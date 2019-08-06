@@ -5,6 +5,4 @@ MpGAP is a nextflow docker-based pipeline that wraps up [Canu](https://github.co
 
 This is an easy to use pipeline that uses well known software for genome assembly of Illumina, Pacbio and Oxford Nanopore sequencing data through illumina only, long reads only or hybrid modes.
 
-This pipeline has only two dependencies: Docker and Nextflow.
-
-This pipeline requires only the installation of Docker and Nextflow. It is able to execute long reads only, illumina only or hybrid assemblies using these tools cited above.
+This pipeline has only two dependencies: [Docker](https://www.docker.com) and [Nextflow](https://github.com/nextflow-io/nextflow).
