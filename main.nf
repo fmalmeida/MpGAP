@@ -47,12 +47,41 @@ def helpMessage() {
     --try_spades                           Execute assembly with Spades. Multiple assemblers can be chosen.
 
 
-            Parameters for illumina-only mode. Can be executed by spades and unicycler assemblers.
+            Parameters for illumina-only mode. Can be executed by SPAdes and Unicycler assemblers.
+            Users can use paired or single end reads. If both types are given at once, assemblers
+            will be executed with a mix of both.
+
+    --shortreads_paired <string>           Path to Illumina paired end reads.
+    --shortreads_single <string>           Path to Illumina single end reads.
+    --ref_genome <string>                  Path to reference genome for guided assembly. Used only by SPAdes.
+
+            Parameters for hybrid mode. Can be executed by spades and unicycler assemblers.
+
+    --shortreads_paired <string>           Path to Illumina paired end reads.
+    --shortreads_single <string>           Path to Illumina single end reads.
+    --ref_genome <string>                  Path to reference genome for guided assembly. Used only by SPAdes.
+    --longreads <string>                   Path to longreads in FASTA or FASTQ formats.
+    --lr_type <string>                     Sets wich type of long reads are being used: pacbio or nanopore
 
             Parameters for longreads-only mode. Can be executed by canu, flye and unicycler assemblers.
             In the end, long reads only assemblies can be polished with illumina reads through pilon.
 
-            Parameters for hybrid mode. Can be executed by spades and unicycler assemblers.
+    --longreads <string>                   Path to longreads in FASTA or FASTQ formats.
+    --fast5Path <string>                   Path to directory containing FAST5 files for given reads.
+                                           Whenever set, the pipeline will execute a polishing step
+                                           with Nanopolish.
+    --pacbio_all_baxh5_path <string>       Path to directory containing bax.h5 files for given reads.
+                                           Whenever set, the pipeline will execute a polishing step
+                                           with VarianCaller.
+    --genomeSize                           Canu and Flye require an estimative of genome size in order
+                                           to be executed. Examples: 5.6m; 1.2g
+    --lr_type <string>                     Sets wich type of long reads are being used: pacbio or nanopore
+    --illumina_polish_longreads_contigs    This tells the pipeline to polish long reads only assemblies
+                                           with Illumina reads through Pilon. This is another hybrid methodology.
+                                           For that, users have to set path to Illumina reads through
+                                           --shortreads_paired or --shortreads_single.
+
+
 
    """.stripIndent()
 }
@@ -135,7 +164,7 @@ params.outDir = 'output'
 params.prefix = 'out'
 params.threads = 3
 params.cpus = 2
-params.yaml = 'additional_parameters.yaml'
+params.yaml = ''
 
 /*
                     Loading Parameters properly
@@ -147,12 +176,14 @@ prefix = params.prefix
 outdir = params.outDir
 threads = params.threads
 genomeSize = params.genomeSize
-assembly_type = params.assembly_type
+assembly_type = params.assembly_type.toLowerCase()
 ref_genome = (params.ref_genome) ? file(params.ref_genome) : ''
 
 /*
- * PARSING YAML FILE
- */
+
+                    PARSING YAML FILE
+
+*/
 
 import org.yaml.snakeyaml.Yaml
 //Def method for addtional parameters
@@ -181,7 +212,8 @@ def getAdditional(String file, String value) {
   }}}
 
 if ( params.yaml ) {} else {
-  exit 1, "YAML file not found: ${params.yaml}"
+  new File("additional_parameters.yaml") << new URL ("https://github.com/fmalmeida/MpGAP/raw/master/additional_parameters.yaml").getText()
+  params.yaml = "additional_parameters.yaml"
 }
 
 //Creating map for additional parameters
