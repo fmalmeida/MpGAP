@@ -1,5 +1,112 @@
 #!/usr/bin/env nextflow
 
+/*
+                      A docker-based pipeline for generic hybrid, illumina-only
+                      or long reads only assembly. It accepts Illumina, ONT and
+                      Pacbio data.
+
+                      It uses Unicycler, Flye, Canu or Spades to assemble reads.
+                      And uses Nanopolish, VariantCaller or Pilon to polish assemblies.
+
+*/
+
+def helpMessage() {
+   log.info """
+   Usage:
+   nextflow run fmalmeida/MpGAP [--help] [ -c nextflow.config ] [OPTIONS] [-with-report] [-with-trace] [-with-timeline]
+
+   Comments:
+   This pipeline contains a massive amount of configuration variables and its usage as CLI parameters would
+   cause the command to be huge. Therefore, it is extremely recommended to use the nextflow.config configuration file in order to make
+   parameterization easier and more readable.
+
+   Creating a configuration file:
+   nextflow run fmalmeida/MpGAP [--get_illumina_config] [--get_ont_config] [--get_pacbio_config]
+
+   Show command line examples:
+   nextflow run fmalmeida/MpGAP --show
+
+   Execution Reports:
+   nextflow run fmalmeida/MpGAP [ -c nextflow.config ] -with-report
+   nextflow run fmalmeida/MpGAP [ -c nextflow.config ] -with-trace
+   nextflow run fmalmeida/MpGAP [ -c nextflow.config ] -with-timeline
+
+   OBS: These reports can also be enabled through the configuration file.
+
+   OPTIONS:
+            General Parameters - Mandatory
+
+    --outDir <string>                      Output directory name
+    --prefix <string>                      Set prefix for output files
+    --threads <int>                        Number of threads to use
+    --yaml <string>                        Sets path to yaml file containing additional parameters to assemblers.
+    --assembly_type <string>               Selects assembly mode: hybrid, illumina-only or longreads-only
+    --try_canu                             Execute assembly with Canu. Multiple assemblers can be chosen.
+    --try_unicycler                        Execute assembly with Unicycler. Multiple assemblers can be chosen.
+    --try_flye                             Execute assembly with Flye. Multiple assemblers can be chosen.
+    --try_spades                           Execute assembly with Spades. Multiple assemblers can be chosen.
+
+
+            Parameters for illumina-only mode. Can be executed by spades and unicycler assemblers.
+
+            Parameters for longreads-only mode. Can be executed by canu, flye and unicycler assemblers.
+            In the end, long reads only assemblies can be polished with illumina reads through pilon.
+
+            Parameters for hybrid mode. Can be executed by spades and unicycler assemblers.
+
+   """.stripIndent()
+}
+
+def exampleMessage() {
+   log.info """
+   Example Usages:
+      Illumina paired end reads. Since it will always be a pattern match, example "illumina/SRR9847694_{1,2}.fastq.gz",
+      it MUST ALWAYS be double quoted as the example below.
+./nextflow run fmalmeida/MpGAP --threads 3 --outDir outputs/illumina_paired --run_shortreads_pipeline --shortreads \
+"illumina/SRR9847694_{1,2}.fastq.gz" --reads_size 2 --lighter_genomeSize 4600000 --clip_r1 5 --three_prime_clip_r1 5 \
+--clip_r2 5 --three_prime_clip_r2 5 --quality_trim 30
+      Illumina single end reads. Multiple files at once, using fixed number of bases to be trimmed
+      If multiple unpaired reads are given as input at once, pattern MUST be double quoted: "SRR9696*.fastq.gz"
+./nextflow run fmalmeida/MpGAP --threads 3 --outDir sample_dataset/outputs/illumina_single --run_shortreads_pipeline \
+--shortreads "sample_dataset/illumina/SRR9696*.fastq.gz" --reads_size 1 --lighter_kmer 17 \
+--lighter_genomeSize 4600000 --clip_r1 5 --three_prime_clip_r1 5
+      ONT reads:
+./nextflow run fmalmeida/MpGAP --threads 3 --outDir sample_dataset/outputs/ont --run_longreads_pipeline \
+--lreads_type nanopore --longReads sample_dataset/ont/kpneumoniae_25X.fastq --nanopore_prefix kpneumoniae_25X
+      Pacbio basecalled (.fastq) reads with nextflow general report
+./nextflow run fmalmeida/MpGAP --threads 3 --outDir sample_dataset/outputs/pacbio_from_fastq \
+--run_longreads_pipeline --lreads_type pacbio \
+--longReads sample_dataset/pacbio/m140905_042212_sidney_c100564852550000001823085912221377_s1_X0.subreads.fastq -with-report
+      Pacbio raw (subreads.bam) reads
+./nextflow run fmalmeida/MpGAP --threads 3 --outDir sample_dataset/outputs/pacbio --run_longreads_pipeline \
+--lreads_type pacbio --pacbio_bamPath sample_dataset/pacbio/m140905_042212_sidney_c100564852550000001823085912221377_s1_X0.subreads.bam
+      Pacbio raw (legacy .bas.h5 to subreads.bam) reads
+./nextflow run fmalmeida/MpGAP --threads 3 --outDir sample_dataset/outputs/pacbio --run_longreads_pipeline \
+--lreads_type pacbio --pacbio_h5Path sample_dataset/pacbio/m140912_020930_00114_c100702482550000001823141103261590_s1_p0.1.bax.h5
+   """.stripIndent()
+}
+
+/*
+          Display Help Message
+*/
+params.help = false
+ // Show help emssage
+ if (params.help){
+   helpMessage()
+   file('work').deleteDir()
+   file('.nextflow').deleteDir()
+   exit 0
+}
+
+/*
+          Display CLI examples
+*/
+params.show = false
+ // Show help emssage
+ if (params.show){
+   exampleMessage()
+   exit 0
+}
 
 /*
                     Setting Default Parameters.
