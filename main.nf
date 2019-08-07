@@ -99,7 +99,6 @@ params.help = false
  if (params.help){
    helpMessage()
    file('work').deleteDir()
-   file('.nextflow').deleteDir()
    exit 0
 }
 
@@ -198,7 +197,7 @@ if (params.get_sreads_config) {
 
 */
 
-if ( params.yaml == '' ) {} else {
+if ( params.yaml != '' ) {} else {
   new File("additional_parameters.yaml") << new URL ("https://github.com/fmalmeida/MpGAP/raw/master/additional_parameters.yaml").getText()
   params.yaml = "additional_parameters.yaml"
 }
@@ -698,7 +697,10 @@ if (params.pacbio_all_baxh5_path != '' && (params.shortreads_paired) && params.i
  Channel.empty().mix(nanopolished_contigs).set { unicycler_polish }
 } else if (params.pacbio_all_baxh5_path == '' && params.fast5Path == '' && (params.shortreads_paired) && params.illumina_polish_longreads_contigs == true) {
  Channel.empty().mix(flye_contigs, canu_contigs, unicycler_longreads_contigs).set { unicycler_polish }
-} else { Channel.empty().set {unicycler_polish} }
+} else {
+ Channel.empty().set {unicycler_polish}
+ Channel.empty().mix(flye_contigs, canu_contigs, unicycler_longreads_contigs).set { lreads_contigs }
+}
 
 //Loading reads for quast
 short_reads_lreads_polish = (params.shortreads_paired) ? Channel.fromFilePairs( params.shortreads_paired, flat: true, size: 2 )
@@ -801,7 +803,7 @@ if (params.illumina_polish_longreads_contigs) {
   Channel.empty().mix(variant_caller_contigs).set { final_assembly }
 } else if (params.fast5Path && params.illumina_polish_longreads_contigs == false ) {
   Channel.empty().mix(nanopolished_contigs).set { final_assembly }
-} else { Channel.empty().mix(unicycler_polish, spades_hybrid_contigs, unicycler_hybrid_contigs, unicycler_illumina_contigs, spades_illumina_contigs).set { final_assembly } }
+} else { Channel.empty().mix(lreads_contigs, spades_hybrid_contigs, unicycler_hybrid_contigs, unicycler_illumina_contigs, spades_illumina_contigs).set { final_assembly } }
 //Loading reads for quast
 short_reads_quast_single = (params.shortreads_single) ? Channel.fromPath(params.shortreads_single) : ''
 short_reads_quast_paired = (params.shortreads_paired) ? Channel.fromFilePairs( params.shortreads_paired, flat: true, size: 2 )
@@ -892,9 +894,8 @@ workflow.onComplete {
     println "Pipeline completed at: $workflow.complete"
     println "Execution status: ${ workflow.success ? 'OK' : 'failed' }"
     println "Execution duration: $workflow.duration"
-    // Remove work dir
-    file('work').deleteDir()
 }
+
 /*
  * Header log info
  */
