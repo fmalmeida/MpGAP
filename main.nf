@@ -88,30 +88,6 @@ def helpMessage() {
 
 def exampleMessage() {
    log.info """
-   Example Usages:
-      Illumina paired end reads. Since it will always be a pattern match, example "illumina/SRR9847694_{1,2}.fastq.gz",
-      it MUST ALWAYS be double quoted as the example below.
-./nextflow run fmalmeida/MpGAP --threads 3 --outDir outputs/illumina_paired --run_shortreads_pipeline --shortreads \
-"illumina/SRR9847694_{1,2}.fastq.gz" --reads_size 2 --lighter_genomeSize 4600000 --clip_r1 5 --three_prime_clip_r1 5 \
---clip_r2 5 --three_prime_clip_r2 5 --quality_trim 30
-      Illumina single end reads. Multiple files at once, using fixed number of bases to be trimmed
-      If multiple unpaired reads are given as input at once, pattern MUST be double quoted: "SRR9696*.fastq.gz"
-./nextflow run fmalmeida/MpGAP --threads 3 --outDir sample_dataset/outputs/illumina_single --run_shortreads_pipeline \
---shortreads "sample_dataset/illumina/SRR9696*.fastq.gz" --reads_size 1 --lighter_kmer 17 \
---lighter_genomeSize 4600000 --clip_r1 5 --three_prime_clip_r1 5
-      ONT reads:
-./nextflow run fmalmeida/MpGAP --threads 3 --outDir sample_dataset/outputs/ont --run_longreads_pipeline \
---lreads_type nanopore --longReads sample_dataset/ont/kpneumoniae_25X.fastq --nanopore_prefix kpneumoniae_25X
-      Pacbio basecalled (.fastq) reads with nextflow general report
-./nextflow run fmalmeida/MpGAP --threads 3 --outDir sample_dataset/outputs/pacbio_from_fastq \
---run_longreads_pipeline --lreads_type pacbio \
---longReads sample_dataset/pacbio/m140905_042212_sidney_c100564852550000001823085912221377_s1_X0.subreads.fastq -with-report
-      Pacbio raw (subreads.bam) reads
-./nextflow run fmalmeida/MpGAP --threads 3 --outDir sample_dataset/outputs/pacbio --run_longreads_pipeline \
---lreads_type pacbio --pacbio_bamPath sample_dataset/pacbio/m140905_042212_sidney_c100564852550000001823085912221377_s1_X0.subreads.bam
-      Pacbio raw (legacy .bas.h5 to subreads.bam) reads
-./nextflow run fmalmeida/MpGAP --threads 3 --outDir sample_dataset/outputs/pacbio --run_longreads_pipeline \
---lreads_type pacbio --pacbio_h5Path sample_dataset/pacbio/m140912_020930_00114_c100702482550000001823141103261590_s1_p0.1.bax.h5
    """.stripIndent()
 }
 
@@ -182,7 +158,7 @@ ref_genome = (params.ref_genome) ? file(params.ref_genome) : ''
 /*
           Download configuration file, if necessary.
 */
-
+params.get_hybrid_config = false
 if (params.get_hybrid_config) {
   new File("hybrid.config") << new URL ("https://github.com/fmalmeida/MpGAP/raw/master/configuration_example/hybrid.config").getText()
   println ""
@@ -193,7 +169,7 @@ if (params.get_hybrid_config) {
 
   exit 0
 }
-
+params.get_lreads_config = false
 if (params.get_lreads_config) {
   new File("lreads.config") << new URL ("https://github.com/fmalmeida/MpGAP/raw/master/configuration_example/lreads.config").getText()
   println ""
@@ -204,7 +180,7 @@ if (params.get_lreads_config) {
 
   exit 0
 }
-
+params.get_sreads_config = false
 if (params.get_sreads_config) {
   new File("sreads.config") << new URL ("https://github.com/fmalmeida/MpGAP/raw/master/configuration_example/sreads.config").getText()
   println ""
@@ -221,6 +197,11 @@ if (params.get_sreads_config) {
                     PARSING YAML FILE
 
 */
+
+if ( params.yaml == '' ) {} else {
+  new File("additional_parameters.yaml") << new URL ("https://github.com/fmalmeida/MpGAP/raw/master/additional_parameters.yaml").getText()
+  params.yaml = "additional_parameters.yaml"
+}
 
 import org.yaml.snakeyaml.Yaml
 //Def method for addtional parameters
@@ -248,11 +229,6 @@ def getAdditional(String file, String value) {
     return output
   }}}
 
-if ( params.yaml ) {} else {
-  new File("additional_parameters.yaml") << new URL ("https://github.com/fmalmeida/MpGAP/raw/master/additional_parameters.yaml").getText()
-  params.yaml = "additional_parameters.yaml"
-}
-
 //Creating map for additional parameters
 def additionalParameters = [:]
 additionalParameters['Spades'] = new MyClass().getAdditional(params.yaml, 'spades')
@@ -262,10 +238,10 @@ additionalParameters['Pilon'] = new MyClass().getAdditional(params.yaml, 'pilon'
 additionalParameters['Flye'] = new MyClass().getAdditional(params.yaml, 'flye')
 
 /*
- * PIPELINE BEGIN
- * Assembly with longreads-only
- * Canu and Nanpolish or Unicycler
- */
+
+                  PIPELINE BEGINS - Long Reads Only Assembly
+
+*/
 
 // Loading long reads files
 canu_lreads = (params.longreads && (params.try_canu) && params.assembly_type == 'longreads-only') ?
@@ -290,7 +266,7 @@ process canu_assembly {
   file lreads from canu_lreads
 
   output:
-  file "*"
+  file "canu_lreadsOnly_results_${lrID}/"
   file("canu_lreadsOnly_results_${lrID}/*.contigs.fasta") into canu_contigs
 
   when:
