@@ -1,12 +1,46 @@
 #!/usr/bin/env nextflow
 
-// Loading general parameters
+
+/*
+                    Setting Default Parameters.
+                    Do not change any of this values
+                    directly in main.nf.
+                    Use the config file instead.
+
+*/
+
+params.longreads = ''
+params.fast5Path = ''
+params.pacbio_all_baxh5_path = ''
+params.lr_type = ''
+params.shortreads_paired = ''
+params.shortreads_single = ''
+params.ref_genome = ''
+params.assembly_type = ''
+params.illumina_polish_longreads_contigs = false
+params.pilon_memmory_limit = 50
+params.try_canu = false
+params.try_unicycler = false
+params.try_flye = false
+params.try_spades = false
+params.genomeSize = ''
+params.outDir = 'output'
+params.prefix = 'out'
+params.threads = 3
+params.cpus = 2
+params.yaml = 'additional_parameters.yaml'
+
+/*
+                    Loading Parameters properly
+                    set through config file.
+
+*/
+
 prefix = params.prefix
 outdir = params.outDir
 threads = params.threads
-genomeSize = params.canu.genomeSize
+genomeSize = params.genomeSize
 assembly_type = params.assembly_type
-// Reference genome
 ref_genome = (params.ref_genome) ? file(params.ref_genome) : ''
 
 /*
@@ -58,11 +92,11 @@ additionalParameters['Flye'] = new MyClass().getAdditional(params.yaml, 'flye')
  */
 
 // Loading long reads files
-canu_lreads = (params.longreads && (params.try.canu) && params.assembly_type == 'longreads-only') ?
+canu_lreads = (params.longreads && (params.try_canu) && params.assembly_type == 'longreads-only') ?
               file(params.longreads) : Channel.empty()
-unicycler_lreads = (params.longreads && (params.try.unicycler) && params.assembly_type == 'longreads-only') ?
+unicycler_lreads = (params.longreads && (params.try_unicycler) && params.assembly_type == 'longreads-only') ?
                    file(params.longreads) : Channel.empty()
-flye_lreads = (params.longreads && (params.try.flye) && params.assembly_type == 'longreads-only') ?
+flye_lreads = (params.longreads && (params.try_flye) && params.assembly_type == 'longreads-only') ?
                    file(params.longreads) : Channel.empty()
 if (params.fast5Path && params.assembly_type == 'longreads-only') {
   fast5 = Channel.fromPath( params.fast5Path )
@@ -84,7 +118,7 @@ process canu_assembly {
   file("canu_lreadsOnly_results_${lrID}/*.contigs.fasta") into canu_contigs
 
   when:
-  (params.try.canu) && assembly_type == 'longreads-only'
+  (params.try_canu) && assembly_type == 'longreads-only'
 
   script:
   lr = (params.lr_type == 'nanopore') ? '-nanopore-raw' : '-pacbio-raw'
@@ -109,7 +143,7 @@ process unicycler_longReads {
   file("unicycler_lreadsOnly_results_${lrID}/assembly.fasta") into unicycler_longreads_contigs
 
   when:
-  (params.try.unicycler) && assembly_type == 'longreads-only'
+  (params.try_unicycler) && assembly_type == 'longreads-only'
 
   script:
   lrID = lreads.getSimpleName()
@@ -135,7 +169,7 @@ process flye_assembly {
   file("flye_lreadsOnly_results_${lrID}/assembly_flye.fasta") into flye_contigs
 
   when:
-  (params.try.flye) && assembly_type == 'longreads-only'
+  (params.try_flye) && assembly_type == 'longreads-only'
 
   script:
   lr = (params.lr_type == 'nanopore') ? '--nano-raw' : '--pacbio-raw'
@@ -154,7 +188,7 @@ process flye_assembly {
 if (params.fast5Path) {
     longread_assembly_nanopolish = Channel.empty().mix(flye_contigs, canu_contigs, unicycler_longreads_contigs)
     longread_assemblies_variantCaller = Channel.empty()
-} else if (params.lr_type == 'pacbio' && params.pacbio.all.baxh5.path != '') {
+} else if (params.lr_type == 'pacbio' && params.pacbio_all_baxh5_path != '') {
   longread_assembly_nanopolish = Channel.empty()
   longread_assemblies_variantCaller = Channel.empty().mix(flye_contigs, canu_contigs, unicycler_longreads_contigs)
 } else {
@@ -213,7 +247,7 @@ process nanopolish {
  */
 
 // Loading files
-baxh5 = (params.pacbio.all.baxh5.path) ? Channel.fromPath(params.pacbio.all.baxh5.path).buffer( size: 3 ) : Channel.empty()
+baxh5 = (params.pacbio_all_baxh5_path) ? Channel.fromPath(params.pacbio_all_baxh5_path).buffer( size: 3 ) : Channel.empty()
 
 process bax2bam {
   publishDir "${outdir}/subreads", mode: 'copy'
@@ -227,7 +261,7 @@ process bax2bam {
   file "*.subreads.bam" into pacbio_bams
 
   when:
-  params.lr_type == 'pacbio' && params.pacbio.all.baxh5.path != ''
+  params.lr_type == 'pacbio' && params.pacbio_all_baxh5_path != ''
 
   script:
   """
@@ -254,7 +288,7 @@ process variantCaller {
   file "${prefix}_${assembler}_pbconsensus.fasta" into variant_caller_contigs
 
   when:
-  params.lr_type == 'pacbio' && params.pacbio.all.baxh5.path != ''
+  params.lr_type == 'pacbio' && params.pacbio_all_baxh5_path != ''
 
   script:
   assembler = (draft.getName()  == 'assembly.fasta' || draft.getName() =~ /unicycler/) ? 'unicycler' : 'canu'
@@ -279,15 +313,15 @@ process variantCaller {
  */
 // Spades
 // Loading paired end short reads
-short_reads_spades_hybrid_paired = (params.shortreads.paired && params.assembly_type == 'hybrid' \
-                                    && (params.try.spades)) ?
-                                    Channel.fromFilePairs( params.shortreads.paired, flat: true, size: 2 ) : Channel.value(['', '', ''])
+short_reads_spades_hybrid_paired = (params.shortreads_paired && params.assembly_type == 'hybrid' \
+                                    && (params.try_spades)) ?
+                                    Channel.fromFilePairs( params.shortreads_paired, flat: true, size: 2 ) : Channel.value(['', '', ''])
 // Loading single end short reads
-short_reads_spades_hybrid_single = (params.shortreads.single && params.assembly_type == 'hybrid' \
-                                    && (params.try.spades)) ?
-                                    Channel.fromPath(params.shortreads.single) : ''
+short_reads_spades_hybrid_single = (params.shortreads_single && params.assembly_type == 'hybrid' \
+                                    && (params.try_spades)) ?
+                                    Channel.fromPath(params.shortreads_single) : ''
 // Long reads
-spades_hybrid_lreads = (params.longreads && params.assembly_type == 'hybrid' && (params.try.spades)) ?
+spades_hybrid_lreads = (params.longreads && params.assembly_type == 'hybrid' && (params.try_spades)) ?
                         file(params.longreads) : ''
 
 // Assembly begin
@@ -308,21 +342,21 @@ process spades_hybrid_assembly {
   file "*"
 
   when:
-  assembly_type == 'hybrid' && (params.try.spades)
+  assembly_type == 'hybrid' && (params.try_spades)
 
   script:
   lr = (params.lr_type == 'nanopore') ? '--nanopore' : '--pacbio'
   spades_opt = (params.ref_genome) ? "--trusted-contigs $ref_genome" : ''
 
-  if ((params.shortreads.single) && (params.shortreads.paired)) {
+  if ((params.shortreads_single) && (params.shortreads_paired)) {
     parameter = "-1 $sread1 -2 $sread2 -s $sread $lr $lreads"
     rid = sread.getSimpleName() + "_and_" + sread1.getSimpleName()
     x = "Executing assembly with paired and single end reads"
-  } else if ((params.shortreads.single) && (params.shortreads.paired == '')) {
+  } else if ((params.shortreads_single) && (params.shortreads_paired == '')) {
     parameter = "-s $sread $lr $lreads"
     rid = sread.getSimpleName()
     x = "Executing assembly with single end reads"
-  } else if ((params.shortreads.paired) && (params.shortreads.single == '')) {
+  } else if ((params.shortreads_paired) && (params.shortreads_single == '')) {
     parameter = "-1 $sread1 -2 $sread2 $lr $lreads"
     rid = sread1.getSimpleName()
     x = "Executing assembly with paired end reads"
@@ -335,15 +369,15 @@ process spades_hybrid_assembly {
 
 // Unicycler
 // Loading paired end short reads
-short_reads_unicycler_hybrid_paired = (params.shortreads.paired && params.assembly_type == 'hybrid' \
-                                       && (params.try.unicycler)) ?
-                                       Channel.fromFilePairs( params.shortreads.paired, flat: true, size: 2 ) : Channel.value(['', '', ''])
+short_reads_unicycler_hybrid_paired = (params.shortreads_paired && params.assembly_type == 'hybrid' \
+                                       && (params.try_unicycler)) ?
+                                       Channel.fromFilePairs( params.shortreads_paired, flat: true, size: 2 ) : Channel.value(['', '', ''])
 // Loading single end short reads
-short_reads_unicycler_hybrid_single = (params.shortreads.single && params.assembly_type == 'hybrid' \
-                                       && (params.try.unicycler)) ?
-                                       Channel.fromPath(params.shortreads.single) : ''
+short_reads_unicycler_hybrid_single = (params.shortreads_single && params.assembly_type == 'hybrid' \
+                                       && (params.try_unicycler)) ?
+                                       Channel.fromPath(params.shortreads_single) : ''
 // Long reads
-unicycler_hybrid_lreads = (params.longreads && params.assembly_type == 'hybrid' && (params.try.unicycler)) ?
+unicycler_hybrid_lreads = (params.longreads && params.assembly_type == 'hybrid' && (params.try_unicycler)) ?
                           file(params.longreads) : ''
 
 // Assembly begin
@@ -363,18 +397,18 @@ process unicycler_hybrid_assembly {
   file("unicycler_hybrid_results_${rid}/assembly.fasta") into unicycler_hybrid_contigs
 
   when:
-  assembly_type == 'hybrid' && (params.try.unicycler)
+  assembly_type == 'hybrid' && (params.try_unicycler)
 
   script:
-  if ((params.shortreads.single) && (params.shortreads.paired)) {
+  if ((params.shortreads_single) && (params.shortreads_paired)) {
     parameter = "-1 $sread1 -2 $sread2 -s $sread -l $lreads"
     rid = sread.getSimpleName() + "_and_" + sread1.getSimpleName()
     x = "Executing assembly with paired and single end reads"
-  } else if ((params.shortreads.single) && (params.shortreads.paired == '')) {
+  } else if ((params.shortreads_single) && (params.shortreads_paired == '')) {
     parameter = "-s $sread -l $lreads"
     rid = sread.getSimpleName()
     x = "Executing assembly with single end reads"
-  } else if ((params.shortreads.paired) && (params.shortreads.single == '')) {
+  } else if ((params.shortreads_paired) && (params.shortreads_single == '')) {
     parameter = "-1 $sread1 -2 $sread2 -l $lreads"
     rid = sread1.getSimpleName()
     x = "Executing assembly with paired end reads"
@@ -391,13 +425,13 @@ process unicycler_hybrid_assembly {
  */
 // Spades
 // Loading short reads
-short_reads_spades_illumina_paired = (params.shortreads.paired && params.assembly_type == 'illumina-only' \
-                                      && (params.try.spades)) ?
-                                      Channel.fromFilePairs( params.shortreads.paired, flat: true, size: 2 ) : Channel.value(['', '', ''])
+short_reads_spades_illumina_paired = (params.shortreads_paired && params.assembly_type == 'illumina-only' \
+                                      && (params.try_spades)) ?
+                                      Channel.fromFilePairs( params.shortreads_paired, flat: true, size: 2 ) : Channel.value(['', '', ''])
 // Loading short reads
-short_reads_spades_illumina_single = (params.shortreads.single && params.assembly_type == 'illumina-only' \
-                                      && (params.try.spades)) ?
-                                      Channel.fromPath(params.shortreads.single) : ''
+short_reads_spades_illumina_single = (params.shortreads_single && params.assembly_type == 'illumina-only' \
+                                      && (params.try_spades)) ?
+                                      Channel.fromPath(params.shortreads_single) : ''
 // Assembly begin
 process spades_illumina_assembly {
   publishDir outdir, mode: 'copy'
@@ -415,19 +449,19 @@ process spades_illumina_assembly {
   file "*"
 
   when:
-  assembly_type == 'illumina-only' && (params.try.spades)
+  assembly_type == 'illumina-only' && (params.try_spades)
 
   script:
   spades_opt = (params.ref_genome) ? "--trusted-contigs $ref_genome" : ''
-  if ((params.shortreads.single) && (params.shortreads.paired)) {
+  if ((params.shortreads_single) && (params.shortreads_paired)) {
     parameter = "-1 $sread1 -2 $sread2 -s $sread"
     rid = sread.getSimpleName() + "_and_" + sread1.getSimpleName()
     x = "Executing assembly with paired and single end reads"
-  } else if ((params.shortreads.single) && (params.shortreads.paired == '')) {
+  } else if ((params.shortreads_single) && (params.shortreads_paired == '')) {
     parameter = "-s $sread"
     rid = sread.getSimpleName()
     x = "Executing assembly with single end reads"
-  } else if ((params.shortreads.paired) && (params.shortreads.single == '')) {
+  } else if ((params.shortreads_paired) && (params.shortreads_single == '')) {
     parameter = "-1 $sread1 -2 $sread2"
     rid = sread1.getSimpleName()
     x = "Executing assembly with paired end reads"
@@ -440,12 +474,12 @@ process spades_illumina_assembly {
 
 // Unicycler
 // Loading short reads
-short_reads_unicycler_illumina_single = (params.shortreads.single && params.assembly_type == 'illumina-only' \
-                                         && (params.try.unicycler)) ?
-                                         Channel.fromPath(params.shortreads.single) : ''
-short_reads_unicycler_illumina_paired = (params.shortreads.paired && params.assembly_type == 'illumina-only' \
-                                         && (params.try.unicycler)) ?
-                                         Channel.fromFilePairs( params.shortreads.paired, flat: true, size: 2 ) : Channel.value(['', '', ''])
+short_reads_unicycler_illumina_single = (params.shortreads_single && params.assembly_type == 'illumina-only' \
+                                         && (params.try_unicycler)) ?
+                                         Channel.fromPath(params.shortreads_single) : ''
+short_reads_unicycler_illumina_paired = (params.shortreads_paired && params.assembly_type == 'illumina-only' \
+                                         && (params.try_unicycler)) ?
+                                         Channel.fromFilePairs( params.shortreads_paired, flat: true, size: 2 ) : Channel.value(['', '', ''])
 // Assembly begin
 process unicycler_illumina_assembly {
   publishDir outdir, mode: 'copy'
@@ -462,18 +496,18 @@ process unicycler_illumina_assembly {
   file("unicycler_illuminaOnly_results_${rid}/assembly.fasta") into unicycler_illumina_contigs
 
   when:
-  assembly_type == 'illumina-only' && (params.try.unicycler)
+  assembly_type == 'illumina-only' && (params.try_unicycler)
 
   script:
-  if ((params.shortreads.single) && (params.shortreads.paired)) {
+  if ((params.shortreads_single) && (params.shortreads_paired)) {
     parameter = "-1 $sread1 -2 $sread2 -s $sread"
     rid = sread.getSimpleName() + "_and_" + sread1.getSimpleName()
     x = "Executing assembly with paired and single end reads"
-  } else if ((params.shortreads.single) && (params.shortreads.paired == '')) {
+  } else if ((params.shortreads_single) && (params.shortreads_paired == '')) {
     parameter = "-s $sread"
     rid = sread.getSimpleName()
     x = "Executing assembly with single end reads"
-  } else if ((params.shortreads.paired) && (params.shortreads.single == '')) {
+  } else if ((params.shortreads_paired) && (params.shortreads_single == '')) {
     parameter = "-1 $sread1 -2 $sread2"
     rid = sread1.getSimpleName()
     x = "Executing assembly with paired end reads"
@@ -491,11 +525,11 @@ process unicycler_illumina_assembly {
 
 // Create a single value channel to make polishing step wait for assemblers to finish
 /*
-[unicycler_ok, unicycler_ok2] = ((params.try.unicycler) && params.pacbio.all.baxh5.path == '' && params.fast5Path == '') ? Channel.empty().mix(unicycler_execution) : Channel.value('OK')
-[canu_ok, canu_ok2] = ((params.try.canu) && params.pacbio.all.baxh5.path == '' && params.fast5Path == '') ? Channel.empty().mix(canu_execution) : Channel.value('OK')
-[flye_ok, flye_ok2] = ((params.try.flye) && params.pacbio.all.baxh5.path == '' && params.fast5Path == '') ? Channel.empty().mix(flye_execution) : Channel.value('OK')
+[unicycler_ok, unicycler_ok2] = ((params.try_unicycler) && params.pacbio_all_baxh5_path == '' && params.fast5Path == '') ? Channel.empty().mix(unicycler_execution) : Channel.value('OK')
+[canu_ok, canu_ok2] = ((params.try_canu) && params.pacbio_all_baxh5_path == '' && params.fast5Path == '') ? Channel.empty().mix(canu_execution) : Channel.value('OK')
+[flye_ok, flye_ok2] = ((params.try_flye) && params.pacbio_all_baxh5_path == '' && params.fast5Path == '') ? Channel.empty().mix(flye_execution) : Channel.value('OK')
 [nanopolish_ok, nanopolish_ok2] = (params.fast5Path) ? Channel.empty().mix(nanopolish_execution) : Channel.value('OK')
-[variantCaller_ok, variantCaller_ok2] = (params.pacbio.all.baxh5.path) ? Channel.empty().mix(variant_caller_execution) : Channel.value('OK')
+[variantCaller_ok, variantCaller_ok2] = (params.pacbio_all_baxh5_path) ? Channel.empty().mix(variant_caller_execution) : Channel.value('OK')
 */
 
 /*
@@ -506,16 +540,16 @@ process unicycler_illumina_assembly {
  */
 
 //Load contigs
-if (params.pacbio.all.baxh5.path != '' && (params.shortreads.paired) && params.illumina_polish_longreads_contigs == true) {
+if (params.pacbio_all_baxh5_path != '' && (params.shortreads_paired) && params.illumina_polish_longreads_contigs == true) {
  Channel.empty().mix(variant_caller_contigs).set { unicycler_polish }
-} else if (params.fast5Path && (params.shortreads.paired) && params.illumina_polish_longreads_contigs == true) {
+} else if (params.fast5Path && (params.shortreads_paired) && params.illumina_polish_longreads_contigs == true) {
  Channel.empty().mix(nanopolished_contigs).set { unicycler_polish }
-} else if (params.pacbio.all.baxh5.path == '' && params.fast5Path == '' && (params.shortreads.paired) && params.illumina_polish_longreads_contigs == true) {
+} else if (params.pacbio_all_baxh5_path == '' && params.fast5Path == '' && (params.shortreads_paired) && params.illumina_polish_longreads_contigs == true) {
  Channel.empty().mix(flye_contigs, canu_contigs, unicycler_longreads_contigs).set { unicycler_polish }
 } else { Channel.empty().set {unicycler_polish} }
 
 //Loading reads for quast
-short_reads_lreads_polish = (params.shortreads.paired) ? Channel.fromFilePairs( params.shortreads.paired, flat: true, size: 2 )
+short_reads_lreads_polish = (params.shortreads_paired) ? Channel.fromFilePairs( params.shortreads_paired, flat: true, size: 2 )
                                                        : Channel.value(['', '', ''])
 process illumina_polish_longreads_contigs {
   publishDir outdir, mode: 'copy'
@@ -531,7 +565,7 @@ process illumina_polish_longreads_contigs {
   file("${assembler}_lreadsOnly_exhaustive_polished/${assembler}_final_polish.fasta") into unicycler_polished_contigs
 
   when:
-  (assembly_type == 'longreads-only' && (params.illumina_polish_longreads_contigs) && (params.shortreads.paired))
+  (assembly_type == 'longreads-only' && (params.illumina_polish_longreads_contigs) && (params.shortreads_paired))
 
   script:
   if (draft.getName()  == 'assembly.fasta' || draft.getName() =~ /unicycler/) {
@@ -555,17 +589,17 @@ process illumina_polish_longreads_contigs {
  * Unicycler Polishing Pipeline
  */
 //Load contigs
-if (params.pacbio.all.baxh5.path != '' && (params.shortreads.single) && params.illumina_polish_longreads_contigs == true) {
+if (params.pacbio_all_baxh5_path != '' && (params.shortreads_single) && params.illumina_polish_longreads_contigs == true) {
 Channel.empty().mix(variant_caller_contigs).set { pilon_polish }
-} else if (params.fast5Path && (params.shortreads.single) && params.illumina_polish_longreads_contigs == true) {
+} else if (params.fast5Path && (params.shortreads_single) && params.illumina_polish_longreads_contigs == true) {
 Channel.empty().mix(nanopolished_contigs).set { pilon_polish }
-} else if (params.pacbio.all.baxh5.path == '' && params.fast5Path == '' && (params.shortreads.single) && params.illumina_polish_longreads_contigs == true) {
+} else if (params.pacbio_all_baxh5_path == '' && params.fast5Path == '' && (params.shortreads_single) && params.illumina_polish_longreads_contigs == true) {
 Channel.empty().mix(flye_contigs, canu_contigs, unicycler_longreads_contigs).set { pilon_polish }
 } else { Channel.empty().set { pilon_polish } }
 
 //Load reads
-short_reads_pilon_single = (params.shortreads.single) ?
-                     Channel.fromPath(params.shortreads.single) : ''
+short_reads_pilon_single = (params.shortreads_single) ?
+                     Channel.fromPath(params.shortreads_single) : ''
 
 process pilon_polish {
   publishDir outdir, mode: 'copy'
@@ -581,7 +615,7 @@ process pilon_polish {
   file("pilon_results_${assembler}/pilon*.fasta") into pilon_polished_contigs
 
   when:
-  (assembly_type == 'longreads-only' && (params.illumina_polish_longreads_contigs) && (params.shortreads.single))
+  (assembly_type == 'longreads-only' && (params.illumina_polish_longreads_contigs) && (params.shortreads_single))
 
   script:
   parameter = "$sread"
@@ -598,7 +632,7 @@ process pilon_polish {
   bwa mem -M -t ${params.threads} ${draft} $parameter > ${rid}_${assembler}_aln.sam ;
   samtools view -bS ${rid}_${assembler}_aln.sam | samtools sort > ${rid}_${assembler}_aln.bam ;
   samtools index ${rid}_${assembler}_aln.bam ;
-  java -Xmx${params.pilon.memmory.limit}G -jar /miniconda/share/pilon-1.22-1/pilon-1.22.jar \
+  java -Xmx${params.pilon_memmory_limit}G -jar /miniconda/share/pilon-1.22-1/pilon-1.22.jar \
   --genome ${draft} --bam ${rid}_${assembler}_aln.bam --output pilon_${assembler}_${rid} \
   --outdir pilon_results_${assembler} ${additionalParameters['Pilon']} &>pilon.log
   """
@@ -611,14 +645,14 @@ process pilon_polish {
 //Load contigs
 if (params.illumina_polish_longreads_contigs) {
   Channel.empty().mix(unicycler_polished_contigs, pilon_polished_contigs).set { final_assembly }
-} else if (params.pacbio.all.baxh5.path != '' && params.illumina_polish_longreads_contigs == false ) {
+} else if (params.pacbio_all_baxh5_path != '' && params.illumina_polish_longreads_contigs == false ) {
   Channel.empty().mix(variant_caller_contigs).set { final_assembly }
 } else if (params.fast5Path && params.illumina_polish_longreads_contigs == false ) {
   Channel.empty().mix(nanopolished_contigs).set { final_assembly }
 } else { Channel.empty().mix(unicycler_polish, spades_hybrid_contigs, unicycler_hybrid_contigs, unicycler_illumina_contigs, spades_illumina_contigs).set { final_assembly } }
 //Loading reads for quast
-short_reads_quast_single = (params.shortreads.single) ? Channel.fromPath(params.shortreads.single) : ''
-short_reads_quast_paired = (params.shortreads.paired) ? Channel.fromFilePairs( params.shortreads.paired, flat: true, size: 2 )
+short_reads_quast_single = (params.shortreads_single) ? Channel.fromPath(params.shortreads_single) : ''
+short_reads_quast_paired = (params.shortreads_paired) ? Channel.fromFilePairs( params.shortreads_paired, flat: true, size: 2 )
                                                       : Channel.value(['', '', ''])
 long_reads_quast = (params.longreads) ? Channel.fromPath(params.longreads) : ''
 
@@ -637,21 +671,21 @@ process quast {
   file "quast_${type}_outputs_${assembler}/*"
 
   script:
-  if ((params.shortreads.single) && (params.shortreads.paired) && assembly_type != 'longreads-only') {
+  if ((params.shortreads_single) && (params.shortreads_paired) && assembly_type != 'longreads-only') {
     ref_parameter = "-M -t ${params.threads} reference_genome sread pread1 pread2"
     parameter = "-M -t ${params.threads} ${contigs} pread1 pread2"
     x = "Assessing assembly with paired and single end reads"
     sreads_parameter = "--single sread"
     preads_parameter = "--pe1 pread1 --pe2 pread2"
     lreads_parameter = ""
-  } else if ((params.shortreads.single) && (params.shortreads.paired == '') && assembly_type != 'longreads-only') {
+  } else if ((params.shortreads_single) && (params.shortreads_paired == '') && assembly_type != 'longreads-only') {
     ref_parameter = "-M -t ${params.threads} reference_genome sread"
     parameter = "-M -t ${params.threads} ${contigs} sread"
     x = "Assessing assembly with single end reads"
     sreads_parameter = "--single sread"
     preads_parameter = ""
     lreads_parameter = ""
-  } else if ((params.shortreads.paired) && (params.shortreads.single == '') && assembly_type != 'longreads-only') {
+  } else if ((params.shortreads_paired) && (params.shortreads_single == '') && assembly_type != 'longreads-only') {
     ref_parameter = "-M -t ${params.threads} reference_genome pread1 pread2"
     parameter = "-M -t ${params.threads} ${contigs} pread1 pread2"
     x = "Assessing assembly with paired end reads"
@@ -719,8 +753,8 @@ def summary = [:]
 summary['Long Reads']   = params.longreads
 summary['Fast5 files dir']   = params.fast5Path
 summary['Long Reads']   = params.longreads
-summary['Short single end reads']   = params.shortreads.single
-summary['Short paired end reads']   = params.shortreads.paired
+summary['Short single end reads']   = params.shortreads_single
+summary['Short paired end reads']   = params.shortreads_paired
 summary['Fasta Ref']    = params.ref_genome
 summary['Output dir']   = params.outDir
 summary['Assembly assembly_type chosen'] = params.assembly_type
