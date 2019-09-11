@@ -69,7 +69,7 @@ def helpMessage() {
     --longreads <string>                   Path to longreads in FASTA or FASTQ formats.
     --fast5Path <string>                   Path to directory containing FAST5 files for given reads.
                                            Whenever set, the pipeline will execute a polishing step
-                                           with Nanopolish.
+                                           with Nanopolish. This makes the pipeline extremely SLOW!!
     --pacbio_all_baxh5_path <string>       Path to directory containing bax.h5 files for given reads.
                                            Whenever set, the pipeline will execute a polishing step
                                            with VarianCaller.
