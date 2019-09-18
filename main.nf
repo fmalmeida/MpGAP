@@ -21,7 +21,7 @@ def helpMessage() {
    parameterization easier and more readable.
 
    Creating a configuration file:
-   nextflow run fmalmeida/MpGAP [--get_hybrid_config] [--get_lreads_config] [--get_sreads_config]
+   nextflow run fmalmeida/MpGAP [--get_hybrid_config] [--get_lreads_config] [--get_sreads_config] [--get_yaml]
 
    Show command line examples:
    nextflow run fmalmeida/MpGAP --show
@@ -139,7 +139,7 @@ params.outDir = 'output'
 params.prefix = 'out'
 params.threads = 3
 params.cpus = 2
-params.yaml = ''
+params.yaml = "additional_parameters.yaml"
 
 /*
                     Loading Parameters properly
@@ -191,16 +191,23 @@ if (params.get_sreads_config) {
   exit 0
 }
 
+params.get_yaml = false
+if ( params.get_yaml ) {
+  new File("additional_parameters.yaml") << new URL ("https://github.com/fmalmeida/MpGAP/raw/master/additional_parameters.yaml").getText()
+  println ""
+  println "additional_parameters.yaml file saved in working directory"
+  println "After configuration, run:"
+  println "nextflow run fmalmeida/NGS-preprocess -c ./*.config"
+  println "Nice code!\n"
+
+  exit 0
+}
+
 /*
 
                     PARSING YAML FILE
 
 */
-
-if ( params.yaml != '' ) {} else {
-  new File("additional_parameters.yaml") << new URL ("https://github.com/fmalmeida/MpGAP/raw/master/additional_parameters.yaml").getText()
-  params.yaml = "additional_parameters.yaml"
-}
 
 import org.yaml.snakeyaml.Yaml
 //Def method for addtional parameters
@@ -255,6 +262,9 @@ if (params.fast5Path && params.assembly_type == 'longreads-only') {
   fast5_dir = Channel.fromPath( params.fast5Path, type: 'dir' )
 } else { Channel.empty().into{fast5; fast5_dir; nanopolish_lreads} }
 
+// Checking Long Reads technology
+lreads_outdir = (params.lr_type == 'nanopore') ? 'ONT' : 'Pacbio'
+
 // CANU ASSEMBLER - longreads
 process canu_assembly {
   publishDir outdir, mode: 'copy'
@@ -265,8 +275,8 @@ process canu_assembly {
   file lreads from canu_lreads
 
   output:
-  file "canu_lreadsOnly_results_${lrID}/"
-  file("canu_lreadsOnly_results_${lrID}/*.contigs.fasta") into canu_contigs
+  file "${lreads_outdir}/canu_${lrID}/"
+  file("${lreads_outdir}/canu_${lrID}/*.contigs.fasta") into canu_contigs
 
   when:
   (params.try_canu) && assembly_type == 'longreads-only'
@@ -275,7 +285,7 @@ process canu_assembly {
   lr = (params.lr_type == 'nanopore') ? '-nanopore-raw' : '-pacbio-raw'
   lrID = lreads.getSimpleName()
   """
-  canu -p ${prefix} -d canu_lreadsOnly_results_${lrID} maxThreads=${params.threads}\
+  canu -p ${prefix} -d ${lreads_outdir}/canu_${lrID} maxThreads=${params.threads}\
   genomeSize=${genomeSize} ${additionalParameters['Canu']} $lr $lreads
   """
 }
