@@ -209,9 +209,8 @@ if ( params.get_yaml ) {
 
 */
 
-if (params.yaml != "") {
-
 import org.yaml.snakeyaml.Yaml
+
 //Def method for addtional parameters
 class MyClass {
 def getAdditional(String file, String value) {
@@ -237,6 +236,7 @@ def getAdditional(String file, String value) {
     return output
   }}}
 
+if (params.yaml != "") {
 //Creating map for additional parameters
 def additionalParameters = [:]
 additionalParameters['Spades'] = new MyClass().getAdditional(params.yaml, 'spades')
