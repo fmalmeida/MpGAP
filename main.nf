@@ -139,7 +139,7 @@ params.outDir = 'output'
 params.prefix = 'out'
 params.threads = 3
 params.cpus = 2
-params.yaml = "additional_parameters.yaml"
+params.yaml = ""
 
 /*
                     Loading Parameters properly
@@ -209,6 +209,8 @@ if ( params.get_yaml ) {
 
 */
 
+if (params.yaml != "") {
+
 import org.yaml.snakeyaml.Yaml
 //Def method for addtional parameters
 class MyClass {
@@ -242,6 +244,16 @@ additionalParameters['Unicycler'] = new MyClass().getAdditional(params.yaml, 'un
 additionalParameters['Canu'] = new MyClass().getAdditional(params.yaml, 'canu')
 additionalParameters['Pilon'] = new MyClass().getAdditional(params.yaml, 'pilon')
 additionalParameters['Flye'] = new MyClass().getAdditional(params.yaml, 'flye')
+
+} else {
+// Empty Map
+def additionalParameters = [:]
+additionalParameters['Spades'] = ""
+additionalParameters['Unicycler'] = ""
+additionalParameters['Canu'] = ""
+additionalParameters['Pilon'] = ""
+additionalParameters['Flye'] = ""
+}
 
 /*
 
