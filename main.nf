@@ -70,9 +70,10 @@ def helpMessage() {
     --fast5Path <string>                   Path to directory containing FAST5 files for given reads.
                                            Whenever set, the pipeline will execute a polishing step
                                            with Nanopolish. This makes the pipeline extremely SLOW!!
-    --pacbio_all_baxh5_path <string>       Path to directory containing bax.h5 files for given reads.
-                                           Whenever set, the pipeline will execute a polishing step
-                                           with VarianCaller.
+    --pacbio_all_baxh5_path <string>       Path to all bax.h5 files for given reads. Whenever set, the pipeline
+                                           will execute a polishing step with VarianCaller.
+    --pacbio_all_bam_path <string>         Path to all subreads bam files for given reads. Whenever set, the pipeline
+                                           will execute a polishing step with VarianCaller.
     --genomeSize                           Canu and Flye require an estimative of genome size in order
                                            to be executed. Examples: 5.6m; 1.2g
     --lr_type <string>                     Sets wich type of long reads are being used: pacbio or nanopore
@@ -123,6 +124,7 @@ params.show = false
 params.longreads = ''
 params.fast5Path = ''
 params.pacbio_all_baxh5_path = ''
+params.pacbio_all_bam_path = ''
 params.lr_type = ''
 params.shortreads_paired = ''
 params.shortreads_single = ''
@@ -236,9 +238,11 @@ def getAdditional(String file, String value) {
     return output
   }}}
 
-if (params.yaml != "") {
-//Creating map for additional parameters
 def additionalParameters = [:]
+
+if (params.yaml) {
+
+//Creating map for additional parameters
 additionalParameters['Spades'] = new MyClass().getAdditional(params.yaml, 'spades')
 additionalParameters['Unicycler'] = new MyClass().getAdditional(params.yaml, 'unicycler')
 additionalParameters['Canu'] = new MyClass().getAdditional(params.yaml, 'canu')
@@ -247,7 +251,6 @@ additionalParameters['Flye'] = new MyClass().getAdditional(params.yaml, 'flye')
 
 } else {
 // Empty Map
-def additionalParameters = [:]
 additionalParameters['Spades'] = ""
 additionalParameters['Unicycler'] = ""
 additionalParameters['Canu'] = ""
@@ -312,8 +315,8 @@ process unicycler_longReads {
   file lreads from unicycler_lreads
 
   output:
-  file "unicycler_lreadsOnly_results_${lrID}/"
-  file("unicycler_lreadsOnly_results_${lrID}/assembly.fasta") into unicycler_longreads_contigs
+  file "${lreads_outdir}/unicycler_${lrID}/"
+  file("${lreads_outdir}/unicycler_${lrID}/assembly.fasta") into unicycler_longreads_contigs
 
   when:
   (params.try_unicycler) && assembly_type == 'longreads-only'
@@ -322,7 +325,7 @@ process unicycler_longReads {
   lrID = lreads.getSimpleName()
   """
   unicycler -l $lreads \
-  -o unicycler_lreadsOnly_results_${lrID} -t ${params.threads} \
+  -o ${lreads_outdir}/unicycler_${lrID} -t ${params.threads} \
   ${additionalParameters['Unicycler']} &> unicycler.log
   """
 }
@@ -337,9 +340,9 @@ process flye_assembly {
   file lreads from flye_lreads
 
   output:
-  file "flye_lreadsOnly_results_${lrID}/"
-  file("flye_lreadsOnly_results_${lrID}/scaffolds.fasta") optional true
-  file("flye_lreadsOnly_results_${lrID}/assembly_flye.fasta") into flye_contigs
+  file "${lreads_outdir}/flye_${lrID}"
+  file("${lreads_outdir}/flye_${lrID}/scaffolds.fasta") optional true
+  file("${lreads_outdir}/flye_${lrID}/assembly_flye.fasta") into flye_contigs
 
   when:
   (params.try_flye) && assembly_type == 'longreads-only'
@@ -349,9 +352,10 @@ process flye_assembly {
   lrID = lreads.getSimpleName()
   """
   source activate flye ;
-  flye ${lr} $lreads --genome-size ${genomeSize} --out-dir flye_lreadsOnly_results_${lrID} \
+  mkdir ${lreads_outdir}/ ;
+  flye ${lr} $lreads --genome-size ${genomeSize} --out-dir ${lreads_outdir}/flye_${lrID} \
   --threads $threads ${additionalParameters['Flye']} &> flye.log ;
-  mv flye_lreadsOnly_results_${lrID}/assembly.fasta flye_lreadsOnly_results_${lrID}/assembly_flye.fasta
+  mv ${lreads_outdir}/flye_${lrID}/assembly.fasta ${lreads_outdir}/flye_${lrID}/assembly_flye.fasta
   """
 }
 
@@ -373,7 +377,7 @@ if (params.fast5Path) {
  * NANOPOLISH - A tool to polish nanopore only assemblies
  */
 process nanopolish {
-  publishDir "${outdir}/lreadsOnly_nanopolished_contigs", mode: 'copy'
+  publishDir "${outdir}/nanopolish_output", mode: 'copy'
   container 'fmalmeida/compgen:ASSEMBLERS'
   cpus threads
 
@@ -421,6 +425,7 @@ process nanopolish {
 
 // Loading files
 baxh5 = (params.pacbio_all_baxh5_path) ? Channel.fromPath(params.pacbio_all_baxh5_path).buffer( size: 3 ) : Channel.empty()
+bams =  (params.pacbio_all_bam_path) ? Channel.fromPath(params.pacbio_all_bam_path).buffer( size: 3 ) : Channel.empty()
 
 process bax2bam {
   publishDir "${outdir}/subreads", mode: 'copy'
@@ -445,7 +450,7 @@ process bax2bam {
 }
 
 // Get bams together
-variantCaller_bams = Channel.empty().mix(pacbio_bams).collect()
+variantCaller_bams = Channel.empty().mix(pacbio_bams,bams).collect()
 
 process variantCaller {
   publishDir "${outdir}/lreadsOnly_pacbio_consensus", mode: 'copy'
@@ -461,7 +466,7 @@ process variantCaller {
   file "${prefix}_${assembler}_pbconsensus.fasta" into variant_caller_contigs
 
   when:
-  params.lr_type == 'pacbio' && params.pacbio_all_baxh5_path != ''
+  params.lr_type == 'pacbio' && ( params.pacbio_all_baxh5_path != '' || params.pacbio_all_bam_path != '' )
 
   script:
   assembler = (draft.getName()  == 'assembly.fasta' || draft.getName() =~ /unicycler/) ? 'unicycler' : 'canu'

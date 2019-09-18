@@ -104,9 +104,10 @@ This pipeline has only two dependencies: [Docker](https://www.docker.com) and [N
      --fast5Path <string>                   Path to directory containing FAST5 files for given reads.
                                             Whenever set, the pipeline will execute a polishing step
                                             with Nanopolish. This makes the pipeline extremely SLOW!!
-     --pacbio_all_baxh5_path <string>       Path to directory containing bax.h5 files for given reads.
-                                            Whenever set, the pipeline will execute a polishing step
-                                            with VarianCaller.
+     --pacbio_all_baxh5_path <string>       Path to all bax.h5 files for given reads. Whenever set, the pipeline
+                                            will execute a polishing step with VarianCaller.
+     --pacbio_all_bam_path <string>         Path to all subreads bam files for given reads. Whenever set, the pipeline
+                                            will execute a polishing step with VarianCaller.
      --genomeSize                           Canu and Flye require an estimative of genome size in order
                                             to be executed. Examples: 5.6m; 1.2g
      --lr_type <string>                     Sets wich type of long reads are being used: pacbio or nanopore
@@ -122,11 +123,12 @@ This pipeline has only two dependencies: [Docker](https://www.docker.com) and [N
     ./nextflow run fmalmeida/MpGAP --threads 3 --outDir outputs/illumina_paired --prefix test --yaml path-to-additional_parameters.yaml --assembly_type
     illumina-only --try_unicycler --try_spades --shortreads_paired "../illumina/SRR9847694_{1,2}.fastq.gz"
 
-> Illumina single end reads. Multiple files at once, using fixed number of bases to be trimmed. If multiple unpaired reads are given as input at once, pattern MUST be double quoted: "SRR9696*.fastq.gz"
+> Illumina-only assembly with single end reads, using SPAdes and Unicycler assemblers. If multiple unpaired reads are given as input at once, pattern MUST be double quoted: "SRR9696*.fastq.gz"
 
-    ./nextflow run fmalmeida/MpGAP --threads 3 --outDir sample_dataset/outputs/illumina_single --run_shortreads_pipeline --shortreads "sample_dataset/illumina/SRR9696*.fastq.gz" --reads_size 1 --lighter_kmer 17 --lighter_genomeSize 4600000 --clip_r1 5 --three_prime_clip_r1 5
+    ./nextflow run fmalmeida/MpGAP --threads 3 --outDir outputs/illumina_single --prefix test --yaml path-to-additional_parameters.yaml --assembly_type
+    illumina-only --try_unicycler --try_spades --shortreads_single "../illumina/SRR9696*.fastq.gz"
 
-> ONT reads (fastq)
+> Long reads only with ONT reads, using Canu, Flye and Unicycler assemblers.
 
     ./nextflow run fmalmeida/MpGAP --threads 3 --outDir sample_dataset/outputs/ont --run_longreads_pipeline --lreads_type nanopore --longReads sample_dataset/ont/kpneumoniae_25X.fastq --nanopore_prefix kpneumoniae_25X
 
