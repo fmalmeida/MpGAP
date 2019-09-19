@@ -9,6 +9,8 @@ This is an easy to use pipeline that adopts well known software for genome assem
 
 This pipeline has only two dependencies: [Docker](https://www.docker.com) and [Nextflow](https://github.com/nextflow-io/nextflow).
 
+Checkout my other two complementary pipelines for [preprocessing NGS raw data](https://github.com/fmalmeida/NGS-preprocess) and to annotate microbial genomes.
+
 ## Table of contents
 
 * [Requirements](https://github.com/fmalmeida/MpGAP#requirements)
@@ -47,6 +49,26 @@ This pipeline has only two dependencies: [Docker](https://www.docker.com) and [N
 ## Documentation
 
 ### Workflow
+
+This pipeline was design to accept data from Illumina, Pacbio and Oxford Nanopore Technologies sequence platforms. It is possible to perform short or long reads only assemblies as well as hybrid assemblies.
+
+### Short reads only
+
+Short reads only assemblies can be produced with Unicycler and/or SPAdes assemblers. Since short reads have an extremely high basecall accuracy, no further steps are done.
+
+Users can assemble Illumina paired or single end reads. [Here](https://github.com/fmalmeida/MpGAP#usage-examples) you can find a few usage examples.
+
+### Long reads only
+
+Long reads only asseblies can be produced with Canu, Flye and/or Unicycler assemblers. Users can assemble pacbio and nanopore reads.
+
+Addionally, users can perform an polishing step since long reads only assemblies generally suffer from basecall accuracy. For that, it is only necessary to set path do a directory containing raw nanopore FAST5 data to polish with Nanopolish or, for pacbio, to set path to \*.bax.h5 or \*.subreads.bam files to use VarianCaller to polish the assembly.
+
+### Hybrid
+
+It is possible to perform two types of hybrid assemblies. The first one, is to polish a long reads only assembly with Illumina reads. For that, users will have to use the long reads only workflow (with lreads.config file), set path to Illumina reads and set illumina_polish_longreads_contigs to true. This will tell the pipeline to produce a long reads only assembly and polish it with Illumina data through Pilon.
+
+The second one is to use the hybrid.config file (or its parameters in the command line) and set path to long reads and short reads. This, will use Unicycler hybrid mode which will first assemble a high quality assembly graph with Illumina data and then it will use long reads to bridge the gaps. More information about Unicycler Hybrid mode can be foun [here](https://github.com/rrwick/Unicycler#method-hybrid-assembly).
 
 ### Usage
 
