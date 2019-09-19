@@ -3,7 +3,7 @@
 ![](https://travis-ci.com/fmalmeida/MpGAP.svg?branch=master) [![DOI](https://zenodo.org/badge/200904121.svg)](https://zenodo.org/badge/latestdoi/200904121)
 
 
-MpGAP is a nextflow docker-based pipeline that wraps up [Canu](https://github.com/marbl/canu), [Flye](https://github.com/fenderglass/Flye), [Unicycler](https://github.com/rrwick/Unicycler), [Spades](https://github.com/ablab/spades), [Nanopolish](https://github.com/jts/nanopolish), [QUAST](https://github.com/ablab/quast) and [Pilon](https://github.com/broadinstitute/pilon).
+MpGAP is a nextflow docker-based pipeline that wraps up [Canu](https://github.com/marbl/canu), [Flye](https://github.com/fenderglass/Flye), [Unicycler](https://github.com/rrwick/Unicycler), [Spades](https://github.com/ablab/spades), [Nanopolish](https://github.com/jts/nanopolish), [QUAST](https://github.com/ablab/quast), [GenomicConsensus](https://github.com/PacificBiosciences/GenomicConsensus) and [Pilon](https://github.com/broadinstitute/pilon).
 
 This is an easy to use pipeline that adopts well known software for genome assembly of Illumina, Pacbio and Oxford Nanopore sequencing data through illumina only, long reads only or hybrid modes.
 
@@ -191,3 +191,7 @@ Create a configuration file in your working directory:
 * To download the YAML file used to pass additional parameters to assemblers:
 
       nextflow run fmalmeida/MpGAP --get_yaml
+
+## Citation
+
+Users are encouraged to cite the programs used in this pipeline whenever they are used. They are: [Canu](https://github.com/marbl/canu), [Flye](https://github.com/fenderglass/Flye), [Unicycler](https://github.com/rrwick/Unicycler), [Spades](https://github.com/ablab/spades), [Nanopolish](https://github.com/jts/nanopolish), [QUAST](https://github.com/ablab/quast), [GenomicConsensus](https://github.com/PacificBiosciences/GenomicConsensus) and [Pilon](https://github.com/broadinstitute/pilon).
