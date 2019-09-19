@@ -70,7 +70,7 @@ Addionally, users can perform a polishing step since long reads only assemblies 
 
 It is possible to perform two types of hybrid assemblies.
 
-The first one, is to polish a long reads only assembly with Illumina reads. For that, users will have to use the long reads only workflow (with lreads.config file), set path to Illumina reads and set **illumina_polish_longreads_contigs** to true. This will tell the pipeline to produce a long reads only assembly and polish it with Pilon using short reads.
+The first one, is to polish a long reads only assembly with Illumina reads. For that, users will have to use the long reads only workflow (with lreads.config file), set path to Illumina reads and set **illumina_polish_longreads_contigs** to true. This will tell the pipeline to produce a long reads only assembly and polish it with Pilon (for unpaired reads) or with [Unicycler polishing step](https://github.com/rrwick/Unicycler/blob/master/docs/unicycler-polish.md) (for paired end reads).
 
 The second one is to use the hybrid.config file (or its parameters in the command line) and set path to long reads and short reads. This, will use Unicycler hybrid mode which will first assemble a high quality assembly graph with Illumina data and then it will use long reads to bridge the gaps. More information about Unicycler Hybrid mode can be found [here](https://github.com/rrwick/Unicycler#method-hybrid-assembly).
 
