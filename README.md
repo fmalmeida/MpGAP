@@ -14,6 +14,7 @@ This pipeline has only two dependencies: [Docker](https://www.docker.com) and [N
 * [Requirements](https://github.com/fmalmeida/MpGAP#requirements)
 * [Quickstart](https://github.com/fmalmeida/MpGAP#quickstart)
 * [Documentation](https://github.com/fmalmeida/MpGAP#documentation)
+  * [Workflow explanation](https://github.com/fmalmeida/MpGAP#workflow)
   * [Full usage](https://github.com/fmalmeida/MpGAP#usage)
   * [Usage Examples](https://github.com/fmalmeida/MpGAP#usage-examples)
   * [Configuration File](https://github.com/fmalmeida/MpGAP#using-the-configuration-file)
@@ -44,6 +45,8 @@ This pipeline has only two dependencies: [Docker](https://www.docker.com) and [N
        nextflow fmalmeida/MpGAP --help
 
 ## Documentation
+
+### Workflow
 
 ### Usage
 
@@ -133,17 +136,9 @@ This pipeline has only two dependencies: [Docker](https://www.docker.com) and [N
 
     ./nextflow run fmalmeida/MpGAP --threads 3 --outDir sample_dataset/outputs/ont --run_longreads_pipeline --lreads_type nanopore --longReads sample_dataset/ont/kpneumoniae_25X.fastq --nanopore_prefix kpneumoniae_25X
 
-> Pacbio basecalled (.fastq) reads with nextflow general report
+> Long reads only with ONT reads, using Canu, Flye and Unicycler assemblers. With polishing (USING FAST5 data)
 
-    ./nextflow run fmalmeida/MpGAP --threads 3 --outDir sample_dataset/outputs/pacbio_from_fastq --run_longreads_pipeline --lreads_type pacbio --longReads sample_dataset/pacbio/m140905_042212_sidney_c100564852550000001823085912221377_s1_X0.subreads.fastq -with-report
-
-> Pacbio raw (subreads.bam) reads
-
-    ./nextflow run fmalmeida/MpGAP --threads 3 --outDir sample_dataset/outputs/pacbio --run_longreads_pipeline --lreads_type pacbio --pacbio_bamPath sample_dataset/pacbio/m140905_042212_sidney_c100564852550000001823085912221377_s1_X0.subreads.bam
-
-> Pacbio raw (legacy .bas.h5 to subreads.bam) reads
-
-    ./nextflow run fmalmeida/MpGAP --threads 3 --outDir sample_dataset/outputs/pacbio --run_longreads_pipeline --lreads_type pacbio --pacbio_h5Path sample_dataset/pacbio/m140912_020930_00114_c100702482550000001823141103261590_s1_p0.1.bax.h5
+    ./nextflow run fmalmeida/MpGAP --threads 3 --outDir sample_dataset/outputs/ont --run_longreads_pipeline --lreads_type nanopore --longReads sample_dataset/ont/kpneumoniae_25X.fastq --nanopore_prefix kpneumoniae_25X --fast5Path path-to-dir-containing-all-FAST5-file
 
 ## Using the configuration file
 
@@ -153,14 +148,18 @@ Your configuration file is what will tell to the pipeline the type of data you h
 
 Create a configuration file in your working directory:
 
-* For Illumina data:
+* For Hybrid assemblies:
 
-      nextflow run fmalmeida/MpGAP --get_illumina_config
+      nextflow run fmalmeida/MpGAP --get_hybrid_config
 
-* For Pacbio data:
+* For Long reads only assemblies:
 
-      nextflow run fmalmeida/MpGAP --get_pacbio_config
+      nextflow run fmalmeida/MpGAP --get_lreads_config
 
-* For ONT data:
+* For illumina only assemblies:
 
-      nextflow run fmalmeida/MpGAP --get_ont_config
+      nextflow run fmalmeida/MpGAP --get_sreads_config
+
+* To download the YAML file used to pass additional parameters to assemblers:
+
+      nextflow run fmalmeida/MpGAP --get_yaml

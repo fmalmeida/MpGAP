@@ -701,15 +701,6 @@ process unicycler_illumina_assembly {
  * STEP 2 - ASSEMBLY POLISHING
  */
 
-// Create a single value channel to make polishing step wait for assemblers to finish
-/*
-[unicycler_ok, unicycler_ok2] = ((params.try_unicycler) && params.pacbio_all_baxh5_path == '' && params.fast5Path == '') ? Channel.empty().mix(unicycler_execution) : Channel.value('OK')
-[canu_ok, canu_ok2] = ((params.try_canu) && params.pacbio_all_baxh5_path == '' && params.fast5Path == '') ? Channel.empty().mix(canu_execution) : Channel.value('OK')
-[flye_ok, flye_ok2] = ((params.try_flye) && params.pacbio_all_baxh5_path == '' && params.fast5Path == '') ? Channel.empty().mix(flye_execution) : Channel.value('OK')
-[nanopolish_ok, nanopolish_ok2] = (params.fast5Path) ? Channel.empty().mix(nanopolish_execution) : Channel.value('OK')
-[variantCaller_ok, variantCaller_ok2] = (params.pacbio_all_baxh5_path) ? Channel.empty().mix(variant_caller_execution) : Channel.value('OK')
-*/
-
 /*
  * Whenever the user have paired end shor reads, this pipeline will execute
  * the polishing step with Unicycler polish pipeline.
