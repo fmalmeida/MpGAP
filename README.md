@@ -9,7 +9,7 @@ This is an easy to use pipeline that adopts well known software for genome assem
 
 This pipeline has only two dependencies: [Docker](https://www.docker.com) and [Nextflow](https://github.com/nextflow-io/nextflow).
 
-Checkout my other two complementary pipelines for [preprocessing NGS raw data](https://github.com/fmalmeida/NGS-preprocess) and to annotate microbial genomes.
+Also, check out my other two complementary pipelines for [preprocessing NGS raw data](https://github.com/fmalmeida/NGS-preprocess) and to annotate microbial genomes.
 
 ## Table of contents
 
