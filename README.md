@@ -170,9 +170,9 @@ The second one is to use the hybrid.config file (or its parameters in the comman
 
 ## Using the configuration file
 
-All the parameters showed above can be, and are advised to be, set through the configuration file. When a configuration file is set the pipeline is run by simply executing `nextflow run fmalmeida/MpGAP -c ./configuration-file`
+All parameters showed above can be, and are advised to be, set through the configuration file. When a configuration file is used the pipeline is executed as `nextflow run fmalmeida/MpGAP -c ./configuration-file`
 
-Your configuration file is what will tell to the pipeline the type of data you have, and which processes to execute. Therefore, it needs to be correctly set up.
+Your configuration file is what will tell the pipeline which type of data you have, and which processes to execute. Therefore, it needs to be correctly configured.
 
 Create a configuration file in your working directory:
 
