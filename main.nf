@@ -725,7 +725,7 @@ short_reads_lreads_polish = (params.shortreads_paired) ? Channel.fromFilePairs( 
                                                        : Channel.value(['', '', ''])
 process illumina_polish_longreads_contigs {
   publishDir outdir, mode: 'copy'
-  container 'fmalmeida/compgen:Unicycler_Polish'
+  container 'fmalmeida/compgen:ASSEMBLERS'
   cpus threads
 
   input:
@@ -830,7 +830,7 @@ long_reads_quast = (params.longreads) ? Channel.fromPath(params.longreads) : ''
 
 process quast {
   publishDir outdir, mode: 'copy'
-  container 'fmalmeida/compgen:QUAST'
+  container 'fmalmeida/compgen:ASSEMBLERS'
 
   input:
   each file(contigs) from final_assembly
