@@ -271,6 +271,8 @@ unicycler_lreads = (params.longreads && (params.try_unicycler) && params.assembl
                    file(params.longreads) : Channel.empty()
 flye_lreads = (params.longreads && (params.try_flye) && params.assembly_type == 'longreads-only') ?
                    file(params.longreads) : Channel.empty()
+
+// Check if fast5 dir path is set
 if (params.fast5Path && params.assembly_type == 'longreads-only') {
   fast5 = Channel.fromPath( params.fast5Path )
   nanopolish_lreads = file(params.longreads)
@@ -280,10 +282,15 @@ if (params.fast5Path && params.assembly_type == 'longreads-only') {
 // Checking Long Reads technology
 lreads_outdir = (params.lr_type == 'nanopore') ? 'ONT' : 'Pacbio'
 
-// CANU ASSEMBLER - longreads
+/*
+
+          Canu Assembler - Long reads only
+
+*/
+
 process canu_assembly {
   publishDir outdir, mode: 'copy'
-  container 'fmalmeida/compgen:ASSEMBLERS'
+  container 'fmalmeida/compgen:MPGAP'
   cpus threads
 
   input:
@@ -305,10 +312,15 @@ process canu_assembly {
   """
 }
 
-// UNICYCLER ASSEMBLER - longreads-only
+/*
+
+        Unicycler Assembler - Long reads only
+
+*/
+
 process unicycler_longReads {
   publishDir outdir, mode: 'copy'
-  container 'fmalmeida/compgen:ASSEMBLERS'
+  container 'fmalmeida/compgen:MPGAP'
   cpus threads
 
   input:
@@ -330,10 +342,15 @@ process unicycler_longReads {
   """
 }
 
-// Flye ASSEMBLER - longreads
+/*
+
+            Flye Assembler - Long reads only
+
+*/
+
 process flye_assembly {
   publishDir outdir, mode: 'copy'
-  container 'fmalmeida/compgen:ASSEMBLERS'
+  container 'fmalmeida/compgen:MPGAP'
   cpus threads
 
   input:
@@ -361,7 +378,7 @@ process flye_assembly {
 
 
 // Creating channels for assesing longreads assemblies
-// For Nanopolish, quast and variantCaller
+// For nanopolish, quast and variantCaller
 if (params.fast5Path) {
     longread_assembly_nanopolish = Channel.empty().mix(flye_contigs, canu_contigs, unicycler_longreads_contigs)
     longread_assemblies_variantCaller = Channel.empty()
@@ -374,11 +391,14 @@ if (params.fast5Path) {
 }
 
 /*
- * NANOPOLISH - A tool to polish nanopore only assemblies
- */
+
+            NANOPOLISH - A tool to polish nanopore only assemblies
+
+*/
+
 process nanopolish {
   publishDir "${outdir}/nanopolish_output", mode: 'copy'
-  container 'fmalmeida/compgen:ASSEMBLERS'
+  container 'fmalmeida/compgen:MPGAP'
   cpus threads
 
   input:
@@ -394,42 +414,43 @@ process nanopolish {
   assembly_type == 'longreads-only' && (params.fast5Path)
 
   script:
+  // Check assembler used
   if (draft.getName()  == 'assembly.fasta' || draft.getName() =~ /unicycler/) {
     assembler = 'unicycler'
-    } else if (draft.getName()  == 'assembly_flye.fasta' || draft.getName() =~ /flye/) {
-      assembler = 'flye'
-      } else {
-        assembler = 'canu'
-        }
+  } else if (draft.getName()  == 'assembly_flye.fasta' || draft.getName() =~ /flye/) {
+    assembler = 'flye'
+  } else { assembler = 'canu' }
   """
+  source activate NANOPOLISH ;
   zcat -f ${reads} > reads ;
   if [ \$(grep -c "^@" reads) -gt 0 ] ; then sed -n '1~4s/^@/>/p;2~4p' reads > reads.fa ; else mv reads reads.fa ; fi ;
   nanopolish index -d "${fast5_dir}" reads.fa ;
   minimap2 -d draft.mmi ${draft} ;
   minimap2 -ax map-ont -t ${params.threads} ${draft} reads.fa | samtools sort -o reads.sorted.bam -T reads.tmp ;
   samtools index reads.sorted.bam ;
-  python /miniconda/bin/nanopolish_makerange.py ${draft} | parallel --results nanopolish.results -P ${params.cpus} \
+  python /miniconda/envs/NANOPOLISH/bin/nanopolish_makerange.py ${draft} | parallel --results nanopolish.results -P ${params.cpus} \
   nanopolish variants --consensus -o polished.{1}.fa \
     -w {1} \
     -r reads.fa \
     -b reads.sorted.bam \
     -g ${draft} \
     --min-candidate-frequency 0.1;
-  python /miniconda/bin/nanopolish_merge.py polished.*.fa > ${prefix}_${assembler}_nanopolished.fa
+  python /miniconda/envs/NANOPOLISH/bin/nanopolish_merge.py polished.*.fa > ${prefix}_${assembler}_nanopolished.fa
   """
 }
 
 /*
- * VariantCaller - A pacbio only polishing step
- */
 
-// Loading files
+            VariantCaller - A pacbio only polishing step
+
+*/
+// Loading pacbio raw files
 baxh5 = (params.pacbio_all_baxh5_path) ? Channel.fromPath(params.pacbio_all_baxh5_path).buffer( size: 3 ) : Channel.empty()
 bams =  (params.pacbio_all_bam_path) ? Channel.fromPath(params.pacbio_all_bam_path).buffer( size: 3 ) : Channel.empty()
 
 process bax2bam {
   publishDir "${outdir}/subreads", mode: 'copy'
-  container 'fmalmeida/compgen:ASSEMBLERS'
+  container 'fmalmeida/compgen:MPGAP'
   cpus threads
 
   input:
@@ -449,12 +470,12 @@ process bax2bam {
   """
 }
 
-// Get bams together
+// Get pacbio bams together
 variantCaller_bams = Channel.empty().mix(pacbio_bams,bams).collect()
 
 process variantCaller {
   publishDir "${outdir}/lreadsOnly_pacbio_consensus", mode: 'copy'
-  container 'fmalmeida/compgen:ASSEMBLERS'
+  container 'fmalmeida/compgen:MPGAP'
   cpus threads
 
   input:
@@ -469,7 +490,12 @@ process variantCaller {
   params.lr_type == 'pacbio' && ( params.pacbio_all_baxh5_path != '' || params.pacbio_all_bam_path != '' )
 
   script:
-  assembler = (draft.getName()  == 'assembly.fasta' || draft.getName() =~ /unicycler/) ? 'unicycler' : 'canu'
+  // Check assembler used
+  if (draft.getName()  == 'assembly.fasta' || draft.getName() =~ /unicycler/) {
+    assembler = 'unicycler'
+  } else if (draft.getName()  == 'assembly_flye.fasta' || draft.getName() =~ /flye/) {
+    assembler = 'flye'
+  } else { assembler = 'canu' }
   """
   source activate pacbio;
   for BAM in ${bams.join(" ")} ; do pbalign --nproc ${params.threads}  \
@@ -487,9 +513,15 @@ process variantCaller {
 }
 
 /*
- * HYBRID ASSEMBLY WITH Unicycler and Spades
- */
-// Spades
+
+                      HYBRID ASSEMBLY WITH Unicycler and Spades
+
+*/
+
+/*
+                      SPAdes Assembler - Hybrid mode
+
+*/
 // Loading paired end short reads
 short_reads_spades_hybrid_paired = (params.shortreads_paired && params.assembly_type == 'hybrid' \
                                     && (params.try_spades)) ?
@@ -505,7 +537,7 @@ spades_hybrid_lreads = (params.longreads && params.assembly_type == 'hybrid' && 
 // Assembly begin
 process spades_hybrid_assembly {
   publishDir outdir, mode: 'copy'
-  container 'fmalmeida/compgen:ASSEMBLERS'
+  container 'fmalmeida/compgen:MPGAP'
   tag { x }
   cpus threads
 
@@ -545,7 +577,11 @@ process spades_hybrid_assembly {
   """
 }
 
-// Unicycler
+/*
+
+                          Unicycler Assembler - Hybrid mode
+
+*/
 // Loading paired end short reads
 short_reads_unicycler_hybrid_paired = (params.shortreads_paired && params.assembly_type == 'hybrid' \
                                        && (params.try_unicycler)) ?
@@ -561,7 +597,7 @@ unicycler_hybrid_lreads = (params.longreads && params.assembly_type == 'hybrid' 
 // Assembly begin
 process unicycler_hybrid_assembly {
   publishDir outdir, mode: 'copy'
-  container 'fmalmeida/compgen:ASSEMBLERS'
+  container 'fmalmeida/compgen:MPGAP'
   tag { x }
   cpus threads
 
@@ -599,9 +635,15 @@ process unicycler_hybrid_assembly {
 }
 
 /*
- * ILLUMINA-ONLY ASSEMBLY WITH Unicycler and Spades
- */
-// Spades
+
+                          ILLUMINA-ONLY ASSEMBLY WITH Unicycler and Spades
+
+*/
+/*
+
+                          SPAdes Assembler - Illumina only mode
+
+*/
 // Loading short reads
 short_reads_spades_illumina_paired = (params.shortreads_paired && params.assembly_type == 'illumina-only' \
                                       && (params.try_spades)) ?
@@ -613,7 +655,7 @@ short_reads_spades_illumina_single = (params.shortreads_single && params.assembl
 // Assembly begin
 process spades_illumina_assembly {
   publishDir outdir, mode: 'copy'
-  container 'fmalmeida/compgen:ASSEMBLERS'
+  container 'fmalmeida/compgen:MPGAP'
   tag { x }
   cpus threads
 
@@ -650,7 +692,11 @@ process spades_illumina_assembly {
   """
 }
 
-// Unicycler
+/*
+
+                          Unicycler Assembler - Illumina only mode
+
+*/
 // Loading short reads
 short_reads_unicycler_illumina_single = (params.shortreads_single && params.assembly_type == 'illumina-only' \
                                          && (params.try_unicycler)) ?
@@ -661,7 +707,7 @@ short_reads_unicycler_illumina_paired = (params.shortreads_paired && params.asse
 // Assembly begin
 process unicycler_illumina_assembly {
   publishDir outdir, mode: 'copy'
-  container 'fmalmeida/compgen:ASSEMBLERS'
+  container 'fmalmeida/compgen:MPGAP'
   tag { x }
   cpus threads
 
@@ -705,7 +751,7 @@ process unicycler_illumina_assembly {
  * Whenever the user have paired end shor reads, this pipeline will execute
  * the polishing step with Unicycler polish pipeline.
  *
- * Unicycler Polishing Pipeline
+ *                                              Unicycler Polishing Pipeline
  */
 
 //Load contigs
@@ -725,7 +771,7 @@ short_reads_lreads_polish = (params.shortreads_paired) ? Channel.fromFilePairs( 
                                                        : Channel.value(['', '', ''])
 process illumina_polish_longreads_contigs {
   publishDir outdir, mode: 'copy'
-  container 'fmalmeida/compgen:ASSEMBLERS'
+  container 'fmalmeida/compgen:MPGAP'
   cpus threads
 
   input:
@@ -747,7 +793,7 @@ process illumina_polish_longreads_contigs {
   } else { assembler = 'canu' }
   """
   mkdir ${assembler}_lreadsOnly_exhaustive_polished;
-  unicycler_polish --ale /home/ALE/src/ALE --samtools /home/samtools-1.9/samtools --pilon /home/pilon/pilon-1.23.jar \
+  unicycler_polish --ale /work/ALE/src/ALE --samtools /miniconda/bin/samtools --pilon /miniconda/share/pilon-1.23-2/pilon-1.23.jar \
   -a $draft -1 $sread1 -2 $sread2 --threads $threads &> polish.log ;
   mv 0* polish.log ${assembler}_lreadsOnly_exhaustive_polished;
   mv ${assembler}_lreadsOnly_exhaustive_polished/*_final_polish.fasta ${assembler}_lreadsOnly_exhaustive_polished/${assembler}_final_polish.fasta;
@@ -758,7 +804,7 @@ process illumina_polish_longreads_contigs {
  * Whenever the user have unpaired short reads, this pipeline will execute
  * the polishing step with a single Pilon round pipeline.
  *
- * Unicycler Polishing Pipeline
+ *                                            Pilon Polishing Pipeline
  */
 //Load contigs
 if (params.pacbio_all_baxh5_path != '' && (params.shortreads_single) && params.illumina_polish_longreads_contigs == true) {
@@ -775,7 +821,7 @@ short_reads_pilon_single = (params.shortreads_single) ?
 
 process pilon_polish {
   publishDir outdir, mode: 'copy'
-  container 'fmalmeida/compgen:ASSEMBLERS'
+  container 'fmalmeida/compgen:MPGAP'
   cpus threads
 
   input:
@@ -804,16 +850,17 @@ process pilon_polish {
   bwa mem -M -t ${params.threads} ${draft} $parameter > ${rid}_${assembler}_aln.sam ;
   samtools view -bS ${rid}_${assembler}_aln.sam | samtools sort > ${rid}_${assembler}_aln.bam ;
   samtools index ${rid}_${assembler}_aln.bam ;
-  java -Xmx${params.pilon_memmory_limit}G -jar /miniconda/share/pilon-1.22-1/pilon-1.22.jar \
+  java -Xmx${params.pilon_memmory_limit}G -jar /miniconda/share/pilon-1.23-2/pilon-1.23.jar \
   --genome ${draft} --bam ${rid}_${assembler}_aln.bam --output pilon_${assembler}_${rid} \
   --outdir pilon_results_${assembler} ${additionalParameters['Pilon']} &>pilon.log
   """
 }
 
 /*
- * STEP 3 -  Assembly quality assesment with QUAST
- */
 
+                                    STEP 3 -  Assembly quality assesment with QUAST
+
+*/
 //Load contigs
 if (params.illumina_polish_longreads_contigs) {
   Channel.empty().mix(unicycler_polished_contigs, pilon_polished_contigs).set { final_assembly }
@@ -830,7 +877,7 @@ long_reads_quast = (params.longreads) ? Channel.fromPath(params.longreads) : ''
 
 process quast {
   publishDir outdir, mode: 'copy'
-  container 'fmalmeida/compgen:ASSEMBLERS'
+  container 'fmalmeida/compgen:MPGAP'
 
   input:
   each file(contigs) from final_assembly
@@ -890,6 +937,7 @@ process quast {
   }
   if (params.ref_genome != '')
   """
+  source activate QUAST ;
   bwa index reference_genome ;
   bwa index ${contigs} ;
   bwa mem $parameter > contigs_aln.sam ;
@@ -899,6 +947,7 @@ process quast {
   """
   else
   """
+  source activate QUAST ;
   bwa index ${contigs} ;
   bwa mem $parameter > contigs_aln.sam ;
   quast.py -o quast_${type}_outputs_${assembler} -t ${params.threads} --sam contigs_aln.sam \\
