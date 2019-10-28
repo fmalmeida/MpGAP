@@ -376,15 +376,19 @@ process flye_assembly {
   """
 }
 
+/*
+                                Managing Channels for Nanopolish and VariantCaller
+*/
 
-// Creating channels for assesing longreads assemblies
-// For nanopolish, quast and variantCaller
-if (params.fast5Path) {
+// You have fast5 and will execute nanopolish
+if (params.fast5Path && params.lr_type == 'nanopore') {
     longread_assembly_nanopolish = Channel.empty().mix(flye_contigs, canu_contigs, unicycler_longreads_contigs)
     longread_assemblies_variantCaller = Channel.empty()
-} else if (params.lr_type == 'pacbio' && params.pacbio_all_baxh5_path != '') {
+// You have h5 files and will execute VariantCaller
+} else if (params.lr_type == 'pacbio' && params.pacbio_all_baxh5_path) {
   longread_assembly_nanopolish = Channel.empty()
   longread_assemblies_variantCaller = Channel.empty().mix(flye_contigs, canu_contigs, unicycler_longreads_contigs)
+// You won't execute any of those
 } else {
   longread_assembly_nanopolish = Channel.empty()
   longread_assemblies_variantCaller = Channel.empty()
@@ -748,25 +752,32 @@ process unicycler_illumina_assembly {
  */
 
 /*
- * Whenever the user have paired end shor reads, this pipeline will execute
- * the polishing step with Unicycler polish pipeline.
- *
- *                                              Unicycler Polishing Pipeline
- */
 
-//Load contigs
-if (params.pacbio_all_baxh5_path != '' && (params.shortreads_paired) && params.illumina_polish_longreads_contigs == true) {
+                          Whenever the user have paired end short reads, this pipeline will execute
+                          the polishing step with Unicycler polish pipeline.
+
+                                                Unicycler Polishing Pipeline
+
+*/
+
+// You have already polished your genome with VariantCaller
+if (params.pacbio_all_baxh5_path && (params.shortreads_paired) && params.illumina_polish_longreads_contigs == true) {
  Channel.empty().mix(variant_caller_contigs).set { unicycler_polish }
+// You have already polished your genome with Nanopolish
 } else if (params.fast5Path && (params.shortreads_paired) && params.illumina_polish_longreads_contigs == true) {
  Channel.empty().mix(nanopolished_contigs).set { unicycler_polish }
+// You have not polished your genome whatsoever but want to polish it with short reads
 } else if (params.pacbio_all_baxh5_path == '' && params.fast5Path == '' && (params.shortreads_paired) && params.illumina_polish_longreads_contigs == true) {
  Channel.empty().mix(flye_contigs, canu_contigs, unicycler_longreads_contigs).set { unicycler_polish }
-} else {
- Channel.empty().set {unicycler_polish}
+// You have not polished your genome whatsoever and don't want to polish it with short reads
+} else if (params.pacbio_all_baxh5_path == '' && params.fast5Path == '' && (params.shortreads_paired) && params.illumina_polish_longreads_contigs == false) {
+ Channel.empty().set { unicycler_polish }
  Channel.empty().mix(flye_contigs, canu_contigs, unicycler_longreads_contigs).set { lreads_contigs }
+} else {
+ Channel.empty().set { unicycler_polish }
 }
 
-//Loading reads for quast
+//Loading reads for polishing
 short_reads_lreads_polish = (params.shortreads_paired) ? Channel.fromFilePairs( params.shortreads_paired, flat: true, size: 2 )
                                                        : Channel.value(['', '', ''])
 process illumina_polish_longreads_contigs {
@@ -801,16 +812,21 @@ process illumina_polish_longreads_contigs {
 }
 
 /*
- * Whenever the user have unpaired short reads, this pipeline will execute
- * the polishing step with a single Pilon round pipeline.
- *
- *                                            Pilon Polishing Pipeline
- */
-//Load contigs
-if (params.pacbio_all_baxh5_path != '' && (params.shortreads_single) && params.illumina_polish_longreads_contigs == true) {
+
+                                    Whenever the user have unpaired short reads, this pipeline will execute
+                                            the polishing step with a single Pilon round pipeline.
+
+                                                              Pilon Polishing Pipeline
+
+*/
+
+// You have already polished your genome with VarianCaller
+if (params.pacbio_all_baxh5_path && (params.shortreads_single) && params.illumina_polish_longreads_contigs == true) {
 Channel.empty().mix(variant_caller_contigs).set { pilon_polish }
+// You have already polished your genome with Nanopolish
 } else if (params.fast5Path && (params.shortreads_single) && params.illumina_polish_longreads_contigs == true) {
 Channel.empty().mix(nanopolished_contigs).set { pilon_polish }
+// You have not polished your genome whatsoever but want to polish with unpaired short reads
 } else if (params.pacbio_all_baxh5_path == '' && params.fast5Path == '' && (params.shortreads_single) && params.illumina_polish_longreads_contigs == true) {
 Channel.empty().mix(flye_contigs, canu_contigs, unicycler_longreads_contigs).set { pilon_polish }
 } else { Channel.empty().set { pilon_polish } }
@@ -858,17 +874,23 @@ process pilon_polish {
 
 /*
 
-                                    STEP 3 -  Assembly quality assesment with QUAST
+                                                STEP 3 -  Assembly quality assesment with QUAST
 
 */
-//Load contigs
+// If you have polished your genome with short reads
 if (params.illumina_polish_longreads_contigs) {
   Channel.empty().mix(unicycler_polished_contigs, pilon_polished_contigs).set { final_assembly }
-} else if (params.pacbio_all_baxh5_path != '' && params.illumina_polish_longreads_contigs == false ) {
+// You have polished your genome with VarianCaller but not with short reads
+} else if (params.pacbio_all_baxh5_path && params.illumina_polish_longreads_contigs == false ) {
   Channel.empty().mix(variant_caller_contigs).set { final_assembly }
+// You have polished your genome with Nanopolish but not with short reads
 } else if (params.fast5Path && params.illumina_polish_longreads_contigs == false ) {
   Channel.empty().mix(nanopolished_contigs).set { final_assembly }
-} else { Channel.empty().mix(lreads_contigs, spades_hybrid_contigs, unicycler_hybrid_contigs, unicycler_illumina_contigs, spades_illumina_contigs).set { final_assembly } }
+// You have not repolished your genome. Is a draft from any of the methods
+} else {
+  Channel.empty().mix(lreads_contigs, spades_hybrid_contigs, unicycler_hybrid_contigs,
+    unicycler_illumina_contigs, spades_illumina_contigs).set { final_assembly }
+}
 //Loading reads for quast
 short_reads_quast_single = (params.shortreads_single) ? Channel.fromPath(params.shortreads_single) : ''
 short_reads_quast_paired = (params.shortreads_paired) ? Channel.fromFilePairs( params.shortreads_paired, flat: true, size: 2 )
