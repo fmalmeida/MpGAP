@@ -7,7 +7,7 @@ To download a configuration file template users just need to run ``nextflow run 
 
 Using a config file your code is lot more clean and concise: ``nextflow run fmalmeida/MpGAP -c [path-to-config]``
 
-Check out some [templates](https://github.com/fmalmeida/MpGAP/tree/master/configuration_example).
+Check out some `templates <https://github.com/fmalmeida/MpGAP/tree/master/configuration_example>`_.
 
 Example of Hybrid assembly config file:
 
