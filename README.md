@@ -19,7 +19,6 @@ Also, check out my other two complementary pipelines for [preprocessing NGS raw 
 * [Documentation](https://github.com/fmalmeida/MpGAP#documentation)
   * [Workflow explanation](https://github.com/fmalmeida/MpGAP#workflow)
   * [Full usage](https://github.com/fmalmeida/MpGAP#usage)
-  * [Usage Examples](https://github.com/fmalmeida/MpGAP#usage-examples)
   * [Configuration File](https://github.com/fmalmeida/MpGAP#using-the-configuration-file)
 
 ## Requirements
