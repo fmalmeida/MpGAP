@@ -74,11 +74,11 @@ The second one is to use the hybrid.config file (or its parameters in the comman
 
 [Here](https://mpgap.readthedocs.io/en/latest/manual.html#examples) you can find a few usage examples.
 
-### Usage
+## Usage
 
 Users are encouraged to read the [documentation](https://mpgap.readthedocs.io/en/latest/index.html).
 
-## Using the configuration file
+### Using the configuration file
 
 All parameters showed above can be, and are advised to be, set through the configuration file. When a configuration file is used the pipeline is executed as `nextflow run fmalmeida/MpGAP -c ./configuration-file`
 
