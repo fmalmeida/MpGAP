@@ -27,7 +27,7 @@ Also, check out my other two complementary pipelines for [preprocessing NGS raw 
 * Unix-like operating system (Linux, macOS, etc)
 * Java 8
 * Docker
-  * `fmalmeida/compgen:MPGAP`
+  * `fmalmeida/mpgap`
 
 ## Quickstart
 
@@ -35,7 +35,7 @@ Also, check out my other two complementary pipelines for [preprocessing NGS raw 
     * You can give this [in-house script](https://github.com/fmalmeida/bioinfo/blob/master/dockerfiles/docker_install.sh) a try.
     * After installed, you need to download the required Docker image
 
-          docker pull fmalmeida/compgen:MPGAP
+          docker pull fmalmeida/mpgap
 
 2. Install Nextflow (version 0.24.x or higher):
 

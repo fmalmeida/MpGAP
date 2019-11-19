@@ -290,7 +290,7 @@ lreads_outdir = (params.lr_type == 'nanopore') ? 'ONT' : 'Pacbio'
 
 process canu_assembly {
   publishDir outdir, mode: 'copy'
-  container 'fmalmeida/compgen:MPGAP'
+  container 'fmalmeida/mpgap'
   cpus threads
 
   input:
@@ -320,7 +320,7 @@ process canu_assembly {
 
 process unicycler_longReads {
   publishDir outdir, mode: 'copy'
-  container 'fmalmeida/compgen:MPGAP'
+  container 'fmalmeida/mpgap'
   cpus threads
 
   input:
@@ -350,7 +350,7 @@ process unicycler_longReads {
 
 process flye_assembly {
   publishDir outdir, mode: 'copy'
-  container 'fmalmeida/compgen:MPGAP'
+  container 'fmalmeida/mpgap'
   cpus threads
 
   input:
@@ -402,7 +402,7 @@ if (params.fast5Path && params.lr_type == 'nanopore') {
 
 process nanopolish {
   publishDir "${outdir}/nanopolish_output", mode: 'copy'
-  container 'fmalmeida/compgen:MPGAP'
+  container 'fmalmeida/mpgap'
   cpus threads
 
   input:
@@ -454,7 +454,7 @@ bams =  (params.pacbio_all_bam_path) ? Channel.fromPath(params.pacbio_all_bam_pa
 
 process bax2bam {
   publishDir "${outdir}/subreads", mode: 'copy'
-  container 'fmalmeida/compgen:MPGAP'
+  container 'fmalmeida/mpgap'
   cpus threads
 
   input:
@@ -479,7 +479,7 @@ variantCaller_bams = Channel.empty().mix(pacbio_bams,bams).collect()
 
 process variantCaller {
   publishDir "${outdir}/lreadsOnly_pacbio_consensus", mode: 'copy'
-  container 'fmalmeida/compgen:MPGAP'
+  container 'fmalmeida/mpgap'
   cpus threads
 
   input:
@@ -541,7 +541,7 @@ spades_hybrid_lreads = (params.longreads && params.assembly_type == 'hybrid' && 
 // Assembly begin
 process spades_hybrid_assembly {
   publishDir outdir, mode: 'copy'
-  container 'fmalmeida/compgen:MPGAP'
+  container 'fmalmeida/mpgap'
   tag { x }
   cpus threads
 
@@ -601,7 +601,7 @@ unicycler_hybrid_lreads = (params.longreads && params.assembly_type == 'hybrid' 
 // Assembly begin
 process unicycler_hybrid_assembly {
   publishDir outdir, mode: 'copy'
-  container 'fmalmeida/compgen:MPGAP'
+  container 'fmalmeida/mpgap'
   tag { x }
   cpus threads
 
@@ -659,7 +659,7 @@ short_reads_spades_illumina_single = (params.shortreads_single && params.assembl
 // Assembly begin
 process spades_illumina_assembly {
   publishDir outdir, mode: 'copy'
-  container 'fmalmeida/compgen:MPGAP'
+  container 'fmalmeida/mpgap'
   tag { x }
   cpus threads
 
@@ -711,7 +711,7 @@ short_reads_unicycler_illumina_paired = (params.shortreads_paired && params.asse
 // Assembly begin
 process unicycler_illumina_assembly {
   publishDir outdir, mode: 'copy'
-  container 'fmalmeida/compgen:MPGAP'
+  container 'fmalmeida/mpgap'
   tag { x }
   cpus threads
 
@@ -782,7 +782,7 @@ short_reads_lreads_polish = (params.shortreads_paired) ? Channel.fromFilePairs( 
                                                        : Channel.value(['', '', ''])
 process illumina_polish_longreads_contigs {
   publishDir outdir, mode: 'copy'
-  container 'fmalmeida/compgen:MPGAP'
+  container 'fmalmeida/mpgap'
   cpus threads
 
   input:
@@ -837,7 +837,7 @@ short_reads_pilon_single = (params.shortreads_single) ?
 
 process pilon_polish {
   publishDir outdir, mode: 'copy'
-  container 'fmalmeida/compgen:MPGAP'
+  container 'fmalmeida/mpgap'
   cpus threads
 
   input:
@@ -899,7 +899,7 @@ long_reads_quast = (params.longreads) ? Channel.fromPath(params.longreads) : ''
 
 process quast {
   publishDir outdir, mode: 'copy'
-  container 'fmalmeida/compgen:MPGAP'
+  container 'fmalmeida/mpgap'
 
   input:
   each file(contigs) from final_assembly
