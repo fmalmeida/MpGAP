@@ -3,67 +3,86 @@
 CLI usage Examples
 ==================
 
-Illumina paired end reads.
-""""""""""""""""""""""""""
+Illumina-only assembly with paired end reads
+""""""""""""""""""""""""""""""""""""""""""""
 
 ::
 
-      ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir outputs/illumina_paired --run_shortreads_pipeline --shortreads
-      "illumina/SRR9847694_{1,2}.fastq.gz" --reads_size 2 --lighter_execute --lighter_genomeSize 4600000 --clip_r1 5 --three_prime_clip_r1 5
-      --clip_r2 5 --three_prime_clip_r2 5 --quality_trim 30 --flash_execute
+   ./nextflow run fmalmeida/MpGAP --threads 3 --outDir outputs/illumina_paired --prefix test --yaml ./additional.yaml --assembly_type
+   "illumina-only" --try_unicycler --try_spades --shortreads_paired "../illumina/SRR9847694_{1,2}.fastq.gz"
 
 .. note::
 
-  Since it will always be a pattern match, example "illumina/SRR9847694_{1,2}.fastq.gz", it MUST ALWAYS be double quoted as the example below.
+  This command will perform an illumina-only assembly using paired end reads with Unicycler and SPAdes assemblers.
+  Since fastq files will be found by a pattern match users MUST ALWAYS double quote as: Example "illumina/SRR9847694_{1,2}.fastq.gz"
 
-Illumina single end reads.
-""""""""""""""""""""""""""
+Illumina-only assembly with single end reads
+""""""""""""""""""""""""""""""""""""""""""""
 
 ::
 
-      ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/illumina_single --run_shortreads_pipeline
-      --shortreads "sample_dataset/illumina/SRR9696*.fastq.gz" --reads_size 1 --clip_r1 5 --three_prime_clip_r1 5
+  ./nextflow run fmalmeida/MpGAP --threads 3 --outDir outputs/illumina_single --prefix test --yaml ./additional.yaml --assembly_type
+  "illumina-only" --try_unicycler --try_spades --shortreads_single "../illumina/SRR9696*.fastq.gz"
 
 .. note::
 
-  Multiple files at once, using fixed number of bases to be trimmed. If multiple unpaired reads are given as input at once, pattern MUST be double quoted: "SRR9696*.fastq.gz"
+  This command will perform an illumina-only assembly using unpaired reads with Unicycler and SPAdes assemblers.
+  Since fastq files will be found by a pattern match users MUST ALWAYS double quote as: Example "SRR9696*.fastq.gz"
 
-ONT reads (fastq)
-"""""""""""""""""
-
-::
-
-  ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/ont --run_longreads_pipeline --lreads_type nanopore
-  --longReads sample_dataset/ont/kpneumoniae_25X.fastq --nanopore_prefix kpneumoniae_25X
-
-Pacbio basecalled (.fastq) reads with nextflow general report
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Long reads only with ONT reads
+""""""""""""""""""""""""""""""
 
 ::
 
-  ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/pacbio_from_fastq --run_longreads_pipeline --lreads_type pacbio
-  --longReads sample_dataset/pacbio/m140905_042212_sidney_c100564852550000001823085912221377_s1_X0.subreads.fastq -with-report
+  ./nextflow run fmalmeida/MpGAP --threads 3 --outDir sample_dataset/outputs/ont --assembly_type "longreads-only" --lr_type nanopore
+  --longreads sample_dataset/ont/kpneumoniae_25X.fastq --genomeSize "5.6m" --try_canu --try_flye --try_unicycler
 
-Pacbio raw (subreads.bam) reads
-"""""""""""""""""""""""""""""""
+.. note::
 
-::
+  This will perform a long reads only assembly using nanopore data with Canu, Flye and Unicycler assemblers. This will note execute nanopolish
+  polishing step nor a polishing with Illumina data.
 
-  ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/pacbio --run_longreads_pipeline --lreads_type pacbio
-  --pacbio_bamPath sample_dataset/pacbio/m140905_042212_sidney_c100564852550000001823085912221377_s1_X0.subreads.bam
-
-Pacbio raw (legacy .bas.h5 to subreads.bam) reads
-"""""""""""""""""""""""""""""""""""""""""""""""""
+Long reads only with ONT reads. With polishing (USING FAST5 data).
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 ::
 
-  ./nextflow run fmalmeida/ngs-preprocess --threads 3 --outDir sample_dataset/outputs/pacbio --run_longreads_pipeline --lreads_type pacbio
-  --pacbio_h5Path sample_dataset/pacbio/m140912_020930_00114_c100702482550000001823141103261590_s1_p0.1.bas.h5
+  ./nextflow run fmalmeida/MpGAP --threads 3 --outDir sample_dataset/outputs/ont --assembly_type "longreads-only" --lr_type nanopore
+  --longreads sample_dataset/ont/kpneumoniae_25X.fastq  --fast5Path ./fast5_pass --genomeSize "5.6m" --try_canu --try_flye --try_unicycler
 
+.. note::
+
+  This will perform a long reads only assembly using nanopore data with Canu, Flye and Unicycler assemblers. This will note execute a
+  polishing step with Illumina data.
+
+Long reads only with ONT reads. With polishing using both FAST5 and Illumina data (paired end).
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+::
+
+  ./nextflow run fmalmeida/MpGAP --threads 3 --outDir sample_dataset/outputs/ont --assembly_type "longreads-only" --lr_type nanopore
+  --longreads sample_dataset/ont/kpneumoniae_25X.fastq  --fast5Path ./fast5_pass --try_canu --try_flye --try_unicycler --genomeSize "5.6m"
+  --shortreads_paired "../illumina/SRR9847694_{1,2}.fastq.gz" --illumina_polish_longreads_contigs
+
+.. note::
+
+  This will perform a long reads only assembly using nanopore data with Canu, Flye and Unicycler assemblers. In the end, it will polish the
+  assembly first with FAST5 data then with Illumina data.
+
+Assembly in Hybrid mode with Unicycler. Using Pacbio reads.
+
+::
+
+  ./nextflow run fmalmeida/MpGAP --threads 3 --outDir sample_dataset/output --assembly_type "hybrid" --lr_type pacbio
+  --longreads sample_dataset/ont/ecoli_25X.fastq --shortreads_paired "../illumina/SRR9847694_{1,2}.fastq.gz" --try_unicycler
+
+.. note::
+
+  This command will execute a hybrid assembly directly through Unicycler's hybrid assembly mode.
 
 Running with a configuration file
 """""""""""""""""""""""""""""""""
 
 ::
 
-      ./nextflow run fmalmeida/ngs-preprocess -c nextflow.config
+      ./nextflow run fmalmeida/MpGAP -c nextflow.config

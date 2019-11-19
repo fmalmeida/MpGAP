@@ -5,7 +5,9 @@ MpGAP
 
 `ngs-preprocess <https://github.com/fmalmeida/ngs-preprocess>`_ is a pipeline developed with `Nextflow <https://www.nextflow.io/docs/latest/index.html>`_
 and `Docker <https://www.docker.com/>`_. It was designed to provide an easy-to-use framework for genome assembly of Illumina, Pacbio and Oxford Nanopore
-sequencing data through illumina only, long reads only or hybrid modes It wraps up the following tools:
+sequencing data through illumina only, long reads only or hybrid modes.
+
+It wraps up the following tools:
 
 * `Canu <https://github.com/marbl/canu>`_
 * `Flye <https://github.com/fenderglass/Flye>`_

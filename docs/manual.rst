@@ -8,6 +8,8 @@ Overview
 
 An overview of all annotation steps automatically taken by the pipeline.
 
+Insert image ...
+
 
 Input
 """""
@@ -23,17 +25,17 @@ Input
 
 .. tip::
 
-  Users must choose between a pipeline for short reads or for long reads using one
-  of the following parameters: ``--run_shortreads_pipeline`` or ``--run_longreads_pipeline``
-
-  The pipeline only runs either long or short reads workflows at once.
+  Hybrid assemblies can be achieved with Unicycler hybrid mode, by giving long and
+  short reads or, by polishing an long reads only assembly. For this, users will have
+  to set ``assembly_type = 'longreads-only'``, set path to Illumina reads and use the
+  ``illumina_polish_longreads_contigs`` parameter.
 
 Usage example
 """""""""""""
 
 ::
 
-   nextflow run fmalmeida/ngs-preprocess [OPTIONS]
+   nextflow run fmalmeida/MpGAP [OPTIONS]
 
 .. list-table::
    :widths: 20 10 20 50
@@ -54,101 +56,86 @@ Usage example
      - 2
      - Number of threads to use
 
-   * - ``--run_shortreads_pipeline``
+   * - ``--prefix``
      - Y
-     - False
-     - Tells the pipeline to run the short reads pre-processing workflow
+     - NA
+     - Prefix for output files
 
-   * - ``--run_longreads_pipeline``
+   * - ``--yaml``
+     - N
+     - NA
+     - Path to yaml file containing assemblers additional parameters
+
+   * - ``--assembly_type``
      - Y
-     - False
-     - Tells the pipeline to run the long reads pre-processing workflow
-
-   * - ``--shortreads``
-     - Y (if ``--run_shortreads_pipeline``)
      - NA
-     - String Pattern to find short reads. Example: "SRR6307304_{1,2}.fastq"
+     - Selects assembly mode: hybrid; illumina-only; longreads-only
 
-   * - ``--reads_size``
-     - Y (if ``--run_shortreads_pipeline``)
-     - NA
-     - Tells wheter input is unpaired or paired end. 1 is unpaired. 2 is paired
-
-   * - ``--clip_r1``
-     - N
-     - 0
-     - Number of bases to always remove from 5' of read pair 1 or from unpaired read.
-
-   * - ``--clip_r2``
-     - N
-     - 0
-     - Number of bases to always remove from 5' of read pair 2.
-
-   * - ``--three_prime_clip_r1``
-     - Y (if ``--run_shortreads_pipeline``)
-     - 0
-     - Number of bases to always remove from 3' of read pair 1 or from unpaired read
-
-   * - ``--three_prime_clip_r2``
-     - Y (if ``--run_shortreads_pipeline``)
-     - 0
-     - Number of bases to always remove from 3' of read pair 2.
-
-   * - ``--quality_trim``
-     - N
-     - 20
-     - Phred quality threshold for trimming.
-
-   * - ``--lighter_execute``
+   * - ``--try_canu``
      - N
      - False
-     - Tells wheter to run or not Lighter correction tool
+     - Try to assemble data with Canu
 
-   * - ``--lighter_kmer``
-     - Y (If ``--lighter_execute``)
-     - 21
-     - Lighter k-mer to use in correction step.
-
-   * - ``--lighter_genomeSize``
-     - Y (If ``--lighter_execute``)
-     - NA
-     - Approximate genome size
-
-   * - ``--lighter_alpha``
-     - N
-     - NA
-     - Lighter sample rate alpha parameter. If empty, Lighter will automatically calculate its value.
-
-   * - ``--flash_execute``
+   * - ``--try_unicycler``
      - N
      - False
-     - If set, PEAR will be executed to merge paired end reads
+     - Try to assemble data with Unicycler
 
-   * - ``--longReads``
-     - Y (If ``--run_longreads_pipeline``)
-     - NA
-     - Sets path to long reads fastq files (Nanopore or Pacbio). Pre-processes basecalled long reads.
-
-   * - ``--lreads_type``
-     - Y (If ``--run_longreads_pipeline``)
-     - NA
-     - Tells wheter your input is nanopore or pacbio data. Possibilities: pacbio | nanopore
-
-   * - ``--lreads_is_barcoded``
+   * - ``--try_flye``
      - N
      - False
-     - Tells wheter your data (Nanopore or Pacbio) is barcoded or not. It will split barcodes into single files. Users with legacy pacbio data need to first produce a new barcoded_subreads.bam file.
+     - Try to assemble data with Flye
 
-   * - ``--pacbio_bamPath``
-     - Y (If input is pacbio .bam)
+   * - ``--try_spades``
+     - N
+     - False
+     - Try to assemble data with SPAdes
+
+   * - ``--shortreads_paired``
+     - (if assembly mode is hybrid or illumina-only)
      - NA
-     - Path to Pacbio subreads.bam. Only used if user wants to basecall subreads.bam to FASTQ. Always keep subreads.bam and its relative subreads.bam.pbi files in the same directory
+     - Path to Illumina paired end reads
 
-   * - ``--pacbio_h5Path``
-     - Y (If input is legacy pacbio)
+   * - ``--shortreads_single``
+     - (if assembly mode is hybrid or illumina-only)
      - NA
-     - Path to legacy .bas.h5 data. It will be used to extract reads in FASTQ file. All related .bas.h5 and .bax.h5 files MUST be in the SAME dir.
+     - Path to Illumina unpaired reads
 
+   * - ``--ref_genome``
+     - N (Only used by SPAdes to guide assembly)
+     - NA
+     - Path to reference genome
+
+   * - ``--longreads``
+     - (if assembly mode is hybrid or longreads-only)
+     - NA
+     - Path to long reads file
+
+   * - ``--lr_type``
+     - (if assembly mode is hybrid or longreads-only)
+     - nanopore
+     - Tells whether input longreads are: pacbio or nanopore
+
+   * - ``--fast5Path``
+     - N
+     - NA
+     - Sets path to dir containing FAST5 data for nanopolish step
+
+   * - ``--pacbio_all_bam_path``
+     - N
+     - NA
+     - Sets path to Pacbio .bam subreads file (files .bai mus be in the same directory)
+
+   * - ``--genomeSize``
+     - (If ``--try_canu`` or ``--try_flye``)
+     - NA
+     - Sets expected genome size
+
+   * - ``--illumina_polish_longreads_contigs``
+     - N
+     - False
+     - Tells the pipeline to polish a long reads only assembly using short reads data. (A type of hybrid method).
+     For that, users have to set path to Illumina reads through ``--shortreads_paired`` or ``--shortreads_single``.
 
 All this parameters are configurable through a configuration file. We encourage users to use the configuration
 file since it will keep your execution cleaner and more readable. See a :ref:`config` example.

@@ -18,11 +18,11 @@ This pipeline requires only `Docker <https://www.docker.com/>`_ (and its Docker 
 
 3. Download the pipeline
 
-    ``./nextflow pull fmalmeida/ngs-preprocess``
+    ``./nextflow pull fmalmeida/MpGAP``
 
 4. Test your installation
 
-    ``./nextflow run fmalmeida/ngs-preprocess --help``
+    ``./nextflow run fmalmeida/MpGAP --help``
 
 5. Download required Docker images
 
