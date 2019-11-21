@@ -259,6 +259,30 @@ additionalParameters['Flye'] = ""
 }
 
 /*
+ * Header log info
+ */
+log.info "========================================="
+log.info "     Docker-based assembly Pipeline      "
+log.info "========================================="
+def summary = [:]
+summary['Long Reads']   = params.longreads
+summary['Fast5 files dir']   = params.fast5Path
+summary['Long Reads']   = params.longreads
+summary['Short single end reads']   = params.shortreads_single
+summary['Short paired end reads']   = params.shortreads_paired
+summary['Fasta Ref']    = params.ref_genome
+summary['Output dir']   = params.outDir
+summary['Assembly assembly_type chosen'] = params.assembly_type
+summary['Long read sequencing technology'] = params.lr_type
+if(workflow.revision) summary['Pipeline Release'] = workflow.revision
+summary['Current home']   = "$HOME"
+summary['Current user']   = "$USER"
+summary['Current path']   = "$PWD"
+summary['Command used']   = "$workflow.commandLine"
+log.info summary.collect { k,v -> "${k.padRight(15)}: $v" }.join("\n")
+log.info "========================================="
+
+/*
 
                   PIPELINE BEGINS - Long Reads Only Assembly
 
@@ -984,27 +1008,3 @@ workflow.onComplete {
     println "Execution status: ${ workflow.success ? 'OK' : 'failed' }"
     println "Execution duration: $workflow.duration"
 }
-
-/*
- * Header log info
- */
-log.info "========================================="
-log.info "     Docker-based assembly Pipeline      "
-log.info "========================================="
-def summary = [:]
-summary['Long Reads']   = params.longreads
-summary['Fast5 files dir']   = params.fast5Path
-summary['Long Reads']   = params.longreads
-summary['Short single end reads']   = params.shortreads_single
-summary['Short paired end reads']   = params.shortreads_paired
-summary['Fasta Ref']    = params.ref_genome
-summary['Output dir']   = params.outDir
-summary['Assembly assembly_type chosen'] = params.assembly_type
-summary['Long read sequencing technology'] = params.lr_type
-if(workflow.revision) summary['Pipeline Release'] = workflow.revision
-summary['Current home']   = "$HOME"
-summary['Current user']   = "$USER"
-summary['Current path']   = "$PWD"
-summary['Command used']   = "$workflow.commandLine"
-log.info summary.collect { k,v -> "${k.padRight(15)}: $v" }.join("\n")
-log.info "========================================="
