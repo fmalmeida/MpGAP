@@ -33,9 +33,9 @@ RUN git clone --recursive https://github.com/isovic/racon.git racon && \
 RUN conda install -y -c bioconda pilon
 
 # Set Canu assembler
-RUN git clone https://github.com/marbl/canu.git && \
-	cd /work/canu/src && make && \
-	ln -rs /work/canu/Linux-amd64/bin/canu /usr/local/bin/canu
+RUN wget https://github.com/marbl/canu/releases/download/v1.9/canu-1.9.Linux-amd64.tar.xz && \
+tar -xJf canu-1.9.*.tar.xz && \
+ln -rs canu-1.9/*/bin/* /usr/local/bin
 
 # Set SPAdes assembler
 RUN conda install -y -c bioconda spades
