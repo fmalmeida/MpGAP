@@ -63,7 +63,7 @@ RUN apt-get install -y mummer && \
 	chmod a+x /miniconda/bin/*
 
 # Set Nanopolish
-RUN apt-get install -y libhdf5-dev && \
+RUN apt-get install -y libhdf5-dev parallel && \
        conda config --add channels defaults && \
        conda config --add channels conda-forge && \
        conda config --add channels bioconda && \

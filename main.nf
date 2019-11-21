@@ -289,15 +289,15 @@ log.info "========================================="
 */
 
 // Loading long reads files
-canu_lreads = (params.longreads && (params.try_canu) && params.assembly_type == 'longreads-only') ?
+canu_lreads = (params.longreads && (params.try_canu) && (params.assembly_type == 'longreads-only' || (assembly_type == 'hybrid' && params.illumina_polish_longreads_contigs)) ) ?
               file(params.longreads) : Channel.empty()
-unicycler_lreads = (params.longreads && (params.try_unicycler) && params.assembly_type == 'longreads-only') ?
+unicycler_lreads = (params.longreads && (params.try_unicycler) && (params.assembly_type == 'longreads-only' || (assembly_type == 'hybrid' && params.illumina_polish_longreads_contigs)) ) ?
                    file(params.longreads) : Channel.empty()
-flye_lreads = (params.longreads && (params.try_flye) && params.assembly_type == 'longreads-only') ?
+flye_lreads = (params.longreads && (params.try_flye) && (params.assembly_type == 'longreads-only' || (assembly_type == 'hybrid' && params.illumina_polish_longreads_contigs)) ) ?
                    file(params.longreads) : Channel.empty()
 
 // Check if fast5 dir path is set
-if (params.fast5Path && params.assembly_type == 'longreads-only') {
+if (params.fast5Path && (params.assembly_type == 'longreads-only' || (assembly_type == 'hybrid' && params.illumina_polish_longreads_contigs)) ) {
   fast5 = Channel.fromPath( params.fast5Path )
   nanopolish_lreads = file(params.longreads)
   fast5_dir = Channel.fromPath( params.fast5Path, type: 'dir' )
@@ -325,7 +325,7 @@ process canu_assembly {
   file("${lreads_outdir}/canu_${lrID}/*.contigs.fasta") into canu_contigs
 
   when:
-  (params.try_canu) && assembly_type == 'longreads-only'
+  (params.try_canu) && assembly_type == 'longreads-only' || (params.try_canu && assembly_type == 'hybrid' && params.illumina_polish_longreads_contigs)
 
   script:
   lr = (params.lr_type == 'nanopore') ? '-nanopore-raw' : '-pacbio-raw'
@@ -386,7 +386,7 @@ process flye_assembly {
   file("${lreads_outdir}/flye_${lrID}/assembly_flye.fasta") into flye_contigs
 
   when:
-  (params.try_flye) && assembly_type == 'longreads-only'
+  (params.try_flye && assembly_type == 'longreads-only') || (params.try_flye && assembly_type == 'hybrid' && params.illumina_polish_longreads_contigs)
 
   script:
   lr = (params.lr_type == 'nanopore') ? '--nano-raw' : '--pacbio-raw'
@@ -439,7 +439,7 @@ process nanopolish {
   file("${prefix}_${assembler}_nanopolished.fa") into nanopolished_contigs
 
   when:
-  assembly_type == 'longreads-only' && (params.fast5Path)
+  (assembly_type == 'longreads-only' && params.fast5Path) || (assembly_type == 'hybrid' && params.illumina_polish_longreads_contigs && params.fast5Path)
 
   script:
   // Check assembler used
@@ -772,7 +772,7 @@ process unicycler_illumina_assembly {
 }
 
 /*
- * STEP 2 - ASSEMBLY POLISHING
+ *                                              STEP 2 - ASSEMBLY POLISHING
  */
 
 /*
@@ -787,12 +787,15 @@ process unicycler_illumina_assembly {
 // You have already polished your genome with VariantCaller
 if (params.pacbio_all_baxh5_path && (params.shortreads_paired) && params.illumina_polish_longreads_contigs == true) {
  Channel.empty().mix(variant_caller_contigs).set { unicycler_polish }
+
 // You have already polished your genome with Nanopolish
 } else if (params.fast5Path && (params.shortreads_paired) && params.illumina_polish_longreads_contigs == true) {
  Channel.empty().mix(nanopolished_contigs).set { unicycler_polish }
+
 // You have not polished your genome whatsoever but want to polish it with short reads
 } else if (params.pacbio_all_baxh5_path == '' && params.fast5Path == '' && (params.shortreads_paired) && params.illumina_polish_longreads_contigs == true) {
  Channel.empty().mix(flye_contigs, canu_contigs, unicycler_longreads_contigs).set { unicycler_polish }
+
 // You have not polished your genome whatsoever and don't want to polish it with short reads
 } else if (params.pacbio_all_baxh5_path == '' && params.fast5Path == '' && (params.shortreads_paired) && params.illumina_polish_longreads_contigs == false) {
  Channel.empty().set { unicycler_polish }
