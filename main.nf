@@ -284,7 +284,7 @@ log.info "========================================="
 
 /*
 
-                  PIPELINE BEGINS - Long Reads Only Assembly
+                                                                PIPELINE BEGINS - Long Reads Only Assembly
 
 */
 
@@ -355,7 +355,7 @@ process unicycler_longReads {
   file("${lreads_outdir}/unicycler_${lrID}/assembly.fasta") into unicycler_longreads_contigs
 
   when:
-  (params.try_unicycler) && assembly_type == 'longreads-only'
+  (params.try_unicycler && assembly_type == 'longreads-only') || (params.try_unicycler && assembly_type == 'hybrid' && params.illumina_polish_longreads_contigs)
 
   script:
   lrID = lreads.getSimpleName()
@@ -537,7 +537,6 @@ process variantCaller {
   arrow -j ${params.threads} --referenceFilename ${draft} -o ${prefix}_${assembler}_pbconsensus.fasta \
   -o ${prefix}_${assembler}_pbvariants.gff pacbio_merged.bam
   """
-
 }
 
 /*
