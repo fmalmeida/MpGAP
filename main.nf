@@ -99,7 +99,7 @@ params.help = false
  // Show help emssage
  if (params.help){
    helpMessage()
-   file('work').deleteDir()
+   //file('work').deleteDir()
    exit 0
 }
 
@@ -111,6 +111,55 @@ params.show = false
  if (params.show){
    exampleMessage()
    exit 0
+}
+
+/*
+          Download configuration file, if necessary.
+*/
+params.get_hybrid_config = false
+if (params.get_hybrid_config) {
+  new File("hybrid.config") << new URL ("https://github.com/fmalmeida/MpGAP/raw/master/configuration_example/hybrid.config").getText()
+  println ""
+  println "hybrid.config file saved in working directory"
+  println "After configuration, run:"
+  println "nextflow run fmalmeida/NGS-preprocess -c ./hybrid.config"
+  println "Nice code!\n"
+
+  exit 0
+}
+params.get_lreads_config = false
+if (params.get_lreads_config) {
+  new File("lreads-only.config") << new URL ("https://github.com/fmalmeida/MpGAP/raw/master/configuration_example/lreads.config").getText()
+  println ""
+  println "lreads.config file saved in working directory"
+  println "After configuration, run:"
+  println "nextflow run fmalmeida/NGS-preprocess -c ./lreads.config"
+  println "Nice code!\n"
+
+  exit 0
+}
+params.get_sreads_config = false
+if (params.get_sreads_config) {
+  new File("sreads-only.config") << new URL ("https://github.com/fmalmeida/MpGAP/raw/master/configuration_example/sreads.config").getText()
+  println ""
+  println "sreads.config file saved in working directory"
+  println "After configuration, run:"
+  println "nextflow run fmalmeida/NGS-preprocess -c ./sreads.config"
+  println "Nice code!\n"
+
+  exit 0
+}
+
+params.get_yaml = false
+if ( params.get_yaml ) {
+  new File("additional_parameters.yaml") << new URL ("https://github.com/fmalmeida/MpGAP/raw/master/additional_parameters.yaml").getText()
+  println ""
+  println "additional_parameters.yaml file saved in working directory"
+  println "After configuration, run:"
+  println "nextflow run fmalmeida/NGS-preprocess -c ./*.config"
+  println "Nice code!\n"
+
+  exit 0
 }
 
 /*
@@ -155,55 +204,6 @@ threads = params.threads
 genomeSize = params.genomeSize
 assembly_type = params.assembly_type.toLowerCase()
 ref_genome = (params.ref_genome) ? file(params.ref_genome) : ''
-
-/*
-          Download configuration file, if necessary.
-*/
-params.get_hybrid_config = false
-if (params.get_hybrid_config) {
-  new File("hybrid.config") << new URL ("https://github.com/fmalmeida/MpGAP/raw/master/configuration_example/hybrid.config").getText()
-  println ""
-  println "hybrid.config file saved in working directory"
-  println "After configuration, run:"
-  println "nextflow run fmalmeida/NGS-preprocess -c ./hybrid.config"
-  println "Nice code!\n"
-
-  exit 0
-}
-params.get_lreads_config = false
-if (params.get_lreads_config) {
-  new File("lreads.config") << new URL ("https://github.com/fmalmeida/MpGAP/raw/master/configuration_example/lreads.config").getText()
-  println ""
-  println "lreads.config file saved in working directory"
-  println "After configuration, run:"
-  println "nextflow run fmalmeida/NGS-preprocess -c ./lreads.config"
-  println "Nice code!\n"
-
-  exit 0
-}
-params.get_sreads_config = false
-if (params.get_sreads_config) {
-  new File("sreads.config") << new URL ("https://github.com/fmalmeida/MpGAP/raw/master/configuration_example/sreads.config").getText()
-  println ""
-  println "sreads.config file saved in working directory"
-  println "After configuration, run:"
-  println "nextflow run fmalmeida/NGS-preprocess -c ./sreads.config"
-  println "Nice code!\n"
-
-  exit 0
-}
-
-params.get_yaml = false
-if ( params.get_yaml ) {
-  new File("additional_parameters.yaml") << new URL ("https://github.com/fmalmeida/MpGAP/raw/master/additional_parameters.yaml").getText()
-  println ""
-  println "additional_parameters.yaml file saved in working directory"
-  println "After configuration, run:"
-  println "nextflow run fmalmeida/NGS-preprocess -c ./*.config"
-  println "Nice code!\n"
-
-  exit 0
-}
 
 /*
 

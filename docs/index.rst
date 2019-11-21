@@ -1,7 +1,7 @@
 .. _index:
 
 MpGAP
-==============
+*****
 
 `ngs-preprocess <https://github.com/fmalmeida/ngs-preprocess>`_ is a pipeline developed with `Nextflow <https://www.nextflow.io/docs/latest/index.html>`_
 and `Docker <https://www.docker.com/>`_. It was designed to provide an easy-to-use framework for genome assembly of Illumina, Pacbio and Oxford Nanopore
@@ -22,6 +22,7 @@ It wraps up the following tools:
    :hidden:
 
    installation
+   quickstart
    manual
    config
    examples

@@ -1,7 +1,7 @@
 .. _config:
 
 Configuration File
-""""""""""""""""""
+******************
 
 To download a configuration file template users just need to run ``nextflow run fmalmeida/MpGAP [--get_hybrid_config] [--get_lreads_config] [--get_sreads_config] [--get_yaml]``
 
@@ -10,6 +10,7 @@ Using a config file your code is lot more clean and concise: ``nextflow run fmal
 Check out some `templates <https://github.com/fmalmeida/MpGAP/tree/master/configuration_example>`_.
 
 Example of Hybrid assembly config file:
+"""""""""""""""""""""""""""""""""""""""
 
 .. code-block:: groovy
 

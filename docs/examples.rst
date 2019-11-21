@@ -1,7 +1,7 @@
 .. _examples:
 
 CLI usage Examples
-==================
+******************
 
 Illumina-only assembly with paired end reads
 """"""""""""""""""""""""""""""""""""""""""""
