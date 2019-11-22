@@ -796,7 +796,7 @@ if (params.pacbio_all_baxh5_path && (params.shortreads_paired) && params.illumin
  Channel.empty().mix(flye_contigs, canu_contigs, unicycler_longreads_contigs).set { unicycler_polish }
 
 // You have not polished your genome whatsoever and don't want to polish it with short reads
-} else if (params.pacbio_all_baxh5_path == '' && params.fast5Path == '' && (params.shortreads_paired) && params.illumina_polish_longreads_contigs == false) {
+} else if (params.pacbio_all_baxh5_path == '' && params.fast5Path == '' && params.illumina_polish_longreads_contigs == false) {
  Channel.empty().set { unicycler_polish }
  Channel.empty().mix(flye_contigs, canu_contigs, unicycler_longreads_contigs).set { lreads_contigs }
 } else {
