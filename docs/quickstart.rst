@@ -6,119 +6,69 @@ Quickstart
 Overview
 --------
 
-We provide users a few test cases for evaluating the pipeline's commands and workflow.
-We've made available two datasets:
+During this quickstart we will use two example datasets. These datasets must be downloaded and pre-processed as
+shown in my `ngs-preprocess pipeline quickstart <https://ngs-preprocess.readthedocs.io/en/latest/quickstart.html>`_.
 
-* `Dataset 1 <https://drive.google.com/file/d/1xm3R97HXcfhsjSyhoTnvbA8HDK4Ij8ws/view?usp=sharing>`_.
+After getting the data as already discussed in the links, you might be able to follow up this quickstart on
+assembling genomes with `MpGAP`.
 
-    * Oxford Nanopore data (FAST5 and FASTQ);
-    * Illumina paired end reads;
+Assembling Oxford Nanopore reads
+--------------------------------
 
-* `Dataset 2 <https://drive.google.com/file/d/1JmBPucItax7t2lH1XpqPxkdX9e7JLR6E/view?usp=sharing>`_
+Oxford nanopore reads are present in the `example dataset 1 <https://ngs-preprocess.readthedocs.io/en/latest/quickstart.html#id2>`_.
 
-    * Pacbio data (subreads.bam);
-    * Illumina paired end reads;
+Users can assemble this dataset in two ways:
 
-Getting the data
-================
-
-Users can directly download data through the link given or by this command line method below.
-
-Add to your ``bashrc`` or ``bash_aliases``
-""""""""""""""""""""""""""""""""""""""""""
-
-.. code-block:: bash
-
-  function gdrive_download () {
-  CONFIRM=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate \
-  "https://docs.google.com/uc?export=download&id=$1" -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')
-  wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$CONFIRM&id=$1" -O $2
-  rm -rf /tmp/cookies.txt
-  }
+1. Through CLI parameterization
+2. Or by a configuration file
 
 .. tip::
 
-  The function is used as: ``gdrive_download [gdrive id] [output name]``
+  The best way to execute the pipeline is by using its configuration files.
+  Users then must properly configure the file and then run the pipeline.
 
-Then, you can download the datasets as follows:
-
-* **Dataset 1**
-
-    * ``gdrive_download 1xm3R97HXcfhsjSyhoTnvbA8HDK4Ij8ws dataset_1.tar.gz``
-
-* **Dataset 2**
-
-    * ``gdrive_download 1JmBPucItax7t2lH1XpqPxkdX9e7JLR6E dataset_2.tar.gz``
-
-Preprocessing the data
-----------------------
-
-Dataset 1
-=========
-
-After downloaded. the dataset shall be available as ``dataset_1`` directory. The first step, right after installing
-the pipeline and downloading the docker image is to download the configuration file templates.
-
-Download config files
-"""""""""""""""""""""
-
-.. code-block:: bash
-
-  ## Get configuration for illumina data
-  nextflow run fmalmeida/ngs-preprocess --get_illumina_config && mv illumina_data.config 01_illumina_data.config
-
-  ## Get configuration for nanopore data
-  nextflow run fmalmeida/ngs-preprocess --get_ont_config && mv ont_data.config 01_ont_data.config
-
-After properly configuration of the files, they might look as this:
-
-* `01_illumina_data.config <https://drive.google.com/file/d/1misoPDB66ai2J9cKhEyUKSO--H-933xv/view?usp=sharing>`_
-* `01_ont_data.config <https://drive.google.com/file/d/16A3Uc6Ixqj-jYniSXPOSwNNzthKL3Ucz/view?usp=sharing>`_
-
-Running the pipeline
+Prepare your folders
 """"""""""""""""""""
 
 .. code-block:: bash
 
-  ## Run for illumina
-  nextflow run fmalmeida/ngs-preprocess -c 01_illumina_data.config &> 01_illumina_preprocess.log
+  # Create dir for all assemblies
+  mkdir -p dataset_1/assemblies
 
-  ## Run for nanopore
-  nextflow run fmalmeida/ngs-preprocess -c 01_ont_data.config &> 01_ont_preprocess.log
-
-Outputs will be at ``dataset_1/preprocessed``
-
-Dataset 2
-=========
-
-After downloaded. the dataset shall be available as ``dataset_2`` directory. The first step, right after installing
-the pipeline and downloading the docker image is to download the configuration file templates.
-
-Download config files
-"""""""""""""""""""""
+Through CLI parameterization
+""""""""""""""""""""""""""""
 
 .. code-block:: bash
 
-  ## Get configuration for illumina data
-  nextflow run fmalmeida/ngs-preprocess --get_illumina_config && mv illumina_data.config 02_illumina_data.config
+  nextflow run main_mpgap.nf --longreads 'dataset_1/preprocessed/ont_reads_trimmed.fastq' --lr_type 'nanopore' \
+  --assembly_type 'longreads-only' --try_canu --try_flye --try_unicycler --genomeSize '3m' \
+  --outDir 'dataset_1/assemblies/longreads-only' --prefix 'data1' --threads 4
 
-  ## Get configuration for pacbio data
-  nextflow run fmalmeida/ngs-preprocess --get_pacbio_config && mv pacbio_data.config 02_pacbio_data.config
+.. tip::
 
-After properly configuration of the files, they might look as this:
+  To perform a polishing step with Nanopolish one just need to add `--fast5Path 'dataset_1/ont/fast5_pass/'` to the execution
 
-* `02_illumina_data.config <https://drive.google.com/file/d/17_lipuPHWOHUKj9TcW9ouDUpuzb7h3gQ/view?usp=sharing>`_
-* `02_pacbio_data.config <https://drive.google.com/file/d/1gEsZ5KglbW-uYpYHnBrKIX7V5oTcMQuO/view?usp=sharing>`_
-
-Running the pipeline
-""""""""""""""""""""
+Via configuration file
+""""""""""""""""""""""
 
 .. code-block:: bash
 
-  ## Run for illumina
-  nextflow run fmalmeida/ngs-preprocess -c 02_illumina_data.config &> 02_illumina_preprocess.log
+  # Downloads the configuration file
+  nextflow run fmalmeida/MpGAP --get_lreads_config && mv lreads-only.config 01_lreads-only.config
 
-  ## Run for pacbio (we will use subreads.bam as input)
-  nextflow run fmalmeida/ngs-preprocess -c 02_pacbio_data.config &> 02_pacbio_preprocess.log
+  # Then you have to fill it in the parameters
 
-Outputs will be at ``dataset_2/preprocessed``
+  # Then execute the pipeline
+  nextflow run fmalmeida/MpGAP -c 01_lreads-only.config &> 01_lreads-only_assembly.log
+
+We have made 01_lreads-only.config file
+`available online <https://drive.google.com/file/d/16A3Uc6Ixqj-jYniSXPOSwNNzthKL3Ucz/view?usp=sharing>`_ for a better understanding.
+
+Assembling Pacbio reads
+-----------------------
+
+Assembling Illumina reads
+-------------------------
+
+Assembling Hybrid datasets
+--------------------------
