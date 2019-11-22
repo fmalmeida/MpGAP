@@ -62,7 +62,7 @@ Via configuration file
   nextflow run fmalmeida/MpGAP -c 01_lreads-only.config &> 01_lreads-only_assembly.log
 
 We have made **01_lreads-only.config** file
-`available online <https://drive.google.com/file/d/16A3Uc6Ixqj-jYniSXPOSwNNzthKL3Ucz/view?usp=sharing>`_ for a better understanding.
+`available online <https://drive.google.com/file/d/14y0q0hjyKgl5tbafBHNQDhgf9581OIvR/view?usp=sharing>`_ for a better understanding.
 
 Assembling Pacbio reads
 -----------------------
