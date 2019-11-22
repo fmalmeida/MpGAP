@@ -84,7 +84,7 @@ RUN rm -rf /var/lib/apt/lists/*  && \
 	apt-get clean && apt-get update && apt-get upgrade -y && \
 	DEBIAN_FRONTEND=noninteractive apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y hmmer unzip zlib1g-dev pkg-config libfreetype6-dev libpng-dev python-matplotlib && \
 	got clone https://github.com/ablab/quast.git && \
-	cd quast && ./setup.py install_full &&
+	cd quast && ./setup.py install_full && \
 	apt-get update && apt-get install -y bwa
 
 # Set WorkDir
