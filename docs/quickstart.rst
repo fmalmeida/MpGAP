@@ -65,6 +65,39 @@ We have made **01_lreads-only.config** file
 Assembling Pacbio reads
 -----------------------
 
+Pacbio reads can be found in `example dataset 2 <https://ngs-preprocess.readthedocs.io/en/latest/quickstart.html#id3>`_.
+If you have not followed my previous quickstart in `ngs-preprocess pipeline <https://ngs-preprocess.readthedocs.io/en/latest/>`_
+you will only have subreads.*.bam.
+
+Via CLI parameterization
+""""""""""""""""""""""""
+
+.. code-block:: bash
+
+  # Assembling via CLI
+  nextflow run fmalmeida/MpGAP --longreads 'dataset_2/preprocessed/all_reads.fastq' --assembly_type 'longreads-only' \
+  --pacbio_all_bam_path 'dataset_2/pacbio/subreads/subreads_subset*.bam' --genomeSize '2m' --lr_type 'pacbio' \
+  --try_unicycler --try_flye --outDir 'dataset_2/assemblies/longreads_only' --prefix 'data2' --threads 4
+
+.. tip::
+
+  The parameter `--pacbio_all_bam_path` will tell the pipeline to run `Arrow` to polish pacbio-only assemblies.
+
+Via configuration file
+""""""""""""""""""""""
+
+.. code-block:: bash
+
+  # Get longreads only config template
+  nextflow run fmalmeida/MpGAP --get_lreads_config && mv lreads-only.config 01_lreads-only-pacbio.config
+
+  # Then execute the pipeline
+  nextflow run fmalmeida/MpGAP -c 01_lreads-only-pacbio.config &> 01_lreads-only-pacbio.log
+
+We have made **01_lreads-only-pacbio.config** file
+`available online <https://drive.google.com/file/d/18qSyO8BnEhfU-opDqwXHnM-JCNDGrRLp/view?usp=sharing>`_ for a better understanding.
+
+
 Assembling Illumina reads
 -------------------------
 
