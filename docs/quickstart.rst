@@ -139,6 +139,7 @@ This pipeline can perform a hybrid assembly in two ways:
 1. Directly through Unicycler or SPAdes hybrid methodologies ;
 2. Performing a long reads only assembly and polish it with Illumina reads using Pilon.
 
+
 Directly through Unicycler or SPAdes hybrid methodologies
 ---------------------------------------------------------
 
