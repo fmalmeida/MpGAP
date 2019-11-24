@@ -4,7 +4,7 @@ Installation
 ************
 
 Dependencies
-------------
+============
 
 This pipeline requires only `Docker <https://www.docker.com/>`_ (and its Docker images) and
 `Nextflow <https://www.nextflow.io/docs/latest/index.html>`_ to run.
