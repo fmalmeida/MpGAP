@@ -1,5 +1,6 @@
 .. _config:
 
+******************
 Configuration File
 ******************
 
@@ -10,7 +11,7 @@ Using a config file your code is lot more clean and concise: ``nextflow run fmal
 Check out some `templates <https://github.com/fmalmeida/MpGAP/tree/master/configuration_example>`_.
 
 Example of Hybrid assembly config file:
-"""""""""""""""""""""""""""""""""""""""
+=======================================
 
 .. code-block:: groovy
 

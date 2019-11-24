@@ -1,10 +1,11 @@
 .. _examples:
 
+******************
 CLI usage Examples
 ******************
 
 Illumina-only assembly with paired end reads
-""""""""""""""""""""""""""""""""""""""""""""
+============================================
 
 ::
 
@@ -17,7 +18,7 @@ Illumina-only assembly with paired end reads
   Since fastq files will be found by a pattern match users MUST ALWAYS double quote as: Example "illumina/SRR9847694_{1,2}.fastq.gz"
 
 Illumina-only assembly with single end reads
-""""""""""""""""""""""""""""""""""""""""""""
+============================================
 
 ::
 
@@ -30,7 +31,7 @@ Illumina-only assembly with single end reads
   Since fastq files will be found by a pattern match users MUST ALWAYS double quote as: Example "SRR9696*.fastq.gz"
 
 Long reads only with ONT reads
-""""""""""""""""""""""""""""""
+==============================
 
 ::
 
@@ -43,7 +44,7 @@ Long reads only with ONT reads
   polishing step nor a polishing with Illumina data.
 
 Long reads only with ONT reads. With polishing (USING FAST5 data).
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+==================================================================
 
 ::
 
@@ -56,7 +57,7 @@ Long reads only with ONT reads. With polishing (USING FAST5 data).
   polishing step with Illumina data.
 
 Long reads only with ONT reads. With polishing using both FAST5 and Illumina data (paired end).
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+===============================================================================================
 
 ::
 
@@ -70,6 +71,7 @@ Long reads only with ONT reads. With polishing using both FAST5 and Illumina dat
   assembly first with FAST5 data then with Illumina data.
 
 Assembly in Hybrid mode with Unicycler. Using Pacbio reads.
+===========================================================
 
 ::
 
@@ -81,7 +83,7 @@ Assembly in Hybrid mode with Unicycler. Using Pacbio reads.
   This command will execute a hybrid assembly directly through Unicycler's hybrid assembly mode.
 
 Running with a configuration file
-"""""""""""""""""""""""""""""""""
+=================================
 
 ::
 
