@@ -37,7 +37,7 @@ Assembling Oxford Nanopore reads
 Oxford nanopore reads are in the `example dataset 1 <https://ngs-preprocess.readthedocs.io/en/latest/quickstart.html#id2>`_.
 
 Via CLI parameterization
-""""""""""""""""""""""""
+========================
 
 .. code-block:: bash
 
@@ -50,7 +50,7 @@ Via CLI parameterization
   To perform a polishing step with Nanopolish one just need to add **--fast5Path 'dataset_1/ont/fast5_pass/'** to the execution
 
 Via configuration file
-""""""""""""""""""""""
+======================
 
 .. code-block:: bash
 
@@ -71,7 +71,7 @@ If you have not followed my previous quickstart in `ngs-preprocess pipeline <htt
 you will only have subreads.*.bam.
 
 Via CLI parameterization
-""""""""""""""""""""""""
+========================
 
 .. code-block:: bash
 
@@ -85,7 +85,7 @@ Via CLI parameterization
   The parameter `--pacbio_all_bam_path` will tell the pipeline to run `Arrow` to polish pacbio-only assemblies.
 
 Via configuration file
-""""""""""""""""""""""
+======================
 
 .. code-block:: bash
 
@@ -106,7 +106,7 @@ Illumina reads can be found in both `example dataset 1 <https://ngs-preprocess.r
 and `example dataset 2 <https://ngs-preprocess.readthedocs.io/en/latest/quickstart.html#id3>`_. You can use any of them.
 
 Via CLI parameterization
-""""""""""""""""""""""""
+========================
 
 .. code-block:: bash
 
@@ -115,7 +115,7 @@ Via CLI parameterization
     --try_unicycler --try_spades --outDir 'dataset_1/assemblies/illumina-only' --prefix 'data1' --threads 4
 
 Via configuration file
-""""""""""""""""""""""
+======================
 
 .. code-block:: bash
 
