@@ -4,7 +4,7 @@ Quickstart
 **********
 
 Overview
---------
+========
 
 During this quickstart we will use two example datasets. These datasets must be downloaded and pre-processed as
 shown in my `ngs-preprocess pipeline quickstart <https://ngs-preprocess.readthedocs.io/en/latest/quickstart.html>`_.
@@ -31,7 +31,7 @@ Prepare your for receiving outputs folders
   mkdir -p dataset_{1,2}/assemblies
 
 Assembling Oxford Nanopore reads
---------------------------------
+================================
 
 Oxford nanopore reads are in the `example dataset 1 <https://ngs-preprocess.readthedocs.io/en/latest/quickstart.html#id2>`_.
 
@@ -63,7 +63,7 @@ We have made **01_lreads-only.config** file
 `available online <https://drive.google.com/file/d/14y0q0hjyKgl5tbafBHNQDhgf9581OIvR/view?usp=sharing>`_ for a better understanding.
 
 Assembling Pacbio reads
------------------------
+=======================
 
 Pacbio reads can be found in `example dataset 2 <https://ngs-preprocess.readthedocs.io/en/latest/quickstart.html#id3>`_.
 If you have not followed my previous quickstart in `ngs-preprocess pipeline <https://ngs-preprocess.readthedocs.io/en/latest/>`_
@@ -99,7 +99,7 @@ We have made **01_lreads-only-pacbio.config** file
 
 
 Assembling Illumina reads
--------------------------
+=========================
 
 Illumina reads can be found in both `example dataset 1 <https://ngs-preprocess.readthedocs.io/en/latest/quickstart.html#id2>`_
 and `example dataset 2 <https://ngs-preprocess.readthedocs.io/en/latest/quickstart.html#id3>`_. You can use any of them.
@@ -128,7 +128,7 @@ We have made **01_sreads-only.config** file
 `available online <https://drive.google.com/file/d/1caFay3skSjPmzqc1Uv2CRTB8_DlBrNwA/view?usp=sharing>`_ for a better understanding.
 
 Assembling Hybrid datasets
---------------------------
+==========================
 
 Illumina reads can be found in both `example dataset 1 <https://ngs-preprocess.readthedocs.io/en/latest/quickstart.html#id2>`_
 and `example dataset 2 <https://ngs-preprocess.readthedocs.io/en/latest/quickstart.html#id3>`_. Therefore it is possible to execute a
@@ -140,7 +140,7 @@ This pipeline can perform a hybrid assembly in two ways:
 2. Performing a long reads only assembly and polish it with Illumina reads using Pilon.
 
 Directly through Unicycler or SPAdes hybrid methodologies
-=========================================================
+---------------------------------------------------------
 
 .. note::
 
@@ -170,7 +170,7 @@ Via configuration file
   nextflow run fmalmeida/MpGAP -c 01_hybrid.config &> 01_hybrid_assembly.log
 
 Performing a long reads only assembly and polish it with Illumina reads using Pilon
-===================================================================================
+-----------------------------------------------------------------------------------
 
 .. note::
 
