@@ -129,3 +129,51 @@ We have made **01_sreads-only.config** file
 
 Assembling Hybrid datasets
 --------------------------
+
+Illumina reads can be found in both `example dataset 1 <https://ngs-preprocess.readthedocs.io/en/latest/quickstart.html#id2>`_
+and `example dataset 2 <https://ngs-preprocess.readthedocs.io/en/latest/quickstart.html#id3>`_. Therefore it is possible to execute a
+hybrid assembly with any of them. Just remember that dataset 1 is oxford nanopore and dataset 2 pacbio.
+
+This pipeline can perform a hybrid assembly in two ways:
+
+1. Directly through Unicycler or SPAdes hybrid methodologies ;
+2. Performing a long reads only assembly and polish it with Illumina reads using Pilon.
+
+Directly through Unicycler or SPAdes hybrid methodologies
+=========================================================
+
+.. note::
+
+  For this one, users must select a hybrid assembly mode, set path to both long and short reads, and remember to set
+  `params.illumina_polish_longreads_contigs = false`. This parameter is what is used to discriminate between a modes 1 and 2.
+  If true, the pipeline will polish a long reads only assembly.
+
+Via CLI parameterization
+""""""""""""""""""""""""
+
+.. code-block:: bash
+
+  # Assembling via CLI
+  nextflow run fmalmeida/MpGAP --longreads 'dataset_1/preprocessed/ont_reads_trimmed.fastq' --lr_type 'nanopore' \
+  --assembly_type 'hybrid' --shortreads_paired 'dataset_1/illumina/read_pair_{1,2}.fastq' --try_spades \
+  --try_unicycler --outDir 'dataset_1/assemblies/hybrid_1' --prefix 'data1' --threads 4
+
+Via configuration file
+""""""""""""""""""""""
+
+.. code-block:: bash
+
+  # Download the configuration file
+  nextflow run fmalmeida/MpGAP --get_hybrid_config && mv hybrid.config 01_hybrid.config
+
+  # Then execute the pipeline
+  nextflow run fmalmeida/MpGAP -c 01_hybrid.config &> 01_hybrid_assembly.log
+
+Performing a long reads only assembly and polish it with Illumina reads using Pilon
+===================================================================================
+
+.. note::
+
+  For this one, users must select a hybrid assembly mode, set path to both long and short reads, and remember to set
+  `params.illumina_polish_longreads_contigs = true`. This parameter is what is used to discriminate between a modes 1 and 2.
+  If true, the pipeline will polish a long reads only assembly.
