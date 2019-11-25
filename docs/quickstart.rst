@@ -136,19 +136,24 @@ hybrid assembly with any of them. Just remember that dataset 1 is oxford nanopor
 
 This pipeline can perform a hybrid assembly in two ways:
 
-1. Directly through Unicycler or SPAdes hybrid methodologies ;
-2. Performing a long reads only assembly and polish it with Illumina reads using Pilon.
+1. Directly through Unicycler or SPAdes hybrid methodologies (Only Unicycler or SPAdes)
+2. Performing a long reads only assembly and polish it with Illumina reads using Pilon (Canu, Flye or Unicycler).
+
+.. note::
+
+  By default only methodology 1 is executed. If users want to also perform a long reads only assembly and polish it with short reads (Methodology 2),
+  the parameter `illumina_polish_longreads_contigs` must be true. This will execute both methodologies 1 and 2. Do not forget to choose which assemblers
+  to use: Canu and Flye and be used if methodology 2 is used.
 
 
-
-Directly through Unicycler or SPAdes hybrid methodologies
----------------------------------------------------------
+Only through Unicycler or SPAdes hybrid methodologies
+-----------------------------------------------------
 
 .. note::
 
   For this one, users must select a hybrid assembly mode, set path to both long and short reads, and remember to set
-  `params.illumina_polish_longreads_contigs = false`. This parameter is what is used to discriminate between a modes 1 and 2.
-  If true, the pipeline will polish a long reads only assembly.
+  `params.illumina_polish_longreads_contigs = false`. This parameter is what is used to execute mode 2. If true,
+  the pipeline will produce and polish a long reads only assembly with Canu, Flye or Unicycler.
 
 Via CLI parameterization
 """"""""""""""""""""""""
@@ -171,11 +176,11 @@ Via configuration file
   # Then execute the pipeline
   nextflow run fmalmeida/MpGAP -c 01_hybrid.config &> 01_hybrid_assembly.log
 
-Performing a long reads only assembly and polish it with Illumina reads using Pilon
------------------------------------------------------------------------------------
+Both hybrid modes and longreads-only assembly polishing
+-------------------------------------------------------
 
 .. note::
 
   For this one, users must select a hybrid assembly mode, set path to both long and short reads, and remember to set
-  `params.illumina_polish_longreads_contigs = true`. This parameter is what is used to discriminate between a modes 1 and 2.
-  If true, the pipeline will polish a long reads only assembly.
+  `params.illumina_polish_longreads_contigs = true`. This parameter is what is used to execute mode 2. If true,
+  the pipeline will produce and polish a long reads only assembly with Canu, Flye or Unicycler.

@@ -127,8 +127,9 @@ Usage example
    * - ``--illumina_polish_longreads_contigs``
      - N
      - False
-     - Tells the pipeline to polish a long reads only assembly using short reads data. (A type of hybrid method).
-     For that, users have to set path to Illumina reads through ``--shortreads_paired`` or ``--shortreads_single``.
+     - Tells the pipeline to create a long reads only assembly and polish it with short reads. By default, only
+     the hybrid mode of Unicycler and SPAdes are executed. If used, users must remember which assemblers to use
+     for a long reads only assembly first: `--try_unicycler`, ``--try_canu`` or ``--try_flye``.
 
 All this parameters are configurable through a configuration file. We encourage users to use the configuration
 file since it will keep your execution cleaner and more readable. See a :ref:`config` example.
