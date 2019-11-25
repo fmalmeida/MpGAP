@@ -313,7 +313,7 @@ lreads_outdir = (params.lr_type == 'nanopore') ? 'ONT' : 'Pacbio'
 */
 
 process canu_assembly {
-  publishDir outdir, mode: 'copy'
+  publishDir "${outdir}/longreads-only", mode: 'copy'
   container 'fmalmeida/mpgap'
   cpus threads
 
@@ -321,8 +321,8 @@ process canu_assembly {
   file lreads from canu_lreads
 
   output:
-  file "${lreads_outdir}/canu_${lrID}/"
-  file("${lreads_outdir}/canu_${lrID}/*.contigs.fasta") into canu_contigs
+  file "canu_${lrID}/"
+  file("canu_${lrID}/*.contigs.fasta") into canu_contigs
 
   when:
   (params.try_canu) && assembly_type == 'longreads-only' || (params.try_canu && assembly_type == 'hybrid' && params.illumina_polish_longreads_contigs)
@@ -331,7 +331,7 @@ process canu_assembly {
   lr = (params.lr_type == 'nanopore') ? '-nanopore-raw' : '-pacbio-raw'
   lrID = lreads.getSimpleName()
   """
-  canu -p ${prefix} -d ${lreads_outdir}/canu_${lrID} maxThreads=${params.threads}\
+  canu -p ${prefix} -d canu_${lrID} maxThreads=${params.threads}\
   genomeSize=${genomeSize} ${additionalParameters['Canu']} $lr $lreads
   """
 }
@@ -343,7 +343,7 @@ process canu_assembly {
 */
 
 process unicycler_longReads {
-  publishDir outdir, mode: 'copy'
+  publishDir "${outdir}/longreads-only", mode: 'copy'
   container 'fmalmeida/mpgap'
   cpus threads
 
@@ -351,8 +351,8 @@ process unicycler_longReads {
   file lreads from unicycler_lreads
 
   output:
-  file "${lreads_outdir}/unicycler_${lrID}/"
-  file("${lreads_outdir}/unicycler_${lrID}/assembly.fasta") into unicycler_longreads_contigs
+  file "unicycler_${lrID}/"
+  file("unicycler_${lrID}/assembly.fasta") into unicycler_longreads_contigs
 
   when:
   (params.try_unicycler && assembly_type == 'longreads-only') || (params.try_unicycler && assembly_type == 'hybrid' && params.illumina_polish_longreads_contigs)
@@ -361,7 +361,7 @@ process unicycler_longReads {
   lrID = lreads.getSimpleName()
   """
   unicycler -l $lreads \
-  -o ${lreads_outdir}/unicycler_${lrID} -t ${params.threads} \
+  -o unicycler_${lrID} -t ${params.threads} \
   ${additionalParameters['Unicycler']} &> unicycler.log
   """
 }
@@ -373,7 +373,7 @@ process unicycler_longReads {
 */
 
 process flye_assembly {
-  publishDir outdir, mode: 'copy'
+  publishDir "${outdir}/longreads-only", mode: 'copy'
   container 'fmalmeida/mpgap'
   cpus threads
 
@@ -381,9 +381,9 @@ process flye_assembly {
   file lreads from flye_lreads
 
   output:
-  file "${lreads_outdir}/flye_${lrID}"
-  file("${lreads_outdir}/flye_${lrID}/scaffolds.fasta") optional true
-  file("${lreads_outdir}/flye_${lrID}/assembly_flye.fasta") into flye_contigs
+  file "flye_${lrID}"
+  file("flye_${lrID}/scaffolds.fasta") optional true
+  file("flye_${lrID}/assembly_flye.fasta") into flye_contigs
 
   when:
   (params.try_flye && assembly_type == 'longreads-only') || (params.try_flye && assembly_type == 'hybrid' && params.illumina_polish_longreads_contigs)
@@ -393,8 +393,7 @@ process flye_assembly {
   lrID = lreads.getSimpleName()
   """
   source activate flye ;
-  mkdir ${lreads_outdir}/ ;
-  flye ${lr} $lreads --genome-size ${genomeSize} --out-dir ${lreads_outdir}/flye_${lrID} \
+  flye ${lr} $lreads --genome-size ${genomeSize} --out-dir flye_${lrID} \
   --threads $threads ${additionalParameters['Flye']} &> flye.log ;
   mv ${lreads_outdir}/flye_${lrID}/assembly.fasta ${lreads_outdir}/flye_${lrID}/assembly_flye.fasta
   """
@@ -425,7 +424,7 @@ if (params.fast5Path && params.lr_type == 'nanopore') {
 */
 
 process nanopolish {
-  publishDir "${outdir}/nanopolish_output", mode: 'copy'
+  publishDir "${outdir}/nanopolished_contigs", mode: 'copy'
   container 'fmalmeida/mpgap'
   cpus threads
 
@@ -502,7 +501,7 @@ process bax2bam {
 variantCaller_bams = Channel.empty().mix(pacbio_bams,bams).collect()
 
 process variantCaller {
-  publishDir "${outdir}/lreadsOnly_pacbio_consensus", mode: 'copy'
+  publishDir "${outdir}/arrowPolished_contigs", mode: 'copy'
   container 'fmalmeida/mpgap'
   cpus threads
 
@@ -563,7 +562,7 @@ spades_hybrid_lreads = (params.longreads && params.assembly_type == 'hybrid' && 
 
 // Assembly begin
 process spades_hybrid_assembly {
-  publishDir outdir, mode: 'copy'
+  publishDir "${outdir}/hybrid", mode: 'copy'
   container 'fmalmeida/mpgap'
   tag { x }
   cpus threads
@@ -575,7 +574,7 @@ process spades_hybrid_assembly {
   file ref_genome from ref_genome
 
   output:
-  file("spades_hybrid_results_${rid}/contigs.fasta") into spades_hybrid_contigs
+  file("spades_${rid}/contigs.fasta") into spades_hybrid_contigs
   file "*"
 
   when:
@@ -599,7 +598,7 @@ process spades_hybrid_assembly {
     x = "Executing assembly with paired end reads"
   }
   """
-  spades.py -o "spades_hybrid_results_${rid}" -t ${params.threads} ${additionalParameters['Spades']} \\
+  spades.py -o "spades_${rid}" -t ${params.threads} ${additionalParameters['Spades']} \\
   $parameter ${spades_opt}
   """
 }
@@ -623,7 +622,7 @@ unicycler_hybrid_lreads = (params.longreads && params.assembly_type == 'hybrid' 
 
 // Assembly begin
 process unicycler_hybrid_assembly {
-  publishDir outdir, mode: 'copy'
+  publishDir "${outdir}/hybrid", mode: 'copy'
   container 'fmalmeida/mpgap'
   tag { x }
   cpus threads
@@ -635,7 +634,7 @@ process unicycler_hybrid_assembly {
 
   output:
   file "*"
-  file("unicycler_hybrid_results_${rid}/assembly.fasta") into unicycler_hybrid_contigs
+  file("unicycler_${rid}/assembly.fasta") into unicycler_hybrid_contigs
 
   when:
   assembly_type == 'hybrid' && (params.try_unicycler)
@@ -656,7 +655,7 @@ process unicycler_hybrid_assembly {
   }
   """
   unicycler $parameter \\
-  -o unicycler_hybrid_results_${rid} -t ${params.threads} \\
+  -o unicycler_${rid} -t ${params.threads} \\
   ${additionalParameters['Unicycler']} &>unicycler.log
   """
 }
@@ -681,7 +680,7 @@ short_reads_spades_illumina_single = (params.shortreads_single && params.assembl
                                       Channel.fromPath(params.shortreads_single) : ''
 // Assembly begin
 process spades_illumina_assembly {
-  publishDir outdir, mode: 'copy'
+  publishDir "${outdir}/shortreads-only", mode: 'copy'
   container 'fmalmeida/mpgap'
   tag { x }
   cpus threads
@@ -692,7 +691,7 @@ process spades_illumina_assembly {
   file ref_genome from ref_genome
 
   output:
-  file("spades_illuminaOnly_results_${rid}/contigs.fasta") into spades_illumina_contigs
+  file("spades_${rid}/contigs.fasta") into spades_illumina_contigs
   file "*"
 
   when:
@@ -714,7 +713,7 @@ process spades_illumina_assembly {
     x = "Executing assembly with paired end reads"
   }
   """
-  spades.py -o "spades_illuminaOnly_results_${rid}" -t ${params.threads} ${additionalParameters['Spades']} \\
+  spades.py -o "spades_${rid}" -t ${params.threads} ${additionalParameters['Spades']} \\
   $parameter ${spades_opt}
   """
 }
@@ -733,7 +732,7 @@ short_reads_unicycler_illumina_paired = (params.shortreads_paired && params.asse
                                          Channel.fromFilePairs( params.shortreads_paired, flat: true, size: 2 ) : Channel.value(['', '', ''])
 // Assembly begin
 process unicycler_illumina_assembly {
-  publishDir outdir, mode: 'copy'
+  publishDir "${outdir}/shortreads-only", mode: 'copy'
   container 'fmalmeida/mpgap'
   tag { x }
   cpus threads
@@ -744,7 +743,7 @@ process unicycler_illumina_assembly {
 
   output:
   file "*"
-  file("unicycler_illuminaOnly_results_${rid}/assembly.fasta") into unicycler_illumina_contigs
+  file("unicycler_${rid}/assembly.fasta") into unicycler_illumina_contigs
 
   when:
   assembly_type == 'illumina-only' && (params.try_unicycler)
@@ -765,7 +764,7 @@ process unicycler_illumina_assembly {
   }
   """
   unicycler $parameter \\
-  -o unicycler_illuminaOnly_results_${rid} -t ${params.threads} \\
+  -o unicycler_${rid} -t ${params.threads} \\
   ${additionalParameters['Unicycler']} &>unicycler.log
   """
 }
@@ -807,7 +806,7 @@ if (params.pacbio_all_baxh5_path && (params.shortreads_paired) && params.illumin
 short_reads_lreads_polish = (params.shortreads_paired) ? Channel.fromFilePairs( params.shortreads_paired, flat: true, size: 2 )
                                                        : Channel.value(['', '', ''])
 process illumina_polish_longreads_contigs {
-  publishDir outdir, mode: 'copy'
+  publishDir "${outdir}/polished-with-shortreads", mode: 'copy'
   container 'fmalmeida/mpgap'
   cpus threads
 
@@ -816,8 +815,8 @@ process illumina_polish_longreads_contigs {
   set val(id), file(sread1), file(sread2) from short_reads_lreads_polish
 
   output:
-  file("${assembler}_lreadsOnly_exhaustive_polished")
-  file("${assembler}_lreadsOnly_exhaustive_polished/${assembler}_final_polish.fasta") into unicycler_polished_contigs
+  file("pilon_results_${assembler}")
+  file("pilon_results_${assembler}/${assembler}_final_polish.fasta") into unicycler_polished_contigs
 
   when:
   (assembly_type == 'longreads-only' && (params.illumina_polish_longreads_contigs) && (params.shortreads_paired))
@@ -829,11 +828,11 @@ process illumina_polish_longreads_contigs {
     assembler = 'flye'
   } else { assembler = 'canu' }
   """
-  mkdir ${assembler}_lreadsOnly_exhaustive_polished;
+  mkdir pilon_results_${assembler};
   unicycler_polish --ale /work/ALE/src/ALE --samtools /miniconda/bin/samtools --pilon /miniconda/share/pilon-1.23-2/pilon-1.23.jar \
   -a $draft -1 $sread1 -2 $sread2 --threads $threads &> polish.log ;
-  mv 0* polish.log ${assembler}_lreadsOnly_exhaustive_polished;
-  mv ${assembler}_lreadsOnly_exhaustive_polished/*_final_polish.fasta ${assembler}_lreadsOnly_exhaustive_polished/${assembler}_final_polish.fasta;
+  mv 0* polish.log pilon_results_${assembler};
+  mv pilon_results_${assembler}/*_final_polish.fasta pilon_results_${assembler}/${assembler}_final_polish.fasta;
   """
 }
 
@@ -862,7 +861,7 @@ short_reads_pilon_single = (params.shortreads_single) ?
                      Channel.fromPath(params.shortreads_single) : ''
 
 process pilon_polish {
-  publishDir outdir, mode: 'copy'
+  publishDir "${outdir}/polished-with-shortreads", mode: 'copy'
   container 'fmalmeida/mpgap'
   cpus threads
 
