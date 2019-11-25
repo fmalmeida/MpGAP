@@ -395,7 +395,7 @@ process flye_assembly {
   source activate flye ;
   flye ${lr} $lreads --genome-size ${genomeSize} --out-dir flye_${lrID} \
   --threads $threads ${additionalParameters['Flye']} &> flye.log ;
-  mv ${lreads_outdir}/flye_${lrID}/assembly.fasta ${lreads_outdir}/flye_${lrID}/assembly_flye.fasta
+  mv flye_${lrID}/assembly.fasta flye_${lrID}/assembly_flye.fasta
   """
 }
 
