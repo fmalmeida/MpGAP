@@ -176,6 +176,8 @@ Via configuration file
   # Then execute the pipeline
   nextflow run fmalmeida/MpGAP -c 01_hybrid.config &> 01_hybrid_assembly.log
 
+We have made **01_hybrid.config** file `available online <https://drive.google.com/file/d/1M6jMIPCt6mPVCmz_tUJa_WcvU05kWmuR/view?usp=sharing>`_ for a better understanding.
+
 Both hybrid modes and longreads-only assembly polishing
 -------------------------------------------------------
 
@@ -184,3 +186,26 @@ Both hybrid modes and longreads-only assembly polishing
   For this one, users must select a hybrid assembly mode, set path to both long and short reads, and remember to set
   `params.illumina_polish_longreads_contigs = true`. This parameter is what is used to execute mode 2. If true,
   the pipeline will produce and polish a long reads only assembly with Canu, Flye or Unicycler.
+
+Via CLI parameterization
+""""""""""""""""""""""""
+
+.. code-block:: bash
+
+  nextflow run fmalmeida/MpGAP --longreads 'dataset_1/preprocessed/ont_reads_trimmed.fastq' --lr_type 'nanopore' \
+      --assembly_type 'hybrid' --shortreads_paired 'dataset_1/illumina/read_pair_{1,2}.fastq' --try_spades \
+      --try_unicycler --outDir 'dataset_1/assemblies/hybrid_1' --prefix 'data1' --threads 4 \
+      --illumina_polish_longreads_contigs --try_flye --try_canu --genomeSize '3m'
+
+Via configuration file
+""""""""""""""""""""""
+
+.. code-block:: bash
+
+    # Download the configuration file
+    nextflow run fmalmeida/MpGAP --get_hybrid_config && mv hybrid.config 01_hybrid-2.config
+
+    # Then execute the pipeline
+    nextflow run fmalmeida/MpGAP -c 01_hybrid-2.config &> 01_hybrid-2_assembly.log
+
+We have made **01_hybrid-2.config** file `available online <https://drive.google.com/file/d/1OYwfv4cJnSDTXRUJhg3DHXuCG3w5qvPU/view?usp=sharing>`_ for a better understanding.

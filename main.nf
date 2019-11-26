@@ -819,7 +819,7 @@ process illumina_polish_longreads_contigs {
   file("pilon_results_${assembler}/${assembler}_final_polish.fasta") into unicycler_polished_contigs
 
   when:
-  (assembly_type == 'longreads-only' && (params.illumina_polish_longreads_contigs) && (params.shortreads_paired))
+  (assembly_type == 'hybrid' && (params.illumina_polish_longreads_contigs) && (params.shortreads_paired))
 
   script:
   if (draft.getName()  == 'assembly.fasta' || draft.getName() =~ /unicycler/) {
@@ -874,7 +874,7 @@ process pilon_polish {
   file("pilon_results_${assembler}/pilon*.fasta") into pilon_polished_contigs
 
   when:
-  (assembly_type == 'longreads-only' && (params.illumina_polish_longreads_contigs) && (params.shortreads_single))
+  (assembly_type == 'hybrid' && (params.illumina_polish_longreads_contigs) && (params.shortreads_single))
 
   script:
   parameter = "$sread"
