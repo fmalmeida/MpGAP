@@ -31,6 +31,11 @@ Prepare your for receiving outputs folders
   # Create dir for all assemblies
   mkdir -p dataset_{1,2}/assemblies
 
+Afterwards
+----------
+
+After assembling a prokaryotic genome you can then annotate it. Why not give my other pipeline, `bacannot <https://bacannot.readthedocs.io/en/latest/>`_ a try?
+
 Assembling Oxford Nanopore reads
 ================================
 
