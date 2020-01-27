@@ -984,6 +984,7 @@ process quast {
   }
   if (params.ref_genome != '')
   """
+  source activate QUAST ;
   bwa index reference_genome ;
   bwa index ${contigs} ;
   bwa mem $parameter > contigs_aln.sam ;
@@ -993,6 +994,7 @@ process quast {
   """
   else
   """
+  source activate QUAST ;
   bwa index ${contigs} ;
   bwa mem $parameter > contigs_aln.sam ;
   quast.py -o quast_${type}_outputs_${assembler} -t ${params.threads} --sam contigs_aln.sam \\
