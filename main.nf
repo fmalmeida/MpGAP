@@ -241,6 +241,8 @@ include flye_assembly from './modules/flye.nf' params(outdir: params.outdir, lr_
 include nanopolish from './modules/nanopolish.nf' params(outdir: params.outdir,
   cpus: params.cpus, threads: params.threads, prefix: params.prefix)
 
+// Medaka (for nanopore and pacbio? data)
+
 /*
  * Define custom workflows
  */
