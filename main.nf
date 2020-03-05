@@ -34,7 +34,7 @@ nextflow.preview.dsl=2
     OPTIONS:
              General Parameters - Mandatory
 
-     --outDir <string>                      Output directory name
+     --outdir <string>                      Output directory name
      --prefix <string>                      Set prefix for output files
      --threads <int>                        Number of threads to use
      --assembly_type <string>               Selects assembly mode: hybrid, illumina-only or longreads-only
@@ -131,7 +131,7 @@ nextflow.preview.dsl=2
    println ""
    println "hybrid.config file saved in working directory"
    println "After configuration, run:"
-   println "nextflow run fmalmeida/NGS-preprocess -c ./hybrid.config"
+   println "nextflow run fmalmeida/MpGAP -c ./hybrid.config"
    println "Nice code!\n"
 
    exit 0
@@ -142,7 +142,7 @@ nextflow.preview.dsl=2
    println ""
    println "lreads.config file saved in working directory"
    println "After configuration, run:"
-   println "nextflow run fmalmeida/NGS-preprocess -c ./lreads.config"
+   println "nextflow run fmalmeida/MpGAP -c ./lreads.config"
    println "Nice code!\n"
 
    exit 0
@@ -153,7 +153,7 @@ nextflow.preview.dsl=2
    println ""
    println "sreads.config file saved in working directory"
    println "After configuration, run:"
-   println "nextflow run fmalmeida/NGS-preprocess -c ./sreads.config"
+   println "nextflow run fmalmeida/MpGAP -c ./sreads.config"
    println "Nice code!\n"
 
    exit 0
@@ -182,7 +182,7 @@ nextflow.preview.dsl=2
   params.try_spades = false
   params.spades_additional_parameters = ''
   params.genomeSize = ''
-  params.outDir = 'output'
+  params.outdir = 'output'
   params.prefix = 'out'
   params.threads = 3
   params.cpus = 2
@@ -190,9 +190,9 @@ nextflow.preview.dsl=2
 /*
  * Define log message
  */
-log.info "========================================="
-log.info "     Docker-based assembly Pipeline      "
-log.info "========================================="
+log.info "================================================================="
+log.info " Docker-based, fmalmeida/mpgap, generic genome assembly Pipeline "
+log.info "================================================================="
 def summary = [:]
 summary['Long Reads']   = params.longreads
 summary['Fast5 files dir']   = params.fast5Path
@@ -200,7 +200,7 @@ summary['Long Reads']   = params.longreads
 summary['Short single end reads']   = params.shortreads_single
 summary['Short paired end reads']   = params.shortreads_paired
 summary['Fasta Ref']    = params.ref_genome
-summary['Output dir']   = params.outDir
+summary['Output dir']   = params.outdir
 summary['Assembly assembly_type chosen'] = params.assembly_type
 summary['Long read sequencing technology'] = params.lr_type
 if(workflow.revision) summary['Pipeline Release'] = workflow.revision
@@ -210,3 +210,105 @@ summary['Current path']   = "$PWD"
 summary['Command used']   = "$workflow.commandLine"
 log.info summary.collect { k,v -> "${k.padRight(15)}: $v" }.join("\n")
 log.info "========================================="
+
+/*
+ * Include modules
+ */
+
+/*
+ * Modules for assembling long reads
+ */
+
+// Canu assembler
+include canu_assembly from './modules/canu.nf' params(outdir: params.outdir, lr_type: params.lr_type,
+  canu_additional_parameters: params.canu_additional_parameters, threads: params.threads,
+  genomeSize: params.genomeSize, prefix: params.prefix)
+
+// Unicycler assembler
+include unicycler_lreads from './modules/unicycler_lreads.nf' params(outdir: params.outdir,
+  unicycler_additional_parameters: params.unicycler_additional_parameters, threads: params.threads)
+
+// Flye assembler
+include flye_assembly from './modules/flye.nf' params(outdir: params.outdir, lr_type: params.lr_type,
+  flye_additional_parameters: params.flye_additional_parameters, threads: params.threads,
+  genomeSize: params.genomeSize, prefix: params.prefix)
+
+/*
+ * Modules for long reads assemblies polishment
+ */
+
+// Nanopolish (for nanopore data)
+include nanopolish from './modules/nanopolish.nf' params(outdir: params.outdir,
+  cpus: params.cpus, threads: params.threads, prefix: params.prefix)
+
+/*
+ * Define custom workflows
+ */
+
+workflow lreads_only_nf {
+  take:
+      reads
+      fast5
+      fast5_dir
+  main:
+      // User wants to use Canu
+      if (params.try_canu) {
+        canu_assembly(reads)
+        if (params.fast5Path && params.lr_type == 'nanopore') {
+          nanopolish(canu_assembly.out[1], reads, fast5, fast5_dir)
+        }
+      }
+
+      // User wants to use Flye
+      if (params.try_flye) {
+        flye_assembly(reads)
+        if (params.fast5Path && params.lr_type == 'nanopore') {
+          nanopolish(flye_assembly.out[1], reads, fast5, fast5_dir)
+        }
+      }
+
+      // User wants to use Unicycler
+      if (params.try_unicycler) {
+        unicycler_lreads(reads)
+        if (params.fast5Path && params.lr_type == 'nanopore') {
+          nanopolish(unicycler_lreads.out[1], reads, fast5, fast5_dir)
+        }
+      }
+}
+
+workflow shortreads_only_nf {
+
+}
+
+/*
+ * Define main workflow
+ */
+
+workflow {
+
+  /*
+   * Long reads only assembly
+   */
+  if (params.assembly_type == 'longreads-only') {
+    lreads_only_nf(Channel.fromPath(params.longreads), Channel.fromPath(params.fast5Path), Channel.fromPath(params.fast5Path, type: 'dir'))
+  }
+
+  /*
+   * Short reads only assembly
+   */
+   if (params.assembly_type == 'shortreads-only') {
+
+   }
+
+}
+
+/*
+ * Completition message
+ */
+workflow.onComplete {
+    println ""
+    println "Pipeline completed at: $workflow.complete"
+    println "Execution status: ${ workflow.success ? 'OK' : 'failed' }"
+    println "Execution duration: $workflow.duration"
+    println "Thank you for using fmalmeida/mpgap pipeline!"
+}

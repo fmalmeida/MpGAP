@@ -261,9 +261,9 @@ additionalParameters['Flye'] = ""
 /*
  * Header log info
  */
-log.info "========================================="
-log.info "     Docker-based assembly Pipeline      "
-log.info "========================================="
+log.info "================================================================="
+log.info " Docker-based, fmalmeida/mpgap, generic genome assembly Pipeline "
+log.info "================================================================="
 def summary = [:]
 summary['Long Reads']   = params.longreads
 summary['Fast5 files dir']   = params.fast5Path
