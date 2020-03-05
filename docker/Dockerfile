@@ -29,6 +29,10 @@ RUN git clone --recursive https://github.com/isovic/racon.git racon && \
 	cmake -DCMAKE_BUILD_TYPE=Release .. && \
 	make && make install
 
+# INSTALL Medaka
+RUN conda create -y -n MEDAKA && \
+	conda install -y -n MEDAKA -c conda-forge -c bioconda medaka
+
 # Set Pilon
 RUN conda install -y -c bioconda pilon
 
