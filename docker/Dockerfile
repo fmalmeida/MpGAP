@@ -91,7 +91,8 @@ RUN conda create -y -n flye && \
 #	cd quast && ./setup.py install_full && \
 #	apt-get update && apt-get install -y bwa
 RUN conda create -y -n QUAST && \
-	conda install -y -n QUAST -c bioconda quast
+	conda install -y -n QUAST -c bioconda quast &&
+	apt-get update && apt-get install -y bwa
 	
 # Check envs
 RUN conda info -e
