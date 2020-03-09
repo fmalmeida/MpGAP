@@ -76,6 +76,20 @@ nextflow.preview.dsl=2
              In the end, long reads only assemblies can be polished with illumina reads through pilon.
 
      --longreads <string>                   Path to longreads in FASTA or FASTQ formats.
+     --params.sequencing_model              Tells Medaka polisher which model to use according to the basecaller
+                                            used. For example the model named r941_min_fast_g303 should be used
+                                            with data from MinION (or GridION) R9.4.1 flowcells using the fast
+                                            Guppy basecaller version 3.0.3. Where a version of Guppy has been used
+                                            without an exactly corresponding medaka model, the medaka model with the
+                                            highest version equal to or less than the guppy version should be selected.
+                                            Models available: r941_min_fast_g303, r941_min_high_g303, r941_min_high_g330,
+                                            r941_min_high_g344, r941_prom_fast_g303, r941_prom_high_g303, r941_prom_high_g344,
+                                            r941_prom_high_g330, r10_min_high_g303, r10_min_high_g340, r103_min_high_g345,
+                                            r941_prom_snp_g303, r941_prom_variant_g303, r941_min_high_g340_rle.
+                                            Default: r941_min_high_g344
+     --use_nanopolish                       By default, the polishing step is performed with Medaka.
+                                            This parameter tells the pipeline to use Nanopolish instead.
+                                            Note: Nanopolish needs the parameter --fast5Path.
      --fast5Path <string>                   Path to directory containing FAST5 files for given reads.
                                             Whenever set, the pipeline will execute a polishing step
                                             with Nanopolish. This makes the pipeline extremely SLOW!!
@@ -163,7 +177,9 @@ nextflow.preview.dsl=2
   * Load general parameters and establish defaults
   */
   params.longreads = ''
+  params.sequencing_model = 'r941_min_high_g344'
   params.fast5Path = ''
+  params.use_nanopolish = false
   params.pacbio_all_baxh5_path = ''
   params.pacbio_all_bam_path = ''
   params.lr_type = ''
@@ -242,12 +258,15 @@ include nanopolish from './modules/nanopolish.nf' params(outdir: params.outdir,
   cpus: params.cpus, threads: params.threads, prefix: params.prefix)
 
 // Medaka (for nanopore and pacbio? data)
+include medaka from './modules/medaka.nf' params(sequencing_model: params.sequencing_model,
+  threads: params.threads, outdir: params.outdir, prefix: params.prefix)
 
 /*
  * Define custom workflows
  */
 
-workflow lreads_only_nf {
+// With Nanopolish
+workflow lreadsonly_nanopolish_nf {
   take:
       reads
       fast5
@@ -256,25 +275,43 @@ workflow lreads_only_nf {
       // User wants to use Canu
       if (params.try_canu) {
         canu_assembly(reads)
-        if (params.fast5Path && params.lr_type == 'nanopore') {
-          nanopolish(canu_assembly.out[1], reads, fast5, fast5_dir)
+        nanopolish(canu_assembly.out[1], reads, fast5, fast5_dir)
         }
+
+      // User wants to use Flye
+      if (params.try_flye) {
+        flye_assembly(reads)
+        nanopolish(flye_assembly.out[1], reads, fast5, fast5_dir)
+        }
+
+      // User wants to use Unicycler
+      if (params.try_unicycler) {
+        unicycler_lreads(reads)
+        nanopolish(unicycler_lreads.out[1], reads, fast5, fast5_dir)
+        }
+}
+
+// With Medaka
+workflow lreadsonly_medaka_nf {
+  take:
+      reads
+  main:
+      // User wants to use Canu
+      if (params.try_canu) {
+        canu_assembly(reads)
+        medaka(canu_assembly.out[1], reads)
       }
 
       // User wants to use Flye
       if (params.try_flye) {
         flye_assembly(reads)
-        if (params.fast5Path && params.lr_type == 'nanopore') {
-          nanopolish(flye_assembly.out[1], reads, fast5, fast5_dir)
-        }
+        medaka(flye_assembly.out[1], reads)
       }
 
       // User wants to use Unicycler
       if (params.try_unicycler) {
         unicycler_lreads(reads)
-        if (params.fast5Path && params.lr_type == 'nanopore') {
-          nanopolish(unicycler_lreads.out[1], reads, fast5, fast5_dir)
-        }
+        medaka(unicycler_lreads.out[1], reads)
       }
 }
 
@@ -291,8 +328,16 @@ workflow {
   /*
    * Long reads only assembly
    */
-  if (params.assembly_type == 'longreads-only') {
-    lreads_only_nf(Channel.fromPath(params.longreads), Channel.fromPath(params.fast5Path), Channel.fromPath(params.fast5Path, type: 'dir'))
+  // With Medaka
+  if (params.assembly_type == 'longreads-only' && params.use_nanopolish == false ) {
+    lreadsonly_medaka_nf(Channel.fromPath(params.longreads))
+  }
+
+  // With Nanopolish
+  if (params.assembly_type == 'longreads-only' && params.use_nanopolish && params.fast5Path) {
+    lreadsonly_nanopolish_nf( Channel.fromPath(params.longreads),
+                    Channel.fromPath(params.fast5Path),
+                    Channel.fromPath(params.fast5Path, type: 'dir'))
   }
 
   /*
