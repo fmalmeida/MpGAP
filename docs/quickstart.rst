@@ -73,7 +73,7 @@ Assembling Pacbio reads
 
 Pacbio reads can be found in `example dataset 2 <https://ngs-preprocess.readthedocs.io/en/latest/quickstart.html#id3>`_.
 If you have not followed my previous quickstart in `ngs-preprocess pipeline <https://ngs-preprocess.readthedocs.io/en/latest/>`_
-you will only have subreads.*.bam.
+you will have subreads in fastq and bam formats.
 
 Via CLI parameterization
 ------------------------
@@ -81,9 +81,10 @@ Via CLI parameterization
 .. code-block:: bash
 
   # Assembling via CLI
-  nextflow run fmalmeida/MpGAP --longreads 'dataset_2/preprocessed/all_reads.fastq' --assembly_type 'longreads-only' \
-  --pacbio_all_bam_path 'dataset_2/pacbio/subreads/subreads_subset*.bam' --genomeSize '2m' --lr_type 'pacbio' \
-  --try_unicycler --try_flye --outDir 'dataset_2/assemblies/longreads_only' --prefix 'data2' --threads 4
+  nextflow run fmalmeida/MpGAP --genomeSize 4.5m --lr_type pacbio \
+  --pacbio_all_bam_path "path/to/m120131_103014_sidney_c100278822550000001523007907041295_s1_p0.subreads.bam" \
+  --longreads "path/to/m120131_103014_sidney_c100278822550000001523007907041295_s1_p0.fastq" --try_flye \
+  --outdir e-coli-k12-mg1655-raw-reads-1.3.0/2590338/0006/assembly --prefix ecoli --threads 3 --assembly_type longreads-only
 
 .. tip::
 
@@ -134,10 +135,6 @@ We have made **01_sreads-only.config** file
 
 Assembling Hybrid datasets
 ==========================
-
-Illumina reads can be found in both `example dataset 1 <https://ngs-preprocess.readthedocs.io/en/latest/quickstart.html#id2>`_
-and `example dataset 2 <https://ngs-preprocess.readthedocs.io/en/latest/quickstart.html#id3>`_. Therefore it is possible to execute a
-hybrid assembly with any of them. Just remember that dataset 1 is oxford nanopore and dataset 2 pacbio.
 
 This pipeline can perform a hybrid assembly in two ways:
 

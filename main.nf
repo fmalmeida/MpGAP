@@ -93,8 +93,6 @@ nextflow.preview.dsl=2
      --fast5Path <string>                   Path to directory containing FAST5 files for given reads.
                                             Whenever set, the pipeline will execute a polishing step
                                             with Nanopolish. This makes the pipeline extremely SLOW!!
-     --pacbio_all_baxh5_path <string>       Path to all bax.h5 files for given reads. Whenever set, the pipeline
-                                            will execute a polishing step with VarianCaller.
      --pacbio_all_bam_path <string>         Path to all subreads bam files for given reads. Whenever set, the pipeline
                                             will execute a polishing step with VarianCaller.
      --genomeSize                           Canu and Flye require an estimative of genome size in order
@@ -180,7 +178,6 @@ nextflow.preview.dsl=2
   params.sequencing_model = 'r941_min_high_g344'
   params.fast5Path = ''
   params.use_nanopolish = false
-  params.pacbio_all_baxh5_path = ''
   params.pacbio_all_bam_path = ''
   params.lr_type = ''
   params.shortreads_paired = ''
@@ -257,9 +254,13 @@ include flye_assembly from './modules/flye.nf' params(outdir: params.outdir, lr_
 include nanopolish from './modules/nanopolish.nf' params(outdir: params.outdir,
   cpus: params.cpus, threads: params.threads, prefix: params.prefix)
 
-// Medaka (for nanopore and pacbio? data)
+// Medaka (for nanopore data)
 include medaka from './modules/medaka.nf' params(sequencing_model: params.sequencing_model,
   threads: params.threads, outdir: params.outdir, prefix: params.prefix)
+
+// VariantCaller Pacbio
+include variantCaller from './modules/variantCaller.nf' params(threads: params.threads,
+  outdir: params.outdir, prefix: params.prefix)
 
 /*
  * Define custom workflows
@@ -315,8 +316,29 @@ workflow lreadsonly_medaka_nf {
       }
 }
 
-workflow shortreads_only_nf {
+workflow lreadsonly_variantCaller_nf {
+  take:
+      reads
+      bamFile
+      nBams
+  main:
+      // User wants to use Canu
+      if (params.try_canu) {
+        canu_assembly(reads)
+        variantCaller(canu_assembly.out[1], bamFile, nBams)
+        }
 
+      // User wants to use Flye
+      if (params.try_flye) {
+        flye_assembly(reads)
+        variantCaller(flye_assembly.out[1], bamFile, nBams)
+        }
+
+      // User wants to use Unicycler
+      if (params.try_unicycler) {
+        unicycler_lreads(reads)
+        variantCaller(unicycler_lreads.out[1], bamFile, nBams)
+        }
 }
 
 /*
@@ -329,15 +351,22 @@ workflow {
    * Long reads only assembly
    */
   // With Medaka
-  if (params.assembly_type == 'longreads-only' && params.use_nanopolish == false ) {
+  if (params.assembly_type == 'longreads-only' && params.lr_type == 'nanopore' && params.use_nanopolish == false ) {
     lreadsonly_medaka_nf(Channel.fromPath(params.longreads))
   }
 
   // With Nanopolish
-  if (params.assembly_type == 'longreads-only' && params.use_nanopolish && params.fast5Path) {
-    lreadsonly_nanopolish_nf( Channel.fromPath(params.longreads),
+  if (params.assembly_type == 'longreads-only' && params.lr_type == 'nanopore' && params.use_nanopolish && params.fast5Path) {
+    lreadsonly_nanopolish_nf(Channel.fromPath(params.longreads),
                     Channel.fromPath(params.fast5Path),
                     Channel.fromPath(params.fast5Path, type: 'dir'))
+  }
+
+  // With Pacbio Genomic Consensus with bax files
+  if (params.assembly_type == 'longreads-only' && params.lr_type == 'pacbio' && params.pacbio_all_bam_path) {
+    lreadsonly_variantCaller_nf(Channel.fromPath(params.longreads),
+                    Channel.fromPath(params.pacbio_all_bam_path),
+                    Channel.fromPath(params.pacbio_all_bam_path).count().subscribe { println it })
   }
 
   /*
