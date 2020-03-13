@@ -76,7 +76,7 @@ RUN apt-get install -y libhdf5-dev parallel && \
 
 # Set PACBIO GENOMICONSENSUS
 RUN conda create --name pacbio python=2 && \
-	conda install -y -c bioconda -n pacbio genomicconsensus pbalign blasr bax2bam pbcore pbcommand && \
+	conda install -y -c bioconda -n pacbio bax2bam bam2fastx lima genomicconsensus pbalign blasr bax2bam pbcore pbcommand && \
 	chmod a+x /miniconda/bin/*
 
 # Set Flye
