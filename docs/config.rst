@@ -16,68 +16,143 @@ Example of Hybrid assembly config file:
 .. code-block:: groovy
 
   /*
-  * This is the assembly.config file. Here are the required parameters in order to execute the
-  * assembly.nextflow pipeline. It is important to keep in mind that some parameters are incompatible
-  * with each other such as: params.shortreads.paired and params.shortreads.single. These type of parameters
-  * can have some empty values.
-  *
-  *                         It has the necessary parameters for a hybrid assembly.
-  */
+   * Configuration File to run fmalmeida/MpGAP pipeline.
+   */
 
   /*
-  * Long reads input files. Just needed to be specified in case of hybrid or longreads-only assembly.
-  * If none of these are wanted it may be left in blank. Fast5 path (set the path to the directory containing
-  * the fast5 files) are needed to perform the polish step with nanopolish (Used with Canu software). Also, it
-  * is important to keep in mind that, nanopolish only works with long reads in FASTA format, not in FASTQ.
-  * In order to use nanopolish, the user might give the directory path to the FAST5 files and the full path to
-  * the FASTA file (the pipeline checks the format, and, if in FASTQ, it converts to FASTA).
-  */
-  params.longreads = '' // Already extracted in fasta or fastq
-  /*
-  * This parameter is used to specify the long read sequencing technology used.
-  * It might be set as one of both: nanopore ; pacbio
-  * If no long read is used, it is not needed.
-  */
-  params.lr_type = ''
-  /*
-  * Short reads input files. They need to be specified in case of hybrid or shortreads-only assembly.
-  * If none of these are wnated it may be left in blank. The files might be single or paired ended. They just
-  * need to be properly identified as the examples below.
-  * Examples for illumina reads:
-  * Paired: params.shortreads.paired = 'SRR6307304_{1,2}.fastq'
-  * Single: params.shortreads.single = 'SRR7128258*'
-  */
-  params.shortreads_paired = ''
-  params.shortreads_single = ''
-  /*
-  * Parameter for reference genome. It is not required and just used in Spades assembly pipeline.
-  * It may be left in blank.
-  */
-  params.ref_genome = ''
-  /*
-  * Here we chose the assembly type wanted. This is required to perform the assembly type wanted.
-  * It must be set as one of these posibilities: longreads-only ; hybrid ; illumina-only
-  */
-  params.assembly_type = 'hybrid'
-  /*
-  * Here it is set the software wanted to perform the assembly with.
-  * It must be set as true to use the software and false to skip it.
-  * Users must note that only unicycler has a intrinsic hybrid
-  * methodology that polishes the final assembly. Also, it is and
-  * SPAdes amelioration. Therefore, users can run just unicycler for that.
-  */
-  params.try_unicycler = true
-  params.try_spades = true
-  /*
-  * Here are some other parameters that do not drastically influence the workflow.
-  */
+   * Customizable parameters
+   */
+  params {
+
+                  /*
+                   * General parameters
+                   */
+
   //Output folder name
-  params.outDir = 'output'
+        outDir = ''
+
   //Prefix for output files
-  params.prefix = 'output'
+        prefix = ''
+
   //Number of threads to be used by each software.
-  params.threads = 3
+        threads = 3
+
+  /*
+   * Here we chose the assembly type wanted. This is required.
+   * It must be set as one of these posibilities: longreads-only ; hybrid ; illumina-only
+   */
+        assembly_type = ''
+
+  /*
+   * Here it is set the software wanted to perform the assembly with.
+   * It must be set as true to use the software and false to skip it.
+   */
+        try_canu      = false
+        canu_additional_parameters = '' // Must be given as shown in Canu manual. E.g. 'correctedErrorRate=0.075 corOutCoverage=200'
+        try_unicycler = false
+        unicycler_additional_parameters = '' // Must be given as shown in Unicycler manual. E.g. '--mode conservative --no_correct'
+        try_flye      = false
+        flye_additional_parameters = '' // Must be given as shown in Flye manual. E.g. '--meta --iterations 4'
+        try_spades    = false
+        spades_additional_parameters = '' // Must be given as shown in Spades manual. E.g. '--meta --plasmids'
+
+  /*
+   * This parameter only needs to be set if the software chosen is Canu.
+   * This is a required option for Canu and Flye.
+   * It is an estimate of the size of the genome. Common suffices are allowed, for example, 3.7m or 2.8g
+   */
+        genomeSize = ''
+
+                  /*
+                   * Long reads parameters
+                   */
+
+  /*
+   * Long reads input files. Just needed to be specified in case of hybrid or longreads-only assembly.
+   * If none of these are wanted it may be left in blank.
+   */
+        longreads = '' // Already extracted in fasta or fastq
+
+
+  /* Tells Medaka polisher which model to use according to the basecaller used.
+   * For example the model named r941_min_fast_g303 should be used with data from
+   * MinION (or GridION) R9.4.1 flowcells using the fast Guppy basecaller version 3.0.3.
+   *
+   * Where a version of Guppy has been used without an exactly corresponding medaka model,
+   * the medaka model with the highest version equal to or less than the guppy version
+   * should be selected. Models available: r941_min_fast_g303, r941_min_high_g303,
+   * r941_min_high_g330, r941_min_high_g344, r941_prom_fast_g303, r941_prom_high_g303,
+   * r941_prom_high_g344, r941_prom_high_g330, r10_min_high_g303, r10_min_high_g340,
+   * r103_min_high_g345, r941_prom_snp_g303, r941_prom_variant_g303, r941_min_high_g340_rle.
+   */
+        sequencing_model = ''
+
+  /* By default, the polishing step is performed with Medaka.
+   * This parameter tells the pipeline to use Nanopolish instead.
+   * Note: Nanopolish needs the parameter --fast5Path.
+   */
+        use_nanopolish = false
+
+  /*
+   * This parameter loads the directory where all the nanopore FAST5 files are stored.
+   * If this parameter is set, the pipeline is able to execute the polishing step with nanopolish
+   * for longreads-only assembly type.
+   */
+        fast5Path = ''
+
   //Number of cores to run nanopolish in parallel
-  params.cpus = 2
-  //Path to the ?.yaml file containing additional parameters for the software. It may be left blank.
-  params.yaml = ''
+        cpus = 2
+
+  /*
+   * This parameter loads all the subreads *.bam pacbio raw files.
+   * In order to nextflow properly use it, one needs to store all the data, from all the cells
+   * in one single directory and show the filepath with "path/to/*bam" to this parameter.
+   */
+        pacbio_all_bam_path = ''
+
+  /*
+   * This parameter is used to specify the long read sequencing technology used.
+   * It might be set as one of both: nanopore ; pacbio
+   */
+        lr_type = ''
+
+
+                  /*
+                   * Short reads parameters
+                   */
+  /*
+   * Short reads input files. They need to be specified in case of hybrid or shortreads-only assembly.
+   * If none of these are wnated it may be left in blank. The files might be single or paired ended. They just
+   * need to be properly identified as the examples below.
+   * Examples for illumina reads:
+   * Paired: params.shortreads.paired = 'SRR6307304_{1,2}.fastq'
+   * Single: params.shortreads.single = 'SRR7128258*'
+   */
+        shortreads_paired = ''
+        shortreads_single = ''
+
+  /*
+   * Parameter for reference genome. It is not required and just used in Spades assembly pipeline.
+   * It may be left in blank.
+   */
+        ref_genome = ''
+
+  /*
+   * This parameter below is to define wheter the user wants or not to polish its long reads only
+   * assembly with illumina short reads in the end. It firstly assemble a genome with only longreads
+   * using flye, canu or unicycler and then polishes it with Illumina reads.
+   * Must use: assembly_type = 'hybrid'
+   */
+        illumina_polish_longreads_contigs = false
+
+  /*
+   * Whenever polishing long reads only assemblies with unpaired short reads (single end), the pipeline
+   * will directly execute one round of pilon polishing instead of using Unicycler's polish pipeline.
+   * Therefore we need to allocate the amount of memmory allocated by Pilon.
+   * Defaut 50G.
+   * This step is crucial because with not enough memmory will crash and not correct your assembly.
+   * When that happens you will not have the pilon output nor the QUAST assesment.
+   */
+        pilon_memmory_limit = 50
+
+  }

@@ -94,7 +94,7 @@ nextflow.preview.dsl=2
 
      --longreads <string>                           Path to longreads in FASTA or FASTQ formats.
 
-     --sequencing_model <string>                    Tells Medaka polisher which model to use according to the basecaller
+     --medaka_sequencing_model <string>             Tells Medaka polisher which model to use according to the basecaller
                                                     used. For example the model named r941_min_fast_g303 should be used
                                                     with data from MinION (or GridION) R9.4.1 flowcells using the fast
                                                     Guppy basecaller version 3.0.3. Where a version of Guppy has been
@@ -107,11 +107,8 @@ nextflow.preview.dsl=2
                                                     r103_min_high_g345, r941_prom_snp_g303, r941_prom_variant_g303,
                                                     r941_min_high_g340_rle.
 
-     --use_nanopolish                               By default, the polishing step is performed with Medaka.
-                                                    This parameter tells the pipeline to use Nanopolish instead.
-                                                    Note: Nanopolish needs the parameter --fast5Path.
 
-     --fast5Path <string>                           Path to directory containing FAST5 files for given reads.
+     --nanopolish_fast5Path <string>                Path to directory containing FAST5 files for given reads.
                                                     Whenever set, the pipeline will execute a polishing step
                                                     with Nanopolish. This makes the pipeline extremely SLOW!!
 
@@ -201,9 +198,8 @@ nextflow.preview.dsl=2
   * Load general parameters and establish defaults
   */
   params.longreads = ''
-  params.sequencing_model = ''
-  params.fast5Path = ''
-  params.use_nanopolish = false
+  params.medaka_sequencing_model = ''
+  params.nanopolish_fast5Path = ''
   params.pacbio_all_bam_path = ''
   params.lr_type = ''
   params.shortreads_paired = ''
@@ -234,7 +230,7 @@ log.info " Docker-based, fmalmeida/mpgap, generic genome assembly Pipeline "
 log.info "================================================================="
 def summary = [:]
 summary['Long Reads']   = params.longreads
-summary['Fast5 files dir']   = params.fast5Path
+summary['Fast5 files dir']   = params.nanopolish_fast5Path
 summary['Long Reads']   = params.longreads
 summary['Short single end reads']   = params.shortreads_single
 summary['Short paired end reads']   = params.shortreads_paired
@@ -281,7 +277,7 @@ include nanopolish from './modules/nanopolish.nf' params(outdir: params.outdir,
   cpus: params.cpus, threads: params.threads, prefix: params.prefix)
 
 // Medaka (for nanopore data)
-include medaka from './modules/medaka.nf' params(sequencing_model: params.sequencing_model,
+include medaka from './modules/medaka.nf' params(medaka_sequencing_model: params.medaka_sequencing_model,
   threads: params.threads, outdir: params.outdir, prefix: params.prefix)
 
 // VariantCaller Pacbio
@@ -398,8 +394,8 @@ workflow {
   /*
    * Long reads only assembly without polish
    */
-  if (params.assembly_type == 'longreads-only' && params.sequencing_model == '' &&
-      params.use_nanopolish == false && params.fast5Path == '' && params.pacbio_all_bam_path == '') {
+  if (params.assembly_type == 'longreads-only' && params.medaka_sequencing_model == '' &&
+      params.nanopolish_fast5Path == '' && params.pacbio_all_bam_path == '') {
     lreadsonly_nf(Channel.fromPath(params.longreads))
   }
 
@@ -408,20 +404,21 @@ workflow {
    */
   // With Medaka
   if (params.assembly_type == 'longreads-only' && params.lr_type == 'nanopore' &&
-      params.use_nanopolish == false && params.sequencing_model) {
+      params.medaka_sequencing_model) {
     lreadsonly_medaka_nf(Channel.fromPath(params.longreads))
   }
 
   // With Nanopolish
   if (params.assembly_type == 'longreads-only' && params.lr_type == 'nanopore' &&
-      params.use_nanopolish && params.fast5Path) {
+      params.nanopolish_fast5Path) {
     lreadsonly_nanopolish_nf(Channel.fromPath(params.longreads),
-                    Channel.fromPath(params.fast5Path),
-                    Channel.fromPath(params.fast5Path, type: 'dir'))
+                    Channel.fromPath(params.nanopolish_fast5Path),
+                    Channel.fromPath(params.nanopolish_fast5Path, type: 'dir'))
   }
 
   // With Pacbio Genomic Consensus with bax files
-  if (params.assembly_type == 'longreads-only' && params.lr_type == 'pacbio' && params.pacbio_all_bam_path) {
+  if (params.assembly_type == 'longreads-only' && params.lr_type == 'pacbio' &&
+      params.pacbio_all_bam_path) {
     lreadsonly_variantCaller_nf(Channel.fromPath(params.longreads),
                     Channel.fromPath(params.pacbio_all_bam_path),
                     Channel.fromPath(params.pacbio_all_bam_path).count().subscribe { println it })

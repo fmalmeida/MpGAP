@@ -69,20 +69,40 @@ Usage example
      - False
      - Try to assemble data with Canu
 
+   * - ``--canu_additional_parameters``
+     - N
+     - NA
+     - If user wants Canu additional parameters
+
    * - ``--try_unicycler``
      - N
      - False
      - Try to assemble data with Unicycler
+
+   * - ``--unicycler_additional_parameters``
+     - N
+     - NA
+     - If user wants Unicycler additional parameters
 
    * - ``--try_flye``
      - N
      - False
      - Try to assemble data with Flye
 
+   * - ``--flye_additional_parameters``
+     - N
+     - NA
+     - If user wants Flye additional parameters
+
    * - ``--try_spades``
      - N
      - False
      - Try to assemble data with SPAdes
+
+   * - ``--spades_additional_parameters``
+     - N
+     - NA
+     - If user wants SPAdes additional parameters
 
    * - ``--shortreads_paired``
      - (if assembly mode is hybrid or illumina-only)
@@ -104,13 +124,18 @@ Usage example
      - NA
      - Path to long reads file
 
+   * - ``--medaka_sequencing_model``
+     - (if user wants to polish longreads-only assembly with Medaka)
+     - NA
+     - Selects ONT sequencing model for Medaka Polish step
+
    * - ``--lr_type``
      - (if assembly mode is hybrid or longreads-only)
      - nanopore
      - Tells whether input longreads are: pacbio or nanopore
 
-   * - ``--fast5Path``
-     - N
+   * - ``--nanopolish_fast5Path``
+     - (if user wants to polish longreads-only assembly with Nanopolish)
      - NA
      - Sets path to dir containing FAST5 data for nanopolish step
 
@@ -128,8 +153,8 @@ Usage example
      - N
      - False
      - Tells the pipeline to create a long reads only assembly and polish it with short reads. By default, only
-     the hybrid mode of Unicycler and SPAdes are executed. If used, users must remember which assemblers to use
-     for a long reads only assembly first: `--try_unicycler`, ``--try_canu`` or ``--try_flye``.
+     the hybrid mode of Unicycler and SPAdes are executed. If used, users must remember to select which assemblers
+     to use for a long reads only assembly first: ``--try_unicycler``, ``--try_canu`` or ``--try_flye``.
 
 All this parameters are configurable through a configuration file. We encourage users to use the configuration
 file since it will keep your execution cleaner and more readable. See a :ref:`config` example.
