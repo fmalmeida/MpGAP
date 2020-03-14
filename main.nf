@@ -57,7 +57,7 @@ nextflow.preview.dsl=2
      --try_flye                                     Execute assembly with Flye. Multiple assemblers can be chosen.
 
      --flye_additional_parameters <string>          Give additional parameters to Flye assembler. Must be in quotes
-                                                    and separated by one space. Must be given as shown in Unicycler manual.
+                                                    and separated by one space. Must be given as shown in Flye manual.
                                                     E.g. '--meta --iterations 4'
 
      --try_spades                                   Execute assembly with Spades. Multiple assemblers can be chosen.
