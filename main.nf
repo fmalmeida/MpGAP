@@ -274,6 +274,10 @@ include spades_sreads_single_assembly from './modules/spades_sreads_single.nf' p
 include unicycler_sreads_paired_assembly from './modules/unicycler_sreads_paired.nf' params(outdir: params.outdir,
   threads: params.threads, unicycler_additional_parameters: params.unicycler_additional_parameters)
 
+// Unicycler single
+include unicycler_sreads_single_assembly from './modules/unicycler_sreads_single.nf' params(outdir: params.outdir,
+  threads: params.threads, unicycler_additional_parameters: params.unicycler_additional_parameters)
+
 /*
  * Modules for long reads assemblies polishment
  */
@@ -423,8 +427,17 @@ workflow sreads_only_single_nf {
       if (params.try_spades) {
         spades_sreads_single_assembly(single_reads)
       }
+
+      // User wants to use Unicycler
+      if (params.try_unicycler) {
+        unicycler_sreads_single_assembly(single_reads)
+      }
 }
 
+                                  /*
+                                   * HYBRID ASSEMBLY WORKFLOWS
+                                   */
+                                   
                                   /*
                                    * DEFINE MAIN WORKFLOW
                                    */
@@ -482,6 +495,9 @@ workflow {
      }
    }
 
+                          /*
+                           * Hybrid assembly
+                           */
 }
 
 /*
