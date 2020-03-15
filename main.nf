@@ -268,6 +268,11 @@ include spades_sreads_paired_assembly from './modules/spades_sreads_paired.nf' p
   threads: params.threads, spades_additional_parameters: params.spades_additional_parameters,
   shortreads_paired: params.shortreads_paired)
 
+// SPAdes single
+include spades_sreads_single_assembly from './modules/spades_sreads_single.nf' params(outdir: params.outdir,
+  threads: params.threads, spades_additional_parameters: params.spades_additional_parameters,
+  shortreads_paired: params.shortreads_single)
+
 /*
  * Modules for long reads assemblies polishment
  */
@@ -404,6 +409,15 @@ workflow sreads_only_paired_nf {
 }
 
 // Single end reads
+workflow sreads_only_single_nf {
+  take:
+      single_reads
+  main:
+      // User wants to use SPAdes
+      if (params.try_spades) {
+        spades_sreads_single_assembly(single_reads)
+      }
+}
 
                                   /*
                                    * DEFINE MAIN WORKFLOW
@@ -454,6 +468,11 @@ workflow {
      // Using paired end reads
      if (params.shortreads_paired) {
        sreads_only_paired_nf(Channel.fromFilePairs( params.shortreads_paired, flat: true, size: 2 ))
+     }
+
+     // Using single end reads
+     if (params.shortreads_single) {
+       sreads_only_single_nf(Channel.fromPath(params.shortreads_single))
      }
    }
 
