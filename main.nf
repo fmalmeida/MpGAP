@@ -221,11 +221,10 @@ log.info "================================================================="
 log.info " Docker-based, fmalmeida/mpgap, generic genome assembly Pipeline "
 log.info "================================================================="
 def summary = [:]
-summary['Long Reads']   = params.longreads
-summary['Fast5 files dir']   = params.nanopolish_fast5Path
-summary['Long Reads']   = params.longreads
-summary['Short single end reads']   = params.shortreads_single
-summary['Short paired end reads']   = params.shortreads_paired
+if (params.longreads) { summary['Long Reads']   = params.longreads }
+if (params.nanopolish_fast5Path) { summary['Fast5 files dir']   = params.nanopolish_fast5Path }
+if (params.shortreads_single) { summary['Short single end reads']   = params.shortreads_single }
+if (params.shortreads_paired) { summary['Short paired end reads']   = params.shortreads_paired }
 summary['Output dir']   = params.outdir
 summary['Assembly assembly_type chosen'] = params.assembly_type
 summary['Long read sequencing technology'] = params.lr_type
@@ -265,13 +264,15 @@ include flye_assembly from './modules/flye.nf' params(outdir: params.outdir, lr_
 
 // SPAdes paired
 include spades_sreads_paired_assembly from './modules/spades_sreads_paired.nf' params(outdir: params.outdir,
-  threads: params.threads, spades_additional_parameters: params.spades_additional_parameters,
-  shortreads_paired: params.shortreads_paired)
+  threads: params.threads, spades_additional_parameters: params.spades_additional_parameters)
 
 // SPAdes single
 include spades_sreads_single_assembly from './modules/spades_sreads_single.nf' params(outdir: params.outdir,
-  threads: params.threads, spades_additional_parameters: params.spades_additional_parameters,
-  shortreads_paired: params.shortreads_single)
+  threads: params.threads, spades_additional_parameters: params.spades_additional_parameters)
+
+// Unicycler paired
+include unicycler_sreads_paired_assembly from './modules/unicycler_sreads_paired.nf' params(outdir: params.outdir,
+  threads: params.threads, unicycler_additional_parameters: params.unicycler_additional_parameters)
 
 /*
  * Modules for long reads assemblies polishment
@@ -405,6 +406,11 @@ workflow sreads_only_paired_nf {
       // User wants to use SPAdes
       if (params.try_spades) {
         spades_sreads_paired_assembly(paired_reads)
+      }
+
+      // User wants to use Unicycler
+      if (params.try_unicycler) {
+        unicycler_sreads_paired_assembly(paired_reads)
       }
 }
 
