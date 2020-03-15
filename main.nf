@@ -36,8 +36,6 @@ nextflow.preview.dsl=2
 
      --outdir <string>                              Output directory name
 
-     --prefix <string>                              Set prefix for output files
-
      --threads <int>                                Number of threads to use
 
      --assembly_type <string>                       Selects assembly mode: hybrid, illumina-only or longreads-only
@@ -75,15 +73,11 @@ nextflow.preview.dsl=2
 
      --shortreads_single <string>                   Path to Illumina single end reads.
 
-     --ref_genome <string>                          Path to reference genome for guided assembly. Used only by SPAdes.
-
                        Parameters for hybrid mode. Can be executed by spades and unicycler assemblers.
 
      --shortreads_paired <string>                   Path to Illumina paired end reads.
 
      --shortreads_single <string>                   Path to Illumina single end reads.
-
-     --ref_genome <string>                          Path to reference genome for guided assembly. Used only by SPAdes.
 
      --longreads <string>                           Path to longreads in FASTA or FASTQ formats.
 
@@ -204,7 +198,6 @@ nextflow.preview.dsl=2
   params.lr_type = ''
   params.shortreads_paired = ''
   params.shortreads_single = ''
-  params.ref_genome = ''
   params.assembly_type = ''
   params.illumina_polish_longreads_contigs = false
   params.pilon_memmory_limit = 50
@@ -218,7 +211,6 @@ nextflow.preview.dsl=2
   params.spades_additional_parameters = ''
   params.genomeSize = ''
   params.outdir = 'output'
-  params.prefix = 'out'
   params.threads = 3
   params.cpus = 2
 
@@ -234,7 +226,6 @@ summary['Fast5 files dir']   = params.nanopolish_fast5Path
 summary['Long Reads']   = params.longreads
 summary['Short single end reads']   = params.shortreads_single
 summary['Short paired end reads']   = params.shortreads_paired
-summary['Fasta Ref']    = params.ref_genome
 summary['Output dir']   = params.outdir
 summary['Assembly assembly_type chosen'] = params.assembly_type
 summary['Long read sequencing technology'] = params.lr_type
@@ -269,6 +260,15 @@ include flye_assembly from './modules/flye.nf' params(outdir: params.outdir, lr_
   genomeSize: params.genomeSize, prefix: params.prefix)
 
 /*
+ * Modules for assembling short reads
+ */
+
+// SPAdes paired
+include spades_sreads_paired_assembly from './modules/spades_sreads_paired.nf' params(outdir: params.outdir,
+  threads: params.threads, spades_additional_parameters: params.spades_additional_parameters,
+  shortreads_paired: params.shortreads_paired)
+
+/*
  * Modules for long reads assemblies polishment
  */
 
@@ -288,7 +288,9 @@ include variantCaller from './modules/variantCaller.nf' params(threads: params.t
  * Define custom workflows
  */
 
-// Long reads without polishing
+                                /*
+                                 * LONG READS ONLY WORKFLOWS
+                                 */
 
 workflow lreadsonly_nf {
   take:
@@ -360,6 +362,7 @@ workflow lreadsonly_medaka_nf {
       }
 }
 
+// With Arrow (PacBio)
 workflow lreadsonly_variantCaller_nf {
   take:
       reads
@@ -385,23 +388,42 @@ workflow lreadsonly_variantCaller_nf {
         }
 }
 
-/*
- * Define main workflow
- */
+                                  /*
+                                   * SHORT READS ONLY WORKFLOWS
+                                   */
+
+// Paired end reads
+workflow sreads_only_paired_nf {
+  take:
+      paired_reads
+  main:
+      // User wants to use SPAdes
+      if (params.try_spades) {
+        spades_sreads_paired_assembly(paired_reads)
+      }
+}
+
+// Single end reads
+
+                                  /*
+                                   * DEFINE MAIN WORKFLOW
+                                   */
 
 workflow {
 
-  /*
-   * Long reads only assembly without polish
-   */
+                            /*
+                             * Long reads only assembly without polish
+                             */
+
   if (params.assembly_type == 'longreads-only' && params.medaka_sequencing_model == '' &&
       params.nanopolish_fast5Path == '' && params.pacbio_all_bam_path == '') {
     lreadsonly_nf(Channel.fromPath(params.longreads))
   }
 
-  /*
-   * Long reads only assembly with polish
-   */
+                            /*
+                             * Long reads only assembly with polish
+                             */
+
   // With Medaka
   if (params.assembly_type == 'longreads-only' && params.lr_type == 'nanopore' &&
       params.medaka_sequencing_model) {
@@ -424,11 +446,15 @@ workflow {
                     Channel.fromPath(params.pacbio_all_bam_path).count().subscribe { println it })
   }
 
-  /*
-   * Short reads only assembly
-   */
-   if (params.assembly_type == 'shortreads-only') {
+                          /*
+                           * Short reads only assembly
+                           */
 
+   if (params.assembly_type == 'illumina-only') {
+     // Using paired end reads
+     if (params.shortreads_paired) {
+       sreads_only_paired_nf(Channel.fromFilePairs( params.shortreads_paired, flat: true, size: 2 ))
+     }
    }
 
 }

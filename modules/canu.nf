@@ -14,7 +14,7 @@ process canu_assembly {
   lr = (params.lr_type == 'nanopore') ? '-nanopore-raw' : '-pacbio-raw'
   lrID = lreads.getSimpleName()
   """
-  canu -p ${params.prefix} -d canu_${lrID} maxThreads=${params.threads}\
+  canu -p ${lrID} -d canu_${lrID} maxThreads=${params.threads}\
   genomeSize=${params.genomeSize} ${params.canu_additional_parameters} $lr $lreads
   """
 }

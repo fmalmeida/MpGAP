@@ -49,16 +49,6 @@ Usage example
      - 2
      - Number of threads to use
 
-   * - ``--prefix``
-     - Y
-     - NA
-     - Prefix for output files
-
-   * - ``--yaml``
-     - N
-     - NA
-     - Path to yaml file containing assemblers additional parameters
-
    * - ``--assembly_type``
      - Y
      - NA
@@ -113,11 +103,6 @@ Usage example
      - (if assembly mode is hybrid or illumina-only)
      - NA
      - Path to Illumina unpaired reads
-
-   * - ``--ref_genome``
-     - N (Only used by SPAdes to guide assembly)
-     - NA
-     - Path to reference genome
 
    * - ``--longreads``
      - (if assembly mode is hybrid or longreads-only)

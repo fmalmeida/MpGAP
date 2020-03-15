@@ -18,6 +18,11 @@ All datasets can be assembled in two ways:
 1. Through CLI parameterization
 2. Or by a configuration file
 
+.. note::
+
+  The pipeline will always use the fastq file name as prefix for output files. For instance, if users use a
+  fastq file named SRR7128258.fastq the output files and directories will have the string "SRR7128258" in it.
+
 .. tip::
 
   The best way to execute these pipelines is by using a configuration file.

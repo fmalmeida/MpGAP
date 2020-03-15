@@ -31,9 +31,6 @@ Example of Hybrid assembly config file:
   //Output folder name
         outDir = ''
 
-  //Prefix for output files
-        prefix = ''
-
   //Number of threads to be used by each software.
         threads = 3
 
@@ -130,12 +127,6 @@ Example of Hybrid assembly config file:
    */
         shortreads_paired = ''
         shortreads_single = ''
-
-  /*
-   * Parameter for reference genome. It is not required and just used in Spades assembly pipeline.
-   * It may be left in blank.
-   */
-        ref_genome = ''
 
   /*
    * This parameter below is to define wheter the user wants or not to polish its long reads only
