@@ -29,6 +29,10 @@ RUN git clone --recursive https://github.com/isovic/racon.git racon && \
 	cmake -DCMAKE_BUILD_TYPE=Release .. && \
 	make && make install
 
+# INSTALL Medaka
+RUN conda create -y -n MEDAKA && \
+	conda install -y -n MEDAKA -c conda-forge -c bioconda medaka
+
 # Set Pilon
 RUN conda install -y -c bioconda pilon
 
@@ -87,7 +91,8 @@ RUN conda create -y -n flye && \
 #	cd quast && ./setup.py install_full && \
 #	apt-get update && apt-get install -y bwa
 RUN conda create -y -n QUAST && \
-	conda install -y -n QUAST -c bioconda quast
+	conda install -y -n QUAST -c bioconda quast && \
+	apt-get update && apt-get install -y bwa
 	
 # Check envs
 RUN conda info -e
