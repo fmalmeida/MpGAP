@@ -72,7 +72,7 @@ def helpMessage() {
                                            with Nanopolish. This makes the pipeline extremely SLOW!!
     --pacbio_all_baxh5_path <string>       Path to all bax.h5 files for given reads. Whenever set, the pipeline
                                            will execute a polishing step with VarianCaller.
-    --pacbio_all_bam_path <string>         Path to all subreads bam files for given reads. Whenever set, the pipeline
+    --pacbio_all_bam_path <string>         Path to all subreads bam files for a given sample. Whenever set, the pipeline
                                            will execute a polishing step with VarianCaller.
     --genomeSize                           Canu and Flye require an estimative of genome size in order
                                            to be executed. Examples: 5.6m; 1.2g

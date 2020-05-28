@@ -137,7 +137,7 @@ Assembling Hybrid datasets
 
 Illumina reads can be found in both `example dataset 1 <https://ngs-preprocess.readthedocs.io/en/latest/quickstart.html#id2>`_
 and `example dataset 2 <https://ngs-preprocess.readthedocs.io/en/latest/quickstart.html#id3>`_. Therefore it is possible to execute a
-hybrid assembly with any of them. Just remember that dataset 1 is oxford nanopore and dataset 2 pacbio.
+hybrid assembly with any one of them. Just remember that dataset 1 is oxford nanopore and dataset 2 pacbio.
 
 This pipeline can perform a hybrid assembly in two ways:
 
