@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 MAINTAINER Felipe Marques de Almeida <180039822@aluno.unb.br>
 SHELL ["/bin/bash", "-c"]
@@ -12,10 +12,8 @@ RUN apt-get update && apt-get upgrade -y && \
 
 # Set miniconda
 RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /miniconda.sh && \
-	bash /miniconda.sh -b -p /miniconda && \
-	wget http://releases.llvm.org/6.0.0/clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-16.04.tar.xz && \
-	tar xf clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-16.04.tar.xz && \
-	ln -rs clang+llvm-6.0.0-x86_64-linux-gnu-ubuntu-16.04/bin/* /usr/local/bin/
+	bash /miniconda.sh -b -p /miniconda
+
 ENV PATH="/miniconda/bin:$PATH"
 
 # Set ncbi-blast+
@@ -45,26 +43,16 @@ ln -rs canu-1.9/*/bin/* /usr/local/bin
 RUN conda install -y -c bioconda spades
 
 # Set Unicycler
-RUN pip install --upgrade pip && \
-	pip3 install --upgrade pip && \
-	hash -d pip && \
-	hash -d pip3 && \
-	pip install setuptools && \
-	pip3 install setuptools && \
-	apt install zlib1g-dev && git clone https://github.com/rrwick/Unicycler.git && cd Unicycler && python3 setup.py install
+RUN apt-get install -y zlib1g zlib1g-dev && \
+		conda install -y -c bioconda unicycler
 
 ## Set Unicycler complementary tools
-RUN apt-get install -y mummer && \
-	conda install -y -c bioconda samtools && \
-	conda install -y -c bioconda bowtie2 && \
-	conda install -y -c bioconda freebayes && \
-	conda create -y -n legacy_python python=2.7 && conda install -y -c bioconda -n legacy_python pbalign && \
-	conda install -y -n legacy_python -c bioconda bax2bam && \
-	conda install -y -c conda-forge arrow && \
-	git clone https://github.com/sc932/ALE.git && cd ALE/src && make && ln -rs ALE /usr/local/bin && \
-	conda install -y -c bioconda minimap && \
-	curl -L https://github.com/lh3/minimap2/releases/download/v2.10/minimap2-2.10_x64-linux.tar.bz2 | tar -jxvf - ; ln -rs minimap2-2.10_x64-linux/minimap2 /usr/local/bin && \
-	chmod a+x /miniconda/bin/*
+## Only Illumina polish
+RUN git clone https://github.com/sc932/ALE.git && \
+		cd ALE/src && make && ln -rs ALE /usr/local/bin && \
+		ALE --help
+RUN conda install -y -c bioconda minimap2 && \
+		chmod a+x /miniconda/bin/*
 
 # Set Nanopolish
 RUN apt-get install -y libhdf5-dev parallel && \
@@ -84,16 +72,10 @@ RUN conda create -y -n flye && \
 	conda install -y -n flye -c bioconda flye
 
 # Set Quast
-#RUN rm -rf /var/lib/apt/lists/*  && \
-#	apt-get clean && apt-get update && apt-get upgrade -y && \
-#	DEBIAN_FRONTEND=noninteractive apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y hmmer unzip zlib1g-dev pkg-config libfreetype6-dev libpng-dev python-matplotlib && \
-#	git clone https://github.com/ablab/quast.git && \
-#	cd quast && ./setup.py install_full && \
-#	apt-get update && apt-get install -y bwa
 RUN conda create -y -n QUAST && \
 	conda install -y -n QUAST -c bioconda quast && \
 	apt-get update && apt-get install -y bwa
-	
+
 # Check envs
 RUN conda info -e
 

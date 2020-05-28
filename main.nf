@@ -829,7 +829,7 @@ process illumina_polish_longreads_contigs {
   } else { assembler = 'canu' }
   """
   mkdir pilon_results_${assembler};
-  unicycler_polish --ale /work/ALE/src/ALE --samtools /miniconda/bin/samtools --pilon /miniconda/share/pilon-1.23-2/pilon-1.23.jar \
+  unicycler_polish --minimap --pilon /miniconda/share/pilon-1.23-2/pilon-1.23.jar \
   -a $draft -1 $sread1 -2 $sread2 --threads $threads &> polish.log ;
   mv 0* polish.log pilon_results_${assembler};
   mv pilon_results_${assembler}/*_final_polish.fasta pilon_results_${assembler}/${assembler}_final_polish.fasta;

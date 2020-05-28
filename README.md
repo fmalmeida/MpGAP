@@ -60,7 +60,7 @@ Users can assemble Illumina paired or single end reads. [Here](https://github.co
 
 Long reads only assemblies can be produced with Canu, Flye and/or Unicycler assemblers. Users can assemble pacbio or nanopore reads.
 
-Addionally, users can perform a polishing step since long reads only assemblies generally suffer from basecall accuracy. For that, it is only necessary to set path to a directory containing raw nanopore FAST5 data to polish with Nanopolish or, for pacbio, to set path to \*.bax.h5 or \*.subreads.bam files to use VarianCaller to polish the assembly.
+Additionally, users can perform a polishing step since long reads only assemblies generally suffer from basecall accuracy. For that, it is only necessary to set path to a directory containing raw nanopore FAST5 data to polish with Nanopolish or, for pacbio, to set path to \*.bax.h5 or \*.subreads.bam files to use VarianCaller to polish the assembly.
 
 [Here](https://github.com/fmalmeida/MpGAP#usage-examples) you can find a few usage examples.
 
@@ -105,4 +105,17 @@ Create a configuration file in your working directory:
 
 ## Citation
 
-Users are encouraged to cite the programs used in this pipeline whenever they are used. They are: [Canu](https://github.com/marbl/canu), [Flye](https://github.com/fenderglass/Flye), [Unicycler](https://github.com/rrwick/Unicycler), [Spades](https://github.com/ablab/spades), [Nanopolish](https://github.com/jts/nanopolish), [QUAST](https://github.com/ablab/quast), [GenomicConsensus](https://github.com/PacificBiosciences/GenomicConsensus) and [Pilon](https://github.com/broadinstitute/pilon).
+To cite this pipeline users can use the our Zenodo tag.
+
+      Felipe Marques de Almeida. (2020, January 25). fmalmeida/MpGAP: fmalmeida/MpGAP: A multi-plataform genome assembly pipeline (Version v1.0). Zenodo. http://doi.org10.5281zenodo.3627673
+
+Users are also encouraged to cite the programs used in this pipeline whenever they are used. They are:
+
+* [Canu](https://github.com/marbl/canu)
+* [Flye](https://github.com/fenderglass/Flye)
+* [Unicycler](https://github.com/rrwick/Unicycler)
+* [Spades](https://github.com/ablab/spades)
+* [Nanopolish](https://github.com/jts/nanopolish)
+* [QUAST](https://github.com/ablab/quast)
+* [GenomicConsensus](https://github.com/PacificBiosciences/GenomicConsensus)
+* [Pilon](https://github.com/broadinstitute/pilon).
