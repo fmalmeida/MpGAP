@@ -69,6 +69,7 @@ Hybrid polishing a ONT long reads only assembly. Polishing using both FAST5 and 
 
   ./nextflow run fmalmeida/mpgap --threads 3 --outDir teste --assembly_type "hybrid" --lr_type "nanopore" --longreads "./dataset_1/ont/ont_reads.fastq"
   --fast5Path "./dataset_1/ont/fast5_pass" --try_canu --try_flye --try_unicycler --genomeSize "5.6m" --shortreads_paired "./dataset_1/illumina/read_pair_{1,2}.fastq"
+  --illumina_polish_longreads_contigs
 
 .. note::
 
