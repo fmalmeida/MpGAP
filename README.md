@@ -10,7 +10,7 @@ This is an easy to use pipeline that adopts well known software for genome assem
 
 This pipeline has only two dependencies: [Docker](https://www.docker.com) and [Nextflow](https://github.com/nextflow-io/nextflow).
 
-Also, check out my other two complementary pipelines for [preprocessing NGS raw data](https://github.com/fmalmeida/NGS-preprocess) and to annotate microbial genomes.
+Also, check out my other two complementary pipelines for [preprocessing NGS raw data](https://github.com/fmalmeida/NGS-preprocess) and to [annotate microbial genomes](https://github.com/fmalmeida/bacannot).
 
 ## Table of contents
 
@@ -105,7 +105,7 @@ Create a configuration file in your working directory:
 
 ## Citation
 
-To cite this pipeline users can use the our Zenodo tag.
+To cite this pipeline users can use our Zenodo tag.
 
       Felipe Marques de Almeida. (2020, January 25). fmalmeida/MpGAP: fmalmeida/MpGAP: A multi-plataform genome assembly pipeline (Version v1.0). Zenodo. http://doi.org10.5281zenodo.3627673
 
