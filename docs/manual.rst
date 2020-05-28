@@ -27,8 +27,8 @@ Input
 
   Hybrid assemblies can be achieved with Unicycler hybrid mode, by giving long and
   short reads or, by polishing an long reads only assembly. For this, users will have
-  to set ``assembly_type = 'longreads-only'``, set path to Illumina reads and use the
-  ``illumina_polish_longreads_contigs`` parameter.
+  to set ``assembly_type = 'hybrid'``, set path to Illumina reads and make sure to
+  use the ``illumina_polish_longreads_contigs`` parameter.
 
 Usage example
 =============
