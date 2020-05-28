@@ -18,7 +18,7 @@ Input
 
 .. warning::
 
-  Remember: the pipeline does not concatenate the reads. When you use a pattern such as \* the pipeline will assemble each pair
+  Remember: the pipeline does not concatenate the reads. Whenever you use a pattern such as \* the pipeline will assemble each pair
   separately. When doing hybrid assemblies or mixing read types it is advised to **not use REGEX** and instead write the full file
   path.
 

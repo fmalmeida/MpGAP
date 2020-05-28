@@ -4,6 +4,12 @@
 A few CLI usage Examples
 ************************
 
+.. warning::
+
+  Remember: the pipeline does not concatenate the reads. Whenever you use a pattern such as \* the pipeline will assemble each pair
+  separately. When doing hybrid assemblies or mixing read types it is advised to **not use REGEX** and instead write the full file
+  path.
+
 Illumina-only assembly with paired end reads
 ============================================
 
@@ -16,11 +22,6 @@ Illumina-only assembly with paired end reads
 
   This command will perform an illumina-only assembly using paired end reads with Unicycler and SPAdes assemblers.
   Since fastq files will be found by a pattern match users MUST ALWAYS double quote as: Example "illumina/SRR\*_{1,2}.fastq.gz"
-
-.. warning::
-  
-  Remember: the pipeline does not concatenate the reads. When you use a pattern such as \* the pipeline will assemble each pair
-  separately.
 
 Illumina-only assembly with single end reads
 ============================================
@@ -61,8 +62,8 @@ Long reads only with ONT reads. With polishing (USING FAST5 data).
   This will perform a long reads only assembly using nanopore data with Canu, Flye and Unicycler assemblers. This will note execute a
   polishing step with Illumina data.
 
-Hybrid polishing a long reads only with ONT reads. Polishing using both FAST5 and Illumina data (paired end).
-=============================================================================================================
+Hybrid polishing a ONT long reads only assembly. Polishing using both FAST5 and Illumina data (paired end).
+===========================================================================================================
 
 ::
 
