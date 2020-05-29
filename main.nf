@@ -118,7 +118,7 @@ params.show = false
 */
 params.get_hybrid_config = false
 if (params.get_hybrid_config) {
-  new File("hybrid.config") << new URL ("https://github.com/fmalmeida/MpGAP/raw/master/configuration_example/hybrid.config").getText()
+  new File("hybrid.config").write(new URL ("https://github.com/fmalmeida/MpGAP/raw/master/configuration_example/hybrid.config").getText())
   println ""
   println "hybrid.config file saved in working directory"
   println "After configuration, run:"
@@ -129,7 +129,7 @@ if (params.get_hybrid_config) {
 }
 params.get_lreads_config = false
 if (params.get_lreads_config) {
-  new File("lreads-only.config") << new URL ("https://github.com/fmalmeida/MpGAP/raw/master/configuration_example/lreads.config").getText()
+  new File("lreads-only.config").write(new URL ("https://github.com/fmalmeida/MpGAP/raw/master/configuration_example/lreads.config").getText())
   println ""
   println "lreads.config file saved in working directory"
   println "After configuration, run:"
@@ -140,7 +140,7 @@ if (params.get_lreads_config) {
 }
 params.get_sreads_config = false
 if (params.get_sreads_config) {
-  new File("sreads-only.config") << new URL ("https://github.com/fmalmeida/MpGAP/raw/master/configuration_example/sreads.config").getText()
+  new File("sreads-only.config").write(new URL ("https://github.com/fmalmeida/MpGAP/raw/master/configuration_example/sreads.config").getText())
   println ""
   println "sreads.config file saved in working directory"
   println "After configuration, run:"
@@ -152,7 +152,7 @@ if (params.get_sreads_config) {
 
 params.get_yaml = false
 if ( params.get_yaml ) {
-  new File("additional_parameters.yaml") << new URL ("https://github.com/fmalmeida/MpGAP/raw/master/additional_parameters.yaml").getText()
+  new File("additional_parameters.yaml").write(new URL ("https://github.com/fmalmeida/MpGAP/raw/master/additional_parameters.yaml").getText())
   println ""
   println "additional_parameters.yaml file saved in working directory"
   println "After configuration, run:"
