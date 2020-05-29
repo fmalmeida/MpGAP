@@ -186,11 +186,11 @@ params.try_unicycler = false
 params.try_flye = false
 params.try_spades = false
 params.genomeSize = ''
-params.outDir = 'output'
-params.prefix = 'out'
+params.outDir = "output"
+params.prefix = "out"
 params.threads = 3
 params.cpus = 2
-params.yaml = ""
+params.yaml = ''
 
 /*
                     Loading Parameters properly
@@ -331,7 +331,7 @@ process canu_assembly {
   lr = (params.lr_type == 'nanopore') ? '-nanopore-raw' : '-pacbio-raw'
   lrID = lreads.getSimpleName()
   """
-  canu -p ${prefix} -d canu_${lrID} maxThreads=${params.threads}\
+  canu -p ${params.prefix} -d canu_${lrID} maxThreads=${params.threads}\
   genomeSize=${genomeSize} ${additionalParameters['Canu']} $lr $lreads
   """
 }
@@ -435,7 +435,7 @@ process nanopolish {
   val fast5_dir from fast5_dir
 
   output:
-  file("${prefix}_${assembler}_nanopolished.fa") into nanopolished_contigs
+  file("${params.prefix}_${assembler}_nanopolished.fa") into nanopolished_contigs
 
   when:
   (assembly_type == 'longreads-only' && params.fast5Path) || (assembly_type == 'hybrid' && params.illumina_polish_longreads_contigs && params.fast5Path)
@@ -462,7 +462,7 @@ process nanopolish {
     -b reads.sorted.bam \
     -g ${draft} \
     --min-candidate-frequency 0.1;
-  python /miniconda/envs/NANOPOLISH/bin/nanopolish_merge.py polished.*.fa > ${prefix}_${assembler}_nanopolished.fa
+  python /miniconda/envs/NANOPOLISH/bin/nanopolish_merge.py polished.*.fa > ${params.prefix}_${assembler}_nanopolished.fa
   """
 }
 
@@ -510,8 +510,8 @@ process variantCaller {
   file bams from variantCaller_bams
 
   output:
-  file "${prefix}_${assembler}_pbvariants.gff"
-  file "${prefix}_${assembler}_pbconsensus.fasta" into variant_caller_contigs
+  file "${params.prefix}_${assembler}_pbvariants.gff"
+  file "${params.prefix}_${assembler}_pbconsensus.fasta" into variant_caller_contigs
 
   when:
   params.lr_type == 'pacbio' && ( params.pacbio_all_baxh5_path != '' || params.pacbio_all_bam_path != '' )
@@ -533,8 +533,8 @@ process variantCaller {
   samtools index pacbio_merged.bam;
   pbindex pacbio_merged.bam;
   samtools faidx ${draft};
-  arrow -j ${params.threads} --referenceFilename ${draft} -o ${prefix}_${assembler}_pbconsensus.fasta \
-  -o ${prefix}_${assembler}_pbvariants.gff pacbio_merged.bam
+  arrow -j ${params.threads} --referenceFilename ${draft} -o ${params.prefix}_${assembler}_pbconsensus.fasta \
+  -o ${params.prefix}_${assembler}_pbvariants.gff pacbio_merged.bam
   """
 }
 

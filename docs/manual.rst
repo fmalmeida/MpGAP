@@ -58,7 +58,7 @@ Usage example
 
    * - ``--prefix``
      - Y
-     - NA
+     - out
      - Prefix for output files
 
    * - ``--yaml``
