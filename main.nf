@@ -122,7 +122,7 @@ if (params.get_hybrid_config) {
   println ""
   println "hybrid.config file saved in working directory"
   println "After configuration, run:"
-  println "nextflow run fmalmeida/NGS-preprocess -c ./hybrid.config"
+  println "nextflow run fmalmeida/MpGAP -c ./hybrid.config"
   println "Nice code!\n"
 
   exit 0
@@ -133,7 +133,7 @@ if (params.get_lreads_config) {
   println ""
   println "lreads.config file saved in working directory"
   println "After configuration, run:"
-  println "nextflow run fmalmeida/NGS-preprocess -c ./lreads.config"
+  println "nextflow run fmalmeida/MpGAP -c ./lreads.config"
   println "Nice code!\n"
 
   exit 0
@@ -144,7 +144,7 @@ if (params.get_sreads_config) {
   println ""
   println "sreads.config file saved in working directory"
   println "After configuration, run:"
-  println "nextflow run fmalmeida/NGS-preprocess -c ./sreads.config"
+  println "nextflow run fmalmeida/MpGAP -c ./sreads.config"
   println "Nice code!\n"
 
   exit 0
@@ -156,7 +156,7 @@ if ( params.get_yaml ) {
   println ""
   println "additional_parameters.yaml file saved in working directory"
   println "After configuration, run:"
-  println "nextflow run fmalmeida/NGS-preprocess -c ./*.config"
+  println "nextflow run fmalmeida/MpGAP -c ./*.config"
   println "Nice code!\n"
 
   exit 0
