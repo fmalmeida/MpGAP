@@ -64,8 +64,8 @@ Long reads only with ONT reads. With polishing (USING FAST5 data).
   This will perform a long reads only assembly using nanopore data with Canu, Flye and Unicycler assemblers. This will note execute a
   polishing step with Illumina data.
 
-Hybrid polishing a ONT long reads only assembly. Polishing using both FAST5 and Illumina data (paired end).
-===========================================================================================================
+Hybrid polishing a ONT long reads only assembly and polishing it using both FAST5 and Illumina data (paired end).
+=================================================================================================================
 
 ::
 
@@ -77,6 +77,10 @@ Hybrid polishing a ONT long reads only assembly. Polishing using both FAST5 and 
 
   This will perform a long reads only assembly using nanopore data with Canu, Flye and Unicycler assemblers. In the end, it will polish the
   assembly first with FAST5 data then with Illumina data.
+
+.. tip::
+
+  For ``--try_unicycler`` both direct unicycler hybrid mode and unicycler longreads-only + pilon polishing will be executed.
 
 Assembly only in direct Hybrid mode with Unicycler. Using Pacbio reads.
 =======================================================================
@@ -90,6 +94,10 @@ Assembly only in direct Hybrid mode with Unicycler. Using Pacbio reads.
 .. note::
 
   This command will execute a hybrid assembly directly through Unicycler's hybrid assembly mode.
+
+.. warning::
+
+  Users must remember to use the parameters ``--try_unicycler`` or ``--try_spades`` otherwise they will not be executed.
 
 Running with a configuration file
 =================================

@@ -105,11 +105,9 @@ Create a configuration file in your working directory:
 
 ## Citation
 
-To cite this pipeline users can use our Zenodo tag.
+To cite this pipeline users can use our Zenodo tag or directly via the github url.
 
-      Felipe Marques de Almeida. (2020, January 25). fmalmeida/MpGAP: fmalmeida/MpGAP: A multi-plataform genome assembly pipeline (Version v1.0). Zenodo. http://doi.org10.5281zenodo.3627673
-
-Users are also encouraged to cite the programs used in this pipeline whenever they are used. They are:
+Users are encouraged to cite the programs used in this pipeline whenever they are used:
 
 * [Canu](https://github.com/marbl/canu)
 * [Flye](https://github.com/fenderglass/Flye)

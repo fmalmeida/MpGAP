@@ -342,7 +342,7 @@ process canu_assembly {
 
 */
 
-process unicycler_longReads {
+process unicycler_lreads_assembly {
   publishDir "${outdir}/longreads-only", mode: 'copy'
   container 'fmalmeida/mpgap'
   cpus threads
@@ -436,6 +436,7 @@ process nanopolish {
 
   output:
   file("${params.prefix}_${assembler}_nanopolished.fa") into nanopolished_contigs
+  file("${params.prefix}_${assembler}_nanopolished.complete.vcf")
 
   when:
   (assembly_type == 'longreads-only' && params.fast5Path) || (assembly_type == 'hybrid' && params.illumina_polish_longreads_contigs && params.fast5Path)
@@ -452,17 +453,19 @@ process nanopolish {
   zcat -f ${reads} > reads ;
   if [ \$(grep -c "^@" reads) -gt 0 ] ; then sed -n '1~4s/^@/>/p;2~4p' reads > reads.fa ; else mv reads reads.fa ; fi ;
   nanopolish index -d "${fast5_dir}" reads.fa ;
-  minimap2 -d draft.mmi ${draft} ;
-  minimap2 -ax map-ont -t ${params.threads} ${draft} reads.fa | samtools sort -o reads.sorted.bam -T reads.tmp ;
+  bwa index ${draft} ;
+  bwa mem -x ont2d -t ${params.threads} ${draft} reads.fa | samtools sort -o reads.sorted.bam -T reads.tmp - ;
   samtools index reads.sorted.bam ;
   python /miniconda/envs/NANOPOLISH/bin/nanopolish_makerange.py ${draft} | parallel --results nanopolish.results -P ${params.cpus} \
-  nanopolish variants --consensus -o polished.{1}.fa \
+  nanopolish variants --consensus -o polished.{1}.vcf \
     -w {1} \
     -r reads.fa \
     -b reads.sorted.bam \
+    -t ${params.threads} \
     -g ${draft} \
     --min-candidate-frequency 0.1;
-  python /miniconda/envs/NANOPOLISH/bin/nanopolish_merge.py polished.*.fa > ${params.prefix}_${assembler}_nanopolished.fa
+  nanopolish vcf2fasta --skip-checks -g ${draft} polished.*.vcf > ${params.prefix}_${assembler}_nanopolished.fa ;
+  cat polished.*.vcf >> ${params.prefix}_${assembler}_nanopolished.complete.vcf
   """
 }
 
@@ -805,7 +808,8 @@ if (params.pacbio_all_baxh5_path && (params.shortreads_paired) && params.illumin
 //Loading reads for polishing
 short_reads_lreads_polish = (params.shortreads_paired) ? Channel.fromFilePairs( params.shortreads_paired, flat: true, size: 2 )
                                                        : Channel.value(['', '', ''])
-process illumina_polish_longreads_contigs {
+
+process pilon_polish_paired_end {
   publishDir "${outdir}/polished-with-shortreads", mode: 'copy'
   container 'fmalmeida/mpgap'
   cpus threads
@@ -829,7 +833,7 @@ process illumina_polish_longreads_contigs {
   } else { assembler = 'canu' }
   """
   mkdir pilon_results_${assembler};
-  unicycler_polish --minimap --pilon /miniconda/share/pilon-1.23-2/pilon-1.23.jar \
+  unicycler_polish --minimap /miniconda/bin/miniasm --pilon /miniconda/share/pilon-1.23-2/pilon-1.23.jar \
   -a $draft -1 $sread1 -2 $sread2 --threads $threads &> polish.log ;
   mv 0* polish.log pilon_results_${assembler};
   mv pilon_results_${assembler}/*_final_polish.fasta pilon_results_${assembler}/${assembler}_final_polish.fasta;
@@ -860,7 +864,7 @@ Channel.empty().mix(flye_contigs, canu_contigs, unicycler_longreads_contigs).set
 short_reads_pilon_single = (params.shortreads_single) ?
                      Channel.fromPath(params.shortreads_single) : ''
 
-process pilon_polish {
+process pilon_polish_single_end {
   publishDir "${outdir}/polished-with-shortreads", mode: 'copy'
   container 'fmalmeida/mpgap'
   cpus threads
