@@ -1,6 +1,5 @@
 .. _manual:
 
-******
 Manual
 ******
 
@@ -135,9 +134,7 @@ Parameters
    * - ``--illumina_polish_longreads_contigs``
      - N
      - False
-     - Tells the pipeline to create a long reads only assembly and polish it with short reads. By default, only
-     the hybrid mode of Unicycler and SPAdes are executed. If used, users must remember which assemblers to use
-     for a long reads only assembly first: ``--try_unicycler``, ``--try_canu`` or ``--try_flye``.
+     - Tells the pipeline to create a long reads only assembly and polish it with short reads. By default, only the hybrid mode of Unicycler and SPAdes are executed. If used, users must remember which assemblers to use for a long reads only assembly first: ``--try_unicycler``, ``--try_canu`` or ``--try_flye``.
 
 
 All this parameters are configurable through a configuration file. We encourage users to use the configuration
