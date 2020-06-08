@@ -30,8 +30,9 @@ Input
   to set ``assembly_type = 'hybrid'``, set path to Illumina reads and make sure to
   use the ``illumina_polish_longreads_contigs`` parameter.
 
-Usage example
-=============
+
+Parameters
+==========
 
 ::
 
@@ -138,8 +139,10 @@ Usage example
      the hybrid mode of Unicycler and SPAdes are executed. If used, users must remember which assemblers to use
      for a long reads only assembly first: ``--try_unicycler``, ``--try_canu`` or ``--try_flye``.
 
+
 All this parameters are configurable through a configuration file. We encourage users to use the configuration
 file since it will keep your execution cleaner and more readable. See a :ref:`config` example.
+
 
 Examples
 ========
