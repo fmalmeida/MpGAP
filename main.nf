@@ -70,6 +70,9 @@ def helpMessage() {
     --fast5Path <string>                   Path to directory containing FAST5 files for given reads.
                                            Whenever set, the pipeline will execute a polishing step
                                            with Nanopolish. This makes the pipeline extremely SLOW!!
+    --nanopolish.max.haplotypes            This parameter sets to nanopolish the max number of haplotypes to be considered.
+                                           Sometimes the pipeline may crash because to much variation was found exceeding the
+                                           limit. Try augmenting this value (Default: 1000)
     --pacbio_all_baxh5_path <string>       Path to all bax.h5 files for given reads. Whenever set, the pipeline
                                            will execute a polishing step with VarianCaller.
     --pacbio_all_bam_path <string>         Path to all subreads bam files for a given sample. Whenever set, the pipeline
@@ -172,6 +175,7 @@ if ( params.get_yaml ) {
 
 params.longreads = ''
 params.fast5Path = ''
+params.nanopolish.max.haplotypes = 1000
 params.pacbio_all_baxh5_path = ''
 params.pacbio_all_bam_path = ''
 params.lr_type = ''
@@ -463,6 +467,7 @@ process nanopolish {
     -b reads.sorted.bam \
     -t ${params.threads} \
     -g ${draft} \
+    --max-haplotypes ${params.nanopolish.max.haplotypes} \
     --min-candidate-frequency 0.1;
   nanopolish vcf2fasta --skip-checks -g ${draft} polished.*.vcf > ${params.prefix}_${assembler}_nanopolished.fa ;
   cat polished.*.vcf >> ${params.prefix}_${assembler}_nanopolished.complete.vcf
