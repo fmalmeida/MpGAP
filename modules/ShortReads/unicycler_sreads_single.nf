@@ -1,7 +1,7 @@
 process unicycler_sreads_single_assembly {
   publishDir "${params.outdir}/shortreads-only/paired_reads", mode: 'copy'
   container 'fmalmeida/mpgap'
-  tag "Executing Unicycler with paired end reads"
+  tag "Executing Unicycler with single end reads"
   cpus params.threads
 
   input:

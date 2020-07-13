@@ -8,8 +8,8 @@ process spades_sreads_single_assembly {
   file(sreads)
 
   output:
-  tuple file("spades_${id}/contigs.fasta"), val(id), val('spades') // Gets contigs file
   file "*" // Save all output
+  tuple file("spades_${id}/contigs.fasta"), val(id), val('spades') // Gets contigs file
 
   script:
   id = sreads.getSimpleName()

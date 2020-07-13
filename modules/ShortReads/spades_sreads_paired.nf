@@ -8,8 +8,8 @@ process spades_sreads_paired_assembly {
   tuple val(id), file(sread1), file(sread2)
 
   output:
-  tuple file("spades_${id}/contigs.fasta"), val(id), val('spades') // Gets contigs file
   file "*" // Save all output
+  tuple file("spades_${id}/contigs.fasta"), val(id), val('spades') // Gets contigs file
 
   script:
   """

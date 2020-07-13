@@ -34,91 +34,114 @@ nextflow.preview.dsl=2
     OPTIONS:
              General Parameters - Mandatory
 
-     --outdir <string>                              Output directory name
+     --outdir <string>                                                          Output directory name
 
-     --threads <int>                                Number of threads to use
+     --threads <int>                                                            Number of threads to use
 
-     --assembly_type <string>                       Selects assembly mode: hybrid, illumina-only or longreads-only
+     --assembly_type <string>                                                   Selects assembly mode: hybrid, illumina-only or longreads-only
 
-     --try_canu                                     Execute assembly with Canu. Multiple assemblers can be chosen.
+     --try_canu                                                                 Execute assembly with Canu. Multiple assemblers can be chosen.
 
-     --canu_additional_parameters <string>          Give additional parameters to Canu assembler. Must be in quotes
-                                                    and separated by one space. Must be given as shown in Canu manual.
-                                                    E.g. 'correctedErrorRate=0.075 corOutCoverage=200'
+     --canu_additional_parameters <string>                                      Give additional parameters to Canu assembler. Must be in quotes
+                                                                                and separated by one space. Must be given as shown in Canu manual.
+                                                                                E.g. 'correctedErrorRate=0.075 corOutCoverage=200'
 
-     --try_unicycler                                Execute assembly with Unicycler. Multiple assemblers can be chosen.
+     --try_unicycler                                                            Execute assembly with Unicycler. Multiple assemblers can be chosen.
 
-     --unicycler_additional_parameters <string>     Give additional parameters to Unicycler assembler. Must be in quotes
-                                                    and separated by one space. Must be given as shown in Unicycler manual.
-                                                    E.g. '--mode conservative --no_correct'
+     --unicycler_additional_parameters <string>                                 Give additional parameters to Unicycler assembler. Must be in quotes
+                                                                                and separated by one space. Must be given as shown in Unicycler manual.
+                                                                                E.g. '--mode conservative --no_correct'
 
-     --try_flye                                     Execute assembly with Flye. Multiple assemblers can be chosen.
+     --try_flye                                                                 Execute assembly with Flye. Multiple assemblers can be chosen.
 
-     --flye_additional_parameters <string>          Give additional parameters to Flye assembler. Must be in quotes
-                                                    and separated by one space. Must be given as shown in Flye manual.
-                                                    E.g. '--meta --iterations 4'
+     --flye_additional_parameters <string>                                      Give additional parameters to Flye assembler. Must be in quotes
+                                                                                and separated by one space. Must be given as shown in Flye manual.
+                                                                                E.g. '--meta --iterations 4'
 
-     --try_spades                                   Execute assembly with Spades. Multiple assemblers can be chosen.
+     --try_spades                                                               Execute assembly with Spades. Multiple assemblers can be chosen.
 
-     --spades_additional_parameters <string>        Give additional parameters to Spades assembler. Must be in quotes
-                                                    and separated by one space. Must be given as shown in Spades manual.
-                                                    E.g. '--meta --plasmids'
+     --spades_additional_parameters <string>                                    Give additional parameters to Spades assembler. Must be in quotes
+                                                                                and separated by one space. Must be given as shown in Spades manual.
+                                                                                E.g. '--meta --plasmids'
 
 
-                       Parameters for illumina-only mode. Can be executed by SPAdes and Unicycler assemblers.
-                       Users can use paired or single end reads. If both types are given at once, assemblers
-                       will be executed with a mix of both.
 
-     --shortreads_paired <string>                   Path to Illumina paired end reads.
+                                                          Short reads only assembly
 
-     --shortreads_single <string>                   Path to Illumina single end reads.
+
+
+                       It can be executed by SPAdes and Unicycler assemblers. Users can use paired or single end reads.
+                       If both types are given at once, assemblers will be executed with a mix of both. Remember to always
+                       write the paths with regex (*, {1,2}, etc.) inside double quotes.
+
+
+
+     --shortreads_paired <string>                                               Path to Illumina paired end reads. E.g. "read_pair_{1,2}.fastq"
+
+     --shortreads_single <string>                                               Path to Illumina single end reads. E.g. "reads*.fastq"
+
+
+
+                                                          Hybrid Assembly
+
 
                        Parameters for hybrid mode. Can be executed by spades and unicycler assemblers.
 
-     --shortreads_paired <string>                   Path to Illumina paired end reads.
+     --shortreads_paired <string>                                               Path to Illumina paired end reads.
 
-     --shortreads_single <string>                   Path to Illumina single end reads.
+     --shortreads_single <string>                                               Path to Illumina single end reads.
 
-     --longreads <string>                           Path to longreads in FASTA or FASTQ formats.
+     --longreads <string>                                                       Path to longreads in FASTA or FASTQ formats.
 
-     --lr_type <string>                             Sets wich type of long reads are being used: pacbio or nanopore
+     --lr_type <string>                                                         Sets wich type of long reads are being used: pacbio or nanopore
+
+
+
+
+                                                          Long reads only assembly
+
+
 
                        Parameters for longreads-only mode. Can be executed by canu, flye and unicycler assemblers.
                        In the end, long reads only assemblies can be polished with illumina reads through pilon.
 
-     --longreads <string>                           Path to longreads in FASTA or FASTQ formats.
+     --longreads <string>                                                       Path to longreads in FASTA or FASTQ formats.
 
-     --medaka_sequencing_model <string>             Tells Medaka polisher which model to use according to the basecaller
-                                                    used. For example the model named r941_min_fast_g303 should be used
-                                                    with data from MinION (or GridION) R9.4.1 flowcells using the fast
-                                                    Guppy basecaller version 3.0.3. Where a version of Guppy has been
-                                                    used without an exactly corresponding medaka model, the medaka model
-                                                    with the highest version equal to or less than the guppy version
-                                                    should be selected. Models available: r941_min_fast_g303,
-                                                    r941_min_high_g303, r941_min_high_g330, r941_min_high_g344,
-                                                    r941_prom_fast_g303, r941_prom_high_g303, r941_prom_high_g344,
-                                                    r941_prom_high_g330, r10_min_high_g303, r10_min_high_g340,
-                                                    r103_min_high_g345, r941_prom_snp_g303, r941_prom_variant_g303,
-                                                    r941_min_high_g340_rle.
+     --medaka_sequencing_model <string>                                         Tells Medaka polisher which model to use according to the basecaller
+                                                                                used. For example the model named r941_min_fast_g303 should be used
+                                                                                with data from MinION (or GridION) R9.4.1 flowcells using the fast
+                                                                                Guppy basecaller version 3.0.3. Where a version of Guppy has been
+                                                                                used without an exactly corresponding medaka model, the medaka model
+                                                                                with the highest version equal to or less than the guppy version
+                                                                                should be selected. Models available: r941_min_fast_g303,
+                                                                                r941_min_high_g303, r941_min_high_g330, r941_min_high_g344,
+                                                                                r941_prom_fast_g303, r941_prom_high_g303, r941_prom_high_g344,
+                                                                                r941_prom_high_g330, r10_min_high_g303, r10_min_high_g340,
+                                                                                r103_min_high_g345, r941_prom_snp_g303, r941_prom_variant_g303,
+                                                                                r941_min_high_g340_rle.
 
 
-     --nanopolish_fast5Path <string>                Path to directory containing FAST5 files for given reads.
-                                                    Whenever set, the pipeline will execute a polishing step
-                                                    with Nanopolish. This makes the pipeline extremely SLOW!!
+     --nanopolish_fast5Path <string>                                            Path to directory containing FAST5 files for given reads.
+                                                                                Whenever set, the pipeline will execute a polishing step
+                                                                                with Nanopolish. This makes the pipeline extremely SLOW!!
 
-     --pacbio_all_bam_path <string>                 Path to all subreads bam files for given reads. Whenever set, the pipeline
-                                                    will execute a polishing step with VarianCaller with arrow.
-                                                    Arrow is supported for PacBio Sequel data and RS data with the P6-C4 chemistry
+     --nanopolish_max_haplotypes                                                This parameter sets to nanopolish the max number of haplotypes to be considered.
+                                                                                Sometimes the pipeline may crash because to much variation was found exceeding the
+                                                                                limit. Try augmenting this value (Default: 1000)
 
-     --genomeSize <string>                          Canu and Flye require an estimative of genome size in order
-                                                    to be executed. Examples: 5.6m; 1.2g
+     --pacbio_all_bam_path <string>                                             Path to all subreads bam files for given reads. Whenever set, the pipeline
+                                                                                will execute a polishing step with VarianCaller with arrow.
+                                                                                Arrow is supported for PacBio Sequel data and RS data with the P6-C4 chemistry
 
-     --lr_type <string>                             Sets wich type of long reads are being used: pacbio or nanopore
+     --genomeSize <string>                                                      Canu and Flye require an estimative of genome size in order
+                                                                                to be executed. Examples: 5.6m; 1.2g
 
-     --illumina_polish_longreads_contigs            This tells the pipeline to polish long reads only assemblies
-                                                    with Illumina reads through Pilon. This is another hybrid methodology.
-                                                    For that, users have to set path to Illumina reads through
-                                                    --shortreads_paired or --shortreads_single.
+     --lr_type <string>                                                         Sets wich type of long reads are being used: pacbio or nanopore
+
+     --illumina_polish_longreads_contigs                                        This tells the pipeline to polish long reads only assemblies
+                                                                                with Illumina reads through Pilon. This is another hybrid methodology.
+                                                                                For that, users have to set path to Illumina reads through
+                                                                                --shortreads_paired or --shortreads_single.
 
 
 
@@ -127,6 +150,18 @@ nextflow.preview.dsl=2
 
  def exampleMessage() {
     log.info """
+
+    Examplification on how to run fmalmeida/MpGAP pipeline using the CLI configuration
+
+    Short reads only - PAIRED:
+\$ nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type illumina-only --try_spades --try_unicycler --shortreads_paired "dataset_1/sampled/illumina_R{1,2}.fastq
+
+    Short reads only - SINGLE:
+\$ nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type illumina-only --try_spades --try_unicycler --shortreads_single dataset_1/sampled/illumina_single.fastq
+
+    Short reads only - Both PAIRED and SINGLE:
+\$ nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type illumina-only --try_spades --try_unicycler --shortreads_paired "dataset_1/sampled/illumina_R{1,2}.fastq" --shortreads_single "dataset_1/sampled/illumina_single.fastq"
+
     """.stripIndent()
  }
 
@@ -245,58 +280,148 @@ log.info "========================================="
  */
 
 // Canu assembler
-include canu_assembly from './modules/canu.nf' params(outdir: params.outdir, lr_type: params.lr_type,
+include canu_assembly from './modules/LongReads/canu.nf' params(outdir: params.outdir, lr_type: params.lr_type,
   canu_additional_parameters: params.canu_additional_parameters, threads: params.threads,
   genomeSize: params.genomeSize, prefix: params.prefix)
 
 // Unicycler assembler
-include unicycler_lreads from './modules/unicycler_lreads.nf' params(outdir: params.outdir,
+include unicycler_lreads from './modules/LongReads/unicycler_lreads.nf' params(outdir: params.outdir,
   unicycler_additional_parameters: params.unicycler_additional_parameters, threads: params.threads)
 
 // Flye assembler
-include flye_assembly from './modules/flye.nf' params(outdir: params.outdir, lr_type: params.lr_type,
+include flye_assembly from './modules/LongReads/flye.nf' params(outdir: params.outdir, lr_type: params.lr_type,
   flye_additional_parameters: params.flye_additional_parameters, threads: params.threads,
   genomeSize: params.genomeSize, prefix: params.prefix)
+
+
 
 /*
  * Modules for assembling short reads
  */
 
 // SPAdes paired
-include spades_sreads_paired_assembly from './modules/spades_sreads_paired.nf' params(outdir: params.outdir,
+include spades_sreads_paired_assembly from './modules/ShortReads/spades_sreads_paired.nf' params(outdir: params.outdir,
   threads: params.threads, spades_additional_parameters: params.spades_additional_parameters)
 
 // SPAdes single
-include spades_sreads_single_assembly from './modules/spades_sreads_single.nf' params(outdir: params.outdir,
+include spades_sreads_single_assembly from './modules/ShortReads/spades_sreads_single.nf' params(outdir: params.outdir,
+  threads: params.threads, spades_additional_parameters: params.spades_additional_parameters)
+
+// SPAdes both
+include spades_sreads_both_assembly from './modules/ShortReads/spades_sreads_both.nf' params(outdir: params.outdir,
   threads: params.threads, spades_additional_parameters: params.spades_additional_parameters)
 
 // Unicycler paired
-include unicycler_sreads_paired_assembly from './modules/unicycler_sreads_paired.nf' params(outdir: params.outdir,
+include unicycler_sreads_paired_assembly from './modules/ShortReads/unicycler_sreads_paired.nf' params(outdir: params.outdir,
   threads: params.threads, unicycler_additional_parameters: params.unicycler_additional_parameters)
 
 // Unicycler single
-include unicycler_sreads_single_assembly from './modules/unicycler_sreads_single.nf' params(outdir: params.outdir,
+include unicycler_sreads_single_assembly from './modules/ShortReads/unicycler_sreads_single.nf' params(outdir: params.outdir,
   threads: params.threads, unicycler_additional_parameters: params.unicycler_additional_parameters)
+
+// Unicycler both
+include unicycler_sreads_both_assembly from './modules/ShortReads/unicycler_sreads_both.nf' params(outdir: params.outdir,
+  threads: params.threads, unicycler_additional_parameters: params.unicycler_additional_parameters)
+
 
 /*
  * Modules for long reads assemblies polishment
  */
 
 // Nanopolish (for nanopore data)
-include nanopolish from './modules/nanopolish.nf' params(outdir: params.outdir,
+include nanopolish from './modules/LongReads/nanopolish.nf' params(outdir: params.outdir,
   cpus: params.cpus, threads: params.threads, prefix: params.prefix)
 
 // Medaka (for nanopore data)
-include medaka from './modules/medaka.nf' params(medaka_sequencing_model: params.medaka_sequencing_model,
+include medaka from './modules/LongReads/medaka.nf' params(medaka_sequencing_model: params.medaka_sequencing_model,
   threads: params.threads, outdir: params.outdir, prefix: params.prefix)
 
 // VariantCaller Pacbio
-include variantCaller from './modules/variantCaller.nf' params(threads: params.threads,
+include variantCaller from './modules/LongReads/variantCaller.nf' params(threads: params.threads,
   outdir: params.outdir, prefix: params.prefix)
+
+
+
+/*
+ * Module for assessing assembly qualities
+ */
+include { quast as quast_sreads_spades; quast as quast_sreads_unicycler } from './modules/QualityAssessment/quast.nf' params(threads: params.threads,
+  outdir: params.outdir, prefix: params.prefix, assembly_type: params.assembly_type, shortreads_paired: params.shortreads_paired, shortreads_single: params.shortreads_single)
+
+
+
 
 /*
  * Define custom workflows
  */
+
+
+
+
+                                 /*
+                                  * WORKFLOW: SHORT READS ONLY
+                                  */
+
+workflow sreads_only_nf {
+  take:
+      preads
+      sreads
+  main:
+      /*
+       * Paired end reads
+       */
+
+       if (params.shortreads_paired && !params.shortreads_single) {
+         // SPAdes
+         if (params.try_spades) {
+           spades_sreads_paired_assembly(preads)
+           quast_sreads_spades(spades_sreads_paired_assembly.out[1], preads)
+         }
+         // Unicycler
+         if (params.try_unicycler) {
+           unicycler_sreads_paired_assembly(preads)
+           quast_sreads_unicycler(unicycler_sreads_paired_assembly.out[1], preads)
+         }
+       }
+
+
+      /*
+       * Single end reads
+       */
+
+      if (params.shortreads_single && !params.shortreads_paired) {
+        // SPAdes
+        if (params.try_spades) {
+          spades_sreads_single_assembly(sreads)
+          quast_sreads_spades(spades_sreads_single_assembly.out[1], sreads)
+        }
+        // Unicycler
+        if (params.try_unicycler) {
+          unicycler_sreads_single_assembly(sreads)
+          quast_sreads_unicycler(unicycler_sreads_single_assembly.out[1], sreads)
+        }
+      }
+
+      /*
+       * Both Library Types
+       */
+
+      if (params.shortreads_paired && params.shortreads_single) {
+        // SPAdes
+        if (params.try_spades) {
+          spades_sreads_both_assembly(preads, sreads)
+          quast_sreads_spades(spades_sreads_both_assembly.out[1], preads.concat(sreads).collect())
+        }
+        // Unicycler
+        if (params.try_unicycler) {
+          unicycler_sreads_both_assembly(preads, sreads)
+          quast_sreads_unicycler(unicycler_sreads_both_assembly.out[1], preads.concat(sreads).collect())
+        }
+      }
+
+}
+
+
 
                                 /*
                                  * LONG READS ONLY WORKFLOWS
@@ -306,20 +431,27 @@ workflow lreadsonly_nf {
   take:
       reads
   main:
-      // User wants to use Canu
+
+      // Results
+      assemblies = Channel.empty()
+
+      // Canu
       if (params.try_canu) {
         canu_assembly(reads)
-        }
+      }
 
-      // User wants to use Flye
+      // Flye
       if (params.try_flye) {
         flye_assembly(reads)
-        }
+      }
 
-      // User wants to use Unicycler
+      // Unicycler
       if (params.try_unicycler) {
         unicycler_lreads(reads)
-        }
+      }
+
+      // Nanopolish
+      // Medaka
 }
 
 // With Nanopolish
@@ -333,7 +465,7 @@ workflow lreadsonly_nanopolish_nf {
       if (params.try_canu) {
         canu_assembly(reads)
         nanopolish(canu_assembly.out[1], reads, fast5, fast5_dir)
-        }
+      }
 
       // User wants to use Flye
       if (params.try_flye) {
@@ -399,47 +531,11 @@ workflow lreadsonly_variantCaller_nf {
 }
 
                                   /*
-                                   * SHORT READS ONLY WORKFLOWS
-                                   */
-
-// Paired end reads
-workflow sreads_only_paired_nf {
-  take:
-      paired_reads
-  main:
-      // User wants to use SPAdes
-      if (params.try_spades) {
-        spades_sreads_paired_assembly(paired_reads)
-      }
-
-      // User wants to use Unicycler
-      if (params.try_unicycler) {
-        unicycler_sreads_paired_assembly(paired_reads)
-      }
-}
-
-// Single end reads
-workflow sreads_only_single_nf {
-  take:
-      single_reads
-  main:
-      // User wants to use SPAdes
-      if (params.try_spades) {
-        spades_sreads_single_assembly(single_reads)
-      }
-
-      // User wants to use Unicycler
-      if (params.try_unicycler) {
-        unicycler_sreads_single_assembly(single_reads)
-      }
-}
-
-                                  /*
-                                   * HYBRID ASSEMBLY WORKFLOWS
+                                   * WORKFLOW: HYBRID
                                    */
 
                                   /*
-                                   * DEFINE MAIN WORKFLOW
+                                   * DEFINE (RUN) MAIN WORKFLOW
                                    */
 
 workflow {
@@ -484,14 +580,23 @@ workflow {
                            */
 
    if (params.assembly_type == 'illumina-only') {
+
      // Using paired end reads
-     if (params.shortreads_paired) {
-       sreads_only_paired_nf(Channel.fromFilePairs( params.shortreads_paired, flat: true, size: 2 ))
+     if (params.shortreads_paired && !params.shortreads_single) {
+       sreads_only_nf(Channel.fromFilePairs( params.shortreads_paired, flat: true, size: 2 ),
+                      Channel.empty())
      }
 
      // Using single end reads
-     if (params.shortreads_single) {
-       sreads_only_single_nf(Channel.fromPath(params.shortreads_single))
+     if (params.shortreads_single && !params.shortreads_paired) {
+       sreads_only_nf(Channel.empty(),
+                      Channel.fromPath(params.shortreads_single))
+     }
+
+     // Using both paired and single end reads
+     if (params.shortreads_single && params.shortreads_paired) {
+       sreads_only_nf(Channel.fromFilePairs( params.shortreads_paired, flat: true, size: 2 ),
+                      Channel.fromPath(params.shortreads_single))
      }
    }
 
