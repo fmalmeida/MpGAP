@@ -34,9 +34,9 @@ nextflow.preview.dsl=2
     OPTIONS:
              General Parameters - Mandatory
 
-     --outdir <string>                                                          Output directory name
+     --outdir <string>                                                          Output directory name. Outputs are prefixed with reads IDs (basenames).
 
-     --threads <int>                                                            Number of threads to use
+     --threads <int>                                                            Number of threads to use.
 
      --assembly_type <string>                                                   Selects assembly mode: hybrid, illumina-only or longreads-only
 
@@ -107,6 +107,8 @@ nextflow.preview.dsl=2
 
      --longreads <string>                                                       Path to longreads in FASTA or FASTQ formats.
 
+     --lr_type <string>                                                         Sets wich type of long reads are being used: pacbio or nanopore
+
      --medaka_sequencing_model <string>                                         Tells Medaka polisher which model to use according to the basecaller
                                                                                 used. For example the model named r941_min_fast_g303 should be used
                                                                                 with data from MinION (or GridION) R9.4.1 flowcells using the fast
@@ -136,8 +138,6 @@ nextflow.preview.dsl=2
      --genomeSize <string>                                                      Canu and Flye require an estimative of genome size in order
                                                                                 to be executed. Examples: 5.6m; 1.2g
 
-     --lr_type <string>                                                         Sets wich type of long reads are being used: pacbio or nanopore
-
      --illumina_polish_longreads_contigs                                        This tells the pipeline to polish long reads only assemblies
                                                                                 with Illumina reads through Pilon. This is another hybrid methodology.
                                                                                 For that, users have to set path to Illumina reads through
@@ -154,13 +154,17 @@ nextflow.preview.dsl=2
     Examplification on how to run fmalmeida/MpGAP pipeline using the CLI configuration
 
     Short reads only - PAIRED:
-\$ nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type illumina-only --try_spades --try_unicycler --shortreads_paired "dataset_1/sampled/illumina_R{1,2}.fastq
+\$ nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type illumina-only --try_spades --try_unicycler --shortreads_paired "dataset_1/sampled/illumina_R{1,2}.fastq"
 
     Short reads only - SINGLE:
-\$ nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type illumina-only --try_spades --try_unicycler --shortreads_single dataset_1/sampled/illumina_single.fastq
+\$ nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type illumina-only --try_spades --try_unicycler --shortreads_single "dataset_1/sampled/illumina_single.fastq"
 
     Short reads only - Both PAIRED and SINGLE:
 \$ nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type illumina-only --try_spades --try_unicycler --shortreads_paired "dataset_1/sampled/illumina_R{1,2}.fastq" --shortreads_single "dataset_1/sampled/illumina_single.fastq"
+
+    Long reads only - ONT (Using both Nanopolish and Medaka):
+\$ nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type longreads-only --try_canu --try_flye --try_unicycler --medaka_sequencing_model r941_min_fast_g303 \
+--nanopolish_fast5Path "dataset_1/ont/fast5_pass" --nanopolish_max_haplotypes 2000 --genomeSize 2m --lr_type nanopore --longreads "dataset_1/ont/ont_reads.fastq"
 
     """.stripIndent()
  }
@@ -229,6 +233,7 @@ nextflow.preview.dsl=2
   params.longreads = ''
   params.medaka_sequencing_model = ''
   params.nanopolish_fast5Path = ''
+  params.nanopolish_max_haplotypes = 1000
   params.pacbio_all_bam_path = ''
   params.lr_type = ''
   params.shortreads_paired = ''
@@ -257,7 +262,7 @@ log.info " Docker-based, fmalmeida/mpgap, generic genome assembly Pipeline "
 log.info "================================================================="
 def summary = [:]
 if (params.longreads) { summary['Long Reads']   = params.longreads }
-if (params.nanopolish_fast5Path) { summary['Fast5 files dir']   = params.nanopolish_fast5Path }
+if (params.nanopolish_fast5Path && params.lr_type == 'nanopore') { summary['Fast5 files dir']   = params.nanopolish_fast5Path }
 if (params.shortreads_single) { summary['Short single end reads']   = params.shortreads_single }
 if (params.shortreads_paired) { summary['Short paired end reads']   = params.shortreads_paired }
 summary['Output dir']   = params.outdir
@@ -282,7 +287,7 @@ log.info "========================================="
 // Canu assembler
 include canu_assembly from './modules/LongReads/canu.nf' params(outdir: params.outdir, lr_type: params.lr_type,
   canu_additional_parameters: params.canu_additional_parameters, threads: params.threads,
-  genomeSize: params.genomeSize, prefix: params.prefix)
+  genomeSize: params.genomeSize)
 
 // Unicycler assembler
 include unicycler_lreads from './modules/LongReads/unicycler_lreads.nf' params(outdir: params.outdir,
@@ -291,7 +296,7 @@ include unicycler_lreads from './modules/LongReads/unicycler_lreads.nf' params(o
 // Flye assembler
 include flye_assembly from './modules/LongReads/flye.nf' params(outdir: params.outdir, lr_type: params.lr_type,
   flye_additional_parameters: params.flye_additional_parameters, threads: params.threads,
-  genomeSize: params.genomeSize, prefix: params.prefix)
+  genomeSize: params.genomeSize)
 
 
 
@@ -329,24 +334,33 @@ include unicycler_sreads_both_assembly from './modules/ShortReads/unicycler_srea
  */
 
 // Nanopolish (for nanopore data)
-include nanopolish from './modules/LongReads/nanopolish.nf' params(outdir: params.outdir,
-  cpus: params.cpus, threads: params.threads, prefix: params.prefix)
+include { nanopolish as nanopolish_canu;
+          nanopolish as nanopolish_unicycler;
+          nanopolish as nanopolish_flye } from './modules/LongReads/nanopolish.nf' params(outdir: params.outdir, cpus: params.cpus, threads: params.threads,
+                                                                                          nanopolish_max_haplotypes: params.nanopolish_max_haplotypes)
 
 // Medaka (for nanopore data)
-include medaka from './modules/LongReads/medaka.nf' params(medaka_sequencing_model: params.medaka_sequencing_model,
-  threads: params.threads, outdir: params.outdir, prefix: params.prefix)
+include { medaka as medaka_canu;
+          medaka as medaka_unicycler;
+          medaka as medaka_flye } from './modules/LongReads/medaka.nf' params(medaka_sequencing_model: params.medaka_sequencing_model, threads: params.threads, outdir: params.outdir)
 
 // VariantCaller Pacbio
-include variantCaller from './modules/LongReads/variantCaller.nf' params(threads: params.threads,
-  outdir: params.outdir, prefix: params.prefix)
+include { variantCaller as variantCaller_canu;
+          variantCaller as variantCaller_unicycler;
+          variantCaller as variantCaller_flye } from './modules/LongReads/variantCaller.nf' params(threads: params.threads, outdir: params.outdir)
 
 
 
 /*
  * Module for assessing assembly qualities
  */
-include { quast as quast_sreads_spades; quast as quast_sreads_unicycler } from './modules/QualityAssessment/quast.nf' params(threads: params.threads,
-  outdir: params.outdir, prefix: params.prefix, assembly_type: params.assembly_type, shortreads_paired: params.shortreads_paired, shortreads_single: params.shortreads_single)
+include { quast as quast_sreads_spades;     quast as quast_sreads_unicycler;
+          quast as quast_lreads_canu;       quast as quast_lreads_flye; quast as quast_lreads_unicycler;
+          quast as quast_nanopolish_canu;   quast as quast_nanopolish_flye; quast as quast_nanopolish_unicycler;
+          quast as quast_medaka_canu;       quast as quast_medaka_flye; quast as quast_medaka_unicycler } \
+\
+          from './modules/QualityAssessment/quast.nf' params(threads: params.threads, outdir: params.outdir, assembly_type: params.assembly_type,
+            shortreads_paired: params.shortreads_paired, shortreads_single: params.shortreads_single, lr_type: params.lr_type)
 
 
 
@@ -430,104 +444,86 @@ workflow sreads_only_nf {
 workflow lreadsonly_nf {
   take:
       reads
-  main:
-
-      // Results
-      assemblies = Channel.empty()
-
-      // Canu
-      if (params.try_canu) {
-        canu_assembly(reads)
-      }
-
-      // Flye
-      if (params.try_flye) {
-        flye_assembly(reads)
-      }
-
-      // Unicycler
-      if (params.try_unicycler) {
-        unicycler_lreads(reads)
-      }
-
-      // Nanopolish
-      // Medaka
-}
-
-// With Nanopolish
-workflow lreadsonly_nanopolish_nf {
-  take:
-      reads
       fast5
       fast5_dir
-  main:
-      // User wants to use Canu
-      if (params.try_canu) {
-        canu_assembly(reads)
-        nanopolish(canu_assembly.out[1], reads, fast5, fast5_dir)
-      }
-
-      // User wants to use Flye
-      if (params.try_flye) {
-        flye_assembly(reads)
-        nanopolish(flye_assembly.out[1], reads, fast5, fast5_dir)
-        }
-
-      // User wants to use Unicycler
-      if (params.try_unicycler) {
-        unicycler_lreads(reads)
-        nanopolish(unicycler_lreads.out[1], reads, fast5, fast5_dir)
-        }
-}
-
-// With Medaka
-workflow lreadsonly_medaka_nf {
-  take:
-      reads
-  main:
-      // User wants to use Canu
-      if (params.try_canu) {
-        canu_assembly(reads)
-        medaka(canu_assembly.out[1], reads)
-      }
-
-      // User wants to use Flye
-      if (params.try_flye) {
-        flye_assembly(reads)
-        medaka(flye_assembly.out[1], reads)
-      }
-
-      // User wants to use Unicycler
-      if (params.try_unicycler) {
-        unicycler_lreads(reads)
-        medaka(unicycler_lreads.out[1], reads)
-      }
-}
-
-// With Arrow (PacBio)
-workflow lreadsonly_variantCaller_nf {
-  take:
-      reads
       bamFile
       nBams
   main:
-      // User wants to use Canu
+      /*
+       * Canu
+       */
       if (params.try_canu) {
         canu_assembly(reads)
-        variantCaller(canu_assembly.out[1], bamFile, nBams)
+        quast_lreads_canu(canu_assembly.out[1], reads)
+
+        // Nanopolish?
+        if (params.nanopolish_fast5Path && params.lr_type == 'nanopore') {
+          nanopolish_canu(canu_assembly.out[1], reads, fast5, fast5_dir)
+          quast_nanopolish_canu(nanopolish_canu.out[0], reads)
         }
 
-      // User wants to use Flye
+        // Medaka?
+        if (params.medaka_sequencing_model && params.lr_type == 'nanopore') {
+          medaka_canu(canu_assembly.out[1], reads)
+          quast_medaka_canu(medaka_canu.out[1], reads)
+        }
+
+        // VariantCaller?
+        if (params.pacbio_all_bam_path && params.lr_type == 'pacbio') {
+          variantCaller_canu(canu_assembly.out[1], bamFile, nBams)
+        }
+      }
+
+      /*
+       * Flye
+       */
       if (params.try_flye) {
         flye_assembly(reads)
-        variantCaller(flye_assembly.out[1], bamFile, nBams)
+        quast_lreads_flye(flye_assembly.out[1], reads)
+
+        // Nanopolish?
+        if (params.nanopolish_fast5Path && params.lr_type == 'nanopore') {
+          nanopolish_flye(flye_assembly.out[1], reads, fast5, fast5_dir)
+          quast_nanopolish_flye(nanopolish_flye.out[0], reads)
         }
 
-      // User wants to use Unicycler
+        // Medaka?
+        if (params.medaka_sequencing_model && params.lr_type == 'nanopore') {
+          medaka_flye(flye_assembly.out[1], reads)
+          quast_medaka_flye(medaka_flye.out[1], reads)
+        }
+
+        // VariantCaller?
+        if (params.pacbio_all_bam_path && params.lr_type == 'pacbio') {
+          variantCaller_flye(flye_assembly.out[1], bamFile, nBams)
+        }
+
+      }
+
+      /*
+       * Unicycler
+       */
       if (params.try_unicycler) {
         unicycler_lreads(reads)
-        variantCaller(unicycler_lreads.out[1], bamFile, nBams)
+        quast_lreads_unicycler(unicycler_lreads.out[1], reads)
+
+        // Nanopolish?
+        if (params.nanopolish_fast5Path && params.lr_type == 'nanopore') {
+          nanopolish_unicycler(unicycler_lreads.out[1], reads, fast5, fast5_dir)
+          quast_nanopolish_unicycler(nanopolish_unicycler.out[0], reads)
         }
+
+        // Medaka?
+        if (params.medaka_sequencing_model && params.lr_type == 'nanopore') {
+          medaka_unicycler(unicycler_lreads.out[1], reads)
+          quast_medaka_unicycler(medaka_unicycler.out[1], reads)
+        }
+
+        // VariantCaller?
+        if (params.pacbio_all_bam_path && params.lr_type == 'pacbio') {
+          variantCaller_unicycler(unicycler_lreads.out[1], bamFile, nBams)
+        }
+      }
 }
 
                                   /*
@@ -540,44 +536,35 @@ workflow lreadsonly_variantCaller_nf {
 
 workflow {
 
-                            /*
-                             * Long reads only assembly without polish
-                             */
+  /*
+   * Long reads only assembly
+   */
 
-  if (params.assembly_type == 'longreads-only' && params.medaka_sequencing_model == '' &&
-      params.nanopolish_fast5Path == '' && params.pacbio_all_bam_path == '') {
-    lreadsonly_nf(Channel.fromPath(params.longreads))
+  if (params.assembly_type == 'longreads-only') {
+
+    // Without any polishing (ONT and Pacbio)
+    if (!params.medaka_sequencing_model && !params.nanopolish_fast5Path && !params.pacbio_all_bam_path) {
+      lreadsonly_nf(Channel.fromPath(params.longreads), Channel.value(''), Channel.value(''), Channel.value(''), Channel.value(''))
+    }
+
+    // Use Nanopolish? (ONT)
+    if (params.nanopolish_fast5Path && !params.pacbio_all_bam_path && params.lr_type == 'nanopore') {
+      lreadsonly_nf(Channel.fromPath(params.longreads), Channel.fromPath(params.nanopolish_fast5Path),
+                    Channel.fromPath(params.nanopolish_fast5Path, type: 'dir'), Channel.value(''), Channel.value(''))
+    }
+
+    // Use VariantCaller (Pacbio)
+    if (!params.nanopolish_fast5Path && params.pacbio_all_bam_path && params.lr_type == 'pacbio') {
+      lreadsonly_nf(Channel.fromPath(params.longreads), Channel.value(''), Channel.value(''),
+                    Channel.fromPath(params.pacbio_all_bam_path), Channel.fromPath(params.pacbio_all_bam_path).count().subscribe { println it })
+    }
+
   }
 
-                            /*
-                             * Long reads only assembly with polish
-                             */
 
-  // With Medaka
-  if (params.assembly_type == 'longreads-only' && params.lr_type == 'nanopore' &&
-      params.medaka_sequencing_model) {
-    lreadsonly_medaka_nf(Channel.fromPath(params.longreads))
-  }
-
-  // With Nanopolish
-  if (params.assembly_type == 'longreads-only' && params.lr_type == 'nanopore' &&
-      params.nanopolish_fast5Path) {
-    lreadsonly_nanopolish_nf(Channel.fromPath(params.longreads),
-                    Channel.fromPath(params.nanopolish_fast5Path),
-                    Channel.fromPath(params.nanopolish_fast5Path, type: 'dir'))
-  }
-
-  // With Pacbio Genomic Consensus with bax files
-  if (params.assembly_type == 'longreads-only' && params.lr_type == 'pacbio' &&
-      params.pacbio_all_bam_path) {
-    lreadsonly_variantCaller_nf(Channel.fromPath(params.longreads),
-                    Channel.fromPath(params.pacbio_all_bam_path),
-                    Channel.fromPath(params.pacbio_all_bam_path).count().subscribe { println it })
-  }
-
-                          /*
-                           * Short reads only assembly
-                           */
+  /*
+   * Short reads only assembly
+   */
 
    if (params.assembly_type == 'illumina-only') {
 

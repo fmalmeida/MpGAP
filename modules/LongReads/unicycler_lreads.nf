@@ -1,7 +1,8 @@
 process unicycler_lreads {
-  publishDir "${params.outdir}/longreads-only", mode: 'copy'
+  publishDir "${params.outdir}/longreads-only", mode: 'copy', overwrite: true
   container 'fmalmeida/mpgap'
   cpus params.threads
+  tag "Performing a longreads only assembly with Unicycler"
 
   input:
   file lreads

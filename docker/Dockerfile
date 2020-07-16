@@ -84,16 +84,14 @@ RUN conda create -y -n flye && \
 	conda install -y -n flye -c bioconda flye
 
 # Set Quast
-#RUN rm -rf /var/lib/apt/lists/*  && \
-#	apt-get clean && apt-get update && apt-get upgrade -y && \
-#	DEBIAN_FRONTEND=noninteractive apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y hmmer unzip zlib1g-dev pkg-config libfreetype6-dev libpng-dev python-matplotlib && \
-#	git clone https://github.com/ablab/quast.git && \
-#	cd quast && ./setup.py install_full && \
-#	apt-get update && apt-get install -y bwa
-RUN conda create -y -n QUAST && \
-	conda install -y -n QUAST -c bioconda quast && \
-	apt-get update && apt-get install -y bwa
-	
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y pkg-config libfreetype6-dev libpng-dev python-matplotlib bwa && \
+		git clone https://github.com/ablab/quast.git && \
+		cd quast && pip install --upgrade setuptools pip && \
+		python setup.py install_full
+
+# Custom Permissions
+RUN chmod -R 777 /miniconda/envs/MEDAKA/lib/python3.6/site-packages/medaka/data
+
 # Check envs
 RUN conda info -e
 

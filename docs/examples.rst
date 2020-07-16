@@ -9,8 +9,8 @@ Illumina-only assembly with paired end reads
 
 ::
 
-   ./nextflow run fmalmeida/MpGAP --threads 3 --outDir outputs/illumina_paired --prefix test --yaml ./additional.yaml --assembly_type
-   "illumina-only" --try_unicycler --try_spades --shortreads_paired "../illumina/SRR9847694_{1,2}.fastq.gz"
+   ./nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type illumina-only --try_spades
+   --try_unicycler --shortreads_paired "dataset_1/sampled/illumina_R{1,2}.fastq"
 
 .. note::
 
@@ -22,39 +22,43 @@ Illumina-only assembly with single end reads
 
 ::
 
-  ./nextflow run fmalmeida/MpGAP --threads 3 --outDir outputs/illumina_single --prefix test --yaml ./additional.yaml --assembly_type
-  "illumina-only" --try_unicycler --try_spades --shortreads_single "../illumina/SRR9696*.fastq.gz"
+  ./nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type illumina-only --try_spades
+  --try_unicycler --shortreads_single "dataset_1/sampled/illumina_single.fastq"
 
 .. note::
 
   This command will perform an illumina-only assembly using unpaired reads with Unicycler and SPAdes assemblers.
   Since fastq files will be found by a pattern match users MUST ALWAYS double quote as: Example "SRR9696*.fastq.gz"
 
+Illumina-only assembly with both paired and single end reads
+============================================================
+
+::
+
+  ./nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type illumina-only --try_spades
+  --try_unicycler --shortreads_paired "dataset_1/sampled/illumina_R{1,2}.fastq" --shortreads_single "dataset_1/sampled/illumina_single.fastq"
+
+.. note::
+
+  This command will perform an illumina-only assembly using both paired and unpaired reads with Unicycler and SPAdes assemblers.
+  Since fastq files will be found by a pattern match users MUST ALWAYS double quote it.
+
 Long reads only with ONT reads
 ==============================
 
 ::
 
-  ./nextflow run fmalmeida/MpGAP --threads 3 --outDir sample_dataset/outputs/ont --assembly_type "longreads-only" --lr_type nanopore
-  --longreads sample_dataset/ont/kpneumoniae_25X.fastq --genomeSize "5.6m" --try_canu --try_flye --try_unicycler
+  ./nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type longreads-only --try_canu --try_flye --try_unicycler --medaka_sequencing_model r941_min_fast_g303
+  --nanopolish_fast5Path "dataset_1/ont/fast5_pass" --nanopolish_max_haplotypes 2000 --genomeSize 2m --lr_type nanopore --longreads "dataset_1/ont/ont_reads.fastq"
 
 .. note::
 
-  This will perform a long reads only assembly using nanopore data with Canu, Flye and Unicycler assemblers. This will note execute nanopolish
-  polishing step nor a polishing with Illumina data.
+  This will perform a long reads only assembly using nanopore data with Canu, Flye and Unicycler assemblers. This specific command will also execute a polishing step with
+  nanopolish (see ``--nanopolish_fast5Path``) and medaka (see ``--medaka_sequencing_model``).
 
-Long reads only with ONT reads. With polishing (USING FAST5 data).
-==================================================================
+.. tip::
 
-::
-
-  ./nextflow run fmalmeida/MpGAP --threads 3 --outDir sample_dataset/outputs/ont --assembly_type "longreads-only" --lr_type nanopore
-  --longreads sample_dataset/ont/kpneumoniae_25X.fastq  --fast5Path ./fast5_pass --genomeSize "5.6m" --try_canu --try_flye --try_unicycler
-
-.. note::
-
-  This will perform a long reads only assembly using nanopore data with Canu, Flye and Unicycler assemblers. This will note execute a
-  polishing step with Illumina data.
+  If neither ``--nanopolish_fast5Path`` nor ``--medaka_sequencing_model`` is set, the pipeline will not try to polish the assemblies using Nanopolish or Medaka, respectively.
 
 Long reads only with ONT reads. With polishing using both FAST5 and Illumina data (paired end).
 ===============================================================================================

@@ -1,5 +1,5 @@
 process variantCaller {
-  publishDir "${params.outdir}/longreads-only/arrowPolished_contigs", mode: 'copy'
+  publishDir "${params.outdir}/longreads-only/arrowPolished_contigs", mode: 'copy', overwrite: true
   container 'fmalmeida/mpgap'
   cpus params.threads
 
@@ -9,8 +9,8 @@ process variantCaller {
   val nBams
 
   output:
-  file "${params.prefix}_${assembler}_pbvariants.gff" // Save gff
-  file "${params.prefix}_${assembler}_pbconsensus.fasta" // Save contigs
+  file "${assembler}_${lrID}_pbvariants.gff" // Save gff
+  file "${assembler}_${lrID}_pbconsensus.fasta" // Save contigs
 
   script:
   id = "${bams}" - ".bam"
@@ -25,8 +25,8 @@ process variantCaller {
     samtools index ${id}_pbaligned.bam;
     pbindex ${id}_pbaligned.bam;
     samtools faidx ${draft};
-    arrow -j ${params.threads} --referenceFilename ${draft} -o ${params.prefix}_${assembler}_pbconsensus.fasta \
-    -o ${params.prefix}_${assembler}_pbvariants.gff ${id}_pbaligned.bam
+    arrow -j ${params.threads} --referenceFilename ${draft} -o ${assembler}_${lrID}_pbconsensus.fasta \
+    -o ${assembler}_${lrID}_pbvariants.gff ${id}_pbaligned.bam
 
   # Multiple bams
   elif [ $nBams -gt 1 ];
@@ -39,8 +39,8 @@ process variantCaller {
     samtools index pacbio_merged.bam;
     pbindex pacbio_merged.bam;
     samtools faidx ${draft};
-    arrow -j ${params.threads} --referenceFilename ${draft} -o ${params.prefix}_${assembler}_pbconsensus.fasta \
-    -o ${params.prefix}_${assembler}_pbvariants.gff pacbio_merged.bam
+    arrow -j ${params.threads} --referenceFilename ${draft} -o ${assembler}_${lrID}_pbconsensus.fasta \
+    -o ${assembler}_${lrID}_pbvariants.gff pacbio_merged.bam
   fi
   """
 }

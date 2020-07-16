@@ -1,5 +1,5 @@
 process nanopolish {
-  publishDir "${params.outdir}/longreads-only/nanopolished_contigs", mode: 'copy'
+  publishDir "${params.outdir}/longreads-only/nanopolish_polished_contigs/${assembler}", mode: 'copy', overwrite: true
   container 'fmalmeida/mpgap'
   cpus params.threads
 
@@ -10,7 +10,8 @@ process nanopolish {
   val fast5_dir
 
   output:
-  file("${params.prefix}_${assembler}_${lrID}_nanopolished.fa") // Save nanopolished contigs
+  tuple file("${assembler}_${lrID}_nanopolished.fa"), val(lrID), val("${assembler}-nanopolish") // Save nanopolished contigs
+  file "${assembler}_${lrID}_nanopolished.complete.vcf" // Save VCF
 
   script:
   """
@@ -22,12 +23,14 @@ process nanopolish {
   minimap2 -ax map-ont -t ${params.threads} ${draft} reads.fa | samtools sort -o reads.sorted.bam -T reads.tmp ;
   samtools index reads.sorted.bam ;
   python /miniconda/envs/NANOPOLISH/bin/nanopolish_makerange.py ${draft} | parallel --results nanopolish.results -P ${params.cpus} \
-  nanopolish variants --consensus -o polished.{1}.fa \
+  nanopolish variants --consensus -o polished.{1}.vcf \
     -w {1} \
     -r reads.fa \
     -b reads.sorted.bam \
     -g ${draft} \
+    --max-haplotypes ${params.nanopolish_max_haplotypes} \
     --min-candidate-frequency 0.1;
-  python /miniconda/envs/NANOPOLISH/bin/nanopolish_merge.py polished.*.fa > ${params.prefix}_${assembler}_${lrID}_nanopolished.fa
+  nanopolish vcf2fasta --skip-checks -g ${draft} polished.*.vcf > ${assembler}_${lrID}_nanopolished.fa ;
+  cat polished.*.vcf >> ${assembler}_${lrID}_nanopolished.complete.vcf
   """
 }

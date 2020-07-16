@@ -1,16 +1,17 @@
 process quast {
-  publishDir "${params.outdir}/Quality_Assessment/quast_${type}", mode: 'copy'
+  publishDir "${params.outdir}/Quality_Assessment/quast_${type}", mode: 'copy', overwrite: true
   container 'fmalmeida/mpgap'
   tag "Assessing ${assembler} assembly quality"
 
   input:
   tuple file(contigs), val(id), val(assembler)
-  file sreads
+  file(reads)
 
   output:
   file "${assembler}/*"
 
   script:
+  // Assembly Type - variable
   if (params.assembly_type == 'longreads-only') {
     type = 'lreadsOnly'
   } else if (params.assembly_type == 'illumina-only') {
@@ -19,21 +20,26 @@ process quast {
     type = 'hybrid'
   }
 
-  if (params.shortreads_paired && !params.shortreads_single) {
-    bwa_parameter   = "-M -t ${params.threads} ${contigs} ${sreads[1]} ${sreads[2]}"
-    quast_parameter = "--pe1 ${sreads[1]} --pe2 ${sreads[2]}"
-  } else if (!params.shortreads_paired && params.shortreads_single) {
-    bwa_parameter   = "-M -t ${params.threads} ${contigs} ${sreads}"
-    quast_parameter = "--single ${sreads}"
-  } else if (params.shortreads_paired && params.shortreads_single) {
-    bwa_parameter   = "-M -t ${params.threads} ${contigs} ${sreads[1]} ${sreads[2]}"
-    quast_parameter = "--single ${sreads[3]} --pe1 ${sreads[1]} --pe2 ${sreads[2]}"
+  // Alignment parameters
+  if (params.shortreads_paired && !params.shortreads_single && params.assembly_type == 'illumina-only') {
+    bwa_parameter   = "-M -t ${params.threads} ${contigs} ${reads[1]} ${reads[2]}"
+    quast_parameter = "--pe1 ${reads[1]} --pe2 ${reads[2]}"
+  } else if (!params.shortreads_paired && params.shortreads_single && params.assembly_type == 'illumina-only') {
+    bwa_parameter   = "-M -t ${params.threads} ${contigs} ${reads}"
+    quast_parameter = "--single ${reads}"
+  } else if (params.shortreads_paired && params.shortreads_single && params.assembly_type == 'illumina-only') {
+    bwa_parameter   = "-M -t ${params.threads} ${contigs} ${reads[1]} ${reads[2]}"
+    quast_parameter = "--single ${reads[3]} --pe1 ${reads[1]} --pe2 ${reads[2]}"
+  } else if (params.assembly_type == 'longreads-only') {
+    ltype           = (params.lr_type == 'nanopore') ? "ont2d" : "pacbio"
+    bwa_parameter   = "-x ${ltype} -t ${params.threads} ${contigs} ${reads}"
+    quast_parameter = "--${params.lr_type} ${reads}"
   }
 
   """
-  bwa index ${contigs} ;
-  bwa mem ${bwa_parameter} > contigs_aln.sam ;
-  quast.py -o ${assembler} -t ${params.threads} --sam contigs_aln.sam \\
-  ${quast_parameter} --circos ${contigs}
+  #bwa index ${contigs} ;
+  #bwa mem ${bwa_parameter} > contigs_aln.sam ;
+  quast.py -o ${assembler} -t ${params.threads} ${quast_parameter} \\
+  --circos --glimmer --rna-finding --conserved-genes-finding ${contigs}
   """
 }

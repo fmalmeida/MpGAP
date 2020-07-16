@@ -1,5 +1,5 @@
 process bax2bam {
-  publishDir "${params.outdir}/longreads-only/${params.prefix}_subreads", mode: 'copy'
+  publishDir "${params.outdir}/longreads-only/${params.prefix}_subreads", mode: 'copy', overwrite: true
   container 'fmalmeida/mpgap'
   cpus params.threads
 
