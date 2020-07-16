@@ -37,9 +37,7 @@ process quast {
   }
 
   """
-  #bwa index ${contigs} ;
-  #bwa mem ${bwa_parameter} > contigs_aln.sam ;
   quast.py -o ${assembler} -t ${params.threads} ${quast_parameter} \\
-  --circos --glimmer --rna-finding --conserved-genes-finding ${contigs}
+  --circos --gene-finding --rna-finding ${contigs}
   """
 }
