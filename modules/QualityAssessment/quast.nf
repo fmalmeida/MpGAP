@@ -37,7 +37,7 @@ process quast {
   }
 
   """
-  quast.py -o ${assembler} -t ${params.threads} ${quast_parameter} \\
-  --circos --gene-finding --rna-finding ${contigs}
+  /work/quast/quast.py -o ${assembler} -t ${params.threads} ${quast_parameter} \\
+  --circos --glimmer --rna-finding ${contigs}
   """
 }

@@ -10,7 +10,6 @@ process flye_assembly {
   output:
   file "flye_${lrID}" // Saves all files
   tuple file("flye_${lrID}/assembly_flye.fasta"), val(lrID), val('flye') // Gets contigs file
-  file("flye_${lrID}/scaffolds.fasta") optional true // Saves the scaffolds
 
   script:
   lr = (params.lr_type == 'nanopore') ? '--nano-raw' : '--pacbio-raw'

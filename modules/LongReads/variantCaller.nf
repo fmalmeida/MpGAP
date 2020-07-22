@@ -10,10 +10,12 @@ process variantCaller {
 
   output:
   file "${assembler}_${lrID}_pbvariants.gff" // Save gff
-  file "${assembler}_${lrID}_pbconsensus.fasta" // Save contigs
+  tuple file("${assembler}_${lrID}_pbconsensus.fasta"), val("${lrID}"), val("VariantCaller") // Save contigs
 
   script:
   id = "${bams}" - ".bam"
+
+  // Guide: https://sr-c.github.io/2018/05/29/polish-pacbio-assembly/
   """
   # Activate env
   source activate pacbio;

@@ -166,6 +166,10 @@ nextflow.preview.dsl=2
 \$ nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type longreads-only --try_canu --try_flye --try_unicycler --medaka_sequencing_model r941_min_fast_g303 \
 --nanopolish_fast5Path "dataset_1/ont/fast5_pass" --nanopolish_max_haplotypes 2000 --genomeSize 2m --lr_type nanopore --longreads "dataset_1/ont/ont_reads.fastq"
 
+    Long reads only - Pacbio (Using VariantCaller):
+\$ nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type "longreads-only" --try_unicycler --try_flye --genomeSize "2m" --lr_type "pacbio" \
+--longreads "E01_1/Analysis_Results/preprocessed/longreads/pacbio/m141013_011508_sherri_c100709962550000001823135904221533_s1_p0.subreads.subset.fastq" --pacbio_all_bam_path "E01_1/Analysis_Results/preprocessed/longreads/pacbio/*.subreads.bam" 
+
     """.stripIndent()
  }
 
@@ -230,29 +234,42 @@ nextflow.preview.dsl=2
  /*
   * Load general parameters and establish defaults
   */
-  params.longreads = ''
-  params.medaka_sequencing_model = ''
-  params.nanopolish_fast5Path = ''
-  params.nanopolish_max_haplotypes = 1000
-  params.pacbio_all_bam_path = ''
-  params.lr_type = ''
-  params.shortreads_paired = ''
-  params.shortreads_single = ''
-  params.assembly_type = ''
-  params.illumina_polish_longreads_contigs = false
-  params.pilon_memmory_limit = 50
-  params.try_canu = false
-  params.canu_additional_parameters = ''
-  params.try_unicycler = false
-  params.unicycler_additional_parameters = ''
-  params.try_flye = false
-  params.flye_additional_parameters = ''
-  params.try_spades = false
-  params.spades_additional_parameters = ''
-  params.genomeSize = ''
-  params.outdir = 'output'
-  params.threads = 4
-  params.cpus = 2
+
+// General
+params.outdir = 'output'
+params.threads = 4
+params.cpus = 2
+params.assembly_type = ''
+
+// Assemblers?
+params.try_flye = false
+params.try_spades = false
+params.try_canu = false
+params.try_unicycler = false
+
+// Additional parameters for assemblers
+params.genomeSize = ''
+params.canu_additional_parameters = ''
+params.unicycler_additional_parameters = ''
+params.flye_additional_parameters = ''
+params.spades_additional_parameters = ''
+
+// Short reads
+params.shortreads_paired = ''
+params.shortreads_single = ''
+
+// Long reads
+params.longreads = ''
+params.lr_type = ''
+params.medaka_sequencing_model = ''
+params.nanopolish_fast5Path = ''
+params.nanopolish_max_haplotypes = 1000
+params.pacbio_all_bam_path = ''
+
+// Hybrid plus
+params.illumina_polish_longreads_contigs = false
+params.pilon_memmory_limit = 50
+
 
 /*
  * Define log message
@@ -357,7 +374,8 @@ include { variantCaller as variantCaller_canu;
 include { quast as quast_sreads_spades;     quast as quast_sreads_unicycler;
           quast as quast_lreads_canu;       quast as quast_lreads_flye; quast as quast_lreads_unicycler;
           quast as quast_nanopolish_canu;   quast as quast_nanopolish_flye; quast as quast_nanopolish_unicycler;
-          quast as quast_medaka_canu;       quast as quast_medaka_flye; quast as quast_medaka_unicycler } \
+          quast as quast_medaka_canu;       quast as quast_medaka_flye; quast as quast_medaka_unicycler;
+          quast as quast_variantcaller_canu; quast as quast_variantcaller_flye; quast as quast_variantcaller_unicycler } \
 \
           from './modules/QualityAssessment/quast.nf' params(threads: params.threads, outdir: params.outdir, assembly_type: params.assembly_type,
             shortreads_paired: params.shortreads_paired, shortreads_single: params.shortreads_single, lr_type: params.lr_type)
@@ -471,6 +489,7 @@ workflow lreadsonly_nf {
         // VariantCaller?
         if (params.pacbio_all_bam_path && params.lr_type == 'pacbio') {
           variantCaller_canu(canu_assembly.out[1], bamFile, nBams)
+          quast_variantcaller_canu(variantCaller_canu.out[1], reads)
         }
       }
 
@@ -496,6 +515,7 @@ workflow lreadsonly_nf {
         // VariantCaller?
         if (params.pacbio_all_bam_path && params.lr_type == 'pacbio') {
           variantCaller_flye(flye_assembly.out[1], bamFile, nBams)
+          quast_variantcaller_flye(variantCaller_flye.out[1], reads)
         }
 
       }
@@ -522,6 +542,7 @@ workflow lreadsonly_nf {
         // VariantCaller?
         if (params.pacbio_all_bam_path && params.lr_type == 'pacbio') {
           variantCaller_unicycler(unicycler_lreads.out[1], bamFile, nBams)
+          quast_variantcaller_unicycler(variantCaller_unicycler.out[1], reads)
         }
       }
 }
@@ -556,7 +577,7 @@ workflow {
     // Use VariantCaller (Pacbio)
     if (!params.nanopolish_fast5Path && params.pacbio_all_bam_path && params.lr_type == 'pacbio') {
       lreadsonly_nf(Channel.fromPath(params.longreads), Channel.value(''), Channel.value(''),
-                    Channel.fromPath(params.pacbio_all_bam_path), Channel.fromPath(params.pacbio_all_bam_path).count().subscribe { println it })
+                    Channel.fromPath(params.pacbio_all_bam_path).collect(), Channel.fromPath(params.pacbio_all_bam_path).count().subscribe { println it })
     }
 
   }
