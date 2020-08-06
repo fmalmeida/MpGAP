@@ -168,8 +168,11 @@ nextflow.preview.dsl=2
 
     Long reads only - Pacbio (Using VariantCaller):
 \$ nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type "longreads-only" --try_unicycler --try_flye --genomeSize "2m" --lr_type "pacbio" \
---longreads "E01_1/Analysis_Results/preprocessed/longreads/pacbio/m141013_011508_sherri_c100709962550000001823135904221533_s1_p0.subreads.subset.fastq" --pacbio_all_bam_path "E01_1/Analysis_Results/preprocessed/longreads/pacbio/*.subreads.bam" 
+--longreads "E01_1/Analysis_Results/preprocessed/longreads/pacbio/m141013_011508_sherri_c100709962550000001823135904221533_s1_p0.subreads.subset.fastq" --pacbio_all_bam_path "E01_1/Analysis_Results/preprocessed/longreads/pacbio/*.subreads.bam"
 
+    Hybrid assembly - Using both paired and single end short reads
+\$ nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type hybrid --try_unicycler --shortreads_paired "dataset_1/sampled/illumina_R{1,2}.fastq" \
+--shortreads_single "dataset_1/sampled/illumina_single.fastq" --lr_type nanopore --longreads "dataset_1/ont/ont_reads.fastq"
     """.stripIndent()
  }
 
@@ -366,6 +369,22 @@ include { variantCaller as variantCaller_canu;
           variantCaller as variantCaller_unicycler;
           variantCaller as variantCaller_flye } from './modules/LongReads/variantCaller.nf' params(threads: params.threads, outdir: params.outdir)
 
+/*
+ * Modules for Hybrid assemblies
+ */
+
+// Unicycler hybrid
+include unicycler_hybrid from './modules/Hybrid/unicycler_hybrid.nf' params(outdir: params.outdir,
+  threads: params.threads, unicycler_additional_parameters: params.unicycler_additional_parameters,
+  shortreads_single: params.shortreads_single, shortreads_paired: params.shortreads_paired)
+
+
+// SPAdes hybrid
+include spades_hybrid from './modules/Hybrid/spades_hybrid.nf' params(outdir: params.outdir,
+  threads: params.threads, spades_additional_parameters: params.spades_additional_parameters,
+  shortreads_single: params.shortreads_single, shortreads_paired: params.shortreads_paired,
+  lr_type: params.lr_type)
+
 
 
 /*
@@ -375,7 +394,8 @@ include { quast as quast_sreads_spades;     quast as quast_sreads_unicycler;
           quast as quast_lreads_canu;       quast as quast_lreads_flye; quast as quast_lreads_unicycler;
           quast as quast_nanopolish_canu;   quast as quast_nanopolish_flye; quast as quast_nanopolish_unicycler;
           quast as quast_medaka_canu;       quast as quast_medaka_flye; quast as quast_medaka_unicycler;
-          quast as quast_variantcaller_canu; quast as quast_variantcaller_flye; quast as quast_variantcaller_unicycler } \
+          quast as quast_variantcaller_canu; quast as quast_variantcaller_flye; quast as quast_variantcaller_unicycler;
+          quast as quast_hybrid_unicycler; quast as quast_hybrid_spades } \
 \
           from './modules/QualityAssessment/quast.nf' params(threads: params.threads, outdir: params.outdir, assembly_type: params.assembly_type,
             shortreads_paired: params.shortreads_paired, shortreads_single: params.shortreads_single, lr_type: params.lr_type)
@@ -551,6 +571,26 @@ workflow lreadsonly_nf {
                                    * WORKFLOW: HYBRID
                                    */
 
+workflow hybrid_nf {
+  take:
+      preads
+      sreads
+      lreads
+  main:
+
+      // SPAdes
+      if (params.try_spades) {
+        spades_hybrid(lreads, preads, sreads)
+        quast_hybrid_spades(spades_hybrid.out[1], preads.concat(sreads).collect())
+      }
+      // Unicycler
+      if (params.try_unicycler) {
+        unicycler_hybrid(lreads, preads, sreads)
+        quast_hybrid_unicycler(unicycler_hybrid.out[1], preads.concat(sreads).collect())
+      }
+
+}
+
                                   /*
                                    * DEFINE (RUN) MAIN WORKFLOW
                                    */
@@ -608,9 +648,33 @@ workflow {
      }
    }
 
-                          /*
-                           * Hybrid assembly
-                           */
+  /*
+   * Hybrid assembly
+   */
+
+   if (params.assembly_type == 'hybrid') {
+
+     // Using paired end reads
+     if (!params.shortreads_single && params.shortreads_paired) {
+       hybrid_nf(Channel.fromFilePairs( params.shortreads_paired, flat: true, size: 2 ),
+                 Channel.value(''),
+                 Channel.fromPath(params.longreads))
+     }
+
+     // Using single end reads
+     if (params.shortreads_single && !params.shortreads_paired) {
+       hybrid_nf(Channel.value(''),
+                 Channel.fromPath(params.shortreads_single),
+                 Channel.fromPath(params.longreads))
+     }
+
+     // Using both paired and single end reads
+     if (params.shortreads_single && params.shortreads_paired) {
+       hybrid_nf(Channel.fromFilePairs( params.shortreads_paired, flat: true, size: 2 ),
+                 Channel.fromPath(params.shortreads_single),
+                 Channel.fromPath(params.longreads))
+     }
+   }
 }
 
 /*
