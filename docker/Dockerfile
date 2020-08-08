@@ -9,7 +9,7 @@ WORKDIR /work
 # Dependencies
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get upgrade -y && \
-			apt-get install -y git libc6-dev build-essential gcc g++ make dpkg-dev python-pip-whl samtools libidn11 cmake wget python3 python3-pip libpbcopper-dev libpbcopper1.3.0
+			apt-get install -y git libc6-dev build-essential gcc g++ make dpkg-dev python-pip-whl samtools libidn11 cmake wget curl python3 python3-pip libpbcopper-dev libpbcopper1.3.0
 
 # Set miniconda
 RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /miniconda.sh && \
@@ -49,7 +49,11 @@ RUN pip install --upgrade pip && \
 			hash -d pip3 && \
 			pip install setuptools && \
 			pip3 install setuptools && \
-			apt install zlib1g-dev && git clone https://github.com/rrwick/Unicycler.git && cd Unicycler && python3 setup.py install
+			apt install zlib1g-dev && \
+			wget https://github.com/rrwick/Unicycler/archive/v0.4.8.tar.gz && \
+			tar zxvf v0.4.8.tar.gz && \
+			mv Unicycler-0.4.8 Unicycler && \
+			cd Unicycler && python3 setup.py install
 
 ## Set Unicycler complementary tools
 RUN apt-get install -y mummer && \
@@ -86,7 +90,7 @@ RUN python -m pip install -U matplotlib && \
 			apt-get install -y pkg-config libfreetype6-dev libpng-dev bwa && \
 			git clone https://github.com/ablab/quast.git && \
 			cd quast && pip install --upgrade setuptools pip && \
-			python setup.py install_full
+			./setup.py install_full
 
 # Custom Permissions
 RUN chmod -R 777 /miniconda/envs/MEDAKA/lib/python3.6/site-packages/medaka/data

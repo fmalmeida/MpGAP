@@ -71,7 +71,7 @@ nextflow.preview.dsl=2
 
 
                        It can be executed by SPAdes and Unicycler assemblers. Users can use paired or single end reads.
-                       If both types are given at once, assemblers will be executed with a mix of both. Remember to always
+                       If both types are given at once, assemblers will be executed using both. Remember to always
                        write the paths with regex (*, {1,2}, etc.) inside double quotes.
 
 
@@ -385,6 +385,16 @@ include spades_hybrid from './modules/Hybrid/spades_hybrid.nf' params(outdir: pa
   shortreads_single: params.shortreads_single, shortreads_paired: params.shortreads_paired,
   lr_type: params.lr_type)
 
+// Pilon polish paired
+include { pilon_polish as pilon_polish_flye; pilon_polish as pilon_polish_flye_nanopolish;
+          pilon_polish as pilon_polish_flye_medaka; pilon_polish as pilon_polish_flye_variantCaller;
+          pilon_polish as pilon_polish_canu; pilon_polish as pilon_polish_canu_nanopolish;
+          pilon_polish as pilon_polish_canu_medaka; pilon_polish as pilon_polish_canu_variantCaller;
+          pilon_polish as pilon_polish_unicycler; pilon_polish as pilon_polish_unicycler_nanopolish;
+          pilon_polish as pilon_polish_unicycler_medaka; pilon_polish as pilon_polish_unicycler_variantCaller } \
+\
+          from './modules/Hybrid/unicycler_polish.nf' params(outdir: params.outdir, threads: params.threads)
+
 
 
 /*
@@ -578,6 +588,9 @@ workflow hybrid_nf {
       lreads
   main:
 
+      /*
+       * Full hybrid mode
+       */
       // SPAdes
       if (params.try_spades) {
         spades_hybrid(lreads, preads, sreads)
@@ -587,6 +600,102 @@ workflow hybrid_nf {
       if (params.try_unicycler) {
         unicycler_hybrid(lreads, preads, sreads)
         quast_hybrid_unicycler(unicycler_hybrid.out[1], preads.concat(sreads).collect())
+      }
+
+      /*
+       * Polish a long reads assembly
+       */
+      if (params.illumina_polish_longreads_contigs){
+        /*
+         * Canu
+         */
+        if (params.try_canu) {
+          canu_assembly(lreads)
+          pilon_polish_canu(canu_assembly.out[1], preads.concat(sreads).collect())
+          quast_lreads_canu(pilon_polish_canu.out[1], preads.concat(sreads).collect())
+
+          // Nanopolish?
+          if (params.nanopolish_fast5Path && params.lr_type == 'nanopore') {
+            nanopolish_canu(canu_assembly.out[1], lreads, fast5, fast5_dir)
+            pilon_polish_canu_nanopolish(nanopolish_canu.out[0], preads.concat(sreads).collect())
+            quast_nanopolish_canu(pilon_polish_canu_nanopolish.out[1], preads.concat(sreads).collect())
+          }
+
+          // Medaka?
+          if (params.medaka_sequencing_model && params.lr_type == 'nanopore') {
+            medaka_canu(canu_assembly.out[1], lreads)
+            pilon_polish_canu_medaka(medaka_canu.out[1], preads.concat(sreads).collect())
+            quast_medaka_canu(pilon_polish_canu_medaka.out[1], preads.concat(sreads).collect())
+          }
+
+          // VariantCaller?
+          if (params.pacbio_all_bam_path && params.lr_type == 'pacbio') {
+            variantCaller_canu(canu_assembly.out[1], bamFile, nBams)
+            pilon_polish_canu_variantCaller(variantCaller_canu.out[1], preads.concat(sreads).collect())
+            quast_variantcaller_canu(pilon_polish_canu_variantCaller.out[1], preads.concat(sreads).collect())
+          }
+        }
+
+        /*
+         * Flye
+         */
+        if (params.try_flye) {
+          flye_assembly(lreads)
+          pilon_polish_flye(flye_assembly.out[1], preads.concat(sreads).collect())
+          quast_lreads_flye(pilon_polish_flye.out[1], preads.concat(sreads).collect())
+
+          // Nanopolish?
+          if (params.nanopolish_fast5Path && params.lr_type == 'nanopore') {
+            nanopolish_flye(flye_assembly.out[1], lreads, fast5, fast5_dir)
+            pilon_polish_flye_nanopolish(nanopolish_flye.out[0], preads.concat(sreads).collect())
+            quast_nanopolish_flye(pilon_polish_flye_nanopolish.out[1], preads.concat(sreads).collect())
+          }
+
+          // Medaka?
+          if (params.medaka_sequencing_model && params.lr_type == 'nanopore') {
+            medaka_flye(flye_assembly.out[1], lreads)
+            pilon_polish_flye_medaka(medaka_flye.out[1], preads.concat(sreads).collect())
+            quast_medaka_flye(pilon_polish_flye_medaka.out[1], preads.concat(sreads).collect())
+          }
+
+          // VariantCaller?
+          if (params.pacbio_all_bam_path && params.lr_type == 'pacbio') {
+            variantCaller_flye(flye_assembly.out[1], bamFile, nBams)
+            pilon_polish_flye_variantCaller(variantCaller_flye.out[1], preads.concat(sreads).collect())
+            quast_variantcaller_flye(pilon_polish_flye_variantCaller.out[1], preads.concat(sreads).collect())
+          }
+
+        }
+
+        /*
+         * Unicycler
+         */
+        if (params.try_unicycler) {
+          unicycler_lreads(lreads)
+          pilon_polish_unicycler(unicycler_lreads.out[1], preads.concat(sreads).collect())
+          quast_lreads_unicycler(pilon_polish_unicycler.out[1], preads.concat(sreads).collect())
+
+          // Nanopolish?
+          if (params.nanopolish_fast5Path && params.lr_type == 'nanopore') {
+            nanopolish_unicycler(unicycler_lreads.out[1], lreads, fast5, fast5_dir)
+            pilon_polish_unicycler_nanopolish(nanopolish_unicycler.out[0], preads.concat(sreads).collect())
+            quast_nanopolish_unicycler(pilon_polish_unicycler_nanopolish.out[1], preads.concat(sreads).collect())
+          }
+
+          // Medaka?
+          if (params.medaka_sequencing_model && params.lr_type == 'nanopore') {
+            medaka_unicycler(unicycler_lreads.out[1], lreads)
+            pilon_polish_unicycler_medaka(medaka_unicycler.out[1], preads.concat(sreads).collect())
+            quast_medaka_unicycler(pilon_polish_unicycler_medaka.out[1], preads.concat(sreads).collect())
+          }
+
+          // VariantCaller?
+          if (params.pacbio_all_bam_path && params.lr_type == 'pacbio') {
+            variantCaller_unicycler(unicycler_lreads.out[1], bamFile, nBams)
+            pilon_polish_unicycler_variantCaller(variantCaller_unicycler.out[1], preads.concat(sreads).collect())
+            quast_variantcaller_unicycler(pilon_polish_unicycler_variantCaller.out[1], preads.concat(sreads).collect())
+          }
+        }
       }
 
 }
@@ -638,13 +747,13 @@ workflow {
      // Using single end reads
      if (params.shortreads_single && !params.shortreads_paired) {
        sreads_only_nf(Channel.empty(),
-                      Channel.fromPath(params.shortreads_single))
+                      Channel.fromPath(params.shortreads_single, hidden: true))
      }
 
      // Using both paired and single end reads
      if (params.shortreads_single && params.shortreads_paired) {
        sreads_only_nf(Channel.fromFilePairs( params.shortreads_paired, flat: true, size: 2 ),
-                      Channel.fromPath(params.shortreads_single))
+                      Channel.fromPath(params.shortreads_single, hidden: true))
      }
    }
 
@@ -664,14 +773,14 @@ workflow {
      // Using single end reads
      if (params.shortreads_single && !params.shortreads_paired) {
        hybrid_nf(Channel.value(''),
-                 Channel.fromPath(params.shortreads_single),
+                 Channel.fromPath(params.shortreads_single, hidden: true),
                  Channel.fromPath(params.longreads))
      }
 
      // Using both paired and single end reads
      if (params.shortreads_single && params.shortreads_paired) {
        hybrid_nf(Channel.fromFilePairs( params.shortreads_paired, flat: true, size: 2 ),
-                 Channel.fromPath(params.shortreads_single),
+                 Channel.fromPath(params.shortreads_single, hidden: true),
                  Channel.fromPath(params.longreads))
      }
    }

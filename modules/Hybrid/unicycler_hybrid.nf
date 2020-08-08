@@ -10,12 +10,12 @@ process unicycler_hybrid {
   file(sreads)
 
   output:
-  file "unicycler_${lreads.getSimpleName()}" // Save everything
+  file "*" // Save everything
   tuple file("unicycler_${lreads.getSimpleName()}/assembly.fasta"), val("unicycler_${lreads.getSimpleName()}"), val('unicycler') // Gets contigs file
 
   script:
   if ((params.shortreads_single) && (params.shortreads_paired)) {
-    parameter = "-1 $sread1 -2 $sread2 -s $sreads -l $lreads"
+    parameter = "-1 $sread1 -2 $sread2 -s $sreads -l $lreads --no_correct --keep 3"
     x = "Performing a hybrid assembly with Unicycler, using paired and single end reads"
   } else if ((params.shortreads_single) && (!params.shortreads_paired)) {
     parameter = "-s $sreads -l $lreads"
