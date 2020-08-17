@@ -278,7 +278,7 @@ params.pilon_memmory_limit = 50
  * Define log message
  */
 log.info "================================================================="
-log.info " Docker-based, fmalmeida/mpgap, generic genome assembly Pipeline "
+log.info " Docker-based, fmalmeida/mpgap, generic genome assembly pipeline "
 log.info "================================================================="
 def summary = [:]
 if (params.longreads) { summary['Long Reads']   = params.longreads }
@@ -324,29 +324,15 @@ include flye_assembly from './modules/LongReads/flye.nf' params(outdir: params.o
  * Modules for assembling short reads
  */
 
-// SPAdes paired
-include spades_sreads_paired_assembly from './modules/ShortReads/spades_sreads_paired.nf' params(outdir: params.outdir,
-  threads: params.threads, spades_additional_parameters: params.spades_additional_parameters)
+// SPAdes sreads
+include spades_sreads_assembly from './modules/ShortReads/spades_sreads.nf' params(outdir: params.outdir,
+  threads: params.threads, spades_additional_parameters: params.spades_additional_parameters,
+  shortreads_single: params.shortreads_single, shortreads_paired: params.shortreads_paired)
 
-// SPAdes single
-include spades_sreads_single_assembly from './modules/ShortReads/spades_sreads_single.nf' params(outdir: params.outdir,
-  threads: params.threads, spades_additional_parameters: params.spades_additional_parameters)
-
-// SPAdes both
-include spades_sreads_both_assembly from './modules/ShortReads/spades_sreads_both.nf' params(outdir: params.outdir,
-  threads: params.threads, spades_additional_parameters: params.spades_additional_parameters)
-
-// Unicycler paired
-include unicycler_sreads_paired_assembly from './modules/ShortReads/unicycler_sreads_paired.nf' params(outdir: params.outdir,
-  threads: params.threads, unicycler_additional_parameters: params.unicycler_additional_parameters)
-
-// Unicycler single
-include unicycler_sreads_single_assembly from './modules/ShortReads/unicycler_sreads_single.nf' params(outdir: params.outdir,
-  threads: params.threads, unicycler_additional_parameters: params.unicycler_additional_parameters)
-
-// Unicycler both
-include unicycler_sreads_both_assembly from './modules/ShortReads/unicycler_sreads_both.nf' params(outdir: params.outdir,
-  threads: params.threads, unicycler_additional_parameters: params.unicycler_additional_parameters)
+// Unicycler sreads
+include unicycler_sreads_assembly from './modules/ShortReads/unicycler_sreads.nf' params(outdir: params.outdir,
+  threads: params.threads, unicycler_additional_parameters: params.unicycler_additional_parameters,
+  shortreads_single: params.shortreads_single, shortreads_paired: params.shortreads_paired)
 
 
 /*
@@ -429,57 +415,17 @@ workflow sreads_only_nf {
       preads
       sreads
   main:
-      /*
-       * Paired end reads
-       */
 
-       if (params.shortreads_paired && !params.shortreads_single) {
-         // SPAdes
-         if (params.try_spades) {
-           spades_sreads_paired_assembly(preads)
-           quast_sreads_spades(spades_sreads_paired_assembly.out[1], preads)
-         }
-         // Unicycler
-         if (params.try_unicycler) {
-           unicycler_sreads_paired_assembly(preads)
-           quast_sreads_unicycler(unicycler_sreads_paired_assembly.out[1], preads)
-         }
-       }
-
-
-      /*
-       * Single end reads
-       */
-
-      if (params.shortreads_single && !params.shortreads_paired) {
-        // SPAdes
-        if (params.try_spades) {
-          spades_sreads_single_assembly(sreads)
-          quast_sreads_spades(spades_sreads_single_assembly.out[1], sreads)
-        }
-        // Unicycler
-        if (params.try_unicycler) {
-          unicycler_sreads_single_assembly(sreads)
-          quast_sreads_unicycler(unicycler_sreads_single_assembly.out[1], sreads)
-        }
-      }
-
-      /*
-       * Both Library Types
-       */
-
-      if (params.shortreads_paired && params.shortreads_single) {
-        // SPAdes
-        if (params.try_spades) {
-          spades_sreads_both_assembly(preads, sreads)
-          quast_sreads_spades(spades_sreads_both_assembly.out[1], preads.concat(sreads).collect())
-        }
-        // Unicycler
-        if (params.try_unicycler) {
-          unicycler_sreads_both_assembly(preads, sreads)
-          quast_sreads_unicycler(unicycler_sreads_both_assembly.out[1], preads.concat(sreads).collect())
-        }
-      }
+  // SPAdes
+  if (params.try_spades) {
+    spades_sreads_assembly(preads, sreads)
+    quast_sreads_spades(spades_sreads_assembly.out[1], preads.concat(sreads).collect())
+  }
+  // Unicycler
+  if (params.try_unicycler) {
+    unicycler_sreads_assembly(preads, sreads)
+    quast_sreads_unicycler(unicycler_sreads_assembly.out[1], preads.concat(sreads).collect())
+  }
 
 }
 
@@ -740,19 +686,19 @@ workflow {
 
      // Using paired end reads
      if (params.shortreads_paired && !params.shortreads_single) {
-       sreads_only_nf(Channel.fromFilePairs( params.shortreads_paired, flat: true, size: 2 ),
-                      Channel.empty())
+       sreads_only_nf(Channel.fromFilePairs(params.shortreads_paired, flat: true, size: 2),
+                      Channel.value(''))
      }
 
      // Using single end reads
      if (params.shortreads_single && !params.shortreads_paired) {
-       sreads_only_nf(Channel.empty(),
+       sreads_only_nf(Channel.value(['', '', '']),
                       Channel.fromPath(params.shortreads_single, hidden: true))
      }
 
      // Using both paired and single end reads
      if (params.shortreads_single && params.shortreads_paired) {
-       sreads_only_nf(Channel.fromFilePairs( params.shortreads_paired, flat: true, size: 2 ),
+       sreads_only_nf(Channel.fromFilePairs(params.shortreads_paired, flat: true, size: 2),
                       Channel.fromPath(params.shortreads_single, hidden: true))
      }
    }
@@ -772,7 +718,7 @@ workflow {
 
      // Using single end reads
      if (params.shortreads_single && !params.shortreads_paired) {
-       hybrid_nf(Channel.value(''),
+       hybrid_nf(Channel.value(['', '', '']),
                  Channel.fromPath(params.shortreads_single, hidden: true),
                  Channel.fromPath(params.longreads))
      }

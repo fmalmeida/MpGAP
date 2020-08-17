@@ -14,6 +14,7 @@ process unicycler_hybrid {
   tuple file("unicycler_${lreads.getSimpleName()}/assembly.fasta"), val("unicycler_${lreads.getSimpleName()}"), val('unicycler') // Gets contigs file
 
   script:
+  
   if ((params.shortreads_single) && (params.shortreads_paired)) {
     parameter = "-1 $sread1 -2 $sread2 -s $sreads -l $lreads --no_correct"
     x = "Performing a hybrid assembly with Unicycler, using paired and single end reads"
@@ -24,6 +25,7 @@ process unicycler_hybrid {
     parameter = "-1 $sread1 -2 $sread2 -l $lreads"
     x = "Performing a hybrid assembly with Unicycler, using paired end reads"
   }
+
   """
   unicycler ${parameter} \\
   -o unicycler_${lreads.getSimpleName()} -t ${params.threads} \\
