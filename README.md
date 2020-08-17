@@ -24,6 +24,7 @@ This pipeline has two complementary pipelines (also written in nextflow) for [NG
 * [Installation](https://github.com/fmalmeida/MpGAP#installation)
 * [Documentation](https://github.com/fmalmeida/MpGAP#documentation)
   * [Configuration File](https://github.com/fmalmeida/MpGAP#using-the-configuration-file)
+* [Known Bugs]()
 
 ## Requirements
 
@@ -109,6 +110,10 @@ To create a configuration file in your working directory:
 * For illumina only assemblies:
 
       nextflow run fmalmeida/MpGAP --get_sreads_config
+
+## Known Bugs
+
+Whenever using unicycler with unpaired reads, an odd platform-specific SPAdes-related crash seems do randomly happen as it can be seen in the issue discussed at https://github.com/rrwick/Unicycler/issues/188. As a workaround, Ryan says to use the `--no_correct` parameter which solves the issue and does not have a negative impact on assembly quality. Therefore, whenever using Illumina unpaired reads, this parameter is automatically used by the pipeline.
 
 ## Citation
 

@@ -15,6 +15,6 @@ process unicycler_sreads_single_assembly {
   id = sreads.getSimpleName()
   """
   unicycler -s $sreads -o unicycler_${id} -t ${params.threads} \\
-  ${params.unicycler_additional_parameters} &> unicycler.log
+  --no_correct ${params.unicycler_additional_parameters} &> unicycler.log
   """
 }
