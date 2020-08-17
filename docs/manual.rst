@@ -23,9 +23,9 @@ Input
 
 .. tip::
 
-  Hybrid assemblies can be achieved with Unicycler|SPAdes hybrid mode, by giving long and
+  Hybrid assemblies can be achieved with Unicycler|SPAdes hybrid modes, by giving long and
   short reads or, by polishing a long reads only assembly. For the latter, users will have
-  to set ``assembly_type = 'longreads-only'``, set path to Illumina reads and use the
+  to set ``assembly_type = 'hybrid'``, set path to Illumina reads and use the
   ``illumina_polish_longreads_contigs`` parameter.
 
 Usage example
@@ -51,7 +51,7 @@ Usage example
 
    * - ``--threads``
      - N
-     - 2
+     - 3
      - Number of threads to use
 
    * - ``--assembly_type``
@@ -121,8 +121,8 @@ Usage example
 
    * - ``--medaka_sequencing_model``
      - N
-     - NA
-     - Used to polish a longreads-only assembly with Medaka. It selects a Medaka ONT sequencing model for polishing.
+     - r941_min_fast_g303
+     - Used to polish a longreads-only assembly with Medaka. It selects a Medaka ONT sequencing model for polishing. Please read `medaka manual <https://github.com/nanoporetech/medaka#models>`_ for more instructions.
 
    * - ``--nanopolish_fast5Path``
      - N

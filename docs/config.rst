@@ -4,7 +4,7 @@
 Configuration File
 ******************
 
-To download a configuration file template users just need to run ``nextflow run fmalmeida/MpGAP [--get_hybrid_config] [--get_lreads_config] [--get_sreads_config] [--get_yaml]``
+To download a configuration file template users just need to run ``nextflow run fmalmeida/MpGAP [--get_hybrid_config] [--get_lreads_config] [--get_sreads_config]``
 
 Using a config file your code is lot more clean and concise: ``nextflow run fmalmeida/MpGAP -c [path-to-config]``
 
@@ -15,135 +15,177 @@ Example of Hybrid assembly config file:
 
 .. code-block:: groovy
 
-  /*
-   * Configuration File to run fmalmeida/MpGAP pipeline.
-   */
+    /*
+     * Configuration File to run fmalmeida/MpGAP pipeline.
+     */
 
-  /*
-   * Customizable parameters
-   */
-  params {
+    /*
+     * Customizable parameters
+     */
+    params {
 
-                  /*
-                   * General parameters
-                   */
+                    /*
+                     * General parameters
+                     */
 
-  //Output folder name
-        outDir = ''
+    //Output folder name
+          outdir = 'output'
 
-  //Number of threads to be used by each software.
-        threads = 3
+    //Number of threads to be used by each software.
+          threads = 3
 
-  /*
-   * Here we chose the assembly type wanted. This is required.
-   * It must be set as one of these posibilities: longreads-only ; hybrid ; illumina-only
-   */
-        assembly_type = ''
+    /*
+     * Here we chose the assembly type wanted. This is required.
+     * It must be set as one of these posibilities: longreads-only ; hybrid ; illumina-only
+     */
+          assembly_type = ''
 
-  /*
-   * Here it is set the software wanted to perform the assembly with.
-   * It must be set as true to use the software and false to skip it.
-   */
-        try_canu      = false
-        canu_additional_parameters = '' // Must be given as shown in Canu manual. E.g. 'correctedErrorRate=0.075 corOutCoverage=200'
-        try_unicycler = false
-        unicycler_additional_parameters = '' // Must be given as shown in Unicycler manual. E.g. '--mode conservative --no_correct'
-        try_flye      = false
-        flye_additional_parameters = '' // Must be given as shown in Flye manual. E.g. '--meta --iterations 4'
-        try_spades    = false
-        spades_additional_parameters = '' // Must be given as shown in Spades manual. E.g. '--meta --plasmids'
+    /*
+     * Here it is set the software wanted to perform the assembly with.
+     * It must be set as true to use the software and false to skip it.
+     */
+          try_canu      = false
+          canu_additional_parameters = '' // Must be given as shown in Canu manual. E.g. 'correctedErrorRate=0.075 corOutCoverage=200'
+          try_unicycler = false
+          unicycler_additional_parameters = '' // Must be given as shown in Unicycler manual. E.g. '--mode conservative --no_correct'
+          try_flye      = false
+          flye_additional_parameters = '' // Must be given as shown in Flye manual. E.g. '--meta --iterations 4'
+          try_spades    = false
+          spades_additional_parameters = '' // Must be given as shown in Spades manual. E.g. '--meta --plasmids'
 
-  /*
-   * This parameter only needs to be set if the software chosen is Canu.
-   * This is a required option for Canu and Flye.
-   * It is an estimate of the size of the genome. Common suffices are allowed, for example, 3.7m or 2.8g
-   */
-        genomeSize = ''
+    /*
+     * This parameter only needs to be set if the software chosen is Canu or Flye.
+     * It is an estimate of the size of the genome. Common suffices are allowed, for example, 3.7m or 2.8g
+     */
+          genomeSize = ''
 
-                  /*
-                   * Long reads parameters
-                   */
+                    /*
+                     * Long reads parameters
+                     */
 
-  /*
-   * Long reads input files. Just needed to be specified in case of hybrid or longreads-only assembly.
-   * If none of these are wanted it may be left in blank.
-   */
-        longreads = '' // Already extracted in fasta or fastq
+    /*
+     * Long reads input files. Just needed to be specified in case of hybrid or longreads-only assembly.
+     * If none of these are wanted it may be left in blank.
+     */
+          longreads = '' // Already extracted in fasta or fastq
 
-
-  /* Tells Medaka polisher which model to use according to the basecaller used.
-   * For example the model named r941_min_fast_g303 should be used with data from
-   * MinION (or GridION) R9.4.1 flowcells using the fast Guppy basecaller version 3.0.3.
-   *
-   * Where a version of Guppy has been used without an exactly corresponding medaka model,
-   * the medaka model with the highest version equal to or less than the guppy version
-   * should be selected. Models available: r941_min_fast_g303, r941_min_high_g303,
-   * r941_min_high_g330, r941_min_high_g344, r941_prom_fast_g303, r941_prom_high_g303,
-   * r941_prom_high_g344, r941_prom_high_g330, r10_min_high_g303, r10_min_high_g340,
-   * r103_min_high_g345, r941_prom_snp_g303, r941_prom_variant_g303, r941_min_high_g340_rle.
-   */
-        sequencing_model = ''
-
-  /* By default, the polishing step is performed with Medaka.
-   * This parameter tells the pipeline to use Nanopolish instead.
-   * Note: Nanopolish needs the parameter --fast5Path.
-   */
-        use_nanopolish = false
-
-  /*
-   * This parameter loads the directory where all the nanopore FAST5 files are stored.
-   * If this parameter is set, the pipeline is able to execute the polishing step with nanopolish
-   * for longreads-only assembly type.
-   */
-        fast5Path = ''
-
-  //Number of cores to run nanopolish in parallel
-        cpus = 2
-
-  /*
-   * This parameter loads all the subreads *.bam pacbio raw files.
-   * In order to nextflow properly use it, one needs to store all the data, from all the cells
-   * in one single directory and show the filepath with "path/to/*bam" to this parameter.
-   */
-        pacbio_all_bam_path = ''
-
-  /*
-   * This parameter is used to specify the long read sequencing technology used.
-   * It might be set as one of both: nanopore ; pacbio
-   */
-        lr_type = ''
+    /*
+     * This parameter is used to specify the long read sequencing technology used.
+     * It might be set as one of both: nanopore ; pacbio
+     */
+          lr_type = ''
 
 
-                  /*
-                   * Short reads parameters
-                   */
-  /*
-   * Short reads input files. They need to be specified in case of hybrid or shortreads-only assembly.
-   * If none of these are wnated it may be left in blank. The files might be single or paired ended. They just
-   * need to be properly identified as the examples below.
-   * Examples for illumina reads:
-   * Paired: params.shortreads.paired = 'SRR6307304_{1,2}.fastq'
-   * Single: params.shortreads.single = 'SRR7128258*'
-   */
-        shortreads_paired = ''
-        shortreads_single = ''
+    /*
+     * Tells Medaka polisher which model to use according to the basecaller used.
+     * For example the model named r941_min_fast_g303 should be used with data from
+     * MinION (or GridION) R9.4.1 flowcells using the fast Guppy basecaller version 3.0.3.
+     *
+     * Where a version of Guppy has been used without an exactly corresponding medaka model,
+     * the medaka model with the highest version equal to or less than the guppy version
+     * should be selected. Models available: r941_min_fast_g303, r941_min_high_g303,
+     * r941_min_high_g330, r941_min_high_g344, r941_prom_fast_g303, r941_prom_high_g303,
+     * r941_prom_high_g344, r941_prom_high_g330, r10_min_high_g303, r10_min_high_g340,
+     * r103_min_high_g345, r941_prom_snp_g303, r941_prom_variant_g303, r941_min_high_g340_rle.
+     *
+     * If left in blank, medaka will not be executed.
+     */
+          medaka_sequencing_model = 'r941_min_fast_g303'
 
-  /*
-   * This parameter below is to define wheter the user wants or not to polish its long reads only
-   * assembly with illumina short reads in the end. It firstly assemble a genome with only longreads
-   * using flye, canu or unicycler and then polishes it with Illumina reads.
-   * Must use: assembly_type = 'hybrid'
-   */
-        illumina_polish_longreads_contigs = false
+    /*
+     * The polishing step is performed (and advised) with Medaka (--sequencing_model parameter).
+     * This parameter tells the pipeline to also try Nanopolish.
+     *
+     * This parameter loads the directory where all the nanopore FAST5 files are stored.
+     * If this parameter is set, the pipeline is able to execute the polishing step with nanopolish
+     * for longreads-only assembly type.
+     */
+          nanopolish_fast5Path = ''
 
-  /*
-   * Whenever polishing long reads only assemblies with unpaired short reads (single end), the pipeline
-   * will directly execute one round of pilon polishing instead of using Unicycler's polish pipeline.
-   * Therefore we need to allocate the amount of memmory allocated by Pilon.
-   * Defaut 50G.
-   * This step is crucial because with not enough memmory will crash and not correct your assembly.
-   * When that happens you will not have the pilon output nor the QUAST assesment.
-   */
-        pilon_memmory_limit = 50
+    /*
+     * This parameter sets to nanopolish the max number of haplotypes to be considered.
+     * Sometimes the pipeline may crash because to much variation was found exceeding the
+     * limit. Try augmenting this value (Default: 1000)
+     */
+          nanopolish_max_haplotypes = 1000
 
-  }
+    //Number of cores to run nanopolish in parallel
+          cpus = 2
+
+    /*
+     * This parameter loads all the subreads *.bam pacbio raw files for polishing with VariantCaller.
+     * In order to nextflow properly use it, one needs to store all the data, from all the cells
+     * in one single directory and show the filepath with "path/to/*bam" to this parameter.
+     */
+          pacbio_all_bam_path = ''
+
+
+                    /*
+                     * Short reads parameters
+                     */
+    /*
+     * Short reads input files. They need to be specified in case of hybrid or shortreads-only assembly.
+     * If none of these are wnated it may be left in blank. The files might be single or paired ended. They just
+     * need to be properly identified as the examples below.
+     * Examples for illumina reads:
+     * Paired: params.shortreads.paired = 'SRR6307304_{1,2}.fastq'
+     * Single: params.shortreads.single = 'SRR7128258*'
+     */
+          shortreads_paired = ''
+          shortreads_single = ''
+
+    /*
+     * This parameter below is to define wheter the one wants or not to ALSO create a long reads only assembly
+     * with canu, flye or unicycler and then polish it using the provided short reads. It executes an additional
+     * workflow (together with unicycler/spades hybrid modes) where a genome is assembled with longreads and then
+     * polished with Illumina reads. Must be used with: assembly_type = 'hybrid'
+     */
+          illumina_polish_longreads_contigs = false
+
+    /*
+     * Whenever polishing long reads only assemblies with unpaired short reads (single end), the pipeline
+     * will directly execute one round of pilon polishing instead of using Unicycler's polish pipeline.
+     * Therefore we need to allocate the amount of memmory allocated by Pilon.
+     * Defaut 50G.
+     * This step is crucial because with not enough memmory will crash and not correct your assembly.
+     * When that happens you will not have the pilon output nor the QUAST assesment.
+     */
+          pilon_memmory_limit = 50
+
+    }
+
+    /*
+     * Configuring Nextflow Scopes.
+     * Do NOT change any of the following
+     */
+
+    //Trace Report
+    trace {
+        enabled = false
+        file = "${params.outdir}" + "/annotation_pipeline_trace.txt"
+        fields = 'task_id,name,status,exit,realtime,cpus,%cpu,memory,%mem,rss'
+    }
+
+    //Timeline Report
+    timeline {
+        enabled = false
+        file = "${params.outdir}" + "/annotation_pipeline_timeline.html"
+    }
+
+    //Complete Report
+    report {
+        enabled = false
+        file = "${params.outdir}" + "/annotation_pipeline_nextflow_report.html"
+    }
+
+    /*
+     * Configuring Nextflow Scopes.
+     * Do NOT change any of the following
+     */
+
+    //Queue limit
+    executor.$local.queueSize = 1
+
+    //Docker usage
+    docker.enabled = true
+    docker.runOptions = '-u $(id -u):root'

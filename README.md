@@ -54,15 +54,15 @@ This pipeline was designed to accept data from Illumina, Pacbio and Oxford Nanop
 
 Short reads only assemblies can be produced with Unicycler and/or SPAdes assemblers. Since short reads have an extremely high basecall accuracy, no further steps are done.
 
-Users can assemble Illumina paired or single end reads. [Here](https://github.com/fmalmeida/MpGAP#usage-examples) you can find a few usage examples.
+Users can assemble Illumina paired or single end reads. [Here](https://mpgap.readthedocs.io/en/latest/examples.html#examples) you can find a few usage examples.
 
 #### Long reads only
 
 Long reads only assemblies can be produced with Canu, Flye and/or Unicycler assemblers. Users can assemble pacbio or nanopore reads.
 
-Addionally, users can perform a polishing step since long reads only assemblies generally suffer from basecall accuracy. For that, it is only necessary to set path to a directory containing raw nanopore FAST5 data to polish with Nanopolish or, for pacbio, to set path to \*.bax.h5 or \*.subreads.bam files to use VarianCaller to polish the assembly.
+Addionally, users can perform a polishing step since long reads only assemblies generally suffer from basecall accuracy. For that, it is only necessary to set path to a directory containing raw nanopore FAST5 data to polish with Nanopolish or, for pacbio, to set path to \*.subreads.bam files to use VarianCaller to polish the assembly.
 
-[Here](https://github.com/fmalmeida/MpGAP#usage-examples) you can find a few usage examples.
+[Here](https://mpgap.readthedocs.io/en/latest/examples.html#examples) you can find a few usage examples.
 
 #### Hybrid
 
@@ -99,10 +99,6 @@ Create a configuration file in your working directory:
 
       nextflow run fmalmeida/MpGAP --get_sreads_config
 
-* To download the YAML file used to pass additional parameters to assemblers:
-
-      nextflow run fmalmeida/MpGAP --get_yaml
-
 ## Citation
 
-Users are encouraged to cite the programs used in this pipeline whenever they are used. They are: [Canu](https://github.com/marbl/canu), [Flye](https://github.com/fenderglass/Flye), [Unicycler](https://github.com/rrwick/Unicycler), [Spades](https://github.com/ablab/spades), [Nanopolish](https://github.com/jts/nanopolish), [QUAST](https://github.com/ablab/quast), [GenomicConsensus](https://github.com/PacificBiosciences/GenomicConsensus) and [Pilon](https://github.com/broadinstitute/pilon).
+Users are encouraged to cite the programs used in this pipeline whenever they are used. They are: [Canu](https://github.com/marbl/canu), [Flye](https://github.com/fenderglass/Flye), [Unicycler](https://github.com/rrwick/Unicycler), [Spades](https://github.com/ablab/spades), [Nanopolish](https://github.com/jts/nanopolish), [Medaka](https://github.com/nanoporetech/medaka), [QUAST](https://github.com/ablab/quast), [GenomicConsensus](https://github.com/PacificBiosciences/GenomicConsensus) and [Pilon](https://github.com/broadinstitute/pilon).

@@ -15,7 +15,7 @@ process unicycler_sreads_both_assembly {
   script:
   """
   unicycler -1 $sread1 -2 $sread2 -s $sreads \\
-  -o unicycler_${id} -t ${params.threads} \\
+  -o unicycler_${id} -t ${params.threads} --no_correct \\
   ${params.unicycler_additional_parameters} &> unicycler.log
   """
 }
