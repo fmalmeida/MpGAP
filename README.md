@@ -72,7 +72,7 @@ Long reads only assemblies can be produced with Canu, Flye and/or Unicycler asse
 
 Example:
 
-        ./nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type longreads-only --try_canu --try_flye --try_unicycler 
+        ./nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type longreads-only --try_canu --try_flye --try_unicycler
         --medaka_sequencing_model r941_min_fast_g303 --nanopolish_fast5Path "dataset_1/ont/fast5_pass" --nanopolish_max_haplotypes 2000
         --genomeSize 2m --lr_type nanopore --longreads "dataset_1/ont/ont_reads.fastq"
 
@@ -81,7 +81,7 @@ Example:
 It is possible to perform two types of hybrid assemblies:
 
 1. By using Unicycler and/or SPAdes hybrid assembly modes
-  * For instance, will use Unicycler hybrid mode which will first assemble a high quality assembly graph with Illumina data and then it will use long reads to bridge the gaps. More information about Unicycler Hybrid mode can be found [here](https://github.com/rrwick/Unicycler#method-hybrid-assembly).
+  * For instance, it will use Unicycler hybrid mode which will first assemble a high quality assembly graph with Illumina data and then it will use long reads to bridge the gaps. More information about Unicycler Hybrid mode can be found [here](https://github.com/rrwick/Unicycler#method-hybrid-assembly).
 2. By polishing a long reads only assembly with Illumina reads
   * For that, users will have to set **illumina_polish_longreads_contigs** to true. This will tell the pipeline to produce a long reads only assembly and polish it with Pilon (for unpaired reads) or with [Unicycler-polish program](https://github.com/rrwick/Unicycler/blob/master/docs/unicycler-polish.md) (for paired end reads)
   * Note that, **illumina_polish_longreads_contigs** parameter is an addition, when true, it will execute both strategies 1 and 2. When false, only strategy 1 will be executed.
