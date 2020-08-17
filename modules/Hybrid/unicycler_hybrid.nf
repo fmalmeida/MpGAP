@@ -18,7 +18,7 @@ process unicycler_hybrid {
     parameter = "-1 $sread1 -2 $sread2 -s $sreads -l $lreads --no_correct"
     x = "Performing a hybrid assembly with Unicycler, using paired and single end reads"
   } else if ((params.shortreads_single) && (!params.shortreads_paired)) {
-    parameter = "-s $sreads -l $lreads"
+    parameter = "-s $sreads -l $lreads --no_correct"
     x = "Performing a hybrid assembly with Unicycler, using single end reads"
   } else if ((params.shortreads_paired) && (!params.shortreads_single)) {
     parameter = "-1 $sread1 -2 $sread2 -l $lreads"
