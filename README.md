@@ -24,7 +24,7 @@ This pipeline has two complementary pipelines (also written in nextflow) for [NG
 * [Installation](https://github.com/fmalmeida/MpGAP#installation)
 * [Documentation](https://github.com/fmalmeida/MpGAP#documentation)
   * [Configuration File](https://github.com/fmalmeida/MpGAP#using-the-configuration-file)
-* [Known Bugs]()
+* [Known Bugs](https://github.com/fmalmeida/MpGAP/tree/develop#known-bugs)
 
 ## Requirements
 
