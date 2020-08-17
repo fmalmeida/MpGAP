@@ -13,7 +13,6 @@ MpGAP is is an easy to use nextflow docker-based pipeline that adopts well known
 * [GenomicConsensus](https://github.com/PacificBiosciences/GenomicConsensus)
 * [Pilon](https://github.com/broadinstitute/pilon)
 * [QUAST](https://github.com/ablab/quast)
-This pipeline has only two dependencies: [Docker](https://www.docker.com) and [Nextflow](https://github.com/nextflow-io/nextflow).
 
 ## Further reading
 
@@ -28,8 +27,11 @@ This pipeline has two complementary pipelines (also written in nextflow) for [NG
 
 ## Requirements
 
+This pipeline has only two dependencies: [Docker](https://www.docker.com) and [Nextflow](https://github.com/nextflow-io/nextflow).
+
 * Unix-like operating system (Linux, macOS, etc)
 * Java 8 (or higher)
+* Nextflow (version 20.01 or higher)
 * Docker
   * Image: `fmalmeida/mpgap`
 
