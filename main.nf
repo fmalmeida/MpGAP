@@ -305,16 +305,16 @@ log.info "========================================="
  */
 
 // Canu assembler
-include canu_assembly from './modules/LongReads/canu.nf' params(outdir: params.outdir, lr_type: params.lr_type,
+include {canu_assembly} from './modules/LongReads/canu.nf' params(outdir: params.outdir, lr_type: params.lr_type,
   canu_additional_parameters: params.canu_additional_parameters, threads: params.threads,
   genomeSize: params.genomeSize)
 
 // Unicycler assembler
-include unicycler_lreads from './modules/LongReads/unicycler_lreads.nf' params(outdir: params.outdir,
+include {unicycler_lreads} from './modules/LongReads/unicycler_lreads.nf' params(outdir: params.outdir,
   unicycler_additional_parameters: params.unicycler_additional_parameters, threads: params.threads)
 
 // Flye assembler
-include flye_assembly from './modules/LongReads/flye.nf' params(outdir: params.outdir, lr_type: params.lr_type,
+include {flye_assembly} from './modules/LongReads/flye.nf' params(outdir: params.outdir, lr_type: params.lr_type,
   flye_additional_parameters: params.flye_additional_parameters, threads: params.threads,
   genomeSize: params.genomeSize)
 
@@ -325,12 +325,12 @@ include flye_assembly from './modules/LongReads/flye.nf' params(outdir: params.o
  */
 
 // SPAdes sreads
-include spades_sreads_assembly from './modules/ShortReads/spades_sreads.nf' params(outdir: params.outdir,
+include {spades_sreads_assembly} from './modules/ShortReads/spades_sreads.nf' params(outdir: params.outdir,
   threads: params.threads, spades_additional_parameters: params.spades_additional_parameters,
   shortreads_single: params.shortreads_single, shortreads_paired: params.shortreads_paired)
 
 // Unicycler sreads
-include unicycler_sreads_assembly from './modules/ShortReads/unicycler_sreads.nf' params(outdir: params.outdir,
+include {unicycler_sreads_assembly} from './modules/ShortReads/unicycler_sreads.nf' params(outdir: params.outdir,
   threads: params.threads, unicycler_additional_parameters: params.unicycler_additional_parameters,
   shortreads_single: params.shortreads_single, shortreads_paired: params.shortreads_paired)
 
@@ -360,13 +360,13 @@ include { variantCaller as variantCaller_canu;
  */
 
 // Unicycler hybrid
-include unicycler_hybrid from './modules/Hybrid/unicycler_hybrid.nf' params(outdir: params.outdir,
+include {unicycler_hybrid} from './modules/Hybrid/unicycler_hybrid.nf' params(outdir: params.outdir,
   threads: params.threads, unicycler_additional_parameters: params.unicycler_additional_parameters,
   shortreads_single: params.shortreads_single, shortreads_paired: params.shortreads_paired)
 
 
 // SPAdes hybrid
-include spades_hybrid from './modules/Hybrid/spades_hybrid.nf' params(outdir: params.outdir,
+include {spades_hybrid} from './modules/Hybrid/spades_hybrid.nf' params(outdir: params.outdir,
   threads: params.threads, spades_additional_parameters: params.spades_additional_parameters,
   shortreads_single: params.shortreads_single, shortreads_paired: params.shortreads_paired,
   lr_type: params.lr_type)

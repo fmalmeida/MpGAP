@@ -22,22 +22,18 @@ process quast {
 
   // Alignment parameters
   if (params.shortreads_paired && !params.shortreads_single) {
-    bwa_parameter   = "-M -t ${params.threads} ${contigs} ${reads[1]} ${reads[2]}"
     quast_parameter = "--pe1 ${reads[1]} --pe2 ${reads[2]}"
   } else if (!params.shortreads_paired && params.shortreads_single) {
-    bwa_parameter   = "-M -t ${params.threads} ${contigs} ${reads}"
-    quast_parameter = "--single ${reads}"
+    quast_parameter = "--single ${reads[3]}"
   } else if (params.shortreads_paired && params.shortreads_single) {
-    bwa_parameter   = "-M -t ${params.threads} ${contigs} ${reads[1]} ${reads[2]}"
     quast_parameter = "--single ${reads[3]} --pe1 ${reads[1]} --pe2 ${reads[2]}"
   } else if (params.assembly_type == 'longreads-only') {
     ltype           = (params.lr_type == 'nanopore') ? "ont2d" : "pacbio"
-    bwa_parameter   = "-x ${ltype} -t ${params.threads} ${contigs} ${reads}"
     quast_parameter = "--${params.lr_type} ${reads}"
   }
 
   """
-  /work/quast/quast.py -o ${assembler} -t ${params.threads} ${quast_parameter} \\
+  quast.py -o ${assembler} -t ${params.threads} ${quast_parameter} \\
   --circos --glimmer --rna-finding ${contigs}
   """
 }
