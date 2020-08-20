@@ -61,8 +61,8 @@ Long reads only with ONT reads (Using both Nanopolish and Medaka polishers)
 
   If neither ``--nanopolish_fast5Path`` nor ``--medaka_sequencing_model`` is set, the pipeline will not try to polish the assemblies using Nanopolish or Medaka, respectively.
 
-Assembly in Hybrid mode with Unicycler. Using Pacbio reads.
-===========================================================
+Assembly in Hybrid mode 1, directly via Unicycler workflow. Using Pacbio reads.
+===============================================================================
 
 ::
 
@@ -72,6 +72,9 @@ Assembly in Hybrid mode with Unicycler. Using Pacbio reads.
 .. note::
 
   This command will execute a hybrid assembly directly through Unicycler's hybrid assembly mode.
+
+Assembly in Hybrid mode 2, by polishing a longreads-only assembly with shortreads. Additionally executing medaka.
+=================================================================================================================
 
 Running with a configuration file
 =================================

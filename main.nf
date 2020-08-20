@@ -32,7 +32,9 @@ nextflow.preview.dsl=2
     OBS: These reports can also be enabled through the configuration file.
 
     OPTIONS:
-             General Parameters - Mandatory
+
+                                                        General Parameters - Mandatory
+
 
      --outdir <string>                                                          Output directory name. Outputs are prefixed with reads IDs (basenames).
 
@@ -95,6 +97,16 @@ nextflow.preview.dsl=2
 
      --lr_type <string>                                                         Sets wich type of long reads are being used: pacbio or nanopore
 
+     --illumina_polish_longreads_contigs                                        This tells the pipeline to create a longreads-only assembly with
+                                                                                Canu, Unicycler or Flye and polish it with shortreads using Pilon.
+                                                                                This represents another hybrid methodology. For that, users have
+                                                                                to select the longreads assemblers to be used (Canu, Flye and/or Unicycler).
+
+                                                                                It is also possible to polish the longreads-only assembly with Nanopolish,
+                                                                                Medaka or Arrow (depending on the sequencing technology) before polishing
+                                                                                it with shortreads. For that, users must check the longreads parameters:
+                                                                                --medaka_sequencing_model, --nanopolish_fast5Path and --pacbio_all_bam_path
+
 
 
 
@@ -138,11 +150,6 @@ nextflow.preview.dsl=2
      --genomeSize <string>                                                      Canu and Flye require an estimative of genome size in order
                                                                                 to be executed. Examples: 5.6m; 1.2g
 
-     --illumina_polish_longreads_contigs                                        This tells the pipeline to polish long reads only assemblies
-                                                                                with Illumina reads through Pilon. This is another hybrid methodology.
-                                                                                For that, users have to set path to Illumina reads through
-                                                                                --shortreads_paired or --shortreads_single.
-
 
 
     """.stripIndent()
@@ -173,6 +180,8 @@ nextflow.preview.dsl=2
     Hybrid assembly - Using both paired and single end short reads
 \$ nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type hybrid --try_unicycler --shortreads_paired "dataset_1/sampled/illumina_R{1,2}.fastq" \
 --shortreads_single "dataset_1/sampled/illumina_single.fastq" --lr_type nanopore --longreads "dataset_1/ont/ont_reads.fastq"
+
+    Hybrid assembly - by polishing (with shortreads) a longreads-only assembly
     """.stripIndent()
  }
 
@@ -271,7 +280,7 @@ params.pacbio_all_bam_path = ''
 
 // Hybrid plus
 params.illumina_polish_longreads_contigs = false
-params.pilon_memmory_limit = 50
+params.pilon_memory_limit = 50
 
 
 /*
@@ -379,7 +388,8 @@ include { pilon_polish as pilon_polish_flye; pilon_polish as pilon_polish_flye_n
           pilon_polish as pilon_polish_unicycler; pilon_polish as pilon_polish_unicycler_nanopolish;
           pilon_polish as pilon_polish_unicycler_medaka; pilon_polish as pilon_polish_unicycler_variantCaller } \
 \
-          from './modules/Hybrid/unicycler_polish.nf' params(outdir: params.outdir, threads: params.threads)
+          from './modules/Hybrid/unicycler_polish.nf' params(outdir: params.outdir, threads: params.threads,
+            pilon_memory_limit: params.pilon_memory_limit, shortreads_paired: params.shortreads_paired)
 
 
 

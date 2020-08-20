@@ -6,7 +6,7 @@ Configuration File
 
 To download a configuration file template users just need to run ``nextflow run fmalmeida/MpGAP [--get_hybrid_config] [--get_lreads_config] [--get_sreads_config]``
 
-Using a config file your code is lot more clean and concise: ``nextflow run fmalmeida/MpGAP -c [path-to-config]``
+Using a config file your code is a lot more clean and concise: ``nextflow run fmalmeida/MpGAP -c [path-to-config]``
 
 Check out some `templates <https://github.com/fmalmeida/MpGAP/tree/master/configuration_example>`_.
 
@@ -97,8 +97,7 @@ Example of Hybrid assembly config file:
      * This parameter tells the pipeline to also try Nanopolish.
      *
      * This parameter loads the directory where all the nanopore FAST5 files are stored.
-     * If this parameter is set, the pipeline is able to execute the polishing step with nanopolish
-     * for longreads-only assembly type.
+     * If this parameter is set, the pipeline is able to execute the polishing step with nanopolish.
      */
           nanopolish_fast5Path = ''
 
@@ -110,12 +109,13 @@ Example of Hybrid assembly config file:
           nanopolish_max_haplotypes = 1000
 
     //Number of cores to run nanopolish in parallel
+    //Beware of your system limits
           cpus = 2
 
     /*
      * This parameter loads all the subreads *.bam pacbio raw files for polishing with VariantCaller.
      * In order to nextflow properly use it, one needs to store all the data, from all the cells
-     * in one single directory and show the filepath with "path/to/*bam" to this parameter.
+     * in one single directory and set the filepath as "some/data/*bam".
      */
           pacbio_all_bam_path = ''
 
@@ -125,38 +125,40 @@ Example of Hybrid assembly config file:
                      */
     /*
      * Short reads input files. They need to be specified in case of hybrid or shortreads-only assembly.
-     * If none of these are wnated it may be left in blank. The files might be single or paired ended. They just
+     * If none of these are wanted it may be left in blank. The files might be single or paired ended. They just
      * need to be properly identified as the examples below.
      * Examples for illumina reads:
-     * Paired: params.shortreads.paired = 'SRR6307304_{1,2}.fastq'
-     * Single: params.shortreads.single = 'SRR7128258*'
+     * Paired: shortreads_paired = 'SRR6307304_{1,2}.fastq' // For reads SRR6307304_1.fastq and SRR6307304_2.fastq
+     * Single: shortreads_single = 'SRR7128258*'
      */
           shortreads_paired = ''
           shortreads_single = ''
 
     /*
-     * This parameter below is to define wheter the one wants or not to ALSO create a long reads only assembly
-     * with canu, flye or unicycler and then polish it using the provided short reads. It executes an additional
-     * workflow (together with unicycler/spades hybrid modes) where a genome is assembled with longreads and then
-     * polished with Illumina reads. Must be used with: assembly_type = 'hybrid'
+     * This parameter below is to define wheter one wants or not to ALSO execute the alternative hybrid assembly method.
+     * It first creates a long reads only assembly with canu, flye or unicycler and then polishes it using the provided
+     * shortreads. It executes an additional workflow (together with unicycler/spades hybrid modes). Must be used with:
+     * assembly_type = 'hybrid'
+     *
+     * Whenever using this parameter, it is also possible to polish the longreads-only assemblies with Nanopolish,
+     * Medaka or VarianCaller (Arrow) before the polishing with shortreads (using Pilon). For that it is necessary to set
+     * the right parameters: pacbio_all_bam_path, nanopolish_fast5Path or medaka_sequencing_model.
      */
           illumina_polish_longreads_contigs = false
 
     /*
      * Whenever polishing long reads only assemblies with unpaired short reads (single end), the pipeline
      * will directly execute one round of pilon polishing instead of using Unicycler's polish pipeline.
-     * Therefore we need to allocate the amount of memmory allocated by Pilon.
-     * Defaut 50G.
-     * This step is crucial because with not enough memmory will crash and not correct your assembly.
-     * When that happens you will not have the pilon output nor the QUAST assesment.
+     * Therefore we need to allocate the amount of memory allocated by Pilon. Default 50G.
+     * This step is crucial because with not enough memory will crash and not correct your assembly.
+     * When that happens you will not have the pilon output nor the QUAST assessment.
      */
-          pilon_memmory_limit = 50
+          pilon_memory_limit = 50
 
     }
 
     /*
-     * Configuring Nextflow Scopes.
-     * Do NOT change any of the following
+     * Configuring Nextflow reports
      */
 
     //Trace Report
@@ -188,4 +190,4 @@ Example of Hybrid assembly config file:
 
     //Docker usage
     docker.enabled = true
-    docker.runOptions = '-u $(id -u):root'
+    //docker.runOptions = '-u $(id -u):root'

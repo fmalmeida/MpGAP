@@ -36,11 +36,6 @@ Prepare your for receiving outputs folders
   # Create dir for all assemblies
   mkdir -p dataset_{1,2}/assemblies
 
-Afterwards
-----------
-
-After assembling a prokaryotic genome you can then annotate it. Why not give my other pipeline, `bacannot <https://bacannot.readthedocs.io/en/latest/>`_ a try?
-
 Assembling Oxford Nanopore reads
 ================================
 
@@ -216,3 +211,9 @@ Via configuration file
     nextflow run fmalmeida/MpGAP -c 01_hybrid-2.config &> 01_hybrid-2_assembly.log
 
 We have made **01_hybrid-2.config** file `available online <https://drive.google.com/file/d/1OYwfv4cJnSDTXRUJhg3DHXuCG3w5qvPU/view?usp=sharing>`_ for a better understanding.
+
+Afterwards
+==========
+
+After assembling a prokaryotic genome you can then annotate it. Why not give my other pipeline, `bacannot <https://bacannot.readthedocs.io/en/latest/>`_ a try? It wraps up lots
+of databases and tools that can give a nice overview of your query genome.
