@@ -97,10 +97,13 @@ nextflow.preview.dsl=2
 
      --lr_type <string>                                                         Sets wich type of long reads are being used: pacbio or nanopore
 
-     --illumina_polish_longreads_contigs                                        This tells the pipeline to create a longreads-only assembly with
-                                                                                Canu, Unicycler or Flye and polish it with shortreads using Pilon.
-                                                                                This represents another hybrid methodology. For that, users have
-                                                                                to select the longreads assemblers to be used (Canu, Flye and/or Unicycler).
+     --illumina_polish_longreads_contigs                                        This tells the pipeline to execute an alternative hybrid method
+                                                                                instead of running Unicycler/SPAdes default hybrid workflows.
+                                                                                This creates a longreads-only assembly with Canu, Unicycler or
+                                                                                Flye and polish it with shortreads using Pilon. This represents
+                                                                                another hybrid methodology. For that, users have to select the
+                                                                                desired longreads assemblers to be used (Canu, Flye and/or Unicycler).
+                                                                                Canu and Flye require a expected genome size as input.
 
                                                                                 It is also possible to polish the longreads-only assembly with Nanopolish,
                                                                                 Medaka or Arrow (depending on the sequencing technology) before polishing
@@ -139,7 +142,7 @@ nextflow.preview.dsl=2
                                                                                 Whenever set, the pipeline will execute a polishing step
                                                                                 with Nanopolish. This makes the pipeline extremely SLOW!!
 
-     --nanopolish_max_haplotypes                                                This parameter sets to nanopolish the max number of haplotypes to be considered.
+     --nanopolish_max_haplotypes <int>                                          This parameter sets to nanopolish the max number of haplotypes to be considered.
                                                                                 Sometimes the pipeline may crash because to much variation was found exceeding the
                                                                                 limit. Try augmenting this value (Default: 1000)
 
@@ -181,7 +184,9 @@ nextflow.preview.dsl=2
 \$ nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type hybrid --try_unicycler --shortreads_paired "dataset_1/sampled/illumina_R{1,2}.fastq" \
 --shortreads_single "dataset_1/sampled/illumina_single.fastq" --lr_type nanopore --longreads "dataset_1/ont/ont_reads.fastq"
 
-    Hybrid assembly - by polishing (with shortreads) a longreads-only assembly
+    Hybrid assembly - by polishing (with shortreads) a longreads-only assembly -- also using medaka
+\$ nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type hybrid --try_unicycler --try_flye --try_canu --shortreads_paired "dataset_1/sampled/illumina_R{1,2}.fastq"
+--genomeSize 2m --lr_type nanopore --longreads "dataset_1/ont/ont_reads.fastq" --illumina_polish_longreads_contigs --medaka_sequencing_model r941_min_fast_g303
     """.stripIndent()
  }
 
@@ -290,13 +295,20 @@ log.info "================================================================="
 log.info " Docker-based, fmalmeida/mpgap, generic genome assembly pipeline "
 log.info "================================================================="
 def summary = [:]
-if (params.longreads) { summary['Long Reads']   = params.longreads }
+// Generic parameters
+summary['Output directory']    = params.outdir
+summary['Assembly method']     = params.assembly_type
+summary['Number of threads']   = params.threads
+// Long reads?
+if (params.longreads) { summary['Longreads']   = params.longreads }
+if (params.longreads) { summary['Longread technology'] = params.lr_type }
 if (params.nanopolish_fast5Path && params.lr_type == 'nanopore') { summary['Fast5 files dir']   = params.nanopolish_fast5Path }
+if (params.medaka_sequencing_model && params.lr_type == 'nanopore') { summary['Medaka model']   = params.medaka_sequencing_model }
+if (params.pacbio_all_bam_path && params.lr_type == 'pacbio') { summary['Pacbio subreads BAM']   = params.pacbio_all_bam_path }
+// Short reads?
 if (params.shortreads_single) { summary['Short single end reads']   = params.shortreads_single }
 if (params.shortreads_paired) { summary['Short paired end reads']   = params.shortreads_paired }
-summary['Output dir']   = params.outdir
-summary['Assembly assembly_type chosen'] = params.assembly_type
-summary['Long read sequencing technology'] = params.lr_type
+// Workflow information
 if(workflow.revision) summary['Pipeline Release'] = workflow.revision
 summary['Current home']   = "$HOME"
 summary['Current user']   = "$USER"
@@ -542,26 +554,34 @@ workflow hybrid_nf {
       preads
       sreads
       lreads
+      fast5
+      fast5_dir
+      bamFile
+      nBams
   main:
 
       /*
-       * Full hybrid mode
+       * Full (default) hybrid mode
        */
-      // SPAdes
-      if (params.try_spades) {
-        spades_hybrid(lreads, preads, sreads)
-        quast_hybrid_spades(spades_hybrid.out[1], preads.concat(sreads).collect())
-      }
-      // Unicycler
-      if (params.try_unicycler) {
-        unicycler_hybrid(lreads, preads, sreads)
-        quast_hybrid_unicycler(unicycler_hybrid.out[1], preads.concat(sreads).collect())
+
+      if (!params.illumina_polish_longreads_contigs) {
+        // SPAdes
+        if (params.try_spades) {
+          spades_hybrid(lreads, preads, sreads)
+          quast_hybrid_spades(spades_hybrid.out[1], preads.concat(sreads).collect())
+        }
+        // Unicycler
+        if (params.try_unicycler) {
+          unicycler_hybrid(lreads, preads, sreads)
+          quast_hybrid_unicycler(unicycler_hybrid.out[1], preads.concat(sreads).collect())
+        }
       }
 
       /*
        * Polish a long reads assembly
        */
-      if (params.illumina_polish_longreads_contigs){
+
+      if (params.illumina_polish_longreads_contigs) {
         /*
          * Canu
          */
@@ -668,23 +688,19 @@ workflow {
 
   if (params.assembly_type == 'longreads-only') {
 
-    // Without any polishing (ONT and Pacbio)
-    if (!params.medaka_sequencing_model && !params.nanopolish_fast5Path && !params.pacbio_all_bam_path) {
-      lreadsonly_nf(Channel.fromPath(params.longreads), Channel.value(''), Channel.value(''), Channel.value(''), Channel.value(''))
-    }
+    // Giving inputs
+    lreadsonly_nf(
+      // Longreads - required
+      Channel.fromPath(params.longreads),
 
-    // Use Nanopolish? (ONT)
-    if (params.nanopolish_fast5Path && !params.pacbio_all_bam_path && params.lr_type == 'nanopore') {
-      lreadsonly_nf(Channel.fromPath(params.longreads), Channel.fromPath(params.nanopolish_fast5Path),
-                    Channel.fromPath(params.nanopolish_fast5Path, type: 'dir'), Channel.value(''), Channel.value(''))
-    }
+      // Will run Nanopolish?
+      (params.nanopolish_fast5Path && params.lr_type == 'nanopore') ? Channel.fromPath(params.nanopolish_fast5Path) : Channel.value(''),
+      (params.nanopolish_fast5Path && params.lr_type == 'nanopore') ? Channel.fromPath(params.nanopolish_fast5Path, type: 'dir') : Channel.value(''),
 
-    // Use VariantCaller (Pacbio)
-    if (!params.nanopolish_fast5Path && params.pacbio_all_bam_path && params.lr_type == 'pacbio') {
-      lreadsonly_nf(Channel.fromPath(params.longreads), Channel.value(''), Channel.value(''),
-                    Channel.fromPath(params.pacbio_all_bam_path).collect(), Channel.fromPath(params.pacbio_all_bam_path).count().subscribe { println it })
-    }
-
+      // Will run Arrow?
+      (params.pacbio_all_bam_path && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_all_bam_path).collect() : Channel.value(''),
+      (params.pacbio_all_bam_path && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_all_bam_path).count().subscribe { println it } : Channel.value('')
+    )
   }
 
 
@@ -694,23 +710,14 @@ workflow {
 
    if (params.assembly_type == 'illumina-only') {
 
-     // Using paired end reads
-     if (params.shortreads_paired && !params.shortreads_single) {
-       sreads_only_nf(Channel.fromFilePairs(params.shortreads_paired, flat: true, size: 2),
-                      Channel.value(''))
-     }
+     // Giving inputs
+     sreads_only_nf(
+       // Have paired end reads?
+       (params.shortreads_paired) ? Channel.fromFilePairs( params.shortreads_paired, flat: true, size: 2 ) : Channel.value(['', '', '']),
 
-     // Using single end reads
-     if (params.shortreads_single && !params.shortreads_paired) {
-       sreads_only_nf(Channel.value(['', '', '']),
-                      Channel.fromPath(params.shortreads_single, hidden: true))
-     }
-
-     // Using both paired and single end reads
-     if (params.shortreads_single && params.shortreads_paired) {
-       sreads_only_nf(Channel.fromFilePairs(params.shortreads_paired, flat: true, size: 2),
-                      Channel.fromPath(params.shortreads_single, hidden: true))
-     }
+       // Have unpaired reads?
+       (params.shortreads_single) ? Channel.fromPath(params.shortreads_single, hidden: true) : Channel.value('')
+     )
    }
 
   /*
@@ -719,26 +726,25 @@ workflow {
 
    if (params.assembly_type == 'hybrid') {
 
-     // Using paired end reads
-     if (!params.shortreads_single && params.shortreads_paired) {
-       hybrid_nf(Channel.fromFilePairs( params.shortreads_paired, flat: true, size: 2 ),
-                 Channel.value(''),
-                 Channel.fromPath(params.longreads))
-     }
+     // Giving inputs
+     hybrid_nf(
+      // Have paired end reads?
+      (params.shortreads_paired) ? Channel.fromFilePairs( params.shortreads_paired, flat: true, size: 2 ) : Channel.value(['', '', '']),
 
-     // Using single end reads
-     if (params.shortreads_single && !params.shortreads_paired) {
-       hybrid_nf(Channel.value(['', '', '']),
-                 Channel.fromPath(params.shortreads_single, hidden: true),
-                 Channel.fromPath(params.longreads))
-     }
+      // Have unpaired reads?
+      (params.shortreads_single) ? Channel.fromPath(params.shortreads_single, hidden: true) : Channel.value(''),
 
-     // Using both paired and single end reads
-     if (params.shortreads_single && params.shortreads_paired) {
-       hybrid_nf(Channel.fromFilePairs( params.shortreads_paired, flat: true, size: 2 ),
-                 Channel.fromPath(params.shortreads_single, hidden: true),
-                 Channel.fromPath(params.longreads))
-     }
+      // Long reads - required
+      Channel.fromPath(params.longreads),
+
+      // Will run Nanopolish?
+      (params.nanopolish_fast5Path && params.lr_type == 'nanopore') ? Channel.fromPath(params.nanopolish_fast5Path) : Channel.value(''),
+      (params.nanopolish_fast5Path && params.lr_type == 'nanopore') ? Channel.fromPath(params.nanopolish_fast5Path, type: 'dir') : Channel.value(''),
+
+      // Will run Arrow?
+      (params.pacbio_all_bam_path && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_all_bam_path).collect() : Channel.value(''),
+      (params.pacbio_all_bam_path && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_all_bam_path).count().subscribe { println it } : Channel.value('')
+     )
    }
 }
 

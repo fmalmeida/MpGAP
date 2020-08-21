@@ -28,6 +28,13 @@ Input
   to set ``assembly_type = 'hybrid'``, set path to Illumina reads and use the
   ``illumina_polish_longreads_contigs`` parameter.
 
+.. tip::
+
+  When using the ``illumina_polish_longreads_contigs`` parameter it is also possible to combine
+  polishings with Medaka, Nanopolish or Arrow by using setting the correct parameters:
+  pacbio_all_bam_path, nanopolish_fast5Path or medaka_sequencing_model. These will tell the
+  pipeline to polish the assemblies with these software before polishing with shortreads (using Pilon).
+
 Usage example
 =============
 
@@ -148,9 +155,10 @@ Usage example
    * - ``--illumina_polish_longreads_contigs``
      - N
      - False
-     - Tells the pipeline to create a long reads only assembly and polish it with short reads. By default, only
-     the hybrid mode of Unicycler and SPAdes are executed. If used, users must remember to select which assemblers
-     to use for a long reads only assembly first: ``--try_unicycler``, ``--try_canu`` or ``--try_flye``.
+     - Tells the pipeline to create a long reads only assembly and polish it with short reads. By default, the
+     hybrid modes of Unicycler and SPAdes are executed. This parameter tells to excute the alternative hybrid
+     method (longreads -> polish) instead of Unicycler/SPAdes hybrid modes. If used, users must remember to
+     select which assemblers to use for a long reads only assembly first: ``--try_unicycler``, ``--try_canu`` or ``--try_flye``.
 
 All these parameters are configurable through a configuration file. We encourage users to use the configuration
 file since it will keep your execution cleaner and more readable. See a :ref:`config` example.

@@ -135,10 +135,10 @@ Example of Hybrid assembly config file:
           shortreads_single = ''
 
     /*
-     * This parameter below is to define wheter one wants or not to ALSO execute the alternative hybrid assembly method.
+     * This parameter below is to define wheter one wants or not to execute the alternative hybrid assembly method.
      * It first creates a long reads only assembly with canu, flye or unicycler and then polishes it using the provided
-     * shortreads. It executes an additional workflow (together with unicycler/spades hybrid modes). Must be used with:
-     * assembly_type = 'hybrid'
+     * shortreads. It executes an alternative workflow and DOES NOT RUN unicycler/spades default hybrid modes.
+     * Must be used with: assembly_type = 'hybrid'
      *
      * Whenever using this parameter, it is also possible to polish the longreads-only assemblies with Nanopolish,
      * Medaka or VarianCaller (Arrow) before the polishing with shortreads (using Pilon). For that it is necessary to set

@@ -61,8 +61,10 @@ Long reads only with ONT reads (Using both Nanopolish and Medaka polishers)
 
   If neither ``--nanopolish_fast5Path`` nor ``--medaka_sequencing_model`` is set, the pipeline will not try to polish the assemblies using Nanopolish or Medaka, respectively.
 
-Assembly in Hybrid mode 1, directly via Unicycler workflow. Using Pacbio reads.
-===============================================================================
+Assembly in Hybrid mode 1
+=========================
+
+Assembling directly via Unicycler hybrid workflow, using Pacbio reads.
 
 ::
 
@@ -73,8 +75,21 @@ Assembly in Hybrid mode 1, directly via Unicycler workflow. Using Pacbio reads.
 
   This command will execute a hybrid assembly directly through Unicycler's hybrid assembly mode.
 
-Assembly in Hybrid mode 2, by polishing a longreads-only assembly with shortreads. Additionally executing medaka.
-=================================================================================================================
+Assembly in Hybrid mode 2
+=========================
+
+By polishing a longreads-only assembly with shortreads, additionally executing medaka and nanopolish (before the polishing with shortreads).
+
+::
+
+  ./nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type hybrid --try_unicycler --try_flye --try_canu --shortreads_paired "dataset_1/sampled/illumina_R{1,2}.fastq"
+  --nanopolish_fast5Path dataset_1/ont/fast5_pass --nanopolish_max_haplotypes 5000 --medaka_sequencing_model r941_min_fast_g303 --genomeSize 2m --lr_type nanopore --longreads
+  "dataset_1/ont/ont_reads.fastq"  --illumina_polish_longreads_contigs
+
+.. note::
+
+  This command will execute a hybrid assembly by polishing a longreads-only assembly with shortreads. The usage of ``nanopolish_fast5Path`` and ``medaka_sequencing_model``
+  tells the pipeline to create additional assemblies where medaka and/or nanopolish are executed before Pilon (polishment with shortreads).
 
 Running with a configuration file
 =================================
