@@ -401,7 +401,8 @@ include { pilon_polish as pilon_polish_flye; pilon_polish as pilon_polish_flye_n
           pilon_polish as pilon_polish_unicycler_medaka; pilon_polish as pilon_polish_unicycler_variantCaller } \
 \
           from './modules/Hybrid/unicycler_polish.nf' params(outdir: params.outdir, threads: params.threads,
-            pilon_memory_limit: params.pilon_memory_limit, shortreads_paired: params.shortreads_paired)
+            pilon_memory_limit: params.pilon_memory_limit, shortreads_paired: params.shortreads_paired,
+            shortreads_single: params.shortreads_single)
 
 
 
