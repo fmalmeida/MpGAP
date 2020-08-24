@@ -15,6 +15,7 @@ It wraps up the following tools:
 * `Unicycler <https://github.com/rrwick/Unicycler>`_
 * `SPAdes <https://github.com/ablab/spades>`_
 * `Nanopolish <https://github.com/jts/nanopolish>`_
+* `Medaka <https://github.com/nanoporetech/medaka>`_
 * `Quast <https://github.com/ablab/quast>`_
 * `GenomicConsensus <https://github.com/PacificBiosciences/GenomicConsensus>`_
 * `Pilon <https://github.com/broadinstitute/pilon>`_
