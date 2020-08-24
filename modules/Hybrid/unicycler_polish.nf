@@ -1,5 +1,5 @@
 process pilon_polish {
-  publishDir "${params.outdir}/polished-with-shortreads", mode: 'copy'
+  publishDir "${params.outdir}/assemblies-polished-with-shortreads", mode: 'copy'
   container 'fmalmeida/mpgap'
   cpus params.threads
   tag "Polishing a longreads-only assembly with shortreads (through Pilon)"
@@ -46,7 +46,7 @@ process pilon_polish {
       # save bam file in the desired directory
       mv ${id}_${assembler}_aln.bam pilon.log pilon_results_${assembler};
       """
-  else if((params.shortreads_paired != '' && params.shortreads_single != ''))
+  else if(params.shortreads_paired != '' && params.shortreads_single != '')
       """
       # Create the results dir
       mkdir pilon_results_${assembler};

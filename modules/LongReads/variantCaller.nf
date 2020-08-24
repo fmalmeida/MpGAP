@@ -10,7 +10,7 @@ process variantCaller {
 
   output:
   file "${assembler}_${lrID}_pbvariants.gff" // Save gff
-  tuple file("${assembler}_${lrID}_pbconsensus.fasta"), val("${lrID}"), val("VariantCaller") // Save contigs
+  tuple file("${assembler}_${lrID}_pbconsensus.fasta"), val("${lrID}"), val("${assembler}-arrow") // Save contigs
 
   script:
   id = "${bams}" - ".bam"
