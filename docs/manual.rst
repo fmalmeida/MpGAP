@@ -14,18 +14,13 @@ Input
 
   Users must **never** use hard or symbolic links. This will make nextflow fail.
   When setting the parameters, please **always** give full path to a hard file,
-  not to a link. This will prevent file access fail.
+  not to a link. This will prevent file access fail. Remember to **always** write input paths inside double quotes.
 
 .. warning::
 
   Remember: the pipeline does not concatenate the reads. Whenever you use a pattern such as \* the pipeline will assemble each pair
   separately. When doing hybrid assemblies or mixing read types it is advised to **not use REGEX** and instead write the full file
   path.
-
-
-.. note::
-
-   Remember to **always** write input paths inside double quotes.
 
 .. tip::
 
@@ -47,6 +42,7 @@ Usage example
 ::
 
    nextflow run fmalmeida/MpGAP [OPTIONS]
+
 
 .. list-table::
    :widths: 20 10 20 50
@@ -150,8 +146,7 @@ Usage example
    * - ``--pacbio_all_bam_path``
      - N
      - NA
-     - Path to all subreads.bam files for the given reads. Whenever set, the pipeline will execute a polishing step with VarianCaller through arrow.
-     Arrow is supported for PacBio Sequel data and RS data with the P6-C4 chemistry.
+     - Path to all subreads.bam files for the given reads. Whenever set, the pipeline will execute a polishing step with VarianCaller through arrow. Arrow is supported for PacBio Sequel data and RS data with the P6-C4 chemistry.
 
    * - ``--genomeSize``
      - Y (for Canu and Flye assemblers)
@@ -161,14 +156,10 @@ Usage example
    * - ``--illumina_polish_longreads_contigs``
      - N
      - False
-     - Tells the pipeline to create a long reads only assembly and polish it with short reads. By default, the
-     hybrid modes of Unicycler and SPAdes are executed. This parameter tells to excute the alternative hybrid
-     method (longreads -> polish) instead of Unicycler/SPAdes hybrid modes. If used, users must remember to
-     select which assemblers to use for a long reads only assembly first: ``--try_unicycler``, ``--try_canu`` or ``--try_flye``.
+     - Tells the pipeline to create a long reads only assembly and polish it with short reads. By default, the hybrid modes of Unicycler and SPAdes are executed. This parameter tells to excute the alternative hybrid method (longreads -> polish) instead of Unicycler/SPAdes hybrid modes. If used, users must remember to select which assemblers to use for a long reads only assembly first: ``--try_unicycler``, ``--try_canu`` or ``--try_flye``.
 
 All these parameters are configurable through a configuration file. We encourage users to use the configuration
 file since it will keep your execution cleaner and more readable. See a :ref:`config` example.
-
 
 Examples
 ========

@@ -41,7 +41,7 @@ Assembling Oxford Nanopore reads
 
 Oxford nanopore reads are in the `example dataset 1 <https://ngs-preprocess.readthedocs.io/en/latest/quickstart.html#id2>`_.
 
-Via CLI parameterisation
+Via CLI parameterization
 ------------------------
 
 .. code-block:: bash
@@ -61,7 +61,7 @@ Pacbio reads can be found in `example dataset 2 <https://ngs-preprocess.readthed
 If you have not followed my previous quickstart in `ngs-preprocess pipeline <https://ngs-preprocess.readthedocs.io/en/latest/>`_
 you will have subreads in fastq and bam formats.
 
-Via CLI parameterisation
+Via CLI parameterization
 ------------------------
 
 .. code-block:: bash
