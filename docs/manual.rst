@@ -111,7 +111,7 @@ Usage example
    * - ``--shortreads_paired``
      - Y (for hybrid and illumina-only modes)
      - NA
-     - Path to Illumina paired end reads. E.g. "read_pair_{1,2}.fastq".
+     - Path to Illumina paired end reads. E.g. "read_pair\_{1,2}.fastq".
 
    * - ``--shortreads_single``
      - Y (for hybrid and illumina-only modes)
