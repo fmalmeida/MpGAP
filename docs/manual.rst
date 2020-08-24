@@ -36,13 +36,8 @@ Input
   pacbio_all_bam_path, nanopolish_fast5Path or medaka_sequencing_model. These will tell the
   pipeline to polish the assemblies with these software before polishing with shortreads (using Pilon).
 
-Usage example
-=============
-
-::
-
-   nextflow run fmalmeida/MpGAP [OPTIONS]
-
+Parameters documentation
+========================
 
 .. list-table::
    :widths: 20 10 20 50
@@ -161,7 +156,7 @@ Usage example
 All these parameters are configurable through a configuration file. We encourage users to use the configuration
 file since it will keep your execution cleaner and more readable. See a :ref:`config` example.
 
-Examples
-========
+Usage examples
+==============
 
 For a better understanding of the usage we provided a feel examples. See :ref:`examples`
