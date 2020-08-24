@@ -114,6 +114,10 @@ Method 1: Only through Unicycler or SPAdes hybrid workflows
   `params.illumina_polish_longreads_contigs = false`. This parameter is what is used to execute mode 2. If true,
   the pipeline will produce and polish a long reads only assembly with Canu, Flye or Unicycler.
 
+.. warning::
+
+  Users must remember to use the parameters ``--try_unicycler`` or ``--try_spades`` otherwise they will not be executed.
+
 Via CLI parameterization
 """"""""""""""""""""""""
 
@@ -130,7 +134,7 @@ Method 2: By polishing a longreads-only assembly with shortreads
 .. note::
 
   For this one, users must select a hybrid assembly mode, set path to both long and short reads, and remember to set
-  `params.illumina_polish_longreads_contigs = true`. This parameter is what is used to execute mode 2. If true,
+  ``params.illumina_polish_longreads_contigs = true``. This parameter is what is used to try to also execute mode 2. If true,
   the pipeline will produce and polish a long reads only assembly with Canu, Flye or Unicycler.
 
 .. note::

@@ -1,8 +1,14 @@
 .. _examples:
 
-******************
-CLI usage Examples
-******************
+************************
+A few CLI usage Examples
+************************
+
+.. warning::
+
+  Remember: the pipeline does not concatenate the reads. Whenever you use a pattern such as \* the pipeline will assemble each pair
+  separately. When doing hybrid assemblies or mixing read types it is advised to **not use REGEX** and instead write the full file
+  path.
 
 Illumina-only assembly with paired end reads
 ============================================
@@ -15,7 +21,7 @@ Illumina-only assembly with paired end reads
 .. note::
 
   This command will perform an illumina-only assembly using paired end reads with Unicycler and SPAdes assemblers.
-  Since fastq files will be found by a pattern match users MUST ALWAYS double quote as: Example "illumina/SRR9847694_{1,2}.fastq.gz"
+  Since fastq files will be found by a pattern match users MUST ALWAYS double quote as: Example "illumina/SRR\*_{1,2}.fastq.gz"
 
 Illumina-only assembly with single end reads
 ============================================
@@ -28,7 +34,7 @@ Illumina-only assembly with single end reads
 .. note::
 
   This command will perform an illumina-only assembly using unpaired reads with Unicycler and SPAdes assemblers.
-  Since fastq files will be found by a pattern match users MUST ALWAYS double quote as: Example "SRR9696*.fastq.gz"
+  Since fastq files will be found by a pattern match users MUST ALWAYS double quote as: Example "SRR9696\*.fastq.gz"
 
 Illumina-only assembly with both paired and single end reads
 ============================================================
@@ -90,6 +96,10 @@ By polishing a longreads-only assembly with shortreads, additionally executing m
 
   This command will execute a hybrid assembly by polishing a longreads-only assembly with shortreads. The usage of ``nanopolish_fast5Path`` and ``medaka_sequencing_model``
   tells the pipeline to create additional assemblies where medaka and/or nanopolish are executed before Pilon (polishment with shortreads).
+
+.. warning::
+
+  Users must remember to use the parameters ``--try_unicycler`` or ``--try_spades`` otherwise they will not be executed.
 
 Running with a configuration file
 =================================

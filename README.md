@@ -117,4 +117,15 @@ Whenever using unicycler with unpaired reads, an odd platform-specific SPAdes-re
 
 ## Citation
 
-Users are encouraged to cite the programs used in this pipeline whenever they are used. They are: [Canu](https://github.com/marbl/canu), [Flye](https://github.com/fenderglass/Flye), [Unicycler](https://github.com/rrwick/Unicycler), [Spades](https://github.com/ablab/spades), [Nanopolish](https://github.com/jts/nanopolish), [Medaka](https://github.com/nanoporetech/medaka), [QUAST](https://github.com/ablab/quast), [GenomicConsensus](https://github.com/PacificBiosciences/GenomicConsensus) and [Pilon](https://github.com/broadinstitute/pilon).
+To cite this pipeline users can use our Zenodo tag or directly via the github url.
+
+Users are encouraged to cite the programs used in this pipeline whenever they are used:
+
+* [Canu](https://github.com/marbl/canu)
+* [Flye](https://github.com/fenderglass/Flye)
+* [Unicycler](https://github.com/rrwick/Unicycler)
+* [Spades](https://github.com/ablab/spades)
+* [Nanopolish](https://github.com/jts/nanopolish)
+* [QUAST](https://github.com/ablab/quast)
+* [GenomicConsensus](https://github.com/PacificBiosciences/GenomicConsensus)
+* [Pilon](https://github.com/broadinstitute/pilon).

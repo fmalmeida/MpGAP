@@ -116,7 +116,6 @@ nextflow.preview.dsl=2
                                                           Long reads only assembly
 
 
-
                        Parameters for longreads-only mode. Can be executed by canu, flye and unicycler assemblers.
                        In the end, long reads only assemblies can be polished with illumina reads through pilon.
 
