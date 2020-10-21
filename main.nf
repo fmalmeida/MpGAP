@@ -22,7 +22,7 @@ nextflow.enable.dsl=2
     nextflow run fmalmeida/MpGAP [--get_hybrid_config] [--get_lreads_config] [--get_sreads_config]
 
     Show command line examples:
-    nextflow run fmalmeida/MpGAP --show
+    nextflow run fmalmeida/MpGAP --examples
 
     Execution Reports:
     nextflow run fmalmeida/MpGAP [ -c nextflow.config ] -with-report
@@ -203,9 +203,9 @@ nextflow.enable.dsl=2
  /*
            Display CLI examples
  */
- params.show = false
+ params.examples = false
   // Show help emssage
-  if (params.show){
+  if (params.examples){
     exampleMessage()
     exit 0
  }

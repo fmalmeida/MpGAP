@@ -5,6 +5,23 @@
     "description": "",
     "type": "object",
     "definitions": {
+        "nf_tower_options": {
+            "title": "NF tower options",
+            "type": "object",
+            "description": "Define the required options for launching the pipeline via NF tower",
+            "default": "",
+            "fa_icon": "fas fa-gopuram",
+            "properties": {
+                "use_tower": {
+                    "type": "boolean",
+                    "description": "Launch pipeline in NF tower?"
+                },
+                "tower_token": {
+                    "type": "string",
+                    "description": "Your NF tower token for launching the pipeline in it"
+                }
+            }
+        },
         "input_output_options": {
             "title": "Input/output options",
             "type": "object",
@@ -109,7 +126,8 @@
                 "try_unicycler": {
                     "type": "boolean",
                     "description": "Assembly with Unicycler?",
-                    "help_text": "Also trigger an assebly with Unicycler?.\nUseful for shortreads-only or hybrid assemblies."
+                    "help_text": "Also trigger an assebly with Unicycler?.\nUseful for shortreads-only or hybrid assemblies.",
+                    "default": true
                 },
                 "try_canu": {
                     "type": "boolean",
@@ -122,13 +140,7 @@
                     "help_text": "Also trigger an assebly with Canu?.\nUseful for longreads-only or hybrid assemblies."
                 }
             },
-            "fa_icon": "fas fa-tasks",
-            "required": [
-                "try_spades",
-                "try_unicycler",
-                "try_canu",
-                "try_flye"
-            ]
+            "fa_icon": "fas fa-tasks"
         },
         "expected_genome_size": {
             "title": "Expected genome size",
@@ -210,6 +222,9 @@
         }
     },
     "allOf": [
+        {
+            "$ref": "#/definitions/nf_tower_options"
+        },
         {
             "$ref": "#/definitions/input_output_options"
         },

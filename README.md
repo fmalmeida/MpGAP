@@ -16,14 +16,18 @@ MpGAP is is an easy to use nextflow docker-based pipeline that adopts well known
 
 ## Further reading
 
-This pipeline has two complementary pipelines (also written in nextflow) for [NGS preprocessing](https://github.com/fmalmeida/ngs-preprocess) and [annotation](https://github.com/fmalmeida/bacannot) that can give the user a complete workflow for bacterial genomics analyses.
+This pipeline has two complementary pipelines (also written in nextflow) for [NGS preprocessing](https://github.com/fmalmeida/mpgap) and [annotation](https://github.com/fmalmeida/bacannot) that can give the user a complete workflow for bacterial genomics analyses.
 
 ## Table of contents
 
 * [Requirements](https://github.com/fmalmeida/MpGAP#requirements)
 * [Installation](https://github.com/fmalmeida/MpGAP#installation)
 * [Documentation](https://github.com/fmalmeida/MpGAP#documentation)
-  * [Configuration File](https://github.com/fmalmeida/MpGAP#using-the-configuration-file)
+  * [Hybrid strategies explanation](https://github.com/fmalmeida/mpgap#explanation-of-hybrid-strategies)
+  * [Full usage](https://github.com/fmalmeida/mpgap#usage)
+  * [Command line examples](https://github.com/fmalmeida/mpgap#command-line-usage-examples)
+  * [Configuration File](https://github.com/fmalmeida/mpgap#using-the-configuration-file)
+  * [Interactive and graphical execution](https://github.com/fmalmeida/mpgap#interactive-graphical-configuration-and-execution)
 * [Known Bugs](https://github.com/fmalmeida/MpGAP/tree/develop#known-bugs)
 
 ## Requirements
@@ -54,44 +58,37 @@ This pipeline has only two dependencies: [Docker](https://www.docker.com) and [N
 
 ## Documentation
 
-This pipeline is designed to accept data from Illumina, Pacbio and Oxford Nanopore Technologies sequence platforms, being possible to perform short or long reads only assemblies as well as hybrid assemblies.
+### Explanation of hybrid strategies
 
-Users are encouraged to read the [complete documentation](https://mpgap.readthedocs.io/en/latest/index.html).
+Hybrid assemblies can be produced using one of two available strategies:
 
-### Short reads only
+#### Strategy 1
 
-Short reads only assemblies can be produced with Unicycler and/or SPAdes assemblers. Since short reads have an extremely high basecall accuracy, no further steps are done. Users can use Illumina paired or/and single end reads.
+By using Unicycler and/or SPAdes hybrid assembly modes. For instance, it will use Unicycler hybrid mode which will first assemble a high quality assembly graph with Illumina data and then it will use long reads to bridge the gaps. More information about Unicycler Hybrid mode can be found [here](https://github.com/rrwick/Unicycler#method-hybrid-assembly).
 
-Example:
+#### Strategy 2
 
-        ./nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type illumina-only --try_spades
-        --try_unicycler --shortreads_paired "dataset_1/sampled/illumina_R{1,2}.fastq"
+By polishing a long reads only assembly with Illumina reads. For that, users will have to set `--illumina_polish_longreads_contigs` to true. This will tell the pipeline to produce a long reads only assembly and polish it with Pilon (for unpaired reads) or with [Unicycler-polish program](https://github.com/rrwick/Unicycler/blob/master/docs/unicycler-polish.md) (for paired end reads).
 
-### Long reads only
+> Note that, `--illumina_polish_longreads_contigs` parameter is an alternative workflow, when used, it will execute ONLY strategy 2 and not both strategies. When false, only strategy 1 will be executed.
 
-Long reads only assemblies can be produced with Canu, Flye and/or Unicycler assemblers. Users can assemble pacbio or nanopore reads. Addionally, users can perform a polishing step since long reads only assemblies generally suffer from basecall accuracy. For that, it is only necessary to set path to a directory containing raw nanopore FAST5 data to polish with Nanopolish or, for pacbio, to set path to \*.subreads.bam files to use VarianCaller to polish the assembly.
-
-Example:
-
-        ./nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type longreads-only --try_canu --try_flye --try_unicycler
-        --medaka_sequencing_model r941_min_fast_g303 --nanopolish_fast5Path "dataset_1/ont/fast5_pass" --nanopolish_max_haplotypes 2000
-        --genomeSize 2m --lr_type nanopore --longreads "dataset_1/ont/ont_reads.fastq"
-
-### Hybrid
-
-It is possible to perform two types of hybrid assemblies:
-
-1. **Strategy 1**: By using Unicycler and/or SPAdes hybrid assembly modes
-  * For instance, it will use Unicycler hybrid mode which will first assemble a high quality assembly graph with Illumina data and then it will use long reads to bridge the gaps. More information about Unicycler Hybrid mode can be found [here](https://github.com/rrwick/Unicycler#method-hybrid-assembly).
-2. **Strategy 2**: By polishing a long reads only assembly with Illumina reads
-  * For that, users will have to set `--illumina_polish_longreads_contigs` to true. This will tell the pipeline to produce a long reads only assembly and polish it with Pilon (for unpaired reads) or with [Unicycler-polish program](https://github.com/rrwick/Unicycler/blob/master/docs/unicycler-polish.md) (for paired end reads)
-  * Note that, `--illumina_polish_longreads_contigs` parameter is an alternative workflow, when used, it will execute ONLY strategy 2 and not both strategies. When false, only strategy 1 will be executed.
-
-Example:
+#### Example:
 
         nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type hybrid --try_unicycler --try_flye --try_canu
         --shortreads_paired "dataset_1/sampled/illumina_R{1,2}.fastq" --shortreads_single "dataset_1/sampled/illumina_single.fastq"
         --lr_type nanopore --longreads "dataset_1/ont/ont_reads.fastq" --illumina_polish_longreads_contigs
+
+### Usage
+
+* Complete command line explanation of parameters:
+    + `nextflow run fmalmeida/mpgap --help`
+* See usage examples in the command line:
+    + `nextflow run fmalmeida/mpgap --examples`
+* However, users are encouraged to read the [complete online documentation](https://mpgap.readthedocs.io/en/latest/?badge=latest).
+
+### Command line usage examples
+
+Command line executions are exemplified [in the manual](https://mpgap.readthedocs.io/en/latest/examples.html).
 
 ### Using the configuration file
 
@@ -110,6 +107,40 @@ To create a configuration file in your working directory:
 * For illumina only assemblies:
 
       nextflow run fmalmeida/MpGAP --get_sreads_config
+
+### Interactive graphical configuration and execution
+
+Users can trigger a graphical and interactive pipeline configuration and execution by using [nf-core launch](https://nf-co.re/launch) utility.
+
+#### Install nf-core
+
+```bash
+# Install nf-core
+pip install nf-core
+```
+
+#### launch the pipeline
+
+nf-core launch will start an interactive form in your web browser or command line so you can configure the pipeline step by step and start the execution of the pipeline in the end.
+
+```bash
+# Launch the pipeline
+nf-core launch fmalmeida/mpgap
+```
+
+It will result in the following:
+
+<p align="center">
+<img src="./images/nf-core-asking.png" width="500px"/>
+</p>
+
+<p align="center">
+<img src="./images/nf-core-gui.png" width="400px"/>
+</p>
+
+#### nextflow tower
+
+This pipeline also accepts that users track its execution of processes via [nextflow tower](https://tower.nf/). For that users will have to use the parameters `--use_tower` and `--tower_token`.
 
 ## Known Bugs
 
