@@ -1,14 +1,18 @@
 .. _examples:
 
-************************
-A few CLI usage Examples
-************************
+***********************
+Some execution examples
+***********************
 
 .. warning::
 
   Remember: the pipeline does not concatenate the reads. Whenever you use a pattern such as \* the pipeline will assemble each pair
   separately. When doing hybrid assemblies or mixing read types it is advised to **not use REGEX** and instead write the full file
   path.
+
+.. tip::
+
+  The parameters ``--use_tower`` and ``--tower_token`` allows the user to launch the pipeline via `nextflow tower <https://tower.nf/>`_ in order to visualize its execution.
 
 Illumina-only assembly with paired end reads
 ============================================
@@ -107,3 +111,10 @@ Running with a configuration file
 ::
 
       ./nextflow run fmalmeida/MpGAP -c nextflow.config
+
+Running and configure from an interactive graphical interface
+=============================================================
+
+::
+
+      nf-core launch fmalmeida/MpGAP

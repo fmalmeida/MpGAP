@@ -24,6 +24,10 @@ Input
 
 .. tip::
 
+  The parameters ``--use_tower`` and ``--tower_token`` allows the user to launch the pipeline via `nextflow tower <https://tower.nf/>`_ in order to visualize its execution.
+
+.. tip::
+
   Hybrid assemblies can be achieved with Unicycler|SPAdes hybrid modes, by giving long and
   short reads or, by polishing a long reads only assembly. For the latter, users will have
   to set ``assembly_type = 'hybrid'``, set path to Illumina reads and use the
@@ -47,6 +51,16 @@ Parameters documentation
      - Required
      - Default value
      - Description
+
+   * - ``--use_tower``
+     - N
+     - False
+     - Triggers the pipeline to be launched via nextflow tower
+
+   * - ``--tower_token``
+     - Y (if ``--use_tower``)
+     - NA
+     - Your nextflow tower token. Used to launch the pipeline in your nextflow tower account
 
    * - ``--outdir``
      - Y

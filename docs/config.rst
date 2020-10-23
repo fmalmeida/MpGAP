@@ -181,6 +181,17 @@ Example of Hybrid assembly config file:
     }
 
     /*
+                          Setting NF tower configurations
+     */
+    if (params.use_tower) {
+    env.TOWER_ACCESS_TOKEN = params.tower_token
+    tower {
+        accessToken = params.tower_token
+        enabled = params.use_tower
+    }
+    }
+
+    /*
      * Configuring Nextflow Scopes.
      * Do NOT change any of the following
      */
