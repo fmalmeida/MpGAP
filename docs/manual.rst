@@ -1,5 +1,6 @@
 .. _manual:
 
+******
 Manual
 ******
 
@@ -26,20 +27,31 @@ Input
 
   The parameters ``--use_tower`` and ``--tower_token`` allows the user to launch the pipeline via `nextflow tower <https://tower.nf/>`_ in order to visualize its execution.
 
-.. tip::
+Hybrid assembly strategies
+==========================
 
-  Hybrid assemblies can be achieved with Unicycler|SPAdes hybrid modes, by giving long and
-  short reads or, by polishing a long reads only assembly. For the latter, users will have
-  to set ``assembly_type = 'hybrid'``, set path to Illumina reads and use the
-  ``illumina_polish_longreads_contigs`` parameter. Also, users will need to select the longreads
-  assemblers: ``--try_canu``, ``--try_flye``, and/or ``--try_unicycler``.
+Hybrid assemblies can be produced using one of two available strategies:
 
-.. tip::
+Strategy 1
+----------
 
-  When using the ``illumina_polish_longreads_contigs`` parameter it is also possible to combine
-  polishings with Medaka, Nanopolish or Arrow by using setting the correct parameters:
-  pacbio_all_bam_path, nanopolish_fast5Path or medaka_sequencing_model. These will tell the
-  pipeline to polish the assemblies with these software before polishing with shortreads (using Pilon).
+By using Unicycler and/or SPAdes hybrid assembly modes. For instance, it will use Unicycler hybrid mode which will first assemble a high quality assembly graph with Illumina
+data and then it will use long reads to bridge the gaps. More information about Unicycler Hybrid mode can be found `here <https://github.com/rrwick/Unicycler#method-hybrid-assembly>`_.
+
+.. note::
+
+  It is achieved when not using the parameter ``--illumina_polish_longreads_contigs``
+
+Strategy 2
+----------
+
+By polishing a long reads only assembly with Illumina reads. For that, users will have to use the parameter ``--illumina_polish_longreads_contigs``. This will tell the pipeline to
+produce a long reads only assembly (with canu, flye or unicycler) and polish it with Pilon (for unpaired reads) or with `Unicycler-polish program <https://github.com/rrwick/Unicycler/blob/master/docs/unicycler-polish.md>`_ (for paired end reads).
+
+.. note::
+
+  Note that, `--illumina_polish_longreads_contigs` parameter is an alternative workflow, when used, it will execute ONLY strategy 2 and not both strategies.
+  When false, only strategy 1 will be executed. Remember to select the desired assemblers to run with `--try_canu`, `--try_flye` and/or `--try_unicycler`
 
 Parameters documentation
 ========================

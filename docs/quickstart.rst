@@ -102,21 +102,19 @@ This pipeline can perform a hybrid assembly in two ways:
 .. note::
 
   By default methodology 1 is executed. If users want to perform a long reads only assembly and polish it with short reads (Methodology 2),
-  the parameter `illumina_polish_longreads_contigs` must be used. Do not forget to choose which assemblers you want to use.
+  the parameter ``--illumina_polish_longreads_contigs`` must be used. Do not forget to choose which assemblers you want to use.
 
 
 Method 1: Only through Unicycler or SPAdes hybrid workflows
 -----------------------------------------------------------
 
+By using Unicycler and/or SPAdes hybrid assembly modes. For instance, it will use Unicycler hybrid mode which will first assemble a high quality assembly graph with Illumina
+data and then it will use long reads to bridge the gaps. More information about Unicycler Hybrid mode can be found `here <https://github.com/rrwick/Unicycler#method-hybrid-assembly>`_.
+
 .. note::
 
-  For this one, users must select a hybrid assembly mode, set path to both long and short reads, and remember to let
-  `params.illumina_polish_longreads_contigs = false`. This parameter is what is used to execute mode 2. If true,
-  the pipeline will produce and polish a long reads only assembly with Canu, Flye or Unicycler.
-
-.. warning::
-
-  Users must remember to use the parameters ``--try_unicycler`` or ``--try_spades`` otherwise they will not be executed.
+  It is achieved when not using the parameter ``--illumina_polish_longreads_contigs``. Users must remember to use the parameters ``--try_unicycler``
+  or ``--try_spades`` otherwise they will not be executed.
 
 Via CLI parameterization
 """"""""""""""""""""""""
@@ -131,13 +129,15 @@ Via CLI parameterization
 Method 2: By polishing a longreads-only assembly with shortreads
 ----------------------------------------------------------------
 
-.. note::
-
-  For this one, users must select a hybrid assembly mode, set path to both long and short reads, and remember to set
-  ``--illumina_polish_longreads_contigs``. This parameter is what is used to execute the strategy 2. If true,
-  the pipeline will produce and polish a long reads only assembly with Canu, Flye and/or Unicycler (user must select).
+By polishing a long reads only assembly with Illumina reads. For that, users will have to use the parameter ``--illumina_polish_longreads_contigs``. This will tell the pipeline to
+produce a long reads only assembly (with canu, flye or unicycler) and polish it with Pilon (for unpaired reads) or with `Unicycler-polish program <https://github.com/rrwick/Unicycler/blob/master/docs/unicycler-polish.md>`_ (for paired end reads).
 
 .. note::
+
+  Note that, `--illumina_polish_longreads_contigs` parameter is an alternative workflow, when used, it will execute ONLY strategy 2 and not both strategies.
+  When false, only strategy 1 will be executed. Remember to select the desired assemblers to run with `--try_canu`, `--try_flye` and/or `--try_unicycler`
+
+.. tip::
 
   It is also possible to combine polishings with Medaka, Nanopolish or Arrow by using setting the correct parameters:
   pacbio_all_bam_path, nanopolish_fast5Path or medaka_sequencing_model. These will tell the pipeline to polish the
