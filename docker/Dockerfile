@@ -17,7 +17,7 @@ RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -
 ENV PATH="/miniconda/bin:$PATH"
 
 # Set ncbi-blast+
-RUN wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ncbi-blast-2.10.1+-x64-linux.tar.gz && \
+RUN wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.10.1/ncbi-blast-2.10.1+-x64-linux.tar.gz && \
         tar -zxvf ncbi-blast-2.10.1+-x64-linux.tar.gz && \
 				cp ncbi-blast-2.10.1+/bin/* /usr/local/bin/
 
@@ -30,7 +30,7 @@ RUN git clone --recursive https://github.com/isovic/racon.git racon && \
 # INSTALL Medaka
 RUN conda create -y -n MEDAKA && \
 			conda install -y -n MEDAKA -c conda-forge -c bioconda medaka
-      
+
 # Set Pilon
 RUN conda install -y -c bioconda pilon
 
