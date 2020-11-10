@@ -2,7 +2,7 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3997375.svg)](https://doi.org/10.5281/zenodo.3445485) ![](https://img.shields.io/github/v/release/fmalmeida/MpGAP) [![Build Status](https://travis-ci.org/fmalmeida/MpGAP.svg?branch=master)](https://travis-ci.org/fmalmeida/MpGAP) ![](https://img.shields.io/docker/cloud/build/fmalmeida/mpgap) [![Documentation Status](https://readthedocs.org/projects/mpgap/badge/?version=latest)](https://mpgap.readthedocs.io/en/latest/?badge=latest) ![](https://img.shields.io/badge/Nextflow-v20.01-yellowgreen)
 
-MpGAP is is an easy to use nextflow docker-based pipeline that adopts well known software for genome assembly of Illumina, Pacbio and Oxford Nanopore sequencing data through illumina only, long reads only or hybrid modes. This pipeline wraps up the following software:
+MpGAP is an easy to use nextflow docker-based pipeline that adopts well known software for genome assembly of Illumina, Pacbio and Oxford Nanopore sequencing data through illumina only, long reads only or hybrid modes. This pipeline wraps up the following software:
 
 * [Canu](https://github.com/marbl/canu)
 * [Flye](https://github.com/fenderglass/Flye)
@@ -68,9 +68,11 @@ By using Unicycler and/or SPAdes hybrid assembly modes. For instance, it will us
 
 #### Strategy 2
 
-By polishing a long reads only assembly with Illumina reads. For that, users will have to set `--illumina_polish_longreads_contigs` to true. This will tell the pipeline to produce a long reads only assembly and polish it with Pilon (for unpaired reads) or with [Unicycler-polish program](https://github.com/rrwick/Unicycler/blob/master/docs/unicycler-polish.md) (for paired end reads).
+By polishing a long reads only assembly with Illumina reads. For that, users will have to set `--illumina_polish_longreads_contigs` to true. This will tell the pipeline to produce a long reads only assembly (with canu, flye or unicycler) and polish it with Pilon (for unpaired reads) or with [Unicycler-polish program](https://github.com/rrwick/Unicycler/blob/master/docs/unicycler-polish.md) (for paired end reads).
 
 > Note that, `--illumina_polish_longreads_contigs` parameter is an alternative workflow, when used, it will execute ONLY strategy 2 and not both strategies. When false, only strategy 1 will be executed.
+
+> Remember to select the desired assemblers to run with `--try_canu`, `--try_flye` and/or `--try_unicycler`
 
 #### Example:
 

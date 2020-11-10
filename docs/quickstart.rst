@@ -135,7 +135,7 @@ Method 2: By polishing a longreads-only assembly with shortreads
 
   For this one, users must select a hybrid assembly mode, set path to both long and short reads, and remember to set
   ``params.illumina_polish_longreads_contigs = true``. This parameter is what is used to try to also execute mode 2. If true,
-  the pipeline will produce and polish a long reads only assembly with Canu, Flye or Unicycler.
+  the pipeline will produce and polish a long reads only assembly with Canu, Flye and/or Unicycler (user must select).
 
 .. note::
 

@@ -85,10 +85,14 @@ Assembling directly via Unicycler hybrid workflow, using Pacbio reads.
 
   This command will execute a hybrid assembly directly through Unicycler's hybrid assembly mode.
 
+.. warning::
+
+  Users must remember to use the parameters ``--try_unicycler`` or ``--try_spades`` otherwise they will not be executed.
+
 Assembly in Hybrid mode 2
 =========================
 
-By polishing a longreads-only assembly with shortreads, additionally executing medaka and nanopolish (before the polishing with shortreads).
+By polishing a longreads-only assembly (with canu, unicycler and/or flye) with shortreads, additionally executing medaka and nanopolish (before the polishing with shortreads).
 
 ::
 
@@ -100,10 +104,6 @@ By polishing a longreads-only assembly with shortreads, additionally executing m
 
   This command will execute a hybrid assembly by polishing a longreads-only assembly with shortreads. The usage of ``nanopolish_fast5Path`` and ``medaka_sequencing_model``
   tells the pipeline to create additional assemblies where medaka and/or nanopolish are executed before Pilon (polishment with shortreads).
-
-.. warning::
-
-  Users must remember to use the parameters ``--try_unicycler`` or ``--try_spades`` otherwise they will not be executed.
 
 Running with a configuration file
 =================================
