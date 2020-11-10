@@ -50,8 +50,8 @@ produce a long reads only assembly (with canu, flye or unicycler) and polish it 
 
 .. note::
 
-  Note that, `--illumina_polish_longreads_contigs` parameter is an alternative workflow, when used, it will execute ONLY strategy 2 and not both strategies.
-  When false, only strategy 1 will be executed. Remember to select the desired assemblers to run with `--try_canu`, `--try_flye` and/or `--try_unicycler`
+  Note that, ``--illumina_polish_longreads_contigs`` parameter is an alternative workflow, when used, it will execute ONLY strategy 2 and not both strategies.
+  When false, only strategy 1 will be executed. Remember to select the desired assemblers to run with ``--try_canu``, ``--try_flye`` and/or ``--try_unicycler``
 
 Parameters documentation
 ========================
