@@ -28,19 +28,22 @@ RUN git clone --recursive https://github.com/isovic/racon.git racon && \
 			make && make install
 
 # INSTALL Medaka
-RUN conda create -y -n MEDAKA && \
-			conda install -y -n MEDAKA -c conda-forge -c bioconda medaka
+RUN conda create -y -n MEDAKA python=3.8 && \
+			conda install -y -n MEDAKA -c conda-forge -c bioconda medaka nomkl && \
+			conda clean -afy
 
 # Set Pilon
-RUN conda install -y -c bioconda pilon
+RUN conda install -y -c bioconda pilon nomkl && \
+			conda clean -afy
 
 # Set Canu assembler
-RUN wget https://github.com/marbl/canu/releases/download/v2.0/canu-2.0.Linux-amd64.tar.xz && \
-			tar -xJf canu-2.0.*.tar.xz && \
-			ln -rs canu-2.0/*/bin/* /usr/local/bin
+RUN wget https://github.com/marbl/canu/releases/download/v2.1.1/canu-2.1.1.Linux-amd64.tar.xz && \
+			tar -xJf canu-2.*.tar.xz && \
+			ln -rs canu-2.*/*/bin/* /usr/local/bin
 
 # Set SPAdes assembler
-RUN conda install -y -c bioconda spades
+RUN conda install -y -c bioconda spades nomkl && \
+			conda clean -afy
 
 # Set Unicycler
 RUN pip install --upgrade pip && \
@@ -56,17 +59,18 @@ RUN pip install --upgrade pip && \
 			cd Unicycler && python3 setup.py install
 
 ## Set Unicycler complementary tools
-RUN apt-get install -y mummer && \
+RUN apt-get install -y mummer nomkl && \
 			#conda install -y -c bioconda samtools && \
-			conda install -y -c bioconda bowtie2 && \
-			conda install -y -c bioconda freebayes && \
+			conda install -y -c bioconda bowtie2 nomkl && \
+			conda install -y -c bioconda freebayes nomkl && \
 			#conda create -y -n legacy_python python=2.7 && conda install -y -c bioconda -n legacy_python pbalign && \
 			#conda install -y -n legacy_python -c bioconda bax2bam && \
 			#conda install -y -c conda-forge arrow && \
 			git clone https://github.com/sc932/ALE.git && cd ALE/src && make && ln -rs ALE /usr/local/bin && \
-			conda install -y -c bioconda minimap && \
+			conda install -y -c bioconda minimap nomkl && \
 			curl -L https://github.com/lh3/minimap2/releases/download/v2.10/minimap2-2.10_x64-linux.tar.bz2 | tar -jxvf - ; ln -rs minimap2-2.10_x64-linux/minimap2 /usr/local/bin && \
-			chmod a+x /miniconda/bin/*
+			chmod a+x /miniconda/bin/* && \
+			conda clean -afy
 
 # Set Nanopolish
 RUN apt-get install -y libhdf5-dev parallel && \
@@ -74,16 +78,19 @@ RUN apt-get install -y libhdf5-dev parallel && \
       conda config --add channels conda-forge && \
       conda config --add channels bioconda && \
       conda create -y -n NANOPOLISH && \
-      conda install -y -n NANOPOLISH nanopolish
+      conda install -y -n NANOPOLISH nanopolish nomkl && \
+			conda clean -afy
 
 # Set PACBIO GENOMICONSENSUS
 RUN conda create --name pacbio python=2 && \
-			conda install -y -c bioconda -n pacbio genomicconsensus openssl=1.0 pbalign blasr bax2bam pbcore pbcommand pbcopper && \
-			chmod a+x /miniconda/bin/*
+			conda install -y -c bioconda -n pacbio genomicconsensus openssl=1.0 pbalign blasr bax2bam pbcore pbcommand pbcopper nomkl && \
+			chmod a+x /miniconda/bin/* && \
+			conda clean -afy
 
 # Set Flye
 RUN conda create -y -n flye && \
-			conda install -y -n flye -c bioconda flye
+			conda install -y -n flye -c bioconda flye nomkl && \
+			conda clean -afy
 
 # Set Quast
 RUN python -m pip install -U matplotlib && \
@@ -93,7 +100,7 @@ RUN python -m pip install -U matplotlib && \
 			./setup.py install_full
 
 # Custom Permissions
-RUN chmod -R 777 /miniconda/envs/MEDAKA/lib/python3.6/site-packages/medaka/data
+RUN chmod -R 777 /miniconda/envs/MEDAKA/lib/python3.8/site-packages/medaka/data
 
 # Check envs
 RUN conda info -e
