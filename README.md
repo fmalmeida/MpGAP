@@ -54,7 +54,7 @@ This pipeline has only two dependencies: [Docker](https://www.docker.com) and [N
 
 3. Give it a try:
 
-       nextflow fmalmeida/MpGAP --help
+       nextflow run fmalmeida/MpGAP --help
 
 ## Documentation
 
