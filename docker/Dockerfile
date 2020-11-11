@@ -59,7 +59,7 @@ RUN pip install --upgrade pip && \
 			cd Unicycler && python3 setup.py install
 
 ## Set Unicycler complementary tools
-RUN apt-get install -y mummer nomkl && \
+RUN apt-get install -y mummer && \
 			#conda install -y -c bioconda samtools && \
 			conda install -y -c bioconda bowtie2 nomkl && \
 			conda install -y -c bioconda freebayes nomkl && \
@@ -99,11 +99,18 @@ RUN python -m pip install -U matplotlib && \
 			cd quast && pip install --upgrade setuptools pip && \
 			./setup.py install_full
 
+# Set miniasm
+RUN conda install -y -c bioconda miniasm nomkl && \
+			conda clean -afy
+
 # Custom Permissions
 RUN chmod -R 777 /miniconda/envs/MEDAKA/lib/python3.8/site-packages/medaka/data
 
 # Check envs
 RUN conda info -e
+
+# Fix Canu links
+RUN ln -frs canu-2.1.1/bin/* /usr/local/bin/
 
 # Set WorkDir
 WORKDIR /work
