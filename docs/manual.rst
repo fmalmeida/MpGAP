@@ -223,16 +223,6 @@ Long reads assembly polishing parameters (also used for hybrid strategy 2)
      - Default value
      - Description
 
-   * - ``--longreads``
-     - Y (for hybrid and longreads-only modes)
-     - NA
-     - Path to longreads in FASTA or FASTQ formats.
-
-   * - ``--lr_type``
-     - Y (for hybrid and longreads-only modes)
-     - nanopore
-     - Tells whether input longreads are: pacbio or nanopore.
-
    * - ``--medaka_sequencing_model``
      - N
      - r941_min_fast_g303
@@ -257,19 +247,6 @@ Long reads assembly polishing parameters (also used for hybrid strategy 2)
        | In order to nextflow properly use it, one needs to store all the data, from all the cells in one single directory and set the filepath as "some/data/\*bam".
        | Whenever set, the pipeline will execute a polishing step with VarianCaller through arrow.
        | Arrow is supported for PacBio Sequel data and RS data with the P6-C4 chemistry.
-
-   * - ``--genomeSize``
-     - Y (for Canu and Flye assemblers)
-     - NA
-     - Sets expected genome size. E.g. 5.6m; 1.2g.
-
-   * - ``--illumina_polish_longreads_contigs``
-     - N
-     - False
-     - | Tells the pipeline to create a long reads only assembly and polish it with short reads.
-       | By default, the hybrid modes of Unicycler and SPAdes are executed.
-       | This parameter tells to excute the alternative hybrid method (longreads -> polish) instead of Unicycler/SPAdes hybrid modes.
-       | If used, users must remember to select which assemblers to use for a long reads only assembly first: ``--try_unicycler``, ``--try_canu`` or ``--try_flye``.
 
 All these parameters are configurable through a configuration file. We encourage users to use the configuration
 file since it will keep your execution cleaner and more readable. See a :ref:`config` example.
