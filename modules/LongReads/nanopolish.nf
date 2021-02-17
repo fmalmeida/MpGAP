@@ -16,8 +16,7 @@ process nanopolish {
   script:
   """
   source activate NANOPOLISH ;
-  zcat -f ${reads} > reads ;
-  if [ \$(grep -c "^@" reads) -gt 0 ] ; then sed -n '1~4s/^@/>/p;2~4p' reads > reads.fa ; else mv reads reads.fa ; fi ;
+  seqtk seq -A ${reads} > reads.fa ;
   nanopolish index -d "${fast5_dir}" reads.fa ;
   minimap2 -d draft.mmi ${draft} ;
   minimap2 -ax map-ont -t ${params.threads} ${draft} reads.fa | samtools sort -o reads.sorted.bam -T reads.tmp ;

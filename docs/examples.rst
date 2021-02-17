@@ -19,7 +19,7 @@ Illumina-only assembly with paired end reads
 
 ::
 
-   ./nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type illumina-only --try_spades
+   ./nextflow run fmalmeida/mpgap --outdir output --threads 5 --assembly_type illumina-only --try_spades
    --try_unicycler --shortreads_paired "dataset_1/sampled/illumina_R{1,2}.fastq"
 
 .. note::
@@ -32,7 +32,7 @@ Illumina-only assembly with single end reads
 
 ::
 
-  ./nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type illumina-only --try_spades
+  ./nextflow run fmalmeida/mpgap --outdir output --threads 5 --assembly_type illumina-only --try_spades
   --try_unicycler --shortreads_single "dataset_1/sampled/illumina_single.fastq"
 
 .. note::
@@ -45,7 +45,7 @@ Illumina-only assembly with both paired and single end reads
 
 ::
 
-  ./nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type illumina-only --try_spades --try_unicycler
+  ./nextflow run fmalmeida/mpgap --outdir output --threads 5 --assembly_type illumina-only --try_spades --try_unicycler
   --shortreads_paired "dataset_1/sampled/illumina_R{1,2}.fastq" --shortreads_single "dataset_1/sampled/illumina_single.fastq"
 
 .. note::
@@ -58,7 +58,7 @@ Long reads only with ONT reads (Using both Nanopolish and Medaka polishers)
 
 ::
 
-  ./nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type longreads-only --try_canu --try_flye --try_unicycler
+  ./nextflow run fmalmeida/mpgap --outdir output --threads 5 --assembly_type longreads-only --try_canu --try_flye --try_unicycler
   --medaka_sequencing_model r941_min_fast_g303 --nanopolish_fast5Path "dataset_1/ont/fast5_pass" --nanopolish_max_haplotypes 2000
   --genomeSize 2m --lr_type nanopore --longreads "dataset_1/ont/ont_reads.fastq"
 
@@ -71,6 +71,23 @@ Long reads only with ONT reads (Using both Nanopolish and Medaka polishers)
 
   If neither ``--nanopolish_fast5Path`` nor ``--medaka_sequencing_model`` is set, the pipeline will not try to polish the assemblies using Nanopolish or Medaka, respectively.
 
+Long reads only with pacbio reads
+=================================
+
+::
+
+  ./nextflow run fmalmeida/mpgap --genomeSize 4.5m --lr_type pacbio --pacbio_all_bam_path "path/to/ecoli_103014.subreads.bam" \
+  --longreads "path/to/ecoli_103014.fastq" --try_canu --try_flye --outdir ecoli_assembly --threads 3 --assembly_type longreads-only
+
+.. note::
+
+  This will perform a long reads only assembly using pacbio data with Canu and Flye assemblers. This specific command
+  will also execute a polishing step with arrow (see ``--pacbio_all_bam_path``).
+
+.. tip::
+
+  If ``--pacbio_all_bam_path`` is not set, the pipeline will not try to polish the assemblies using arrow.
+
 Assembly in Hybrid mode 1
 =========================
 
@@ -78,7 +95,7 @@ Assembling directly via Unicycler hybrid workflow, using Pacbio reads.
 
 ::
 
-  ./nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type hybrid --lr_type pacbio
+  ./nextflow run fmalmeida/mpgap --outdir output --threads 5 --assembly_type hybrid --lr_type pacbio
   --longreads sample_dataset/ont/ecoli_25X.fastq --shortreads_paired "../illumina/SRR9847694_{1,2}.fastq.gz" --try_unicycler
 
 .. note::
@@ -96,7 +113,7 @@ By polishing a longreads-only assembly (with canu, unicycler and/or flye) with s
 
 ::
 
-  ./nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type hybrid --try_unicycler --try_flye --try_canu --shortreads_paired "dataset_1/sampled/illumina_R{1,2}.fastq"
+  ./nextflow run fmalmeida/mpgap --outdir output --threads 5 --assembly_type hybrid --try_unicycler --try_flye --try_canu --shortreads_paired "dataset_1/sampled/illumina_R{1,2}.fastq"
   --nanopolish_fast5Path dataset_1/ont/fast5_pass --nanopolish_max_haplotypes 5000 --medaka_sequencing_model r941_min_fast_g303 --genomeSize 2m --lr_type nanopore --longreads
   "dataset_1/ont/ont_reads.fastq"  --illumina_polish_longreads_contigs
 
@@ -110,11 +127,11 @@ Running with a configuration file
 
 ::
 
-      ./nextflow run fmalmeida/MpGAP -c nextflow.config
+      ./nextflow run fmalmeida/mpgap -c nextflow.config
 
 Running and configure from an interactive graphical interface
 =============================================================
 
 ::
 
-      nf-core launch fmalmeida/MpGAP
+      nf-core launch fmalmeida/mpgap
