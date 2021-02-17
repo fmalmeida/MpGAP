@@ -11,7 +11,7 @@ During this quickstart we will use two example datasets. These datasets must be 
 shown in my `ngs-preprocess pipeline quickstart <https://ngs-preprocess.readthedocs.io/en/latest/quickstart.html>`_.
 
 After getting the data as already discussed in the above link, you might be able to follow up this quickstart on
-assembling genomes with `MpGAP`.
+assembling genomes with MpGAP.
 
 All datasets can be assembled in two ways:
 
@@ -74,7 +74,7 @@ Via CLI parameterization
 
 .. tip::
 
-  The parameter `--pacbio_all_bam_path` will tell the pipeline to run `Arrow` to polish pacbio-only assemblies.
+  The parameter **--pacbio_all_bam_path** will tell the pipeline to run **Arrow** to polish pacbio-only assemblies.
 
 Assembling Illumina reads
 =========================

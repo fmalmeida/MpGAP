@@ -16,7 +16,7 @@ Example of Hybrid assembly config file:
 .. code-block:: groovy
 
     /*
-     * Configuration File to run fmalmeida/mpgap pipeline.
+     * Configuration File to run fmalmeida/MpGAP pipeline.
      */
 
     /*
@@ -34,11 +34,36 @@ Example of Hybrid assembly config file:
     //Number of threads to be used by each software.
           threads = 3
 
+    // Number of jobs to run in parallel. Be aware that each job (in parallel) can consume
+    // N threads (set above). Be sure to carefully check your resources before augmenting
+    // this parameter. For example: parallel_jobs = 2 + threads = 5 can consume until 10
+    // threads at once.
+          parallel_jobs = 1
+
+                    /*
+                     * NF tower setup parameters
+                     */
+
+          use_tower   = false
+          tower_token = ''
+
     /*
      * Here we chose the assembly type wanted. This is required.
      * It must be set as one of these posibilities: longreads-only ; hybrid ; illumina-only
      */
-          assembly_type = ''
+          assembly_type = 'hybrid'
+
+    /*
+     * This parameter below is to define wheter one wants or not to execute the alternative hybrid assembly method.
+     * It first creates a long reads only assembly with canu, flye or unicycler and then polishes it using the provided
+     * shortreads. It executes an alternative workflow and DOES NOT RUN unicycler/spades default hybrid modes.
+     * Must be used with: assembly_type = 'hybrid'
+     *
+     * Whenever using this parameter, it is also possible to polish the longreads-only assemblies with Nanopolish,
+     * Medaka or VarianCaller (Arrow) before the polishing with shortreads (using Pilon). For that it is necessary to set
+     * the right parameters: pacbio_all_bam_path, nanopolish_fast5Path or medaka_sequencing_model.
+     */
+          illumina_polish_longreads_contigs = false
 
     /*
      * Here it is set the software wanted to perform the assembly with.
@@ -90,7 +115,7 @@ Example of Hybrid assembly config file:
      *
      * If left in blank, medaka will not be executed.
      */
-          medaka_sequencing_model = 'r941_min_fast_g303'
+          medaka_sequencing_model = '' // Optional for hybrid assemblies. Works with illumina_polish_longreads_contigs = true
 
     /*
      * The polishing step is performed (and advised) with Medaka (--sequencing_model parameter).
@@ -99,7 +124,7 @@ Example of Hybrid assembly config file:
      * This parameter loads the directory where all the nanopore FAST5 files are stored.
      * If this parameter is set, the pipeline is able to execute the polishing step with nanopolish.
      */
-          nanopolish_fast5Path = ''
+          nanopolish_fast5Path = '' // Optional for hybrid assemblies. Works with illumina_polish_longreads_contigs = true
 
     /*
      * This parameter sets to nanopolish the max number of haplotypes to be considered.
@@ -117,7 +142,7 @@ Example of Hybrid assembly config file:
      * In order to nextflow properly use it, one needs to store all the data, from all the cells
      * in one single directory and set the filepath as "some/data/*bam".
      */
-          pacbio_all_bam_path = ''
+          pacbio_all_bam_path = '' // Optional for hybrid assemblies. Works with illumina_polish_longreads_contigs = true
 
 
                     /*
@@ -133,18 +158,6 @@ Example of Hybrid assembly config file:
      */
           shortreads_paired = ''
           shortreads_single = ''
-
-    /*
-     * This parameter below is to define wheter one wants or not to execute the alternative hybrid assembly method.
-     * It first creates a long reads only assembly with canu, flye or unicycler and then polishes it using the provided
-     * shortreads. It executes an alternative workflow and DOES NOT RUN unicycler/spades default hybrid modes.
-     * Must be used with: assembly_type = 'hybrid'
-     *
-     * Whenever using this parameter, it is also possible to polish the longreads-only assemblies with Nanopolish,
-     * Medaka or VarianCaller (Arrow) before the polishing with shortreads (using Pilon). For that it is necessary to set
-     * the right parameters: pacbio_all_bam_path, nanopolish_fast5Path or medaka_sequencing_model.
-     */
-          illumina_polish_longreads_contigs = false
 
     /*
      * Whenever polishing long reads only assemblies with unpaired short reads (single end), the pipeline
@@ -167,7 +180,6 @@ Example of Hybrid assembly config file:
         file = "${params.outdir}" + "/annotation_pipeline_trace.txt"
         fields = 'task_id,name,status,exit,realtime,cpus,%cpu,memory,%mem,rss'
     }
-
     //Timeline Report
     timeline {
         enabled = false
@@ -182,7 +194,7 @@ Example of Hybrid assembly config file:
 
     /*
                           Setting NF tower configurations
-     */
+    */
     if (params.use_tower) {
     env.TOWER_ACCESS_TOKEN = params.tower_token
     tower {
@@ -196,9 +208,15 @@ Example of Hybrid assembly config file:
      * Do NOT change any of the following
      */
 
-    //Queue limit
-    executor.$local.queueSize = 1
+    // Queue limit
+    if (params.parallel_jobs) {
+      executor.$local.queueSize = params.parallel_jobs
+    } else {
+      executor.$local.queueSize = 1
+    }
 
-    //Docker usage
-    docker.enabled = true
-    //docker.runOptions = '-u $(id -u):root'
+    // Docker permissions
+    docker {
+      enabled = true
+      runOptions = '-u $(id -u):root'
+    }

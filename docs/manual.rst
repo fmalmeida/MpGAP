@@ -56,6 +56,9 @@ produce a long reads only assembly (with canu, flye or unicycler) and polish it 
 Parameters documentation
 ========================
 
+General parameters
+------------------
+
 .. list-table::
    :widths: 20 10 20 50
    :header-rows: 1
@@ -85,10 +88,28 @@ Parameters documentation
      - 3
      - Number of threads to use
 
+   * - ``--parallel_jobs``
+     - N
+     - 1
+     - Number of jobs to run in parallel. Each job can consume up to N threads (``--threads``)
+
    * - ``--assembly_type``
      - Y
      - NA
      - Selects assembly mode: hybrid; illumina-only; longreads-only
+
+Assembler options
+-----------------
+
+.. list-table::
+   :widths: 20 10 20 50
+   :header-rows: 1
+
+   * - Arguments
+     - Required
+     - Default value
+     - Description
+
 
    * - ``--try_canu``
      - N
@@ -98,7 +119,8 @@ Parameters documentation
    * - ``--canu_additional_parameters``
      - N
      - NA
-     - Passes additional parameters for Canu assembler. E.g. 'correctedErrorRate=0.075 corOutCoverage=200'. Must be given as shown in Canu's manual.
+     - | Passes additional parameters for Canu assembler. E.g. 'correctedErrorRate=0.075 corOutCoverage=200'.
+       | Must be given as shown in Canu's manual.
 
    * - ``--try_unicycler``
      - N
@@ -108,7 +130,8 @@ Parameters documentation
    * - ``--unicycler_additional_parameters``
      - N
      - NA
-     - Passes additional parameters for Unicycler assembler. E.g. '--mode conservative --no_correct'. Must be given as shown in Unicycler's manual.
+     - | Passes additional parameters for Unicycler assembler. E.g. '--mode conservative --no_correct'.
+       | Must be given as shown in Unicycler's manual.
 
    * - ``--try_flye``
      - N
@@ -118,7 +141,8 @@ Parameters documentation
    * - ``--flye_additional_parameters``
      - N
      - NA
-     - Passes additional parameters for Flye assembler. E.g. '--meta --iterations 4'. Must be given as shown in Flye's manual.
+     - | Passes additional parameters for Flye assembler. E.g. '--meta --iterations 4'.
+       | Must be given as shown in Flye's manual.
 
    * - ``--try_spades``
      - N
@@ -128,7 +152,20 @@ Parameters documentation
    * - ``--spades_additional_parameters``
      - N
      - NA
-     - Passes additional parameters for SPAdes assembler. E.g. '--meta --plasmids'. Must be given as shown in Spades' manual.
+     - | Passes additional parameters for SPAdes assembler. E.g. '--meta --plasmids'.
+       | Must be given as shown in Spades' manual.
+
+Short reads parameters (also used for hybrid)
+---------------------------------------------
+
+.. list-table::
+   :widths: 20 10 20 50
+   :header-rows: 1
+
+   * - Arguments
+     - Required
+     - Default value
+     - Description
 
    * - ``--shortreads_paired``
      - Y (for hybrid and illumina-only modes)
@@ -139,6 +176,18 @@ Parameters documentation
      - Y (for hybrid and illumina-only modes)
      - NA
      - Path to Illumina single end reads. E.g. "reads\*.fastq".
+
+Long reads parameters (also used for hybrid)
+---------------------------------------------
+
+.. list-table::
+   :widths: 20 10 20 50
+   :header-rows: 1
+
+   * - Arguments
+     - Required
+     - Default value
+     - Description
 
    * - ``--longreads``
      - Y (for hybrid and longreads-only modes)
@@ -153,12 +202,14 @@ Parameters documentation
    * - ``--medaka_sequencing_model``
      - N
      - r941_min_fast_g303
-     - Used to polish a longreads-only assembly with Medaka. It selects a Medaka ONT sequencing model for polishing. Please read `medaka manual <https://github.com/nanoporetech/medaka#models>`_ for more instructions.
+     - | Used to polish a longreads-only assembly with Medaka. It selects a Medaka ONT sequencing model for polishing.
+       | Please read `medaka manual <https://github.com/nanoporetech/medaka#models>`_ for more instructions.
 
    * - ``--nanopolish_fast5Path``
      - N
      - NA
-     - Used to polish a longreads-only assembly with Nanopolish. It sets path to the directory containing all the FAST5 files containing the raw data.
+     - | Used to polish a longreads-only assembly with Nanopolish.
+       | It sets path to the directory containing all the FAST5 files containing the raw data.
 
    * - ``--nanopolish_max_haplotypes``
      - N
@@ -168,7 +219,10 @@ Parameters documentation
    * - ``--pacbio_all_bam_path``
      - N
      - NA
-     - Path to all subreads.bam files for the given reads. Whenever set, the pipeline will execute a polishing step with VarianCaller through arrow. Arrow is supported for PacBio Sequel data and RS data with the P6-C4 chemistry.
+     - | Path to all subreads.bam files for the given reads (can be '\*.bam')
+       | In order to nextflow properly use it, one needs to store all the data, from all the cells in one single directory and set the filepath as "some/data/\*bam".
+       | Whenever set, the pipeline will execute a polishing step with VarianCaller through arrow.
+       | Arrow is supported for PacBio Sequel data and RS data with the P6-C4 chemistry.
 
    * - ``--genomeSize``
      - Y (for Canu and Flye assemblers)
@@ -178,7 +232,10 @@ Parameters documentation
    * - ``--illumina_polish_longreads_contigs``
      - N
      - False
-     - Tells the pipeline to create a long reads only assembly and polish it with short reads. By default, the hybrid modes of Unicycler and SPAdes are executed. This parameter tells to excute the alternative hybrid method (longreads -> polish) instead of Unicycler/SPAdes hybrid modes. If used, users must remember to select which assemblers to use for a long reads only assembly first: ``--try_unicycler``, ``--try_canu`` or ``--try_flye``.
+     - | Tells the pipeline to create a long reads only assembly and polish it with short reads.
+       | By default, the hybrid modes of Unicycler and SPAdes are executed.
+       | This parameter tells to excute the alternative hybrid method (longreads -> polish) instead of Unicycler/SPAdes hybrid modes.
+       | If used, users must remember to select which assemblers to use for a long reads only assembly first: ``--try_unicycler``, ``--try_canu`` or ``--try_flye``.
 
 All these parameters are configurable through a configuration file. We encourage users to use the configuration
 file since it will keep your execution cleaner and more readable. See a :ref:`config` example.
