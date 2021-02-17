@@ -26,7 +26,16 @@
 
     OPTIONS:
 
+            # Nextflow tower parameters
+            # Used to display the pipeline execution in nextflow tower page
+            # very useful when combined with nextflow -bg (for running in backgroung)
+
+    --use_tower                                    Triggers the pipeline to be launched via nextflow tower
+    --tower_token <token>                          Your nextflow tower token. Used to launch the pipeline in your nextflow tower account
+
+
                                                         General Parameters - Mandatory
+                                                            Used for any workflow
 
 
      --outdir <string>                                                          Output directory name. Outputs are prefixed with reads IDs (basenames).
