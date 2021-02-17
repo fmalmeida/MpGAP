@@ -6,209 +6,31 @@ nextflow.enable.dsl=2
  */
 
 /*
- * Define help message
+ * Generic Pipeline for preprocessing ngs data
  */
- def helpMessage() {
-    log.info """
-    Usage:
-    nextflow run fmalmeida/MpGAP [--help] [ -c nextflow.config ] [OPTIONS] [-with-report] [-with-trace] [-with-timeline]
 
-    Comments:
-    This pipeline contains a massive amount of configuration variables and its usage as CLI parameters would
-    cause the command to be huge. Therefore, it is extremely recommended to use the nextflow.config configuration file in order to make
-    parameterization easier and more readable.
-
-    Creating a configuration file:
-    nextflow run fmalmeida/MpGAP [--get_hybrid_config] [--get_lreads_config] [--get_sreads_config]
-
-    Show command line examples:
-    nextflow run fmalmeida/MpGAP --examples
-
-    Execution Reports:
-    nextflow run fmalmeida/MpGAP [ -c nextflow.config ] -with-report
-    nextflow run fmalmeida/MpGAP [ -c nextflow.config ] -with-trace
-    nextflow run fmalmeida/MpGAP [ -c nextflow.config ] -with-timeline
-
-    OBS: These reports can also be enabled through the configuration file.
-
-    OPTIONS:
-
-                                                        General Parameters - Mandatory
-
-
-     --outdir <string>                                                          Output directory name. Outputs are prefixed with reads IDs (basenames).
-
-     --threads <int>                                                            Number of threads to use.
-
-     --assembly_type <string>                                                   Selects assembly mode: hybrid, illumina-only or longreads-only
-
-     --try_canu                                                                 Execute assembly with Canu. Multiple assemblers can be chosen.
-
-     --canu_additional_parameters <string>                                      Give additional parameters to Canu assembler. Must be in quotes
-                                                                                and separated by one space. Must be given as shown in Canu manual.
-                                                                                E.g. 'correctedErrorRate=0.075 corOutCoverage=200'
-
-     --try_unicycler                                                            Execute assembly with Unicycler. Multiple assemblers can be chosen.
-
-     --unicycler_additional_parameters <string>                                 Give additional parameters to Unicycler assembler. Must be in quotes
-                                                                                and separated by one space. Must be given as shown in Unicycler manual.
-                                                                                E.g. '--mode conservative --no_correct'
-
-     --try_flye                                                                 Execute assembly with Flye. Multiple assemblers can be chosen.
-
-     --flye_additional_parameters <string>                                      Give additional parameters to Flye assembler. Must be in quotes
-                                                                                and separated by one space. Must be given as shown in Flye manual.
-                                                                                E.g. '--meta --iterations 4'
-
-     --try_spades                                                               Execute assembly with Spades. Multiple assemblers can be chosen.
-
-     --spades_additional_parameters <string>                                    Give additional parameters to Spades assembler. Must be in quotes
-                                                                                and separated by one space. Must be given as shown in Spades manual.
-                                                                                E.g. '--meta --plasmids'
-
-
-
-                                                          Short reads only assembly
-
-
-
-                       It can be executed by SPAdes and Unicycler assemblers. Users can use paired or single end reads.
-                       If both types are given at once, assemblers will be executed using both. Remember to always
-                       write the paths with regex (*, {1,2}, etc.) inside double quotes.
-
-
-
-     --shortreads_paired <string>                                               Path to Illumina paired end reads. E.g. "read_pair_{1,2}.fastq"
-
-     --shortreads_single <string>                                               Path to Illumina single end reads. E.g. "reads*.fastq"
-
-
-
-                                                          Hybrid Assembly
-
-
-                       Parameters for hybrid mode. Can be executed by spades and unicycler assemblers.
-
-     --shortreads_paired <string>                                               Path to Illumina paired end reads.
-
-     --shortreads_single <string>                                               Path to Illumina single end reads.
-
-     --longreads <string>                                                       Path to longreads in FASTA or FASTQ formats.
-
-     --lr_type <string>                                                         Sets wich type of long reads are being used: pacbio or nanopore
-
-     --illumina_polish_longreads_contigs                                        This tells the pipeline to execute an alternative hybrid method
-                                                                                instead of running Unicycler/SPAdes default hybrid workflows.
-                                                                                This creates a longreads-only assembly with Canu, Unicycler or
-                                                                                Flye and polish it with shortreads using Pilon. This represents
-                                                                                another hybrid methodology. For that, users have to select the
-                                                                                desired longreads assemblers to be used (Canu, Flye and/or Unicycler).
-                                                                                Canu and Flye require a expected genome size as input.
-
-                                                                                It is also possible to polish the longreads-only assembly with Nanopolish,
-                                                                                Medaka or Arrow (depending on the sequencing technology) before polishing
-                                                                                it with shortreads. For that, users must check the longreads parameters:
-                                                                                --medaka_sequencing_model, --nanopolish_fast5Path and --pacbio_all_bam_path
-
-
-
-
-                                                          Long reads only assembly
-
-
-                       Parameters for longreads-only mode. Can be executed by canu, flye and unicycler assemblers.
-                       In the end, long reads only assemblies can be polished with illumina reads through pilon.
-
-     --longreads <string>                                                       Path to longreads in FASTA or FASTQ formats.
-
-     --lr_type <string>                                                         Sets wich type of long reads are being used: pacbio or nanopore
-
-     --medaka_sequencing_model <string>                                         Tells Medaka polisher which model to use according to the basecaller
-                                                                                used. For example the model named r941_min_fast_g303 should be used
-                                                                                with data from MinION (or GridION) R9.4.1 flowcells using the fast
-                                                                                Guppy basecaller version 3.0.3. Where a version of Guppy has been
-                                                                                used without an exactly corresponding medaka model, the medaka model
-                                                                                with the highest version equal to or less than the guppy version
-                                                                                should be selected. Models available: r941_min_fast_g303,
-                                                                                r941_min_high_g303, r941_min_high_g330, r941_min_high_g344,
-                                                                                r941_prom_fast_g303, r941_prom_high_g303, r941_prom_high_g344,
-                                                                                r941_prom_high_g330, r10_min_high_g303, r10_min_high_g340,
-                                                                                r103_min_high_g345, r941_prom_snp_g303, r941_prom_variant_g303,
-                                                                                r941_min_high_g340_rle.
-
-
-     --nanopolish_fast5Path <string>                                            Path to directory containing FAST5 files for given reads.
-                                                                                Whenever set, the pipeline will execute a polishing step
-                                                                                with Nanopolish. This makes the pipeline extremely SLOW!!
-
-     --nanopolish_max_haplotypes <int>                                          This parameter sets to nanopolish the max number of haplotypes to be considered.
-                                                                                Sometimes the pipeline may crash because to much variation was found exceeding the
-                                                                                limit. Try augmenting this value (Default: 1000)
-
-     --pacbio_all_bam_path <string>                                             Path to all subreads bam files for given reads. Whenever set, the pipeline
-                                                                                will execute a polishing step with VarianCaller with arrow.
-                                                                                Arrow is supported for PacBio Sequel data and RS data with the P6-C4 chemistry
-
-     --genomeSize <string>                                                      Canu and Flye require an estimative of genome size in order
-                                                                                to be executed. Examples: 5.6m; 1.2g
-
-
-
-    """.stripIndent()
- }
-
- def exampleMessage() {
-    log.info """
-
-    Examplification on how to run fmalmeida/MpGAP pipeline using the CLI configuration
-
-    Short reads only - PAIRED:
-\$ nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type illumina-only --try_spades --try_unicycler --shortreads_paired "dataset_1/sampled/illumina_R{1,2}.fastq"
-
-    Short reads only - SINGLE:
-\$ nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type illumina-only --try_spades --try_unicycler --shortreads_single "dataset_1/sampled/illumina_single.fastq"
-
-    Short reads only - Both PAIRED and SINGLE:
-\$ nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type illumina-only --try_spades --try_unicycler --shortreads_paired "dataset_1/sampled/illumina_R{1,2}.fastq" --shortreads_single "dataset_1/sampled/illumina_single.fastq"
-
-    Long reads only - ONT (Using both Nanopolish and Medaka):
-\$ nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type longreads-only --try_canu --try_flye --try_unicycler --medaka_sequencing_model r941_min_fast_g303 \
---nanopolish_fast5Path "dataset_1/ont/fast5_pass" --nanopolish_max_haplotypes 2000 --genomeSize 2m --lr_type nanopore --longreads "dataset_1/ont/ont_reads.fastq"
-
-    Long reads only - Pacbio (Using VariantCaller):
-\$ nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type "longreads-only" --try_unicycler --try_flye --genomeSize "2m" --lr_type "pacbio" \
---longreads "E01_1/Analysis_Results/preprocessed/longreads/pacbio/m141013_011508_sherri_c100709962550000001823135904221533_s1_p0.subreads.subset.fastq" --pacbio_all_bam_path "E01_1/Analysis_Results/preprocessed/longreads/pacbio/*.subreads.bam"
-
-    Hybrid assembly - Using both paired and single end short reads
-\$ nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type hybrid --try_unicycler --shortreads_paired "dataset_1/sampled/illumina_R{1,2}.fastq" \
---shortreads_single "dataset_1/sampled/illumina_single.fastq" --lr_type nanopore --longreads "dataset_1/ont/ont_reads.fastq"
-
-    Hybrid assembly - by polishing (with shortreads) a longreads-only assembly -- also using medaka
-\$ nextflow run fmalmeida/MpGAP --outdir output --threads 5 --assembly_type hybrid --try_unicycler --try_flye --try_canu --shortreads_paired "dataset_1/sampled/illumina_R{1,2}.fastq"
---genomeSize 2m --lr_type nanopore --longreads "dataset_1/ont/ont_reads.fastq" --illumina_polish_longreads_contigs --medaka_sequencing_model r941_min_fast_g303
-    """.stripIndent()
- }
-
- /*
-           Display Help Message
+/*
+ * Include functions
  */
- params.help = false
-  // Show help emssage
-  if (params.help){
-    helpMessage()
-    //file('work').deleteDir()
-    exit 0
- }
+include { helpMessage } from './nf_functions/help.nf'
+include { exampleMessage } from './nf_functions/examples.nf'
+include { paramsCheck } from './nf_functions/paramsCheck.nf'
+include { logMessage } from './nf_functions/logMessages.nf'
 
- /*
-           Display CLI examples
+/*
+ * Check parameters
  */
- params.examples = false
-  // Show help emssage
-  if (params.examples){
-    exampleMessage()
-    exit 0
- }
+paramsCheck()
+params.help = false
+if (params.help){
+  helpMessage()
+  exit 0
+}
+params.examples = false
+if (params.examples){
+  exampleMessage()
+  exit 0
+}
 
  /*
            Download configuration file, if necessary.
@@ -290,31 +112,7 @@ params.pilon_memory_limit = 50
 /*
  * Define log message
  */
-log.info "================================================================="
-log.info " Docker-based, fmalmeida/mpgap, generic genome assembly pipeline "
-log.info "================================================================="
-def summary = [:]
-// Generic parameters
-summary['Output directory']    = params.outdir
-summary['Assembly method']     = params.assembly_type
-summary['Number of threads']   = params.threads
-// Long reads?
-if (params.longreads) { summary['Longreads']   = params.longreads }
-if (params.longreads) { summary['Longread technology'] = params.lr_type }
-if (params.nanopolish_fast5Path && params.lr_type == 'nanopore') { summary['Fast5 files dir']   = params.nanopolish_fast5Path }
-if (params.medaka_sequencing_model && params.lr_type == 'nanopore') { summary['Medaka model']   = params.medaka_sequencing_model }
-if (params.pacbio_all_bam_path && params.lr_type == 'pacbio') { summary['Pacbio subreads BAM']   = params.pacbio_all_bam_path }
-// Short reads?
-if (params.shortreads_single) { summary['Short single end reads']   = params.shortreads_single }
-if (params.shortreads_paired) { summary['Short paired end reads']   = params.shortreads_paired }
-// Workflow information
-if(workflow.revision) summary['Pipeline Release'] = workflow.revision
-summary['Current home']   = "$HOME"
-summary['Current user']   = "$USER"
-summary['Current path']   = "$PWD"
-summary['Command used']   = "$workflow.commandLine"
-log.info summary.collect { k,v -> "${k.padRight(15)}: $v" }.join("\n")
-log.info "========================================="
+logMessage()
 
 /*
  * Include modules

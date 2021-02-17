@@ -19,11 +19,11 @@ This pipeline requires only `Docker <https://www.docker.com/>`_ (and its Docker 
 
 3. Download the pipeline
 
-    ``./nextflow pull fmalmeida/MpGAP``
+    ``./nextflow pull fmalmeida/mpgap``
 
 4. Test your installation
 
-    ``./nextflow run fmalmeida/MpGAP --help``
+    ``./nextflow run fmalmeida/mpgap --help``
 
 5. Download required Docker images
 

@@ -78,6 +78,11 @@
                     "type": "integer",
                     "description": "Number of threads to use for each process"
                 },
+                "parallel_jobs": {
+                    "type": "integer",
+                    "default": 1,
+                    "description": "Number of jobs to run in parallel. Each job can consume up to N threads (--threads)"
+                },
                 "cpus": {
                     "type": "integer",
                     "description": "Number of cores to run nanopolish in parallel"

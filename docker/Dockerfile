@@ -112,5 +112,14 @@ RUN conda info -e
 # Fix Canu links
 RUN ln -frs canu-2.1.1/bin/* /usr/local/bin/
 
+# Install seqtk
+RUN git clone https://github.com/lh3/seqtk.git && \
+				cd seqtk && \
+				make && \
+				ln -rs seqtk /usr/local/bin
+
+# Remove tars
+RUN rm -rf *.tar.gz *.tar.xz
+
 # Set WorkDir
 WORKDIR /work
