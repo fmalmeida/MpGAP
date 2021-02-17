@@ -110,6 +110,10 @@ Assembler options
      - Default value
      - Description
 
+   * - ``--genomeSize``
+     - Y (for Canu and Flye assemblers)
+     - NA
+     - Sets expected genome size. E.g. 5.6m; 1.2g.
 
    * - ``--try_canu``
      - N
@@ -122,17 +126,6 @@ Assembler options
      - | Passes additional parameters for Canu assembler. E.g. 'correctedErrorRate=0.075 corOutCoverage=200'.
        | Must be given as shown in Canu's manual.
 
-   * - ``--try_unicycler``
-     - N
-     - False
-     - Try to assemble data with Unicycler
-
-   * - ``--unicycler_additional_parameters``
-     - N
-     - NA
-     - | Passes additional parameters for Unicycler assembler. E.g. '--mode conservative --no_correct'.
-       | Must be given as shown in Unicycler's manual.
-
    * - ``--try_flye``
      - N
      - False
@@ -143,6 +136,17 @@ Assembler options
      - NA
      - | Passes additional parameters for Flye assembler. E.g. '--meta --iterations 4'.
        | Must be given as shown in Flye's manual.
+
+   * - ``--try_unicycler``
+     - N
+     - False
+     - Try to assemble data with Unicycler
+
+   * - ``--unicycler_additional_parameters``
+     - N
+     - NA
+     - | Passes additional parameters for Unicycler assembler. E.g. '--mode conservative --no_correct'.
+       | Must be given as shown in Unicycler's manual.
 
    * - ``--try_spades``
      - N
@@ -179,6 +183,36 @@ Short reads parameters (also used for hybrid)
 
 Long reads parameters (also used for hybrid)
 ---------------------------------------------
+
+.. list-table::
+   :widths: 20 10 20 50
+   :header-rows: 1
+
+   * - Arguments
+     - Required
+     - Default value
+     - Description
+
+   * - ``--longreads``
+     - Y (for hybrid and longreads-only modes)
+     - NA
+     - Path to longreads in FASTA or FASTQ formats.
+
+   * - ``--lr_type``
+     - Y (for hybrid and longreads-only modes)
+     - nanopore
+     - Tells whether input longreads are: pacbio or nanopore.
+
+   * - ``--illumina_polish_longreads_contigs``
+     - N
+     - False
+     - | Tells the pipeline to create a long reads only assembly and polish it with short reads.
+       | By default, the hybrid modes of Unicycler and SPAdes are executed.
+       | This parameter tells to excute the hybrid strategy 2 (longreads -> polish) instead of Unicycler/SPAdes hybrid modes.
+       | If used, users must remember to select which assemblers to use for a long reads only assembly first: ``--try_unicycler``, ``--try_canu`` or ``--try_flye``.
+
+Long reads assembly polishing parameters (also used for hybrid strategy 2)
+--------------------------------------------------------------------------
 
 .. list-table::
    :widths: 20 10 20 50
