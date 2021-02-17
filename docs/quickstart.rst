@@ -28,14 +28,6 @@ All datasets can be assembled in two ways:
   The best way to execute these pipelines is by using a configuration file.
   With a proper configuration users can easily run the pipeline.
 
-Prepare your for receiving outputs folders
-------------------------------------------
-
-.. code-block:: bash
-
-  # Create dir for all assemblies
-  mkdir -p dataset_{1,2}/assemblies
-
 Assembling Oxford Nanopore reads
 ================================
 
@@ -48,7 +40,7 @@ Via CLI parameterization
 
   nextflow run fmalmeida/mpgap --longreads 'dataset_1/preprocessed/ont_reads_trimmed.fastq' --lr_type 'nanopore' \
   --assembly_type 'longreads-only' --try_canu --try_flye --try_unicycler --genomeSize '3m' \
-  --outdir 'dataset_1/assemblies/longreads-only' --threads 4
+  --outdir 'dataset_1/assemblies' --threads 4
 
 .. tip::
 
@@ -70,7 +62,7 @@ Via CLI parameterization
   nextflow run fmalmeida/mpgap --genomeSize 4.5m --lr_type pacbio \
   --pacbio_all_bam_path "path/to/m120131_103014_sidney_c100278822550000001523007907041295_s1_p0.subreads.bam" \
   --longreads "path/to/m120131_103014_sidney_c100278822550000001523007907041295_s1_p0.fastq" --try_flye \
-  --outdir e-coli-k12-mg1655-raw-reads-1.3.0/2590338/0006/assembly --threads 3 --assembly_type longreads-only
+  --outdir 'e-coli-k12-mg1655-raw-reads-1.3.0/2590338/0006/assembly' --threads 3 --assembly_type longreads-only
 
 .. tip::
 
@@ -89,7 +81,7 @@ Via CLI parameterization
 
   ## Assembling via CLI
   nextflow run fmalmeida/mpgap --shortreads_paired 'dataset_1/illumina/read_pair_{1,2}.fastq' --assembly_type 'illumina-only' \
-    --try_unicycler --try_spades --outdir 'dataset_1/assemblies/illumina-only' --threads 4
+    --try_unicycler --try_spades --outdir 'dataset_1/assemblies' --threads 4
 
 Assembling Hybrid datasets
 ==========================
@@ -124,7 +116,7 @@ Via CLI parameterization
   # Assembling via CLI
   nextflow run fmalmeida/mpgap --longreads 'dataset_1/preprocessed/ont_reads_trimmed.fastq' --lr_type 'nanopore' \
   --assembly_type 'hybrid' --shortreads_paired 'dataset_1/illumina/read_pair_{1,2}.fastq' --try_spades \
-  --try_unicycler --outdir 'dataset_1/assemblies/hybrid_1' --threads 4
+  --try_unicycler --outdir 'dataset_1/assemblies' --threads 4
 
 Method 2: By polishing a longreads-only assembly with shortreads
 ----------------------------------------------------------------
@@ -149,7 +141,7 @@ Via CLI parameterization
 .. code-block:: bash
 
   nextflow run fmalmeida/mpgap --longreads 'dataset_1/preprocessed/ont_reads_trimmed.fastq' --lr_type 'nanopore' \
-      --assembly_type 'hybrid' --shortreads_paired 'dataset_1/illumina/read_pair_{1,2}.fastq' --outdir 'dataset_1/assemblies/hybrid_1' \
+      --assembly_type 'hybrid' --shortreads_paired 'dataset_1/illumina/read_pair_{1,2}.fastq' --outdir 'dataset_1/assemblies' \
       --threads 4 --illumina_polish_longreads_contigs --try_flye --try_canu --try_unicycler --genomeSize '3m'
 
 Afterwards
