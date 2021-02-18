@@ -106,7 +106,7 @@
                     ],
                     "fa_icon": "fas fa-ellipsis-v"
                 },
-                "illumina_polish_longreads_contigs": {
+                "strategy_2": {
                     "type": "boolean",
                     "description": "For hybrid assemblies, use strategy 2",
                     "help_text": "It must be used with \"--assembly_type = hybrid\".\nThis paremeter tells the pipeline to first create a longreads-only assembly and then polish it with short reads, instead of executing the hybrid assembly modes implemented by Unicycler and SPAdes.",

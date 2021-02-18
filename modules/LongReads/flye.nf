@@ -1,5 +1,5 @@
 process flye_assembly {
-  publishDir "${params.outdir}/longreads-only", mode: 'copy', overwrite: true
+  publishDir "${params.outdir}/${lrID}/longreads_only", mode: 'copy', overwrite: true
   container 'fmalmeida/mpgap'
   cpus params.threads
   tag "Performing a longreads only assembly with Flye"
@@ -8,16 +8,17 @@ process flye_assembly {
   file lreads
 
   output:
-  file "flye_${lrID}" // Saves all files
-  tuple file("flye_${lrID}/assembly_flye.fasta"), val(lrID), val('flye') // Gets contigs file
+  file "flye" // Saves all files
+  tuple file("flye/assembly_flye.fasta"), val(lrID), val('flye') // Gets contigs file
 
   script:
-  lr = (params.lr_type == 'nanopore') ? '--nano-raw' : '--pacbio-raw'
-  lrID = lreads.getSimpleName()
+  lr    = (params.lr_type == 'nanopore') ? '--nano-raw' : '--pacbio-raw'
+  lrID  = lreads.getSimpleName()
+  gsize = (params.genomeSize) ? "--genome-size ${params.genomeSize}" : ""
   """
   source activate flye ;
-  flye ${lr} $lreads --genome-size ${params.genomeSize} --out-dir flye_${lrID} \
+  flye ${lr} $lreads ${gsize} --out-dir flye \
   --threads ${params.threads} ${params.flye_additional_parameters} &> flye.log ;
-  mv flye_${lrID}/assembly.fasta flye_${lrID}/assembly_flye.fasta
+  mv flye/assembly.fasta flye/assembly_flye.fasta
   """
 }

@@ -1,5 +1,5 @@
 process medaka {
-  publishDir "${params.outdir}/longreads-only/medaka_polished_contigs", mode: 'copy', overwrite: true
+  publishDir "${params.outdir}/${lrID}/longreads_only/medaka_polished_contigs", mode: 'copy', overwrite: true
   container 'fmalmeida/mpgap'
   tag "Polishing assembly with Medaka"
 
@@ -8,13 +8,13 @@ process medaka {
   file reads
 
   output:
-  file "${assembler}_${lrID}" // Save everything
-  tuple file("${assembler}_${lrID}/${assembler}_${lrID}_consensus.fa"), val(lrID), val("${assembler}-medaka") // Save medaka contigs
+  file "${assembler}" // Save everything
+  tuple file("${assembler}/${assembler}_consensus.fa"), val(lrID), val("${assembler}_medaka") // Save medaka contigs
 
   script:
   """
   source activate MEDAKA ;
-  medaka_consensus -i $reads -d $draft -o ${assembler}_${lrID} -t ${params.threads} -m ${params.medaka_sequencing_model} ;
-  mv ${assembler}_${lrID}/consensus.fasta ${assembler}_${lrID}/${assembler}_${lrID}_consensus.fa
+  medaka_consensus -i $reads -d $draft -o ${assembler} -t ${params.threads} -m ${params.medaka_sequencing_model} ;
+  mv ${assembler}/consensus.fasta ${assembler}/${assembler}_consensus.fa
   """
 }

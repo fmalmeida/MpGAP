@@ -1,5 +1,5 @@
 process nanopolish {
-  publishDir "${params.outdir}/longreads-only/nanopolish_polished_contigs/${assembler}", mode: 'copy', overwrite: true
+  publishDir "${params.outdir}/${lrID}/longreads_only/nanopolish_polished_contigs/${assembler}", mode: 'copy', overwrite: true
   container 'fmalmeida/mpgap'
   cpus params.threads
 
@@ -10,8 +10,8 @@ process nanopolish {
   val fast5_dir
 
   output:
-  tuple file("${assembler}_${lrID}_nanopolished.fa"), val(lrID), val("${assembler}-nanopolish") // Save nanopolished contigs
-  file "${assembler}_${lrID}_nanopolished.complete.vcf" // Save VCF
+  tuple file("${assembler}_nanopolished.fa"), val(lrID), val("${assembler}_nanopolish") // Save nanopolished contigs
+  file "${assembler}_nanopolished.complete.vcf" // Save VCF
 
   script:
   """
@@ -29,7 +29,7 @@ process nanopolish {
     -g ${draft} \
     --max-haplotypes ${params.nanopolish_max_haplotypes} \
     --min-candidate-frequency 0.1;
-  nanopolish vcf2fasta --skip-checks -g ${draft} polished.*.vcf > ${assembler}_${lrID}_nanopolished.fa ;
-  cat polished.*.vcf >> ${assembler}_${lrID}_nanopolished.complete.vcf
+  nanopolish vcf2fasta --skip-checks -g ${draft} polished.*.vcf > ${assembler}_nanopolished.fa ;
+  cat polished.*.vcf >> ${assembler}_nanopolished.complete.vcf
   """
 }

@@ -7,145 +7,90 @@ Quickstart
 Overview
 ========
 
-During this quickstart we will use two example datasets. These datasets must be downloaded and pre-processed as
-shown in my `ngs-preprocess pipeline quickstart <https://ngs-preprocess.readthedocs.io/en/latest/quickstart.html>`_.
+As an use case, we will use 30X of one of the *Escherichia coli* sequencing data (Biosample: `SAMN10819847 <https://www.ncbi.nlm.nih.gov/biosample/10819847>`_)
+that is available from a recent study that compared the use of different long read technologies in hybrid assembly if 137 bacterial genomes [`4 <https://doi.org/10.1099/mgen.0.000294>`_].
 
-After getting the data as already discussed in the above link, you might be able to follow up this quickstart on
-assembling genomes with MpGAP.
+Get the data
+------------
 
-All datasets can be assembled in two ways:
+We have made this subsampled dataset available in `Figshare <https://figshare.com/articles/dataset/Illumina_pacbio_and_ont_sequencing_reads/14036585>`_.
 
-1. Through CLI parameterization
-2. Or by a configuration file
+.. code-block:: bash
+
+  # Download data from figshare
+  wget -O reads.zip https://ndownloader.figshare.com/articles/14036585/versions/4
+
+  # Unzip
+  unzip reads.zip
+
+
+Now we have the necessary data to perform the quickstart.
 
 .. note::
 
-  The pipeline will always use the fastq file name as prefix for output files. For instance, if users use a
+  The pipeline will always use the fastq file name as prefix for sub-fodlers and output files. For instance, if users use a
   fastq file named SRR7128258.fastq the output files and directories will have the string "SRR7128258" in it.
 
 .. tip::
 
-  The best way to execute these pipelines is by using a configuration file.
-  With a proper configuration users can easily run the pipeline.
+  Remember, the pipeline can always be executed with a config file. In fact, the best way to execute these pipelines is
+  by using a configuration file. With a proper configuration, users can easily run the pipeline.
 
-Assembling Oxford Nanopore reads
-================================
+Hybrid assembly (strategy 1)
+============================
+
+By default, when assembling long and short reads together (hybrid assemblies) the pipeline executes the SPAdes, Unicycler and Haslr
+software since they have assembly modules specialized for hybrid assemblies.
 
 Oxford nanopore reads are in the `example dataset 1 <https://ngs-preprocess.readthedocs.io/en/latest/quickstart.html#id2>`_.
 
-Via CLI parameterization
-------------------------
-
 .. code-block:: bash
 
-  nextflow run fmalmeida/mpgap --longreads 'dataset_1/preprocessed/ont_reads_trimmed.fastq' --lr_type 'nanopore' \
-  --assembly_type 'longreads-only' --try_canu --try_flye --try_unicycler --genomeSize '3m' \
-  --outdir 'dataset_1/assemblies' --threads 4
+  # Run the pipeline
+  nextflow run fmalmeida/mpgap --outdir _ASSEMBLY --threads 5 \
+    --skip_spades --shortreads_paired "SRR8482585_30X_{1,2}.fastq.gz" \
+    --longreads "SRX5299443_30X.fastq.gz" --lr_type nanopore \
+    --unicycler_additional_parameters '--mode conservative'
+
 
 .. tip::
 
-  To perform a polishing step with Nanopolish one just need to add **--fast5Path 'dataset_1/ont/fast5_pass/'** to the execution
-
-Assembling Pacbio reads
-=======================
-
-Pacbio reads can be found in `example dataset 2 <https://ngs-preprocess.readthedocs.io/en/latest/quickstart.html#id3>`_.
-If you have not followed my previous quickstart in `ngs-preprocess pipeline <https://ngs-preprocess.readthedocs.io/en/latest/>`_
-you will have subreads in fastq and bam formats.
-
-Via CLI parameterization
-------------------------
-
-.. code-block:: bash
-
-  # Assembling via CLI
-  nextflow run fmalmeida/mpgap --genomeSize 4.5m --lr_type pacbio \
-  --pacbio_all_bam_path "path/to/m120131_103014_sidney_c100278822550000001523007907041295_s1_p0.subreads.bam" \
-  --longreads "path/to/m120131_103014_sidney_c100278822550000001523007907041295_s1_p0.fastq" --try_flye \
-  --outdir 'e-coli-k12-mg1655-raw-reads-1.3.0/2590338/0006/assembly' --threads 3 --assembly_type longreads-only
+	Additional paramaters can be passed to the assemblers using the ``--{assembler}_additional_parameters`` parameter.
 
 .. tip::
 
-  The parameter **--pacbio_all_bam_path** will tell the pipeline to run **Arrow** to polish pacbio-only assemblies.
+	Specific software can be turned of with the parameters ``--skip_{assembler}``
 
-Assembling Illumina reads
-=========================
+Hybrid assembly (strategy 2)
+============================
 
-Illumina reads can be found in both `example dataset 1 <https://ngs-preprocess.readthedocs.io/en/latest/quickstart.html#id2>`_
-and `example dataset 2 <https://ngs-preprocess.readthedocs.io/en/latest/quickstart.html#id3>`_. You can use any of them.
+Additionally to the conventional hybrid assembly method (strategy 1), users can also hybrid assemble their genomes using an alternative
+method called, in this pipeline, **strategy 2**. In this method, long reads are first assembled with specialized long reads assemblers,
+such as Canu, Flye, Raven and Unicycler. And, after that, this long reads only assembly is polished (error correction step) using the
+available short reads with the Pilon software.
 
-Via CLI parameterization
-------------------------
-
-.. code-block:: bash
-
-  ## Assembling via CLI
-  nextflow run fmalmeida/mpgap --shortreads_paired 'dataset_1/illumina/read_pair_{1,2}.fastq' --assembly_type 'illumina-only' \
-    --try_unicycler --try_spades --outdir 'dataset_1/assemblies' --threads 4
-
-Assembling Hybrid datasets
-==========================
-
-This pipeline can perform a hybrid assembly in two ways:
-
-1. Directly through Unicycler or SPAdes hybrid methodologies (Only Unicycler or SPAdes)
-2. Performing a long reads only assembly and polish it with Illumina reads using Pilon (Canu, Flye or Unicycler).
-
-.. note::
-
-  By default methodology 1 is executed. If users want to perform a long reads only assembly and polish it with short reads (Methodology 2),
-  the parameter ``--illumina_polish_longreads_contigs`` must be used. Do not forget to choose which assemblers you want to use.
-
-
-Method 1: Only through Unicycler or SPAdes hybrid workflows
------------------------------------------------------------
-
-By using Unicycler and/or SPAdes hybrid assembly modes. For instance, it will use Unicycler hybrid mode which will first assemble a high quality assembly graph with Illumina
-data and then it will use long reads to bridge the gaps. More information about Unicycler Hybrid mode can be found `here <https://github.com/rrwick/Unicycler#method-hybrid-assembly>`_.
-
-.. note::
-
-  It is achieved when not using the parameter ``--illumina_polish_longreads_contigs``. Users must remember to use the parameters ``--try_unicycler``
-  or ``--try_spades`` otherwise they will not be executed.
-
-Via CLI parameterization
-""""""""""""""""""""""""
+The execution is actually the same as for the strategy 1, however users must use the ``--strategy_2`` parameter to use this alternative method.
 
 .. code-block:: bash
 
-  # Assembling via CLI
-  nextflow run fmalmeida/mpgap --longreads 'dataset_1/preprocessed/ont_reads_trimmed.fastq' --lr_type 'nanopore' \
-  --assembly_type 'hybrid' --shortreads_paired 'dataset_1/illumina/read_pair_{1,2}.fastq' --try_spades \
-  --try_unicycler --outdir 'dataset_1/assemblies' --threads 4
+  # Run the pipeline
+  nextflow run fmalmeida/mpgap --outdir _ASSEMBLY --threads 5 \
+    --skip_canu --shortreads_paired "SRR8482585_30X_{1,2}.fastq.gz" \
+    --longreads "SRX5299443_30X.fastq.gz" --lr_type nanopore \
+    --unicycler_additional_parameters '--mode conservative' --strategy_2
 
-Method 2: By polishing a longreads-only assembly with shortreads
-----------------------------------------------------------------
-
-By polishing a long reads only assembly with Illumina reads. For that, users will have to use the parameter ``--illumina_polish_longreads_contigs``. This will tell the pipeline to
-produce a long reads only assembly (with canu, flye or unicycler) and polish it with Pilon (for unpaired reads) or with `Unicycler-polish program <https://github.com/rrwick/Unicycler/blob/master/docs/unicycler-polish.md>`_ (for paired end reads).
 
 .. note::
 
-  Note that, ``--illumina_polish_longreads_contigs`` parameter is an alternative workflow, when used, it will execute ONLY strategy 2 and not both strategies.
-  When false, only strategy 1 will be executed. Remember to select the desired assemblers to run with ``--try_canu``, ``--try_flye`` and/or ``--try_unicycler``
+	Remember that in this method, the assemblers used are the long reads assemblers (Canu, Flye, Raven and Unicycler), not the hybrid ones used in strategy 1.
 
 .. tip::
 
-  It is also possible to combine polishings with Medaka, Nanopolish or Arrow by using setting the correct parameters:
-  ``--pacbio_all_bam_path``, ``--nanopolish_fast5Path`` or ``--medaka_sequencing_model``. These will tell the pipeline to polish the
-  assemblies with these software before polishing with shortreads (using Pilon).
-
-Via CLI parameterization
-""""""""""""""""""""""""
-
-.. code-block:: bash
-
-  nextflow run fmalmeida/mpgap --longreads 'dataset_1/preprocessed/ont_reads_trimmed.fastq' --lr_type 'nanopore' \
-      --assembly_type 'hybrid' --shortreads_paired 'dataset_1/illumina/read_pair_{1,2}.fastq' --outdir 'dataset_1/assemblies' \
-      --threads 4 --illumina_polish_longreads_contigs --try_flye --try_canu --try_unicycler --genomeSize '3m'
+	Additionally, users can also execute a long reads polishing step in their assemblies prior to the polishing with short reads. The long reads polishers available are: ONT ==> Medaka and Nanopolish; Pacbio ==> Arrow. For that, users must check the longreads parameters: ``--medaka_sequencing_model``, ``--nanopolish_fast5Path`` and ``--pacbio_all_bam_path``. This will make de pipeline work as: ``long reads assembly -> polishing with long reads models -> polishing with short reads with Pilon``
 
 Afterwards
 ==========
 
-After assembling a prokaryotic genome you can then annotate it. Why not give my other pipeline, `bacannot <https://bacannot.readthedocs.io/en/latest/>`_ a try? It wraps up lots
-of databases and tools that can give a nice overview of your query genome.
+Users can continue to investigate the pipeline capabilities in through the manual. And also, after assembling a prokaryotic genome you can then annotate it.
+Why not give my other pipeline, `bacannot <https://bacannot.readthedocs.io/en/latest/>`_ a try? It wraps up lots of databases and tools that can give a
+nice overview of your query genome.

@@ -118,6 +118,24 @@ RUN git clone https://github.com/lh3/seqtk.git && \
 				make && \
 				ln -rs seqtk /usr/local/bin
 
+# Install shovill
+RUN conda create --name shovill -y -c conda-forge -c bioconda -c defaults shovill nomkl && \
+			conda clean -afy
+
+# Install haslr
+RUN git clone https://github.com/vpc-ccg/haslr.git && \
+			cd haslr && \
+			make
+ENV PATH="$PATH:/work/haslr/bin"
+
+# Install raven
+RUN git clone https://github.com/lbcb-sci/raven && \
+			cd raven && \
+			mkdir build \
+			&& cd build && \
+			cmake -DCMAKE_BUILD_TYPE=Release .. && \
+			make && make install
+
 # Remove tars
 RUN rm -rf *.tar.gz *.tar.xz
 

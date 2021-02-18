@@ -1,5 +1,5 @@
 process quast {
-  publishDir "${params.outdir}/Quality_Assessment/quast_${type}", mode: 'copy', overwrite: true
+  publishDir "${params.outdir}/${id}/quality_assessment/${type}", mode: 'copy', overwrite: true
   container 'fmalmeida/mpgap'
   tag "Assessing ${assembler} assembly quality"
 
@@ -11,12 +11,12 @@ process quast {
   file "${assembler}/*"
 
   script:
-  // Assembly Type - variable
-  if (params.assembly_type == 'longreads-only') {
-    type = 'lreadsOnly'
-  } else if (params.assembly_type == 'illumina-only') {
-    type = 'illuminaOnly'
-  } else if (params.assembly_type == 'hybrid') {
+  // Check available reads
+  if (!params.shortreads_paired && !params.shortreads_single && params.longreads && params.lr_type) {
+    type = 'longreads-only'
+  } else if ((params.shortreads_paired || params.shortreads_single) && !params.longreads ) {
+    type = 'shortreads-only'
+  } else {
     type = 'hybrid'
   }
 
@@ -27,7 +27,7 @@ process quast {
     quast_parameter = "--single ${reads[3]}"
   } else if (params.shortreads_paired && params.shortreads_single) {
     quast_parameter = "--single ${reads[3]} --pe1 ${reads[1]} --pe2 ${reads[2]}"
-  } else if (params.assembly_type == 'longreads-only') {
+  } else {
     ltype           = (params.lr_type == 'nanopore') ? "ont2d" : "pacbio"
     quast_parameter = "--${params.lr_type} ${reads}"
   }

@@ -10,62 +10,56 @@ Some execution examples
   separately. When doing hybrid assemblies or mixing read types it is advised to **not use REGEX** and instead write the full file
   path.
 
-.. tip::
-
-  The parameters ``--use_tower`` and ``--tower_token`` allows the user to launch the pipeline via `nextflow tower <https://tower.nf/>`_ in order to visualize its execution.
-
 Illumina-only assembly with paired end reads
 ============================================
 
 ::
 
-   ./nextflow run fmalmeida/mpgap --outdir output --threads 5 --assembly_type illumina-only --try_spades
-   --try_unicycler --shortreads_paired "dataset_1/sampled/illumina_R{1,2}.fastq"
+   ./nextflow run fmalmeida/mpgap --outdir output --threads 5 --shortreads_paired "path-to/illumina_r{1,2}.fastq"
 
 .. note::
 
-  This command will perform an illumina-only assembly using paired end reads with Unicycler and SPAdes assemblers.
-  Since fastq files will be found by a pattern match users MUST ALWAYS double quote as: Example "illumina/SRR\*_{1,2}.fastq.gz"
+  This command will perform an illumina-only assembly using paired end reads with Unicycler, SPAdes and Shovill assemblers. Since fastq files will be found by a pattern match users MUST ALWAYS double quote as: Example "illumina/SRR\*_{1,2}.fastq.gz"
 
 Illumina-only assembly with single end reads
 ============================================
 
 ::
 
-  ./nextflow run fmalmeida/mpgap --outdir output --threads 5 --assembly_type illumina-only --try_spades
-  --try_unicycler --shortreads_single "dataset_1/sampled/illumina_single.fastq"
+  ./nextflow run fmalmeida/mpgap --outdir output --threads 5 --shortreads_single "path-to/illumina_unpaired.fastq"
 
 .. note::
 
-  This command will perform an illumina-only assembly using unpaired reads with Unicycler and SPAdes assemblers.
-  Since fastq files will be found by a pattern match users MUST ALWAYS double quote as: Example "SRR9696\*.fastq.gz"
+  This command will perform an illumina-only assembly using unpaired reads with Unicycler and SPAdes assemblers. Since fastq files will be found by a pattern match users MUST ALWAYS double quote as: Example "SRR9696\*.fastq.gz"
 
 Illumina-only assembly with both paired and single end reads
 ============================================================
 
 ::
 
-  ./nextflow run fmalmeida/mpgap --outdir output --threads 5 --assembly_type illumina-only --try_spades --try_unicycler
-  --shortreads_paired "dataset_1/sampled/illumina_R{1,2}.fastq" --shortreads_single "dataset_1/sampled/illumina_single.fastq"
+  ./nextflow run fmalmeida/mpgap --outdir output --threads 5 \
+  --shortreads_paired "path-to/illumina_r{1,2}.fastq" \
+  --shortreads_single "path-to/illumina_unpaired.fastq"
 
 .. note::
 
-  This command will perform an illumina-only assembly using both paired and unpaired reads with Unicycler and SPAdes assemblers.
-  Since fastq files will be found by a pattern match users MUST ALWAYS double quote it.
+  This command will perform an illumina-only assembly using both paired and unpaired reads with Unicycler and SPAdes assemblers. Since fastq files will be found by a pattern match users MUST ALWAYS double quote it.
 
-Long reads only with ONT reads (Using both Nanopolish and Medaka polishers)
-===========================================================================
+Long reads only with ONT reads
+==============================
+
+Take note that in this example, we also polish the resulting assembly with both Nanopolish and Medaka polishers.
 
 ::
 
-  ./nextflow run fmalmeida/mpgap --outdir output --threads 5 --assembly_type longreads-only --try_canu --try_flye --try_unicycler
-  --medaka_sequencing_model r941_min_fast_g303 --nanopolish_fast5Path "dataset_1/ont/fast5_pass" --nanopolish_max_haplotypes 2000
-  --genomeSize 2m --lr_type nanopore --longreads "dataset_1/ont/ont_reads.fastq"
+  ./nextflow run fmalmeida/mpgap --outdir output --threads 5 \
+  --genomeSize 2m --lr_type nanopore --longreads "path-to/ont_reads.fastq" \
+  --medaka_sequencing_model r941_min_fast_g303 \
+  --nanopolish_max_haplotypes 2000 --nanopolish_fast5Path "path-to/fast5_pass"
 
 .. note::
 
-  This will perform a long reads only assembly using nanopore data with Canu, Flye and Unicycler assemblers. This specific command
-  will also execute a polishing step with nanopolish (see ``--nanopolish_fast5Path``) and medaka (see ``--medaka_sequencing_model``).
+  This will perform a long reads only assembly using nanopore data with Canu, Raven, Flye and Unicycler assemblers. This specific command will also execute a polishing step with nanopolish (see ``--nanopolish_fast5Path``) and medaka (see ``--medaka_sequencing_model``).
 
 .. tip::
 
@@ -74,48 +68,49 @@ Long reads only with ONT reads (Using both Nanopolish and Medaka polishers)
 Long reads only with pacbio reads
 =================================
 
+Take note that in this example, we also polish the resulting assembly with both Arrow polisher.
+
 ::
 
-  ./nextflow run fmalmeida/mpgap --genomeSize 4.5m --lr_type pacbio --pacbio_all_bam_path "path/to/ecoli_103014.subreads.bam" \
-  --longreads "path/to/ecoli_103014.fastq" --try_canu --try_flye --outdir ecoli_assembly --threads 3 --assembly_type longreads-only
+  ./nextflow run fmalmeida/mpgap --outdir output --threads 5 --skip_unicycler \
+  --genomeSize 2m --lr_type "pacbio" --longreads "path-to/pacbio.subreads.fastq" \
+  --pacbio_all_bam_path "path-to/pacbio.*.subreads.bam"
 
 .. note::
 
-  This will perform a long reads only assembly using pacbio data with Canu and Flye assemblers. This specific command
-  will also execute a polishing step with arrow (see ``--pacbio_all_bam_path``).
+  This will perform a long reads only assembly using pacbio data with Canu, Raven, and Flye assemblers (skipping unicycler). This specific command will also execute a polishing step with arrow (see ``--pacbio_all_bam_path``).
 
 .. tip::
 
   If ``--pacbio_all_bam_path`` is not set, the pipeline will not try to polish the assemblies using arrow.
 
-Assembly in Hybrid mode 1
-=========================
+Assembly in Hybrid strategy 1
+=============================
 
-Assembling directly via Unicycler hybrid workflow, using Pacbio reads.
+Assembling directly via Unicycler, Haslr and SPAdes modules, using Pacbio reads.
 
 ::
 
-  ./nextflow run fmalmeida/mpgap --outdir output --threads 5 --assembly_type hybrid --lr_type pacbio
-  --longreads sample_dataset/ont/ecoli_25X.fastq --shortreads_paired "../illumina/SRR9847694_{1,2}.fastq.gz" --try_unicycler
+  ./nextflow run fmalmeida/mpgap --outdir output --threads 5 --genomeSize 2m \
+  --shortreads_paired "path-to/illumina_r{1,2}.fastq" \
+  --lr_type pacbio --longreads "path-to/pacbio.subreads.fastq"
 
 .. note::
 
-  This command will execute a hybrid assembly directly through Unicycler's hybrid assembly mode.
+  This command will execute a hybrid assembly directly through Unicycler's, Haslr's and SPAdes' hybrid assembly modules.
 
-.. warning::
+Assembly in Hybrid strategy 2
+=============================
 
-  Users must remember to use the parameters ``--try_unicycler`` or ``--try_spades`` otherwise they will not be executed.
-
-Assembly in Hybrid mode 2
-=========================
-
-By polishing a longreads-only assembly (with canu, unicycler and/or flye) with shortreads, additionally executing medaka and nanopolish (before the polishing with shortreads).
+By using shortreads to correct errors (polish) in longreads-only assemblies (generated with canu, raven, unicycler and/or flye). Additionally, in this example, we also execute the medaka and nanopolish poloishers before the polishing with shortreads.
 
 ::
 
-  ./nextflow run fmalmeida/mpgap --outdir output --threads 5 --assembly_type hybrid --try_unicycler --try_flye --try_canu --shortreads_paired "dataset_1/sampled/illumina_R{1,2}.fastq"
-  --nanopolish_fast5Path dataset_1/ont/fast5_pass --nanopolish_max_haplotypes 5000 --medaka_sequencing_model r941_min_fast_g303 --genomeSize 2m --lr_type nanopore --longreads
-  "dataset_1/ont/ont_reads.fastq"  --illumina_polish_longreads_contigs
+  ./nextflow run fmalmeida/mpgap --outdir output --threads 5 --genomeSize 2m --strategy_2 \
+  --shortreads_paired "path-to/illumina_r{1,2}.fastq" \
+  --lr_type nanopore --longreads "path-to/ont_reads.fastq" \
+  --medaka_sequencing_model r941_min_fast_g303 \
+  --nanopolish_fast5Path "path-to/fast5_pass"
 
 .. note::
 

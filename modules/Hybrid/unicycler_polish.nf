@@ -1,5 +1,5 @@
 process pilon_polish {
-  publishDir "${params.outdir}/assemblies-polished-with-shortreads", mode: 'copy'
+  publishDir "${params.outdir}/${id}/hybrid", mode: 'copy', overwrite: true
   container 'fmalmeida/mpgap'
   cpus params.threads
   tag "Polishing a longreads-only assembly with shortreads (through Pilon)"
@@ -10,7 +10,7 @@ process pilon_polish {
 
   output:
   file("pilon_results_${assembler}") // Get everything
-  tuple file("pilon_results_${assembler}/${assembler}_final_polish.fasta"), val(id), val("${assembler}-pilon-polished")
+  tuple file("pilon_results_${assembler}/${assembler}_final_polish.fasta"), val(id), val("${assembler}_pilon_polished")
 
   script:
   if(params.shortreads_paired != '' && params.shortreads_single == '')

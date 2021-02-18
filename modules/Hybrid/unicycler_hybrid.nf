@@ -1,5 +1,5 @@
 process unicycler_hybrid {
-  publishDir "${params.outdir}/hybrid", mode: 'copy'
+  publishDir "${params.outdir}/${lrID}/hybrid", mode: 'copy', overwrite: true
   container 'fmalmeida/mpgap'
   tag { x }
   cpus params.threads
@@ -11,10 +11,11 @@ process unicycler_hybrid {
 
   output:
   file "*" // Save everything
-  tuple file("unicycler_${lreads.getSimpleName()}/assembly.fasta"), val("unicycler_${lreads.getSimpleName()}"), val('unicycler') // Gets contigs file
+  tuple file("unicycler/assembly.fasta"), val(lrID), val('unicycler') // Gets contigs file
 
   script:
-
+  // Check reads
+  lrID  = lreads.getSimpleName()
   if ((params.shortreads_single) && (params.shortreads_paired)) {
     parameter = "-1 $sread1 -2 $sread2 -s $sreads -l $lreads --no_correct"
     x = "Performing a hybrid assembly with Unicycler, using paired and single end reads"
@@ -28,7 +29,7 @@ process unicycler_hybrid {
 
   """
   unicycler ${parameter} \\
-  -o unicycler_${lreads.getSimpleName()} -t ${params.threads} \\
+  -o unicycler -t ${params.threads} \\
   ${params.unicycler_additional_parameters} &>unicycler.log
   """
 }
