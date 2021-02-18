@@ -9,7 +9,7 @@ process flye_assembly {
 
   output:
   file "flye" // Saves all files
-  tuple file("flye/assembly_flye.fasta"), val(lrID), val('flye') // Gets contigs file
+  tuple file("flye/flye_assembly.fasta"), val(lrID), val('flye') // Gets contigs file
 
   script:
   lr    = (params.lr_type == 'nanopore') ? '--nano-raw' : '--pacbio-raw'
@@ -19,6 +19,6 @@ process flye_assembly {
   source activate flye ;
   flye ${lr} $lreads ${gsize} --out-dir flye \
   --threads ${params.threads} ${params.flye_additional_parameters} &> flye.log ;
-  mv flye/assembly.fasta flye/assembly_flye.fasta
+  mv flye/assembly.fasta flye/flye_assembly.fasta
   """
 }

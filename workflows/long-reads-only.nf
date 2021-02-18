@@ -46,12 +46,9 @@ include { variantCaller as variantCaller_canu;
 /*
  * Module for assessing assembly qualities
  */
-include { quast as quast_lreads_canu;       quast as quast_lreads_flye; quast as quast_lreads_unicycler; quast as quast_lreads_raven;
-          quast as quast_nanopolish_canu;   quast as quast_nanopolish_flye; quast as quast_nanopolish_unicycler; quast as quast_nanopolish_raven;
-          quast as quast_medaka_canu;       quast as quast_medaka_flye; quast as quast_medaka_unicycler; quast as quast_medaka_raven;
-          quast as quast_variantcaller_canu; quast as quast_variantcaller_flye; quast as quast_variantcaller_unicycler } \
-       from '../modules/QualityAssessment/quast.nf' params(threads: params.threads, outdir: params.outdir, longreads: params.longreads,
-            shortreads_paired: params.shortreads_paired, shortreads_single: params.shortreads_single, lr_type: params.lr_type)
+include { quast } from '../modules/QualityAssessment/quast.nf' params(threads: params.threads, outdir: params.outdir, longreads: params.longreads,
+  shortreads_paired: params.shortreads_paired, shortreads_single: params.shortreads_single, lr_type: params.lr_type)
+include { multiqc } from '../modules/QualityAssessment/multiqc.nf' params(outdir: params.outdir)
 
 workflow lreadsonly_nf {
   take:
@@ -62,28 +59,49 @@ workflow lreadsonly_nf {
       nBams
   main:
       /*
+       * Quast channels
+       */
+      canu_ch         = Channel.empty()
+      nanopol_canu_ch = Channel.empty()
+      medaka_canu_ch  = Channel.empty()
+      arrow_canu_ch   = Channel.empty()
+      raven_ch         = Channel.empty()
+      nanopol_raven_ch = Channel.empty()
+      medaka_raven_ch  = Channel.empty()
+      arrow_raven_ch   = Channel.empty()
+      flye_ch         = Channel.empty()
+      nanopol_flye_ch = Channel.empty()
+      medaka_flye_ch  = Channel.empty()
+      arrow_flye_ch   = Channel.empty()
+      unicycler_ch         = Channel.empty()
+      nanopol_unicycler_ch = Channel.empty()
+      medaka_unicycler_ch  = Channel.empty()
+      arrow_unicycler_ch   = Channel.empty()
+
+
+      /*
        * Canu
        */
       if (!params.skip_canu) {
         canu_assembly(reads)
-        quast_lreads_canu(canu_assembly.out[1], reads)
+        canu_ch = canu_assembly.out[1]
 
         // Nanopolish?
         if (params.nanopolish_fast5Path && params.lr_type == 'nanopore') {
           nanopolish_canu(canu_assembly.out[1], reads, fast5, fast5_dir)
-          quast_nanopolish_canu(nanopolish_canu.out[0], reads)
+          nanopol_canu_ch = nanopolish_canu.out[0]
         }
 
         // Medaka?
         if (params.medaka_sequencing_model && params.lr_type == 'nanopore') {
           medaka_canu(canu_assembly.out[1], reads)
-          quast_medaka_canu(medaka_canu.out[1], reads)
+          medaka_canu_ch = medaka_canu.out[1]
         }
 
         // VariantCaller?
         if (params.pacbio_all_bam_path && params.lr_type == 'pacbio') {
           variantCaller_canu(canu_assembly.out[1], bamFile, nBams)
-          quast_variantcaller_canu(variantCaller_canu.out[1], reads)
+          arrow_canu_ch = variantCaller_canu.out[1]
         }
       }
 
@@ -92,24 +110,24 @@ workflow lreadsonly_nf {
        */
       if (!params.skip_flye) {
         flye_assembly(reads)
-        quast_lreads_flye(flye_assembly.out[1], reads)
+        flye_ch = flye_assembly.out[1]
 
         // Nanopolish?
         if (params.nanopolish_fast5Path && params.lr_type == 'nanopore') {
           nanopolish_flye(flye_assembly.out[1], reads, fast5, fast5_dir)
-          quast_nanopolish_flye(nanopolish_flye.out[0], reads)
+          nanopol_flye_ch = nanopolish_flye.out[0]
         }
 
         // Medaka?
         if (params.medaka_sequencing_model && params.lr_type == 'nanopore') {
           medaka_flye(flye_assembly.out[1], reads)
-          quast_medaka_flye(medaka_flye.out[1], reads)
+          medaka_flye_ch = medaka_flye.out[1]
         }
 
         // VariantCaller?
         if (params.pacbio_all_bam_path && params.lr_type == 'pacbio') {
           variantCaller_flye(flye_assembly.out[1], bamFile, nBams)
-          quast_variantcaller_flye(variantCaller_flye.out[1], reads)
+          arrow_flye_ch = variantCaller_flye.out[1]
         }
 
       }
@@ -119,24 +137,24 @@ workflow lreadsonly_nf {
        */
       if (!params.skip_unicycler) {
         unicycler_lreads(reads)
-        quast_lreads_unicycler(unicycler_lreads.out[1], reads)
+        unicycler_ch = unicycler_lreads.out[1]
 
         // Nanopolish?
         if (params.nanopolish_fast5Path && params.lr_type == 'nanopore') {
           nanopolish_unicycler(unicycler_lreads.out[1], reads, fast5, fast5_dir)
-          quast_nanopolish_unicycler(nanopolish_unicycler.out[0], reads)
+          nanopol_unicycler_ch = nanopolish_unicycler.out[0]
         }
 
         // Medaka?
         if (params.medaka_sequencing_model && params.lr_type == 'nanopore') {
           medaka_unicycler(unicycler_lreads.out[1], reads)
-          quast_medaka_unicycler(medaka_unicycler.out[1], reads)
+          medaka_unicycler_ch = medaka_unicycler.out[1]
         }
 
         // VariantCaller?
         if (params.pacbio_all_bam_path && params.lr_type == 'pacbio') {
           variantCaller_unicycler(unicycler_lreads.out[1], bamFile, nBams)
-          quast_variantcaller_unicycler(variantCaller_unicycler.out[1], reads)
+          arrow_unicycler_ch = variantCaller_unicycler.out[1]
         }
       }
 
@@ -145,24 +163,33 @@ workflow lreadsonly_nf {
        */
       if (!params.skip_raven) {
         raven_assembly(reads)
-        quast_lreads_raven(raven_assembly.out[1], reads)
+        raven_ch = raven_assembly.out[1]
 
         // Nanopolish?
         if (params.nanopolish_fast5Path && params.lr_type == 'nanopore') {
           nanopolish_raven(raven_assembly.out[1], reads, fast5, fast5_dir)
-          quast_nanopolish_raven(nanopolish_raven.out[0], reads)
+          nanopol_canu_ch = nanopolish_raven.out[0]
         }
 
         // Medaka?
         if (params.medaka_sequencing_model && params.lr_type == 'nanopore') {
           medaka_raven(raven_assembly.out[1], reads)
-          quast_medaka_raven(medaka_raven.out[1], reads)
+          medaka_raven_ch = medaka_raven.out[1]
         }
 
         // VariantCaller?
         if (params.pacbio_all_bam_path && params.lr_type == 'pacbio') {
           variantCaller_raven(raven_assembly.out[1], bamFile, nBams)
-          quast_variantcaller_raven(variantCaller_raven.out[1], reads)
+          arrow_raven_ch = variantCaller_raven.out[1]
         }
       }
+
+      // Run quast
+      quast(spades_ch.mix(canu_ch, nanopol_canu_ch, medaka_canu_ch, arrow_canu_ch,
+                          raven_ch, nanopol_raven_ch, medaka_raven_ch, arrow_raven_ch,
+                          flye_ch, nanopol_flye_ch, medaka_flye_ch, arrow_flye_ch,
+                          unicycler_ch, nanopol_unicycler_ch, medaka_unicycler_ch, arrow_unicycler_ch), reads)
+
+      // Run multiqc
+      multiqc(quast.out[1].collect(), Channel.value('longreads-only'))
 }

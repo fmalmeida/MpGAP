@@ -10,7 +10,7 @@ process spades_sreads_assembly {
 
   output:
   file "*" // Save all output
-  tuple file("spades/contigs.fasta"), val(out_ids), val('spades') // Gets contigs file
+  tuple file("spades/spades_contigs.fasta"), val(out_ids), val('spades') // Gets contigs file
 
   script:
 
@@ -33,5 +33,8 @@ process spades_sreads_assembly {
   """
   spades.py -o spades -t ${params.threads} \\
   ${params.spades_additional_parameters} $parameter
+
+  # Rename assembly
+  mv spades/contigs.fasta spades/spades_contigs.fasta
   """
 }

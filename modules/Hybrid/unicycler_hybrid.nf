@@ -11,7 +11,7 @@ process unicycler_hybrid {
 
   output:
   file "*" // Save everything
-  tuple file("unicycler/assembly.fasta"), val(lrID), val('unicycler') // Gets contigs file
+  tuple file("unicycler/unicycler_assembly.fasta"), val(lrID), val('unicycler') // Gets contigs file
 
   script:
   // Check reads
@@ -31,5 +31,8 @@ process unicycler_hybrid {
   unicycler ${parameter} \\
   -o unicycler -t ${params.threads} \\
   ${params.unicycler_additional_parameters} &>unicycler.log
+
+  # Rename
+  mv unicycler/assembly.fasta unicycler/unicycler_assembly.fasta
   """
 }

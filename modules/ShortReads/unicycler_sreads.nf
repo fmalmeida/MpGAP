@@ -10,7 +10,7 @@ process unicycler_sreads_assembly {
 
   output:
   file "unicycler" // Save everything
-  tuple file("unicycler/assembly.fasta"), val(out_ids), val('unicycler') // Gets contigs file
+  tuple file("unicycler/unicycler_assembly.fasta"), val(out_ids), val('unicycler') // Gets contigs file
 
   script:
 
@@ -33,5 +33,8 @@ process unicycler_sreads_assembly {
   """
   unicycler $parameter -o unicycler -t ${params.threads} \\
   ${params.unicycler_additional_parameters} &> unicycler.log
+
+  # Rename assembly
+  mv unicycler/assembly.fasta unicycler/unicycler_assembly.fasta
   """
 }

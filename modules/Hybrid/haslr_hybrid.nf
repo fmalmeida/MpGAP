@@ -11,7 +11,7 @@ process haslr_hybrid {
 
   output:
   file "*" // Save everything
-  tuple file("haslr/*/asm.final.fa"), val(lrID), val('haslr') // Gets contigs file
+  tuple file("haslr/haslr.asm.final.fa"), val(lrID), val('haslr') // Gets contigs file
 
   script:
   // Check reads
@@ -30,5 +30,8 @@ process haslr_hybrid {
   haslr.py -t ${params.threads} -o haslr -g ${params.genomeSize} \
   -l $lreads -x ${params.lr_type} ${parameter} \
   ${params.haslr_additional_parameters}
+
+  # Rename
+  cp haslr/*/asm.final.fa haslr/haslr.asm.final.fa
   """
 }

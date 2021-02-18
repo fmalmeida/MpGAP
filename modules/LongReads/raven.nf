@@ -9,12 +9,12 @@ process raven_assembly {
 
   output:
   file "raven" // Saves all files
-  tuple file("raven/contigs.fa"), val(lrID), val('raven') // Gets contigs file
+  tuple file("raven/raven_contigs.fa"), val(lrID), val('raven') // Gets contigs file
 
   script:
   lrID = lreads.getSimpleName()
   """
   mkdir raven ;
-  raven $lreads --threads ${params.threads} ${params.raven_additional_parameters} > raven/contigs.fa ;
+  raven $lreads --threads ${params.threads} ${params.raven_additional_parameters} > raven/raven_contigs.fa ;
   """
 }

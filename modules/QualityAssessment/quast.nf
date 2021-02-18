@@ -9,6 +9,7 @@ process quast {
 
   output:
   file "${assembler}/*"
+  tuple file("${assembler}"), val(id)
 
   script:
   // Check available reads

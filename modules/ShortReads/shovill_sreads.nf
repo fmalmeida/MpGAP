@@ -9,7 +9,7 @@ process shovill_sreads_assembly {
 
   output:
   file "*" // Save all output
-  tuple file("shovill/contigs.fa"), val(id), val('shovill') // Gets contigs file
+  tuple file("shovill/shovill_contigs.fa"), val(id), val('shovill') // Gets contigs file
 
   when:
   ((params.shortreads_paired) && (!params.shortreads_single))
@@ -22,5 +22,8 @@ process shovill_sreads_assembly {
   # Run
   shovill --outdir shovill --R1 $sread1 --R2 $sread2 \
   --cpus ${params.threads} --trim ${params.shovill_additional_parameters}
+
+  # Rename assembly
+  mv shovill/contigs.fa shovill/shovill_contigs.fa
   """
 }

@@ -11,7 +11,7 @@ process spades_hybrid {
 
   output:
   file "*" // Save everything
-  tuple file("spades/contigs.fasta"), val(lrID), val('spades') // Gets contigs file
+  tuple file("spades/spades_contigs.fasta"), val(lrID), val('spades') // Gets contigs file
 
   script:
   // Check reads
@@ -30,5 +30,8 @@ process spades_hybrid {
   """
   spades.py -o spades -t ${params.threads} \\
   ${params.spades_additional_parameters} $parameter
+
+  # Rename
+  mv spades/contigs.fasta spades/spades_contigs.fasta
   """
 }

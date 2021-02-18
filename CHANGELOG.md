@@ -13,13 +13,12 @@ The output files and folders that have been changed to have a easier and cleaner
 * Short reads basenames for short reads only assemblies
 * Long reads basenames for hybrid and long reads only assemblies
 
-However, users are still advised to do not perform hybrid assemblies, nor short reads only assemblies with both paired and unpaired reads, for multiple samples at once using glob patterns such as '*' and '?'. Because the pipeline is not yet trained to properly search for the correct pairs, and since nextflow channels are random, we cannot ensure that the combination of data used in these to assembly types will be right. The pipeline treats each input file as a unique sample, and it will execute it individually.
+However, whenever running the pipeline for multiple samples at once using glob patterns such as '*' and '?', users are advised to do not perform hybrid assemblies, nor short reads only assemblies with both paired and unpaired read. Because the pipeline is not yet trained to properly search for the correct pairs, and since nextflow channels are random, we cannot ensure that the combination of data used in these to assembly types will be right. The pipeline treats each input file as a unique sample, and it will execute it individually.
 
-The use of glob patterns to date only works properly with long reads only assembly, or short reads only assemblies using either paired or unpaired reads, not both. For example:
-
-* nextflow run [...] --longreads 'my_data/*.fastq' --lr_type 'nanopore' --outdir my_results
+* To date, the use of glob patterns only works properly with long reads only assembly, or short reads only assemblies using either paired or unpaired reads, not both. For example:
+  + `nextflow run [...] --longreads 'my_data/*.fastq' --lr_type 'nanopore' --outdir my_results`
   + The pipeline will load and assembly each fastq in the `my_data` folder and assemble it, writing the results for each read in a sub-folder with the reads basename in the `my_results` output folder.
-* nextflow run [...] --shortreads_single 'my_data/*.fastq' --outdir my_results
+  + `nextflow run [...] --shortreads_single 'my_data/*.fastq' --outdir my_results`
   + The pipeline will load and assembly each fastq in the `my_data` folder and assemble it, writing the results for each read in a sub-folder with the reads basename in the `my_results` output folder.
 
 > However, we are currently working in a proper way to execute the hybrid and combination of short reads in assemblies for multiple samples at once so that users can properly execute it without confusion. But it will come in v2.3.

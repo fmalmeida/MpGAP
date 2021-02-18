@@ -136,6 +136,10 @@ RUN git clone https://github.com/lbcb-sci/raven && \
 			cmake -DCMAKE_BUILD_TYPE=Release .. && \
 			make && make install
 
+# Install multiqc
+RUN conda install -y -c bioconda -c conda-forge multiqc nomkl && \
+			conda clean -afy
+
 # Remove tars
 RUN rm -rf *.tar.gz *.tar.xz
 
