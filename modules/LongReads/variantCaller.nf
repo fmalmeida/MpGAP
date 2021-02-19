@@ -4,9 +4,7 @@ process variantCaller {
   cpus params.threads
 
   input:
-  tuple file(draft), val(lrID), val(assembler)
-  file bams
-  val nBams
+  tuple file(draft), val(lrID), val(assembler), file(bams), val(nBams)
 
   output:
   file "${assembler}_pbvariants.gff" // Save gff

@@ -1,5 +1,5 @@
 process haslr_hybrid {
-  publishDir "${params.outdir}/${lrID}/hybrid", mode: 'copy'
+  publishDir "${params.outdir}/${lrID}/hybrid", mode: 'copy', overwrite: true
   container 'fmalmeida/mpgap'
   tag { x }
   cpus params.threads
@@ -24,6 +24,7 @@ process haslr_hybrid {
     x = "Performing a hybrid assembly with haslr, using single end reads"
   } else if ((params.shortreads_paired) && (!params.shortreads_single)) {
     parameter = "-s $sread1 $sread2"
+    x = "Performing a hybrid assembly with haslr, using paired end reads"
   }
 
   """

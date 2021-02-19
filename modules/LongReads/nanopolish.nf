@@ -4,10 +4,7 @@ process nanopolish {
   cpus params.threads
 
   input:
-  tuple file(draft), val(lrID), val(assembler)
-  file reads
-  file fast5
-  val fast5_dir
+  tuple file(draft), val(lrID), val(assembler), file(reads), file(fast5), val(fast5_dir)
 
   output:
   tuple file("${assembler}_nanopolished.fa"), val(lrID), val("${assembler}_nanopolish") // Save nanopolished contigs

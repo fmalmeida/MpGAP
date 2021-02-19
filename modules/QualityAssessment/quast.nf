@@ -4,8 +4,7 @@ process quast {
   tag "Assessing ${assembler} assembly quality"
 
   input:
-  tuple file(contigs), val(id), val(assembler)
-  file(reads)
+  tuple file(contigs), val(id), val(assembler), file(reads)
 
   output:
   file "${assembler}/*"

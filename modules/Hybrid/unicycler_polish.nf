@@ -5,8 +5,7 @@ process pilon_polish {
   tag "Polishing a longreads-only assembly with shortreads (through Pilon)"
 
   input:
-  tuple file(draft), val(id), val(assembler)
-  file(reads)
+  tuple file(draft), val(id), val(assembler), file(reads)
 
   output:
   file("pilon_results_${assembler}") // Get everything

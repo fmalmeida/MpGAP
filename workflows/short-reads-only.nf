@@ -51,8 +51,11 @@ workflow sreads_only_nf {
     shovill_ch = shovill_sreads_assembly.out[1]
   }
 
+  // Get assemblies
+  assemblies_ch = spades_ch.mix(unicycler_ch, shovill_ch)
+
   // Run quast
-  quast(spades_ch.mix(unicycler_ch, shovill_ch), preads.concat(sreads).collect())
+  quast(assemblies_ch.combine([ preads.concat(sreads).collect()) ])
 
   // Run multiqc
   multiqc(quast.out[1].collect(), quast.out[2].distinct(), Channel.value('shortreads-only'))

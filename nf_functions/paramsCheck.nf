@@ -19,8 +19,7 @@ def paramsCheck() {
   /*
    * Checking for genomeSize option when using canu
    */
-  if (!params.skip_canu && !params.genomeSize && !params.shortreads_paired && !params.shortreads_single
-      && params.longreads && params.lr_type) {
+  if (!params.skip_canu && !params.genomeSize && params.longreads && params.lr_type) {
     println """
     ERROR!
     A minor error has occurred
@@ -35,7 +34,8 @@ def paramsCheck() {
   /*
    * Checking for genomeSize option when using haslr
    */
-  if (!params.skip_haslr && !params.genomeSize && (params.shortreads_paired || params.shortreads_single)
+  if (!params.skip_haslr && !params.genomeSize
+      && (params.shortreads_paired || params.shortreads_single)
       && params.longreads && params.lr_type) {
     println """
     ERROR!

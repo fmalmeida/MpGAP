@@ -1,5 +1,5 @@
 process multiqc {
-  publishDir "${params.outdir}/${id}/quality_assessment/${dir}", mode: 'copy', overwrite: true
+  publishDir "${params.outdir}/${id}/quality_assessment/${dir}", mode: 'copy'
   container 'fmalmeida/mpgap'
   tag "Collecting Quast quality reports"
 

@@ -38,6 +38,10 @@ This pipeline has two complementary pipelines (also written in nextflow) for [NG
 This pipeline has only two dependencies: [Docker](https://www.docker.com) and [Nextflow](https://github.com/nextflow-io/nextflow).
 
 * Unix-like operating system (Linux, macOS, etc)
+  + Windows users maybe can execute it using the linux subsystem for windows as shown in:
+    + https://docs.microsoft.com/pt-br/windows/wsl/install-win10
+    + https://www.nextflow.io/docs/latest/getstarted.html
+    + https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux
 * Java 8 (or higher)
 * Nextflow (version 20.01 or higher)
 * Docker
@@ -160,6 +164,8 @@ This pipeline also accepts that users track its execution of processes via [next
     + The pipeline will load and assembly each fastq in the `my_data` folder and assemble it, writing the results for each read in a sub-folder with the reads basename in the `my_results` output folder.
     + `nextflow run [...] --shortreads_single 'my_data/*.fastq' --outdir my_results`
     + The pipeline will load and assembly each fastq in the `my_data` folder and assemble it, writing the results for each read in a sub-folder with the reads basename in the `my_results` output folder.
+3. Sometimes, shovill assembler can fail and cause the pipeline to fail due to problems in estimating the genome size. This, is actually super simple to solve! Instead of letting the shovill assembler estimate the genome size, you can pass the information to it and prevent its fail:
+    + `--shovill_additional_parameters '--gsize 3m'`
 
 > However, we are currently working in a proper way to execute the hybrid and combination of short reads in assemblies for multiple samples at once so that users can
 properly execute it without confusion. But it will come in v2.3.

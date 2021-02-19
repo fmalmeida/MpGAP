@@ -4,8 +4,7 @@ process medaka {
   tag "Polishing assembly with Medaka"
 
   input:
-  tuple file(draft), val(lrID), val(assembler)
-  file reads
+  tuple file(draft), val(lrID), val(assembler), file(reads)
 
   output:
   file "${assembler}" // Save everything
