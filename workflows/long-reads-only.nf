@@ -136,5 +136,5 @@ workflow lreadsonly_nf {
       /*
        * Run multiqc
        */
-      multiqc(quast.out[1].collect(), quast.out[2].distinct(), Channel.value('longreads-only'))
+      multiqc(quast.out[1].collect(), quast.out[2].distinct(), Channel.value('longreads-only'), Channel.value("$workflow.runName"))
 }

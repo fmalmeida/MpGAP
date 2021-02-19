@@ -204,9 +204,13 @@ workflow hybrid_nf {
       }
 
       // Run quast
-      quast(hybrid_assemblies_ch.mix(lreads_assemblies_ch, pilon_ch).combine([ preads.concat(sreads).collect() ]))
+      quast(
+        hybrid_assemblies_ch.mix(lreads_assemblies_ch, pilon_ch).combine(
+          preads.combine(sreads).collect().toList()
+        )
+      )
 
       // Run multiqc
-      multiqc(quast.out[1].collect(), quast.out[2].distinct(), Channel.value('hybrid'))
+      multiqc(quast.out[1].collect(), quast.out[2].distinct(), Channel.value('hybrid'), Channel.value("$workflow.runName"))
 
 }
