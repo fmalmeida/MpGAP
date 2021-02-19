@@ -1,5 +1,5 @@
 process medaka {
-  publishDir "${params.outdir}/${lrID}/longreads_only/medaka_polished_contigs", mode: 'copy', overwrite: true
+  publishDir "${params.outdir}/${lrID}/longreads_only/medaka_polished_contigs", mode: 'copy'
   container 'fmalmeida/mpgap'
   tag "Polishing assembly with Medaka"
 

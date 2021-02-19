@@ -1,5 +1,5 @@
 process quast {
-  publishDir "${params.outdir}/${id}/quality_assessment/${type}", mode: 'copy', overwrite: true
+  publishDir "${params.outdir}/${id}/quality_assessment/${type}", mode: 'copy'
   container 'fmalmeida/mpgap'
   tag "Assessing ${assembler} assembly quality"
 
@@ -9,7 +9,8 @@ process quast {
 
   output:
   file "${assembler}/*"
-  tuple file("${assembler}"), val(id)
+  file("${assembler}")
+  val(id)
 
   script:
   // Check available reads

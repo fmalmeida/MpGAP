@@ -55,6 +55,6 @@ workflow sreads_only_nf {
   quast(spades_ch.mix(unicycler_ch, shovill_ch), preads.concat(sreads).collect())
 
   // Run multiqc
-  multiqc(quast.out[1].collect(), Channel.value('shortreads-only'))
+  multiqc(quast.out[1].collect(), quast.out[2].distinct(), Channel.value('shortreads-only'))
 
 }

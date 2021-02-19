@@ -4,7 +4,8 @@ process multiqc {
   tag "Collecting Quast quality reports"
 
   input:
-  tuple file(quast_dirs), val(id)
+  file(quast_dirs)
+  val(id)
   val(dir)
 
   output:

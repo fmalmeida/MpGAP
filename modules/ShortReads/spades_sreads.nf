@@ -1,5 +1,5 @@
 process spades_sreads_assembly {
-  publishDir "${params.outdir}/${out_ids}/shortreads_only", mode: 'copy', overwrite: true
+  publishDir "${params.outdir}/${out_ids}/shortreads_only", mode: 'copy'
   container 'fmalmeida/mpgap'
   tag { x }
   cpus params.threads
@@ -9,7 +9,7 @@ process spades_sreads_assembly {
   file(sreads)
 
   output:
-  file "*" // Save all output
+  file "spades" // Save all output
   tuple file("spades/spades_contigs.fasta"), val(out_ids), val('spades') // Gets contigs file
 
   script:

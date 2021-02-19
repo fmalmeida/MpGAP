@@ -99,6 +99,9 @@
                                                                                 Whenever set, the pipeline will execute a polishing step
                                                                                 with Nanopolish. This makes the pipeline extremely SLOW!!
 
+     --cpus                                                                     Number of cores to run nanopolish in parallel.
+                                                                                Beware of your system limits. Default: 2.
+
      --nanopolish_max_haplotypes <int>                                          This parameter sets to nanopolish the max number of haplotypes to be considered.
                                                                                 Sometimes the pipeline may crash because to much variation was found exceeding the
                                                                                 limit. Try augmenting this value (Default: 1000)

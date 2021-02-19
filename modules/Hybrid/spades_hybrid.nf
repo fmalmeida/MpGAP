@@ -1,5 +1,5 @@
 process spades_hybrid {
-  publishDir "${params.outdir}/${lrID}/hybrid", mode: 'copy', overwrite: true
+  publishDir "${params.outdir}/${lrID}/hybrid", mode: 'copy'
   container 'fmalmeida/mpgap'
   tag { x }
   cpus params.threads

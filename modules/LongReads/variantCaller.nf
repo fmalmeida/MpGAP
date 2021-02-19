@@ -1,5 +1,5 @@
 process variantCaller {
-  publishDir "${params.outdir}/${lrID}/longreads_only/arrow_polished_contigs", mode: 'copy', overwrite: true
+  publishDir "${params.outdir}/${lrID}/longreads_only/arrow_polished_contigs", mode: 'copy'
   container 'fmalmeida/mpgap'
   cpus params.threads
 

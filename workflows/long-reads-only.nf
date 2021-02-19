@@ -185,11 +185,11 @@ workflow lreadsonly_nf {
       }
 
       // Run quast
-      quast(spades_ch.mix(canu_ch, nanopol_canu_ch, medaka_canu_ch, arrow_canu_ch,
+      quast(canu_ch.mix(nanopol_canu_ch, medaka_canu_ch, arrow_canu_ch,
                           raven_ch, nanopol_raven_ch, medaka_raven_ch, arrow_raven_ch,
                           flye_ch, nanopol_flye_ch, medaka_flye_ch, arrow_flye_ch,
                           unicycler_ch, nanopol_unicycler_ch, medaka_unicycler_ch, arrow_unicycler_ch), reads)
 
       // Run multiqc
-      multiqc(quast.out[1].collect(), Channel.value('longreads-only'))
+      multiqc(quast.out[1].collect(), quast.out[2].distinct(), Channel.value('longreads-only'))
 }

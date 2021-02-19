@@ -278,13 +278,13 @@ workflow hybrid_nf {
       }
 
       // Run quast
-      quast(spades_ch.mix(spades_ch, unicycler_hybrid_ch, haslr_ch,
+      quast(spades_ch.mix(unicycler_hybrid_ch, haslr_ch,
                           canu_ch, nanopol_canu_ch, medaka_canu_ch, arrow_canu_ch,
                           raven_ch, nanopol_raven_ch, medaka_raven_ch, arrow_raven_ch,
                           flye_ch, nanopol_flye_ch, medaka_flye_ch, arrow_flye_ch,
                           unicycler_ch, nanopol_unicycler_ch, medaka_unicycler_ch, arrow_unicycler_ch), preads.concat(sreads).collect())
 
       // Run multiqc
-      multiqc(quast.out[1].collect(), Channel.value('hybrid'))
+      multiqc(quast.out[1].collect(), quast.out[2].distinct(), Channel.value('hybrid'))
 
 }

@@ -1,5 +1,5 @@
 process canu_assembly {
-  publishDir "${params.outdir}/${lrID}/longreads_only", mode: 'copy', overwrite: true
+  publishDir "${params.outdir}/${lrID}/longreads_only", mode: 'copy'
   container 'fmalmeida/mpgap'
   cpus params.threads
   tag "Performing a longreads only assembly with Canu"
