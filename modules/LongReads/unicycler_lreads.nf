@@ -1,4 +1,4 @@
-process unicycler_lreads {
+process unicycler_lreads_assembly {
   publishDir "${params.outdir}/${lrID}/longreads_only", mode: 'copy'
   container 'fmalmeida/mpgap'
   cpus params.threads
@@ -16,7 +16,7 @@ process unicycler_lreads {
   """
   unicycler -l $lreads \
   -o unicycler -t ${params.threads} \
-  ${params.unicycler_additional_parameters} &> unicycler.log
+  ${params.unicycler_additional_parameters}
 
   # Rename assembly
   mv unicycler/assembly.fasta unicycler/unicycler_assembly.fasta

@@ -8,7 +8,7 @@ include { canu_assembly } from '../modules/LongReads/canu.nf' params(outdir: par
   genomeSize: params.genomeSize)
 
 // Unicycler assembler
-include { unicycler_lreads } from '../modules/LongReads/unicycler_lreads.nf' params(outdir: params.outdir,
+include { unicycler_lreads_assembly } from '../modules/LongReads/unicycler_lreads.nf' params(outdir: params.outdir,
   unicycler_additional_parameters: params.unicycler_additional_parameters, threads: params.threads)
 
 // Flye assembler
@@ -86,8 +86,8 @@ workflow lreadsonly_nf {
        * Unicycler
        */
       if (!params.skip_unicycler) {
-        unicycler_lreads(reads)
-        unicycler_ch = unicycler_lreads.out[1]
+        unicycler_lreads_assembly(reads)
+        unicycler_ch = unicycler_lreads_assembly.out[1]
       }
 
       /*
@@ -136,5 +136,5 @@ workflow lreadsonly_nf {
       /*
        * Run multiqc
        */
-      multiqc(quast.out[1].collect(), quast.out[2].distinct(), Channel.value('longreads-only'), Channel.value("$workflow.runName"))
+      multiqc(quast.out[0].collect(), quast.out[1].distinct(), Channel.value('longreads_only'), Channel.value("$workflow.runName"))
 }

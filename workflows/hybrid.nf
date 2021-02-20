@@ -11,7 +11,7 @@ include { canu_assembly } from '../modules/LongReads/canu.nf' params(outdir: par
   canu_additional_parameters: params.canu_additional_parameters, threads: params.threads, genomeSize: params.genomeSize)
 
 // Unicycler assembler
-include { unicycler_lreads } from '../modules/LongReads/unicycler_lreads.nf' params(outdir: params.outdir,
+include { unicycler_lreads_assembly } from '../modules/LongReads/unicycler_lreads.nf' params(outdir: params.outdir,
   unicycler_additional_parameters: params.unicycler_additional_parameters, threads: params.threads)
 
 // Flye assembler
@@ -116,7 +116,7 @@ workflow hybrid_nf {
         // Unicycler
         if (!params.skip_unicycler) {
           unicycler_hybrid(lreads, preads, sreads)
-          unicycler_hybrid_ch = unicycler_hybrid.out[1]
+          unicycler_h_ch = unicycler_hybrid.out[1]
         }
         // Haslr
         if (!params.skip_haslr) {
@@ -125,7 +125,7 @@ workflow hybrid_nf {
         }
 
         // Get hybrid assemblies
-        hybrid_assemblies_ch = spades_ch.mix(unicycler_hybrid_ch, haslr_ch)
+        hybrid_assemblies_ch = spades_ch.mix(unicycler_h_ch, haslr_ch)
       }
 
       /*
@@ -138,8 +138,7 @@ workflow hybrid_nf {
          */
         if (!params.skip_canu) {
           canu_assembly(lreads)
-          pilon_polish_canu(canu_assembly.out[1], preads.concat(sreads).collect())
-          canu_ch = pilon_polish_canu.out[1]
+          canu_ch = canu_assembly.out[1]
         }
 
         /*
@@ -147,17 +146,15 @@ workflow hybrid_nf {
          */
         if (!params.skip_flye) {
           flye_assembly(lreads)
-          pilon_polish_flye(flye_assembly.out[1], preads.concat(sreads).collect())
-          flye_ch = pilon_polish_flye.out[1]
+          flye_ch = flye_assembly.out[1]
         }
 
         /*
          * Unicycler
          */
         if (!params.skip_unicycler) {
-          unicycler_lreads(lreads)
-          pilon_polish_unicycler(unicycler_lreads.out[1], preads.concat(sreads).collect())
-          unicycler_ch = pilon_polish_unicycler.out[1]
+          unicycler_lreads_assembly(lreads)
+          unicycler_ch = unicycler_lreads_assembly.out[1]
         }
 
         /*
@@ -165,8 +162,7 @@ workflow hybrid_nf {
          */
         if (!params.skip_raven) {
           raven_assembly(lreads)
-          pilon_polish_raven(raven_assembly.out[1], preads.concat(sreads).collect())
-          raven_ch = pilon_polish_raven.out[1]
+          raven_ch = raven_assembly.out[1]
         }
 
         // Get long reads assemblies
@@ -199,8 +195,12 @@ workflow hybrid_nf {
         /*
          * Finally, run pilon for all
          */
-        pilon_polish(lreads_assemblies_ch.mix(medaka_ch, nanopolish_ch, arrow_ch).combine([ preads.concat(sreads).collect() ]))
-        pilon_ch = pilon.out[1]
+        pilon_polish(
+          lreads_assemblies_ch.mix(medaka_ch, nanopolish_ch, arrow_ch).combine(
+            preads.combine(sreads).collect().toList()
+          )
+        )
+        pilon_ch = pilon_polish.out[1]
       }
 
       // Run quast
@@ -211,6 +211,6 @@ workflow hybrid_nf {
       )
 
       // Run multiqc
-      multiqc(quast.out[1].collect(), quast.out[2].distinct(), Channel.value('hybrid'), Channel.value("$workflow.runName"))
+      multiqc(quast.out[0].collect(), quast.out[1].distinct(), Channel.value('hybrid'), Channel.value("$workflow.runName"))
 
 }

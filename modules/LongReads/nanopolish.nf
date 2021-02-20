@@ -1,5 +1,5 @@
 process nanopolish {
-  publishDir "${params.outdir}/${lrID}/longreads_only/nanopolish_polished_contigs/${assembler}", mode: 'copy'
+  publishDir "${params.outdir}/${lrID}/longreads_only/nanopolished_contigs/${assembler}", mode: 'copy'
   container 'fmalmeida/mpgap'
   cpus params.threads
 

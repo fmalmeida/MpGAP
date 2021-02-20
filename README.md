@@ -164,11 +164,11 @@ This pipeline also accepts that users track its execution of processes via [next
     + The pipeline will load and assembly each fastq in the `my_data` folder and assemble it, writing the results for each read in a sub-folder with the reads basename in the `my_results` output folder.
     + `nextflow run [...] --shortreads_single 'my_data/*.fastq' --outdir my_results`
     + The pipeline will load and assembly each fastq in the `my_data` folder and assemble it, writing the results for each read in a sub-folder with the reads basename in the `my_results` output folder.
+
+> However, we are currently working in a proper way to execute the hybrid and combination of short reads in assemblies for multiple samples at once so that users can properly execute it without confusion. But it will come in v2.3.
+
 3. Sometimes, shovill assembler can fail and cause the pipeline to fail due to problems in estimating the genome size. This, is actually super simple to solve! Instead of letting the shovill assembler estimate the genome size, you can pass the information to it and prevent its fail:
     + `--shovill_additional_parameters '--gsize 3m'`
-
-> However, we are currently working in a proper way to execute the hybrid and combination of short reads in assemblies for multiple samples at once so that users can
-properly execute it without confusion. But it will come in v2.3.
 
 ## Citation
 

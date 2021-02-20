@@ -15,7 +15,10 @@ Illumina-only assembly with paired end reads
 
 ::
 
-   ./nextflow run fmalmeida/mpgap --outdir output --threads 5 --shortreads_paired "path-to/illumina_r{1,2}.fastq"
+   ./nextflow run fmalmeida/mpgap \
+      --outdir output \
+      --threads 5 \
+      --shortreads_paired "path-to/illumina_r{1,2}.fastq"
 
 .. note::
 
@@ -26,7 +29,10 @@ Illumina-only assembly with single end reads
 
 ::
 
-  ./nextflow run fmalmeida/mpgap --outdir output --threads 5 --shortreads_single "path-to/illumina_unpaired.fastq"
+  ./nextflow run fmalmeida/mpgap \
+     --outdir output \
+     --threads 5 \
+     --shortreads_single "path-to/illumina_unpaired.fastq"
 
 .. note::
 
@@ -37,9 +43,11 @@ Illumina-only assembly with both paired and single end reads
 
 ::
 
-  ./nextflow run fmalmeida/mpgap --outdir output --threads 5 \
-  --shortreads_paired "path-to/illumina_r{1,2}.fastq" \
-  --shortreads_single "path-to/illumina_unpaired.fastq"
+  ./nextflow run fmalmeida/mpgap \
+     --outdir output \
+     --threads 5 \
+     --shortreads_paired "path-to/illumina_r{1,2}.fastq" \
+     --shortreads_single "path-to/illumina_unpaired.fastq"
 
 .. note::
 
@@ -52,10 +60,15 @@ Take note that in this example, we also polish the resulting assembly with both 
 
 ::
 
-  ./nextflow run fmalmeida/mpgap --outdir output --threads 5 \
-  --genomeSize 2m --lr_type nanopore --longreads "path-to/ont_reads.fastq" \
-  --medaka_sequencing_model r941_min_fast_g303 \
-  --nanopolish_max_haplotypes 2000 --nanopolish_fast5Path "path-to/fast5_pass"
+  ./nextflow run fmalmeida/mpgap \
+     --outdir output \
+     --threads 5 \
+     --genomeSize 2m \
+     --lr_type nanopore \
+     --longreads "path-to/ont_reads.fastq" \
+     --medaka_sequencing_model r941_min_fast_g303 \
+     --nanopolish_max_haplotypes 2000 \
+     --nanopolish_fast5Path "path-to/fast5_pass"
 
 .. note::
 
@@ -72,9 +85,14 @@ Take note that in this example, we also polish the resulting assembly with both 
 
 ::
 
-  ./nextflow run fmalmeida/mpgap --outdir output --threads 5 --skip_unicycler \
-  --genomeSize 2m --lr_type "pacbio" --longreads "path-to/pacbio.subreads.fastq" \
-  --pacbio_all_bam_path "path-to/pacbio.*.subreads.bam"
+  ./nextflow run fmalmeida/mpgap \
+     --outdir output \
+     --threads 5 \
+     --skip_unicycler \
+     --genomeSize 2m \
+     --lr_type "pacbio" \
+     --longreads "path-to/pacbio.subreads.fastq" \
+     --pacbio_all_bam_path "path-to/pacbio.*.subreads.bam"
 
 .. note::
 
@@ -91,9 +109,13 @@ Assembling directly via Unicycler, Haslr and SPAdes modules, using Pacbio reads.
 
 ::
 
-  ./nextflow run fmalmeida/mpgap --outdir output --threads 5 --genomeSize 2m \
-  --shortreads_paired "path-to/illumina_r{1,2}.fastq" \
-  --lr_type pacbio --longreads "path-to/pacbio.subreads.fastq"
+  ./nextflow run fmalmeida/mpgap \
+     --outdir output \
+     --threads 5 \
+     --genomeSize 2m \
+     --shortreads_paired "path-to/illumina_r{1,2}.fastq" \
+     --lr_type pacbio \
+     --longreads "path-to/pacbio.subreads.fastq"
 
 .. note::
 
@@ -106,11 +128,16 @@ By using shortreads to correct errors (polish) in longreads-only assemblies (gen
 
 ::
 
-  ./nextflow run fmalmeida/mpgap --outdir output --threads 5 --genomeSize 2m --strategy_2 \
-  --shortreads_paired "path-to/illumina_r{1,2}.fastq" \
-  --lr_type nanopore --longreads "path-to/ont_reads.fastq" \
-  --medaka_sequencing_model r941_min_fast_g303 \
-  --nanopolish_fast5Path "path-to/fast5_pass"
+  ./nextflow run fmalmeida/mpgap \
+     --outdir output \
+     --threads 5 \
+     --genomeSize 2m \
+     --strategy_2 \
+     --shortreads_paired "path-to/illumina_r{1,2}.fastq" \
+     --lr_type nanopore \
+     --longreads "path-to/ont_reads.fastq" \
+     --medaka_sequencing_model r941_min_fast_g303 \
+     --nanopolish_fast5Path "path-to/fast5_pass"
 
 .. note::
 

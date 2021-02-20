@@ -32,7 +32,7 @@ process unicycler_sreads_assembly {
 
   """
   unicycler $parameter -o unicycler -t ${params.threads} \\
-  ${params.unicycler_additional_parameters} &> unicycler.log
+  ${params.unicycler_additional_parameters}
 
   # Rename assembly
   mv unicycler/assembly.fasta unicycler/unicycler_assembly.fasta

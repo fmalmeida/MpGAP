@@ -7,16 +7,15 @@ process quast {
   tuple file(contigs), val(id), val(assembler), file(reads)
 
   output:
-  file "${assembler}/*"
   file("${assembler}")
   val(id)
 
   script:
   // Check available reads
   if (!params.shortreads_paired && !params.shortreads_single && params.longreads && params.lr_type) {
-    type = 'longreads-only'
+    type = 'longreads_only'
   } else if ((params.shortreads_paired || params.shortreads_single) && !params.longreads ) {
-    type = 'shortreads-only'
+    type = 'shortreads_only'
   } else {
     type = 'hybrid'
   }
