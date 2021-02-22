@@ -17,7 +17,11 @@ process quast {
   } else if ((params.shortreads_paired || params.shortreads_single) && !params.longreads ) {
     type = 'shortreads_only'
   } else {
-    type = 'hybrid'
+    if (params.strategy_2) {
+    type = 'hybrid/strategy_2'
+    } else {
+    type = 'hybrid/strategy_1'
+    }
   }
 
   // Alignment parameters

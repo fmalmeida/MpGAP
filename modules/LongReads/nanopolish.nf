@@ -1,5 +1,5 @@
 process nanopolish {
-  publishDir "${params.outdir}/${lrID}/longreads_only/nanopolished_contigs/${assembler}", mode: 'copy'
+  publishDir "${params.outdir}/${lrID}/${type}/nanopolished_contigs/${assembler}", mode: 'copy'
   container 'fmalmeida/mpgap'
   cpus params.threads
 
@@ -11,6 +11,12 @@ process nanopolish {
   file "${assembler}_nanopolished.complete.vcf" // Save VCF
 
   script:
+  // Check available reads
+  if (!params.shortreads_paired && !params.shortreads_single && params.longreads && params.lr_type) {
+    type = 'longreads_only'
+  } else if ((params.shortreads_paired || params.shortreads_single) && params.longreads && params.lr_type) {
+    type = 'hybrid/strategy_2'
+  }
   """
   source activate NANOPOLISH ;
   seqtk seq -A ${reads} > reads.fa ;

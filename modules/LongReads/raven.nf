@@ -1,5 +1,5 @@
 process raven_assembly {
-  publishDir "${params.outdir}/${lrID}/longreads_only/raven", mode: 'copy'
+  publishDir "${params.outdir}/${lrID}/${type}/raven", mode: 'copy'
   container 'fmalmeida/mpgap'
   cpus params.threads
   tag "Performing a longreads only assembly with raven"
@@ -13,6 +13,13 @@ process raven_assembly {
 
   script:
   lrID = lreads.getSimpleName()
+
+  // Check available reads
+  if (!params.shortreads_paired && !params.shortreads_single && params.longreads && params.lr_type) {
+    type = 'longreads_only'
+  } else if ((params.shortreads_paired || params.shortreads_single) && params.longreads && params.lr_type) {
+    type = 'hybrid/strategy_2'
+  }
   """
   raven $lreads --threads ${params.threads} ${params.raven_additional_parameters} > raven_contigs.fa ;
   """

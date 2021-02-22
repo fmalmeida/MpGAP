@@ -1,5 +1,5 @@
 process unicycler_hybrid {
-  publishDir "${params.outdir}/${lrID}/hybrid", mode: 'copy'
+  publishDir "${params.outdir}/${lrID}/hybrid/strategy_1", mode: 'copy'
   container 'fmalmeida/mpgap'
   tag { x }
   cpus params.threads

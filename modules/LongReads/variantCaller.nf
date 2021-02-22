@@ -1,5 +1,5 @@
 process variantCaller {
-  publishDir "${params.outdir}/${lrID}/longreads_only/arrow_polished_contigs", mode: 'copy'
+  publishDir "${params.outdir}/${lrID}/${type}/arrow_polished_contigs", mode: 'copy'
   container 'fmalmeida/mpgap'
   cpus params.threads
 
@@ -14,6 +14,13 @@ process variantCaller {
   id = "${bams}" - ".bam"
 
   // Guide: https://sr-c.github.io/2018/05/29/polish-pacbio-assembly/
+
+  // Check available reads
+  if (!params.shortreads_paired && !params.shortreads_single && params.longreads && params.lr_type) {
+    type = 'longreads_only'
+  } else if ((params.shortreads_paired || params.shortreads_single) && params.longreads && params.lr_type) {
+    type = 'hybrid/strategy_2'
+  }
   """
   # Activate env
   source activate pacbio;

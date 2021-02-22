@@ -1,5 +1,5 @@
 process unicycler_lreads_assembly {
-  publishDir "${params.outdir}/${lrID}/longreads_only", mode: 'copy'
+  publishDir "${params.outdir}/${lrID}/${type}", mode: 'copy'
   container 'fmalmeida/mpgap'
   cpus params.threads
   tag "Performing a longreads only assembly with Unicycler"
@@ -13,6 +13,13 @@ process unicycler_lreads_assembly {
 
   script:
   lrID = lreads.getSimpleName()
+
+  // Check available reads
+  if (!params.shortreads_paired && !params.shortreads_single && params.longreads && params.lr_type) {
+    type = 'longreads_only'
+  } else if ((params.shortreads_paired || params.shortreads_single) && params.longreads && params.lr_type) {
+    type = 'hybrid/strategy_2'
+  }
   """
   unicycler -l $lreads \
   -o unicycler -t ${params.threads} \

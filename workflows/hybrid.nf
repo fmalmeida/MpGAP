@@ -8,19 +8,23 @@
 
 // Canu assembler
 include { canu_assembly } from '../modules/LongReads/canu.nf' params(outdir: params.outdir, lr_type: params.lr_type,
-  canu_additional_parameters: params.canu_additional_parameters, threads: params.threads, genomeSize: params.genomeSize)
+  canu_additional_parameters: params.canu_additional_parameters, threads: params.threads,
+  genomeSize: params.genomeSize, longreads: params.longreads, shortreads_paired: params.shortreads_paired, shortreads_single: params.shortreads_single)
 
 // Unicycler assembler
 include { unicycler_lreads_assembly } from '../modules/LongReads/unicycler_lreads.nf' params(outdir: params.outdir,
-  unicycler_additional_parameters: params.unicycler_additional_parameters, threads: params.threads)
+  unicycler_additional_parameters: params.unicycler_additional_parameters, threads: params.threads, longreads: params.longreads,
+  shortreads_paired: params.shortreads_paired, shortreads_single: params.shortreads_single, lr_type: params.lr_type)
 
 // Flye assembler
 include { flye_assembly } from '../modules/LongReads/flye.nf' params(outdir: params.outdir, lr_type: params.lr_type,
-  flye_additional_parameters: params.flye_additional_parameters, threads: params.threads, genomeSize: params.genomeSize)
+  flye_additional_parameters: params.flye_additional_parameters, threads: params.threads, genomeSize: params.genomeSize,
+  longreads: params.longreads, shortreads_paired: params.shortreads_paired, shortreads_single: params.shortreads_single)
 
 // Raven assembler
 include { raven_assembly } from '../modules/LongReads/raven.nf' params(outdir: params.outdir, threads: params.threads,
-  raven_additional_parameters: params.raven_additional_parameters)
+  raven_additional_parameters: params.raven_additional_parameters, longreads: params.longreads,
+  shortreads_paired: params.shortreads_paired, shortreads_single: params.shortreads_single, lr_type: params.lr_type)
 
 
 /*
@@ -28,14 +32,18 @@ include { raven_assembly } from '../modules/LongReads/raven.nf' params(outdir: p
  */
 
 // Nanopolish (for nanopore data)
-include { nanopolish } from '../modules/LongReads/nanopolish.nf' params(outdir: params.outdir, cpus: params.cpus,
-  threads: params.threads, nanopolish_max_haplotypes: params.nanopolish_max_haplotypes)
+include { nanopolish } from '../modules/LongReads/nanopolish.nf' params(outdir: params.outdir, cpus: params.cpus, threads: params.threads,
+  nanopolish_max_haplotypes: params.nanopolish_max_haplotypes, longreads: params.longreads, shortreads_paired: params.shortreads_paired,
+  shortreads_single: params.shortreads_single, lr_type: params.lr_type)
 
 // Medaka (for nanopore data)
-include { medaka } from '../modules/LongReads/medaka.nf' params(medaka_sequencing_model: params.medaka_sequencing_model, threads: params.threads, outdir: params.outdir)
+include { medaka } from '../modules/LongReads/medaka.nf' params(medaka_sequencing_model: params.medaka_sequencing_model, threads: params.threads,
+  outdir: params.outdir, longreads: params.longreads,
+  shortreads_paired: params.shortreads_paired, shortreads_single: params.shortreads_single, lr_type: params.lr_type)
 
 // VariantCaller Pacbio
-include { variantCaller } from '../modules/LongReads/variantCaller.nf' params(threads: params.threads, outdir: params.outdir)
+include { variantCaller } from '../modules/LongReads/variantCaller.nf' params(threads: params.threads, outdir: params.outdir, longreads: params.longreads,
+  shortreads_paired: params.shortreads_paired, shortreads_single: params.shortreads_single, lr_type: params.lr_type)
 
 /*
  * Modules for Hybrid assemblies
@@ -66,7 +74,7 @@ include { pilon_polish } from '../modules/Hybrid/unicycler_polish.nf' params(out
  * Module for assessing assembly qualities
  */
 include { quast } from '../modules/QualityAssessment/quast.nf' params(threads: params.threads, outdir: params.outdir, longreads: params.longreads,
-  shortreads_paired: params.shortreads_paired, shortreads_single: params.shortreads_single, lr_type: params.lr_type)
+  shortreads_paired: params.shortreads_paired, shortreads_single: params.shortreads_single, lr_type: params.lr_type, strategy_2: params.strategy_2)
 include { multiqc } from '../modules/QualityAssessment/multiqc.nf' params(outdir: params.outdir)
 
 workflow hybrid_nf {

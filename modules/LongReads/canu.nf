@@ -1,5 +1,5 @@
 process canu_assembly {
-  publishDir "${params.outdir}/${lrID}/longreads_only", mode: 'copy'
+  publishDir "${params.outdir}/${lrID}/${type}", mode: 'copy'
   container 'fmalmeida/mpgap'
   cpus params.threads
   tag "Performing a longreads only assembly with Canu"
@@ -14,8 +14,18 @@ process canu_assembly {
   script:
   lr = (params.lr_type == 'nanopore') ? '-nanopore-raw' : '-pacbio-raw'
   lrID = lreads.getSimpleName()
+
+  // Check available reads
+  if (!params.shortreads_paired && !params.shortreads_single && params.longreads && params.lr_type) {
+    type = 'longreads_only'
+  } else if ((params.shortreads_paired || params.shortreads_single) && params.longreads && params.lr_type) {
+    type = 'hybrid/strategy_2'
+  }
   """
   canu -p ${lrID} -d canu maxThreads=${params.threads}\
   genomeSize=${params.genomeSize} ${params.canu_additional_parameters} $lr $lreads
+
+  # Rename contigs
+  mv canu/${lrID}.contigs.fasta canu/canu_${lrID}_contigs.fasta
   """
 }
