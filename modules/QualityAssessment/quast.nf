@@ -9,6 +9,7 @@ process quast {
   output:
   file("${assembler}")
   val(id)
+  val(type)
 
   script:
   // Check available reads
@@ -38,6 +39,6 @@ process quast {
 
   """
   quast.py -o ${assembler} -t ${params.threads} ${quast_parameter} \\
-  --circos --glimmer --rna-finding ${contigs}
+  --circos --conserved-genes-finding --rna-finding ${contigs}
   """
 }

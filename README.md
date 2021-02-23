@@ -16,6 +16,7 @@ MpGAP is an easy to use nextflow docker-based pipeline that adopts well known so
 * [GenomicConsensus](https://github.com/PacificBiosciences/GenomicConsensus)
 * [Pilon](https://github.com/broadinstitute/pilon)
 * [QUAST](https://github.com/ablab/quast)
+* [MultiQC](https://multiqc.info/)
 
 ## Further reading
 
@@ -188,3 +189,4 @@ Users are encouraged to cite the programs used in this pipeline whenever they ar
 * [GenomicConsensus](https://github.com/PacificBiosciences/GenomicConsensus)
 * [Pilon](https://github.com/broadinstitute/pilon)
 * [QUAST](https://github.com/ablab/quast)
+* [MultiQC](https://multiqc.info/)

@@ -15,7 +15,7 @@ process medaka {
   if (!params.shortreads_paired && !params.shortreads_single && params.longreads && params.lr_type) {
     type = 'longreads_only'
   } else if ((params.shortreads_paired || params.shortreads_single) && params.longreads && params.lr_type) {
-    type = 'hybrid/strategy_2'
+    type = 'hybrid/strategy_2/longreads_only'
   }
   """
   source activate MEDAKA ;

@@ -18,7 +18,7 @@ process raven_assembly {
   if (!params.shortreads_paired && !params.shortreads_single && params.longreads && params.lr_type) {
     type = 'longreads_only'
   } else if ((params.shortreads_paired || params.shortreads_single) && params.longreads && params.lr_type) {
-    type = 'hybrid/strategy_2'
+    type = 'hybrid/strategy_2/longreads_only'
   }
   """
   raven $lreads --threads ${params.threads} ${params.raven_additional_parameters} > raven_contigs.fa ;

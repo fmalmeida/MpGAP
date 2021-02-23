@@ -9,7 +9,7 @@ process canu_assembly {
 
   output:
   file "canu/" // Saves all files
-  tuple file("canu/*.contigs.fasta"), val(lrID), val('canu') // Gets contigs file
+  tuple file("canu/canu_${lrID}_contigs.fasta"), val(lrID), val('canu') // Gets contigs file
 
   script:
   lr = (params.lr_type == 'nanopore') ? '-nanopore-raw' : '-pacbio-raw'
@@ -19,7 +19,7 @@ process canu_assembly {
   if (!params.shortreads_paired && !params.shortreads_single && params.longreads && params.lr_type) {
     type = 'longreads_only'
   } else if ((params.shortreads_paired || params.shortreads_single) && params.longreads && params.lr_type) {
-    type = 'hybrid/strategy_2'
+    type = 'hybrid/strategy_2/longreads_only'
   }
   """
   canu -p ${lrID} -d canu maxThreads=${params.threads}\

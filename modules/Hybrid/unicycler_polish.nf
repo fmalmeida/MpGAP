@@ -8,7 +8,7 @@ process pilon_polish {
   tuple file(draft), val(id), val(assembler), file(reads)
 
   output:
-  file("pilon_results_${assembler}") // Get everything
+  file("pilon_results_${assembler}/*") // Get everything
   tuple file("pilon_results_${assembler}/${assembler}_final_pilon_polish.fasta"), val(id), val("${assembler}_pilon_polished")
 
   script:

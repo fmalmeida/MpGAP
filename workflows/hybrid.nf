@@ -219,6 +219,6 @@ workflow hybrid_nf {
       )
 
       // Run multiqc
-      multiqc(quast.out[0].collect(), quast.out[1].distinct(), Channel.value('hybrid'), Channel.value("$workflow.runName"))
+      multiqc(quast.out[0].collect(), quast.out[1].distinct(), quast.out[2], Channel.value("$workflow.runName"))
 
 }

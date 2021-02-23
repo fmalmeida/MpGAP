@@ -85,12 +85,18 @@ General parameters
    * - ``--use_tower``
      - N
      - False
-     - Triggers the pipeline to be launched via nextflow tower
+     - | Triggers the pipeline to be launched via nextflow tower
+       | Make sure that the required environment variables are exported before using NF tower
+       | ``export TOWER_ACCESS_TOKEN=<YOUR ACCESS TOKEN>``
+       | ``export NXF_VER=20.10.0``
 
    * - ``--tower_token``
      - Y (if ``--use_tower``)
      - NA
-     - Your nextflow tower token. Used to launch the pipeline in your nextflow tower account
+     - | Your nextflow tower token. Used to launch the pipeline in your nextflow tower account
+       | Make sure that the required environment variables are exported before using NF tower
+       | ``export TOWER_ACCESS_TOKEN=<YOUR ACCESS TOKEN>``
+       | ``export NXF_VER=20.10.0``
 
    * - ``--outdir``
      - Y

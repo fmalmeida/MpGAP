@@ -48,6 +48,9 @@ Main config file
 
                     /*
                      * NF tower setup parameters
+                     * Make sure that the required environment variables are exported before using NF tower
+                     * export TOWER_ACCESS_TOKEN=<YOUR ACCESS TOKEN>
+                     * export NXF_VER=20.10.0
                      */
 
           use_tower   = false
@@ -193,10 +196,9 @@ Main config file
                           Setting NF tower configurations
     */
     if (params.use_tower) {
-    env.TOWER_ACCESS_TOKEN = params.tower_token
     tower {
         accessToken = params.tower_token
-        enabled = params.use_tower
+        enabled     = true
     }
     }
 
