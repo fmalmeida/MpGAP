@@ -5,23 +5,6 @@
     "description": "",
     "type": "object",
     "definitions": {
-        "nf_tower_options": {
-            "title": "NF tower options",
-            "type": "object",
-            "description": "Define the required options for launching the pipeline via NF tower",
-            "default": "",
-            "fa_icon": "fas fa-gopuram",
-            "properties": {
-                "use_tower": {
-                    "type": "boolean",
-                    "description": "Launch pipeline in NF tower?"
-                },
-                "tower_token": {
-                    "type": "string",
-                    "description": "Your NF tower token for launching the pipeline in it"
-                }
-            }
-        },
         "input_output_options": {
             "title": "Input/output options",
             "type": "object",
@@ -243,9 +226,6 @@
         }
     },
     "allOf": [
-        {
-            "$ref": "#/definitions/nf_tower_options"
-        },
         {
             "$ref": "#/definitions/input_output_options"
         },

@@ -119,7 +119,7 @@ workflow lreadsonly_nf {
        * Run nanopolish?
        */
       if (params.nanopolish_fast5Path && params.lr_type == 'nanopore') {
-        nanopolish(assemblies_ch.combine(reads, fast5, fast5_dir))
+        nanopolish(assemblies_ch.combine(reads).combine(fast5).combine(fast5_dir))
         nanopolish_ch = nanopolish.out[0]
       }
 
@@ -127,7 +127,7 @@ workflow lreadsonly_nf {
        * VariantCaller?
        */
       if (params.pacbio_all_bam_path && params.lr_type == 'pacbio') {
-        variantCaller(assemblies_ch.combine(bamFile, nBams))
+        variantCaller(assemblies_ch.combine(bamFile).combine(nBams))
         arrow_ch = variantCaller.out[1]
       }
 

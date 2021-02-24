@@ -26,17 +26,6 @@
 
     OPTIONS:
 
-            # Nextflow tower parameters
-            # Used to display the pipeline execution in nextflow tower page
-            # very useful when combined with nextflow -bg (for running in backgroung)
-            # Make sure that the required environment variables are exported before using NF tower
-            # export TOWER_ACCESS_TOKEN=<YOUR ACCESS TOKEN>
-            # export NXF_VER=20.10.0 
-
-    --use_tower                                                                 Triggers the pipeline to be launched via nextflow tower
-    --tower_token <token>                                                       Your nextflow tower token. Used to launch the pipeline in your nextflow tower account
-
-
             # General Parameters
 
 
