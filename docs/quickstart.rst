@@ -51,7 +51,8 @@ Oxford nanopore reads are in the `example dataset 1 <https://ngs-preprocess.read
     --shortreads_paired "SRR8482585_30X_{1,2}.fastq.gz" \
     --longreads "SRX5299443_30X.fastq.gz" \
     --lr_type nanopore \
-    --unicycler_additional_parameters '--mode conservative'
+    --unicycler_additional_parameters '--mode conservative' \
+    --genomeSize 4m
 
 .. tip::
 
