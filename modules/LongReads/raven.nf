@@ -21,6 +21,10 @@ process raven_assembly {
     type = 'hybrid/strategy_2/longreads_only'
   }
   """
+  # Activate env
+  source activate RAVEN;
+
+  # Run
   raven --threads ${params.threads} --graphical-fragment-assembly raven_contigs.gfa \
   ${params.raven_additional_parameters} $lreads > raven_contigs.fa ;
   """

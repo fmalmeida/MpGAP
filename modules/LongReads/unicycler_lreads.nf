@@ -8,7 +8,7 @@ process unicycler_lreads_assembly {
   file lreads
 
   output:
-  file "*" // Save all files
+  file "unicycler/*" // Save all files
   tuple file("unicycler/unicycler_assembly.fasta"), val(lrID), val('unicycler') // Gets contigs file
 
   script:

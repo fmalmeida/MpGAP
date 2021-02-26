@@ -129,12 +129,8 @@ RUN git clone https://github.com/vpc-ccg/haslr.git && \
 ENV PATH="$PATH:/work/haslr/bin"
 
 # Install raven
-RUN git clone https://github.com/lbcb-sci/raven && \
-			cd raven && \
-			mkdir build \
-			&& cd build && \
-			cmake -DCMAKE_BUILD_TYPE=Release .. && \
-			make && make install
+RUN conda create -y -n RAVEN && \
+			conda install -y -n RAVEN -c bioconda raven-assembler nomkl
 
 # Install multiqc
 RUN conda install -y -c bioconda -c conda-forge multiqc nomkl && \
