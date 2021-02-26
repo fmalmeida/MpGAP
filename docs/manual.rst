@@ -61,7 +61,7 @@ By using `Unicycler <https://github.com/rrwick/Unicycler#method-hybrid-assembly>
 Strategy 2
 ----------
 
-By polishing (correcting errors) a long reads only assembly with Illumina reads. For that, users will have to use the parameter ``--strategy_2``. This will tell the pipeline to produce a long reads only assembly (with canu, rave, flye or unicycler) and polish it with Pilon (for unpaired reads) or with `Unicycler-polish program <https://github.com/rrwick/Unicycler/blob/master/docs/unicycler-polish.md>`_ (for paired end reads).
+By polishing (correcting errors) a long reads only assembly with Illumina reads. For that, users will have to use the parameter ``--strategy_2``. This will tell the pipeline to produce a long reads only assembly (with canu, raven, flye or unicycler) and polish it with Pilon (for unpaired reads) or with `Unicycler-polish program <https://github.com/rrwick/Unicycler/blob/master/docs/unicycler-polish.md>`_ (for paired end reads).
 
 .. note::
 
