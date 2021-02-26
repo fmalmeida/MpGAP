@@ -4,7 +4,8 @@ def paramsCheck() {
   /*
    * Checking for genomeSize option when using canu
    */
-  if (!params.skip_canu && !params.genomeSize && params.longreads && params.lr_type) {
+  if (!params.skip_canu && !params.genomeSize && params.longreads &&
+    params.lr_type && !params.shortreads_paired && !params.shortreads_single) {
     println """
     ERROR!
     A minor error has occurred
