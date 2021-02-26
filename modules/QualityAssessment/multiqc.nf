@@ -11,13 +11,14 @@ process multiqc {
 
   output:
   file "multiqc_report_${nfRun}.html"
+  file "multiqc_data" optional true
 
   script:
   """
   # Run
-  multiqc */report.tsv
+  multiqc */report.tsv */busco_stats/short_summary_* ;
 
   # Rename to have nf run name
-  mv multiqc_report.html multiqc_report_${nfRun}.html
+  mv multiqc_report.html multiqc_report_${nfRun}.html ;
   """
 }
