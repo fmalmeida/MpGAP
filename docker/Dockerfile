@@ -17,9 +17,9 @@ RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -
 ENV PATH="/miniconda/bin:$PATH"
 
 # Set ncbi-blast+
-RUN wget ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.10.1/ncbi-blast-2.10.1+-x64-linux.tar.gz && \
-        tar -zxvf ncbi-blast-2.10.1+-x64-linux.tar.gz && \
-				cp ncbi-blast-2.10.1+/bin/* /usr/local/bin/
+RUN wget https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.11.0/ncbi-blast-2.11.0+-x64-linux.tar.gz && \
+        tar -zxvf ncbi-blast-2.11.0+-x64-linux.tar.gz && \
+				cp ncbi-blast-2.11.0+/bin/* /usr/local/bin/
 
 # INSTALL Racon
 RUN git clone --recursive https://github.com/isovic/racon.git racon && \
@@ -117,6 +117,24 @@ RUN git clone https://github.com/lh3/seqtk.git && \
 				cd seqtk && \
 				make && \
 				ln -rs seqtk /usr/local/bin
+
+# Install shovill
+RUN conda create --name shovill -y -c conda-forge -c bioconda -c defaults shovill nomkl && \
+			conda clean -afy
+
+# Install haslr
+RUN git clone https://github.com/vpc-ccg/haslr.git && \
+			cd haslr && \
+			make
+ENV PATH="$PATH:/work/haslr/bin"
+
+# Install raven
+RUN conda create -y -n RAVEN && \
+			conda install -y -n RAVEN -c bioconda raven-assembler nomkl
+
+# Install multiqc
+RUN conda install -y -c bioconda -c conda-forge multiqc nomkl && \
+			conda clean -afy
 
 # Remove tars
 RUN rm -rf *.tar.gz *.tar.xz

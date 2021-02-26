@@ -1,19 +1,22 @@
 process nanopolish {
-  publishDir "${params.outdir}/longreads-only/nanopolish_polished_contigs/${assembler}", mode: 'copy', overwrite: true
+  publishDir "${params.outdir}/${lrID}/${type}/nanopolished_contigs/${assembler}", mode: 'copy'
   container 'fmalmeida/mpgap'
   cpus params.threads
 
   input:
-  tuple file(draft), val(lrID), val(assembler)
-  file reads
-  file fast5
-  val fast5_dir
+  tuple file(draft), val(lrID), val(assembler), file(reads), file(fast5), val(fast5_dir)
 
   output:
-  tuple file("${assembler}_${lrID}_nanopolished.fa"), val(lrID), val("${assembler}-nanopolish") // Save nanopolished contigs
-  file "${assembler}_${lrID}_nanopolished.complete.vcf" // Save VCF
+  tuple file("${assembler}_nanopolished.fa"), val(lrID), val("${assembler}_nanopolish") // Save nanopolished contigs
+  file "${assembler}_nanopolished.complete.vcf" // Save VCF
 
   script:
+  // Check available reads
+  if (!params.shortreads_paired && !params.shortreads_single && params.longreads && params.lr_type) {
+    type = 'longreads_only'
+  } else if ((params.shortreads_paired || params.shortreads_single) && params.longreads && params.lr_type) {
+    type = 'hybrid/strategy_2/longreads_only'
+  }
   """
   source activate NANOPOLISH ;
   seqtk seq -A ${reads} > reads.fa ;
@@ -29,7 +32,7 @@ process nanopolish {
     -g ${draft} \
     --max-haplotypes ${params.nanopolish_max_haplotypes} \
     --min-candidate-frequency 0.1;
-  nanopolish vcf2fasta --skip-checks -g ${draft} polished.*.vcf > ${assembler}_${lrID}_nanopolished.fa ;
-  cat polished.*.vcf >> ${assembler}_${lrID}_nanopolished.complete.vcf
+  nanopolish vcf2fasta --skip-checks -g ${draft} polished.*.vcf > ${assembler}_nanopolished.fa ;
+  cat polished.*.vcf >> ${assembler}_nanopolished.complete.vcf
   """
 }

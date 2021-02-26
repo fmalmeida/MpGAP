@@ -5,23 +5,6 @@
     "description": "",
     "type": "object",
     "definitions": {
-        "nf_tower_options": {
-            "title": "NF tower options",
-            "type": "object",
-            "description": "Define the required options for launching the pipeline via NF tower",
-            "default": "",
-            "fa_icon": "fas fa-gopuram",
-            "properties": {
-                "use_tower": {
-                    "type": "boolean",
-                    "description": "Launch pipeline in NF tower?"
-                },
-                "tower_token": {
-                    "type": "string",
-                    "description": "Your NF tower token for launching the pipeline in it"
-                }
-            }
-        },
         "input_output_options": {
             "title": "Input/output options",
             "type": "object",
@@ -33,7 +16,7 @@
                     "description": "The output directory where the results will be saved.",
                     "default": "./results",
                     "fa_icon": "fas fa-folder-open",
-                    "help_text": "All the outputs will be stored under this directory."
+                    "help_text": "All the outputs will be stored under this directory. Sub-folders for each dataset will be written in this folder using reads basenames. Short reads basenames for short reads only assemblies and long reads basenames for hybrid and long reads only assemblies."
                 },
                 "longreads": {
                     "type": "string",
@@ -76,7 +59,8 @@
             "properties": {
                 "threads": {
                     "type": "integer",
-                    "description": "Number of threads to use for each process"
+                    "description": "Number of threads to use for each process",
+                    "default": "4"
                 },
                 "parallel_jobs": {
                     "type": "integer",
@@ -85,67 +69,74 @@
                 },
                 "cpus": {
                     "type": "integer",
-                    "description": "Number of cores to run nanopolish in parallel"
+                    "description": "Number of cores to run nanopolish in parallel",
+                    "default": "2"
                 }
             }
         },
-        "assembly_mode": {
-            "title": "Assembly mode",
+        "hybrid_assembly_strategy_parameters": {
+            "title": "Hybrid assembly strategy parameters",
             "type": "object",
             "fa_icon": "fas fa-ellipsis-v",
             "description": "Select assembly strategy",
             "properties": {
-                "assembly_type": {
-                    "type": "string",
-                    "description": "Assembly strategy: illumina-only, longreads-only or hybrid",
-                    "help_text": "Select which assembly strategy to use. The possibilities are: \"illumina-only\", \"longreads-only\" or \"hybrid\".",
-                    "enum": [
-                        "illumina-only",
-                        "longreads-only",
-                        "hybrid"
-                    ],
-                    "fa_icon": "fas fa-ellipsis-v"
-                },
-                "illumina_polish_longreads_contigs": {
+                "strategy_2": {
                     "type": "boolean",
                     "description": "For hybrid assemblies, use strategy 2",
-                    "help_text": "It must be used with \"--assembly_type = hybrid\".\nThis paremeter tells the pipeline to first create a longreads-only assembly and then polish it with short reads, instead of executing the hybrid assembly modes implemented by Unicycler and SPAdes.",
+                    "help_text": "This paremeter tells the pipeline to first create a longreads-only assembly and then polish it with short reads, instead of executing the hybrid assembly modes implemented by Unicycler, Haslr and SPAdes.",
                     "fa_icon": "fab fa-confluence"
+                },
+                "pilon_memory_limit": {
+                    "type": "number",
+                    "description": "Max amount of memory allocated by Pilon (in gigabase)",
+                    "default": 50,
+                    "help_text": "Whenever polishing long reads only assemblies with unpaired short reads (single end), the pipeline will directly execute one round of pilon polishing instead of using Unicycler's polish pipeline. Therefore we need to allocate the amount of memory allocated by Pilon. Default 50G. This step is crucial because with not enough memory will crash and not correct your assembly. When that happens you will not have the pilon output nor the QUAST assessment."
                 }
-            },
-            "required": [
-                "assembly_type"
-            ]
+            }
         },
-        "select_assemblers": {
-            "title": "Select assemblers",
+        "turn_assemblers_on_off": {
+            "title": "Turn assemblers on/off",
             "type": "object",
-            "description": "",
+            "description": "Select which assemblers to skip or not",
             "default": "",
+            "fa_icon": "fas fa-tasks",
             "properties": {
-                "try_spades": {
+                "skip_spades": {
                     "type": "boolean",
-                    "description": "Assembly with SPAdes?",
-                    "help_text": "Also trigger an assebly with SPAdes?.\nUseful for shortreads-only or hybrid assemblies."
+                    "description": "Skip SPAdes assembler",
+                    "help_text": "SPAdes is a short reads only and hybrid assembler."
                 },
-                "try_unicycler": {
+                "skip_shovill": {
                     "type": "boolean",
-                    "description": "Assembly with Unicycler?",
-                    "help_text": "Also trigger an assebly with Unicycler?.\nUseful for shortreads-only or hybrid assemblies.",
-                    "default": true
+                    "description": "Skip Shovill assembler",
+                    "help_text": "Shovill is a paired short reads only assembler."
                 },
-                "try_canu": {
+                "skip_unicycler": {
                     "type": "boolean",
-                    "description": "Assembly with Canu?",
-                    "help_text": "Also trigger an assebly with Canu?.\nUseful for longreads-only or hybrid assemblies."
+                    "description": "Skip Unicycler assembler",
+                    "help_text": "Unicycler is a short reads only, long reads only and hybrid assembler."
                 },
-                "try_flye": {
+                "skip_haslr": {
                     "type": "boolean",
-                    "description": "Assembly with Flye?",
-                    "help_text": "Also trigger an assebly with Canu?.\nUseful for longreads-only or hybrid assemblies."
+                    "description": "Skip Haslr assembler",
+                    "help_text": "Haslr is a hybrid assembler."
+                },
+                "skip_canu": {
+                    "type": "boolean",
+                    "description": "Skip Canu assembler",
+                    "help_text": "Canu is a long reads only assembler. Can be use for hybrid assemblies in strategy 2."
+                },
+                "skip_flye": {
+                    "type": "boolean",
+                    "description": "Skip Flye assembler",
+                    "help_text": "Flye is a long reads only assembler. Can be use for hybrid assemblies in strategy 2."
+                },
+                "skip_raven": {
+                    "type": "boolean",
+                    "description": "Skip Raven assembler",
+                    "help_text": "Raven is a long reads only assembler. Can be use for hybrid assemblies in strategy 2."
                 }
-            },
-            "fa_icon": "fas fa-tasks"
+            }
         },
         "expected_genome_size": {
             "title": "Expected genome size",
@@ -156,7 +147,7 @@
                 "genomeSize": {
                     "type": "string",
                     "description": "Set the expected genome size (E.g. 5.6m; 1.2g)",
-                    "help_text": "It sets the expected genome size of the assembly. It is required by Canu and Flye assemblers. E.g. 5.6m; 1.2g."
+                    "help_text": "It sets the expected genome size of the assembly. It is required by Canu and Haslr assemblers. It is optional for Flye, but highly recommended. E.g. 5.6m; 1.2g."
                 }
             }
         },
@@ -166,6 +157,11 @@
             "description": "Pass additional parameters to the assemblers",
             "default": "",
             "properties": {
+                "shovill_additional_parameters": {
+                    "type": "string",
+                    "description": "Shovill additional parameters",
+                    "help_text": "Passes additional parameters for Shovill assembler. E.g. '--depth 15 --assembler skesa'. Must be given as shown in Shovill\u2019 manual."
+                },
                 "spades_additional_parameters": {
                     "type": "string",
                     "description": "SPAdes additional parameters",
@@ -176,6 +172,11 @@
                     "description": "Unicycler additional parameters",
                     "help_text": "Passes additional parameters for Unicycler assembler. E.g. '\u2013mode conservative \u2013no_correct'. Must be given as shown in Unicycler\u2019s manual."
                 },
+                "haslr_additional_parameters": {
+                    "type": "string",
+                    "description": "Haslr additional parameters",
+                    "help_text": "Passes additional parameters for Haslr assembler. E.g. '--cov-lr 30'. Must be given as shown in Haslr\u2019 manual."
+                },
                 "canu_additional_parameters": {
                     "type": "string",
                     "description": "Canu additional parameters",
@@ -185,19 +186,23 @@
                     "type": "string",
                     "description": "Flye additional parameters",
                     "help_text": "Passes additional parameters for Flye assembler. E.g. '\u2013meta \u2013iterations 4'. Must be given as shown in Flye\u2019s manual."
+                },
+                "raven_additional_parameters": {
+                    "type": "string",
+                    "description": "Raven additional parameters",
+                    "help_text": "Passes additional parameters for Raven assembler. E.g. '--polishing-rounds 4'. Must be given as shown in Raven\u2019 manual."
                 }
             },
             "fa_icon": "fas fa-list-ul"
         },
-        "assembly_polishing_parameters": {
-            "title": "Assembly polishing parameters",
+        "long_reads_assembly_polishing_parameters": {
+            "title": "Long reads assembly polishing parameters",
             "type": "object",
-            "description": "",
+            "description": "Select which long reads assembly polishers to use. They can be also used with hybrid assemblies in strategy 2, see the docs.",
             "default": "",
             "properties": {
                 "medaka_sequencing_model": {
                     "type": "string",
-                    "default": "r941_min_fast_g303",
                     "help_text": "Useful for longreads-only or hybrid assemblies using strategy 2.\nUsed to polish a longreads-only assembly with Medaka. It selects a Medaka ONT sequencing model for polishing. Please read [medaka manual](https://nanoporetech.github.io/medaka/) for more instructions.",
                     "description": "Polish with Medaka? Which model?"
                 },
@@ -216,20 +221,11 @@
                     "type": "string",
                     "description": "Polish with Arrow? Set path to pacbio subreads.bam",
                     "help_text": "Useful for longreads-only and hybrid assemblies using strategy 2.\nPath to all subreads.bam files for the given reads. Whenever set, the pipeline will execute a polishing step with VarianCaller through arrow. Arrow is supported for PacBio Sequel data and RS data with the P6-C4 chemistry."
-                },
-                "pilon_memory_limit": {
-                    "type": "number",
-                    "description": "Max amount of memory allocated by Pilon (in gigabase)",
-                    "default": 50,
-                    "help_text": "Whenever polishing long reads only assemblies with unpaired short reads (single end), the pipeline will directly execute one round of pilon polishing instead of using Unicycler's polish pipeline. Therefore we need to allocate the amount of memory allocated by Pilon. Default 50G. This step is crucial because with not enough memory will crash and not correct your assembly. When that happens you will not have the pilon output nor the QUAST assessment."
                 }
             }
         }
     },
     "allOf": [
-        {
-            "$ref": "#/definitions/nf_tower_options"
-        },
         {
             "$ref": "#/definitions/input_output_options"
         },
@@ -237,10 +233,10 @@
             "$ref": "#/definitions/max_job_request_options"
         },
         {
-            "$ref": "#/definitions/assembly_mode"
+            "$ref": "#/definitions/hybrid_assembly_strategy_parameters"
         },
         {
-            "$ref": "#/definitions/select_assemblers"
+            "$ref": "#/definitions/turn_assemblers_on_off"
         },
         {
             "$ref": "#/definitions/expected_genome_size"
@@ -249,7 +245,7 @@
             "$ref": "#/definitions/assemblers_additional_parameters"
         },
         {
-            "$ref": "#/definitions/assembly_polishing_parameters"
+            "$ref": "#/definitions/long_reads_assembly_polishing_parameters"
         }
     ]
 }

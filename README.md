@@ -1,18 +1,22 @@
 # MpGAP (General multi-platform genome assembly pipeline)
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3997375.svg)](https://doi.org/10.5281/zenodo.3445485) ![](https://img.shields.io/github/v/release/fmalmeida/MpGAP) [![Build Status](https://travis-ci.org/fmalmeida/MpGAP.svg?branch=master)](https://travis-ci.org/fmalmeida/MpGAP) ![](https://img.shields.io/badge/dependencies-docker-informational) [![Documentation Status](https://readthedocs.org/projects/mpgap/badge/?version=latest)](https://mpgap.readthedocs.io/en/latest/?badge=latest) ![](https://img.shields.io/badge/Nextflow-v20.01-yellowgreen)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3997375.svg)](https://doi.org/10.5281/zenodo.3445485) ![](https://img.shields.io/github/v/release/fmalmeida/mpgap) [![Build Status](https://travis-ci.org/fmalmeida/mpgap.svg?branch=master)](https://travis-ci.org/fmalmeida/mpgap) ![](https://img.shields.io/badge/dependencies-docker-informational) [![Documentation Status](https://readthedocs.org/projects/mpgap/badge/?version=latest)](https://mpgap.readthedocs.io/en/latest/?badge=latest) ![](https://img.shields.io/badge/Nextflow-v20.01-yellowgreen)
 
 MpGAP is an easy to use nextflow docker-based pipeline that adopts well known software for genome assembly of Illumina, Pacbio and Oxford Nanopore sequencing data through illumina only, long reads only or hybrid modes. This pipeline wraps up the following software:
 
 * [Canu](https://github.com/marbl/canu)
 * [Flye](https://github.com/fenderglass/Flye)
+* [Raven](https://github.com/lbcb-sci/raven)
+* [Haslr](https://github.com/vpc-ccg/haslr)
 * [Unicycler](https://github.com/rrwick/Unicycler)
 * [Spades](https://github.com/ablab/spades)
+* [Shovill](https://github.com/tseemann/shovill)
 * [Nanopolish](https://github.com/jts/nanopolish)
 * [Medaka](https://github.com/nanoporetech/medaka)
 * [GenomicConsensus](https://github.com/PacificBiosciences/GenomicConsensus)
 * [Pilon](https://github.com/broadinstitute/pilon)
 * [QUAST](https://github.com/ablab/quast)
+* [MultiQC](https://multiqc.info/)
 
 ## Further reading
 
@@ -35,6 +39,10 @@ This pipeline has two complementary pipelines (also written in nextflow) for [NG
 This pipeline has only two dependencies: [Docker](https://www.docker.com) and [Nextflow](https://github.com/nextflow-io/nextflow).
 
 * Unix-like operating system (Linux, macOS, etc)
+  + Windows users maybe can execute it using the linux subsystem for windows as shown in:
+    + https://docs.microsoft.com/pt-br/windows/wsl/install-win10
+    + https://www.nextflow.io/docs/latest/getstarted.html
+    + https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux
 * Java 8 (or higher)
 * Nextflow (version 20.01 or higher)
 * Docker
@@ -60,7 +68,7 @@ The latest release will always have its docker image in dockerhub.
 
        nextflow run fmalmeida/mpgap --help
 
-> Users can get let the pipeline always updated with: `nextflow pull fmalmeida/MpGAP`
+> Users can get let the pipeline always updated with: `nextflow pull fmalmeida/mpgap`
 
 ## Documentation
 
@@ -70,21 +78,18 @@ Hybrid assemblies can be produced using one of two available strategies:
 
 #### Strategy 1
 
-By using Unicycler and/or SPAdes hybrid assembly modes. For instance, it will use Unicycler hybrid mode which will first assemble a high quality assembly graph with Illumina data and then it will use long reads to bridge the gaps. More information about Unicycler Hybrid mode can be found [here](https://github.com/rrwick/Unicycler#method-hybrid-assembly).
+By using Unicycler, Haslr and/or SPAdes hybrid assembly modes. For instance, it can use the Unicycler hybrid mode which will first assemble a high quality assembly graph with Illumina data and then it will use long reads to bridge the gaps. More information about Unicycler Hybrid mode can be found [here](https://github.com/rrwick/Unicycler#method-hybrid-assembly).
 
 #### Strategy 2
 
-By polishing a long reads only assembly with Illumina reads. For that, users will have to set `--illumina_polish_longreads_contigs` to true. This will tell the pipeline to produce a long reads only assembly (with canu, flye or unicycler) and polish it with Pilon (for unpaired reads) or with [Unicycler-polish program](https://github.com/rrwick/Unicycler/blob/master/docs/unicycler-polish.md) (for paired end reads).
+By polishing a long reads only assembly with Illumina reads. For that, users will have to set `--strategy_2` to true. This will tell the pipeline to produce a long reads only assembly (with canu, flye, raven or unicycler) and polish it with Pilon (for unpaired reads) or with [Unicycler-polish program](https://github.com/rrwick/Unicycler/blob/master/docs/unicycler-polish.md) (for paired end reads).
 
-> Note that, `--illumina_polish_longreads_contigs` parameter is an alternative workflow, when used, it will execute ONLY strategy 2 and not both strategies. When false, only strategy 1 will be executed.
-
-> Remember to select the desired assemblers to run with `--try_canu`, `--try_flye` and/or `--try_unicycler`
+> Note that, `--strategy_2` parameter is an alternative workflow, when used, it will execute ONLY strategy 2 and not both strategies. When false, only strategy 1 will be executed.
 
 #### Example:
 
-        nextflow run fmalmeida/mpgap --outdir output --threads 5 --assembly_type hybrid --try_unicycler --try_flye --try_canu
-        --shortreads_paired "dataset_1/sampled/illumina_R{1,2}.fastq" --shortreads_single "dataset_1/sampled/illumina_single.fastq"
-        --lr_type nanopore --longreads "dataset_1/ont/ont_reads.fastq" --illumina_polish_longreads_contigs
+        nextflow run fmalmeida/mpgap --outdir output --threads 5 --shortreads_paired "path-to/illumina_r{1,2}.fastq" \
+        --shortreads_single "path-to/illumina_unpaired.fastq" --lr_type 'nanopore' --longreads "path-to/ont_reads.fastq" --strategy_2
 
 ### Usage
 
@@ -152,9 +157,19 @@ This pipeline also accepts that users track its execution of processes via [next
 
 ## Known issues
 
-1. Whenever using unicycler with unpaired reads, an odd platform-specific SPAdes-related crash seems do randomly happen as it can be seen in the issue discussed at https://github.com/rrwick/Unicycler/issues/188. As a workaround, Ryan says to use the `--no_correct` parameter which solves the issue and does not have a negative impact on assembly quality. Therefore, whenever using Illumina unpaired reads, this parameter is automatically used by the pipeline.
-2. Users are advised to do not perform hybrid annotations with multiple samples (giving reads as glob patterns, such as ? and *). This would result in unexpected outcomes since the pipeline is not trained to understand/search pairs when multiple samples are given. It is possible that the reads get mixed, or that reads are analysed separately.
-   + These glob patterns are effective when running the pipeline with multiple samples that have the same type of input reads. For example, running a long reads assembly for multiple samples with nanopore data (using `--longreads *.fastq --lr_type nanopore`). This is possible because, as said before, the pipeline is not trained to understand/search pairs when multiple samples are given, which means, that each fastq found with the glob pattern will be individually assembled using the parameters set.
+1. Whenever using unicycler with unpaired reads, an odd platform-specific SPAdes-related crash seems do randomly happen as it can be seen in the issue discussed at https://github.com/rrwick/Unicycler/issues/188.
+  + As a workaround, Ryan says to use the `--no_correct` parameter which solves the issue and does not have a negative impact on assembly quality. Therefore, whenever using Illumina unpaired reads, this parameter is automatically used by the pipeline.
+2. Whenever running the pipeline for multiple samples at once using glob patterns such as '*' and '?', users are advised to do not perform hybrid assemblies, nor combining both paired and unpaired short reads in short reads only assemblies. Because the pipeline is not yet trained to properly search for the correct pairs, and since nextflow channels are random, we cannot ensure that the combination of data used in these to assembly types will be right. The pipeline treats each input file as a unique sample, and it will execute it individually.
+  + To date, the use of glob patterns only works properly with long reads only assembly, or short reads only assemblies using either paired or unpaired reads, not both at the same time. For example:
+    + `nextflow run [...] --longreads 'my_data/*.fastq' --lr_type 'nanopore' --outdir my_results`
+    + The pipeline will load and assembly each fastq in the `my_data` folder and assemble it, writing the results for each read in a sub-folder with the reads basename in the `my_results` output folder.
+    + `nextflow run [...] --shortreads_single 'my_data/*.fastq' --outdir my_results`
+    + The pipeline will load and assembly each fastq in the `my_data` folder and assemble it, writing the results for each read in a sub-folder with the reads basename in the `my_results` output folder.
+
+> However, we are currently working in a proper way to execute the hybrid and combination of short reads in assemblies for multiple samples at once so that users can properly execute it without confusion. But it will come in v2.3.
+
+3. Sometimes, shovill assembler can fail and cause the pipeline to fail due to problems in estimating the genome size. This, is actually super simple to solve! Instead of letting the shovill assembler estimate the genome size, you can pass the information to it and prevent its fail:
+    + `--shovill_additional_parameters '--gsize 3m'`
 
 ## Citation
 
@@ -164,9 +179,14 @@ Users are encouraged to cite the programs used in this pipeline whenever they ar
 
 * [Canu](https://github.com/marbl/canu)
 * [Flye](https://github.com/fenderglass/Flye)
+* [Raven](https://github.com/lbcb-sci/raven)
+* [Haslr](https://github.com/vpc-ccg/haslr)
 * [Unicycler](https://github.com/rrwick/Unicycler)
 * [Spades](https://github.com/ablab/spades)
+* [Shovill](https://github.com/tseemann/shovill)
 * [Nanopolish](https://github.com/jts/nanopolish)
-* [QUAST](https://github.com/ablab/quast)
+* [Medaka](https://github.com/nanoporetech/medaka)
 * [GenomicConsensus](https://github.com/PacificBiosciences/GenomicConsensus)
-* [Pilon](https://github.com/broadinstitute/pilon).
+* [Pilon](https://github.com/broadinstitute/pilon)
+* [QUAST](https://github.com/ablab/quast)
+* [MultiQC](https://multiqc.info/)

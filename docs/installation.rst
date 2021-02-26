@@ -7,12 +7,14 @@ Installation
 Dependencies
 ============
 
-This pipeline requires only `Docker <https://www.docker.com/>`_ (and its Docker images) and
-`Nextflow <https://www.nextflow.io/docs/latest/index.html>`_ to run.
+This pipeline requires only `Docker <https://www.docker.com/>`_ (and its Docker images) and `Nextflow <https://www.nextflow.io/docs/latest/index.html>`_ to run.
 
 1. Installing Docker
+
   * Read more in their `manual <https://docs.docker.com/>`_
+
   * Or give this `in-house script <https://github.com/fmalmeida/bioinfo/blob/master/dockerfiles/docker_install.sh>`_ a try.
+
 2. Installing Nextflow
 
     ``curl -s https://get.nextflow.io | bash``
@@ -35,6 +37,8 @@ This pipeline requires only `Docker <https://www.docker.com/>`_ (and its Docker 
 
 .. note::
 
-  Now, everything is set up and ready to run.
-  Remember to always keep your Docker images up to date
-  (Docker pull will always download the latest).
+  Now, everything is set up and ready to run. Remember to always keep your Docker images up to date (Docker pull will always download the latest).
+
+.. note::
+
+	The pipeline requires a UNIX system, therefore, Windows users may successfully use this pipeline via the `Linux subsystem for windows <https://docs.microsoft.com/pt-br/windows/wsl/install-win10>`_.

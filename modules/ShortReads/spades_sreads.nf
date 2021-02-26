@@ -1,5 +1,5 @@
 process spades_sreads_assembly {
-  publishDir "${params.outdir}/shortreads-only", mode: 'copy'
+  publishDir "${params.outdir}/${out_ids}/shortreads_only", mode: 'copy'
   container 'fmalmeida/mpgap'
   tag { x }
   cpus params.threads
@@ -9,25 +9,32 @@ process spades_sreads_assembly {
   file(sreads)
 
   output:
-  file "*" // Save all output
-  tuple file("spades_${id}/contigs.fasta"), val(id), val('spades') // Gets contigs file
+  file "spades" // Save all output
+  tuple file("spades/spades_contigs.fasta"), val(out_ids), val('spades') // Gets contigs file
 
   script:
 
   if ((params.shortreads_single) && (params.shortreads_paired)) {
     parameter = "-1 $sread1 -2 $sread2 -s $sreads"
     x = "Performing a illumina-only assembly with SPAdes, using paired and single end reads"
+    srId = sreads.getSimpleName()
+    out_ids = "${id}_and_${srId}"
   } else if ((params.shortreads_single) && (!params.shortreads_paired)) {
     parameter = "-s $sreads"
     id = sreads.getSimpleName()
     x = "Performing a illumina-only assembly with SPAdes, using single end reads"
+    out_ids = "${id}"
   } else if ((params.shortreads_paired) && (!params.shortreads_single)) {
     parameter = "-1 $sread1 -2 $sread2"
     x = "Performing a illumina-only assembly with SPAdes, using paired end reads"
+    out_ids = "${id}"
   }
 
   """
-  spades.py -o "spades_${id}" -t ${params.threads} \\
+  spades.py -o spades -t ${params.threads} \\
   ${params.spades_additional_parameters} $parameter
+
+  # Rename assembly
+  mv spades/contigs.fasta spades/spades_contigs.fasta
   """
 }

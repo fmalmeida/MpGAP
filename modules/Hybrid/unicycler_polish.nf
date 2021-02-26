@@ -1,16 +1,15 @@
 process pilon_polish {
-  publishDir "${params.outdir}/assemblies-polished-with-shortreads", mode: 'copy'
+  publishDir "${params.outdir}/${id}/hybrid/strategy_2", mode: 'copy'
   container 'fmalmeida/mpgap'
   cpus params.threads
   tag "Polishing a longreads-only assembly with shortreads (through Pilon)"
 
   input:
-  tuple file(draft), val(id), val(assembler)
-  file(reads)
+  tuple file(draft), val(id), val(assembler), file(reads)
 
   output:
-  file("pilon_results_${assembler}") // Get everything
-  tuple file("pilon_results_${assembler}/${assembler}_final_polish.fasta"), val(id), val("${assembler}-pilon-polished")
+  file("pilon_results_${assembler}/*") // Get everything
+  tuple file("pilon_results_${assembler}/${assembler}_final_pilon_polish.fasta"), val(id), val("${assembler}_pilon_polished")
 
   script:
   if(params.shortreads_paired != '' && params.shortreads_single == '')
@@ -24,7 +23,7 @@ process pilon_polish {
 
       # Save files in the desired directory
       mv 0* polish.log pilon_results_${assembler};
-      mv pilon_results_${assembler}/*_final_polish.fasta pilon_results_${assembler}/${assembler}_final_polish.fasta ;
+      mv pilon_results_${assembler}/*_final_polish.fasta pilon_results_${assembler}/${assembler}_final_pilon_polish.fasta ;
       """
 
   else if(params.shortreads_paired == '' && params.shortreads_single != '')
@@ -40,7 +39,7 @@ process pilon_polish {
 
       # Execute pilon a single time (for single end reads)
       java -Xmx${params.pilon_memory_limit}G -jar /miniconda/share/pilon-1.23-2/pilon-1.23.jar \
-      --genome ${draft} --bam ${id}_${assembler}_aln.bam --output ${assembler}_final_polish \
+      --genome ${draft} --bam ${id}_${assembler}_aln.bam --output ${assembler}_final_pilon_polish \
       --outdir pilon_results_${assembler} &> pilon.log
 
       # save bam file in the desired directory
@@ -68,6 +67,6 @@ process pilon_polish {
 
       # Save files in the desired directory
       mv 0* polish.log pilon_results_${assembler};
-      mv pilon_results_${assembler}/*_final_polish.fasta pilon_results_${assembler}/${assembler}_final_polish.fasta ;
+      mv pilon_results_${assembler}/*_final_polish.fasta pilon_results_${assembler}/${assembler}_final_pilon_polish.fasta ;
       """
 }

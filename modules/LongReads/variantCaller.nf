@@ -1,21 +1,26 @@
 process variantCaller {
-  publishDir "${params.outdir}/longreads-only/arrowPolished_contigs", mode: 'copy', overwrite: true
+  publishDir "${params.outdir}/${lrID}/${type}/arrow_polished_contigs", mode: 'copy'
   container 'fmalmeida/mpgap'
   cpus params.threads
 
   input:
-  tuple file(draft), val(lrID), val(assembler)
-  file bams
-  val nBams
+  tuple file(draft), val(lrID), val(assembler), file(bams), val(nBams)
 
   output:
-  file "${assembler}_${lrID}_pbvariants.gff" // Save gff
-  tuple file("${assembler}_${lrID}_pbconsensus.fasta"), val("${lrID}"), val("${assembler}-arrow") // Save contigs
+  file "${assembler}_pbvariants.gff" // Save gff
+  tuple file("${assembler}_pbconsensus.fasta"), val("${lrID}"), val("${assembler}_arrow") // Save contigs
 
   script:
   id = "${bams}" - ".bam"
 
   // Guide: https://sr-c.github.io/2018/05/29/polish-pacbio-assembly/
+
+  // Check available reads
+  if (!params.shortreads_paired && !params.shortreads_single && params.longreads && params.lr_type) {
+    type = 'longreads_only'
+  } else if ((params.shortreads_paired || params.shortreads_single) && params.longreads && params.lr_type) {
+    type = 'hybrid/strategy_2/longreads_only'
+  }
   """
   # Activate env
   source activate pacbio;
@@ -27,8 +32,8 @@ process variantCaller {
     samtools index ${id}_pbaligned.bam;
     pbindex ${id}_pbaligned.bam;
     samtools faidx ${draft};
-    arrow -j ${params.threads} --referenceFilename ${draft} -o ${assembler}_${lrID}_pbconsensus.fasta \
-    -o ${assembler}_${lrID}_pbvariants.gff ${id}_pbaligned.bam
+    arrow -j ${params.threads} --referenceFilename ${draft} -o ${assembler}_pbconsensus.fasta \
+    -o ${assembler}_pbvariants.gff ${id}_pbaligned.bam
 
   # Multiple bams
   elif [ $nBams -gt 1 ];
@@ -41,8 +46,8 @@ process variantCaller {
     samtools index pacbio_merged.bam;
     pbindex pacbio_merged.bam;
     samtools faidx ${draft};
-    arrow -j ${params.threads} --referenceFilename ${draft} -o ${assembler}_${lrID}_pbconsensus.fasta \
-    -o ${assembler}_${lrID}_pbvariants.gff pacbio_merged.bam
+    arrow -j ${params.threads} --referenceFilename ${draft} -o ${assembler}_pbconsensus.fasta \
+    -o ${assembler}_pbvariants.gff pacbio_merged.bam
   fi
   """
 }
