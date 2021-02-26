@@ -68,7 +68,7 @@ The latest release will always have its docker image in dockerhub.
 
        nextflow run fmalmeida/mpgap --help
 
-> Users can get let the pipeline always updated with: `nextflow pull fmalmeida/mpgap`
+> Users can let the pipeline always updated with: `nextflow pull fmalmeida/mpgap`
 
 ## Documentation
 
