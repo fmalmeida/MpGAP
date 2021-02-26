@@ -39,8 +39,6 @@ Hybrid assembly (strategy 1)
 
 By default, when assembling long and short reads together (hybrid assemblies) the pipeline executes the SPAdes, Unicycler and Haslr software since they have assembly modules specialized for hybrid assemblies.
 
-Oxford nanopore reads are in the `example dataset 1 <https://ngs-preprocess.readthedocs.io/en/latest/quickstart.html#id2>`_.
-
 .. code-block:: bash
 
   # Run the pipeline
