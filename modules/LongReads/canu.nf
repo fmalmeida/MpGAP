@@ -12,7 +12,7 @@ process canu_assembly {
   tuple file("canu/canu_${lrID}_contigs.fasta"), val(lrID), val('canu') // Gets contigs file
 
   script:
-  lr = (params.lr_type == 'nanopore') ? '-nanopore-raw' : '-pacbio-raw'
+  lr = (params.lr_type == 'nanopore') ? '-nanopore' : '-pacbio'
   lrID = lreads.getSimpleName()
 
   // Check available reads
