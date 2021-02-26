@@ -1,6 +1,6 @@
 # MpGAP (General multi-platform genome assembly pipeline)
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3997375.svg)](https://doi.org/10.5281/zenodo.3445485) ![](https://img.shields.io/github/v/release/fmalmeida/MpGAP) [![Build Status](https://travis-ci.org/fmalmeida/MpGAP.svg?branch=master)](https://travis-ci.org/fmalmeida/MpGAP) ![](https://img.shields.io/badge/dependencies-docker-informational) [![Documentation Status](https://readthedocs.org/projects/mpgap/badge/?version=latest)](https://mpgap.readthedocs.io/en/latest/?badge=latest) ![](https://img.shields.io/badge/Nextflow-v20.01-yellowgreen)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3997375.svg)](https://doi.org/10.5281/zenodo.3445485) ![](https://img.shields.io/github/v/release/fmalmeida/mpgap) [![Build Status](https://travis-ci.org/fmalmeida/mpgap.svg?branch=master)](https://travis-ci.org/fmalmeida/mpgap) ![](https://img.shields.io/badge/dependencies-docker-informational) [![Documentation Status](https://readthedocs.org/projects/mpgap/badge/?version=latest)](https://mpgap.readthedocs.io/en/latest/?badge=latest) ![](https://img.shields.io/badge/Nextflow-v20.01-yellowgreen)
 
 MpGAP is an easy to use nextflow docker-based pipeline that adopts well known software for genome assembly of Illumina, Pacbio and Oxford Nanopore sequencing data through illumina only, long reads only or hybrid modes. This pipeline wraps up the following software:
 
@@ -68,7 +68,7 @@ The latest release will always have its docker image in dockerhub.
 
        nextflow run fmalmeida/mpgap --help
 
-> Users can get let the pipeline always updated with: `nextflow pull fmalmeida/MpGAP`
+> Users can get let the pipeline always updated with: `nextflow pull fmalmeida/mpgap`
 
 ## Documentation
 

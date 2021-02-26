@@ -18,7 +18,7 @@ Main config file
 .. code-block:: groovy
 
     /*
-     * Configuration File to run fmalmeida/MpGAP pipeline.
+     * Configuration File to run fmalmeida/mpgap pipeline.
      */
 
     /*

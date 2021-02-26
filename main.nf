@@ -33,33 +33,33 @@ if (params.examples){
  */
  params.get_hybrid_config = false
  if (params.get_hybrid_config) {
-   new File("hybrid.config").write(new URL ("https://github.com/fmalmeida/MpGAP/raw/master/configuration_example/hybrid.config").getText())
+   new File("hybrid.config").write(new URL ("https://github.com/fmalmeida/mpgap/raw/master/configuration_example/hybrid.config").getText())
    println ""
    println "hybrid.config file saved in working directory"
    println "After configuration, run:"
-   println "nextflow run fmalmeida/MpGAP -c ./hybrid.config"
+   println "nextflow run fmalmeida/mpgap -c ./hybrid.config"
    println "Nice code!\n"
 
    exit 0
  }
  params.get_lreads_config = false
  if (params.get_lreads_config) {
-   new File("lreads-only.config").write(new URL ("https://github.com/fmalmeida/MpGAP/raw/master/configuration_example/lreads.config").getText())
+   new File("lreads-only.config").write(new URL ("https://github.com/fmalmeida/mpgap/raw/master/configuration_example/lreads.config").getText())
    println ""
    println "lreads.config file saved in working directory"
    println "After configuration, run:"
-   println "nextflow run fmalmeida/MpGAP -c ./lreads.config"
+   println "nextflow run fmalmeida/mpgap -c ./lreads.config"
    println "Nice code!\n"
 
    exit 0
  }
  params.get_sreads_config = false
  if (params.get_sreads_config) {
-   new File("sreads-only.config").write(new URL ("https://github.com/fmalmeida/MpGAP/raw/master/configuration_example/sreads.config").getText())
+   new File("sreads-only.config").write(new URL ("https://github.com/fmalmeida/mpgap/raw/master/configuration_example/sreads.config").getText())
    println ""
    println "sreads.config file saved in working directory"
    println "After configuration, run:"
-   println "nextflow run fmalmeida/MpGAP -c ./sreads.config"
+   println "nextflow run fmalmeida/mpgap -c ./sreads.config"
    println "Nice code!\n"
 
    exit 0
