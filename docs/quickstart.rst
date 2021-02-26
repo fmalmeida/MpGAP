@@ -59,7 +59,7 @@ Oxford nanopore reads are in the `example dataset 1 <https://ngs-preprocess.read
 
 .. tip::
 
-	Specific software can be turned of with the parameters ``--skip_{assembler}``
+	Specific software can be turned off with the parameters ``--skip_{assembler}``
 
 Hybrid assembly (strategy 2)
 ============================
