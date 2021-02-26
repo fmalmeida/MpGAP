@@ -27,12 +27,12 @@ def exampleMessage() {
     ## Hybrid assembly - Using both paired and single end short reads:
 
 \$ nextflow run fmalmeida/mpgap --outdir output --threads 5 --shortreads_paired "path-to/illumina_r{1,2}.fastq" \
---shortreads_single "path-to/illumina_unpaired.fastq" --lr_type nanopore --longreads "path-to/ont_reads.fastq"
+--shortreads_single "path-to/illumina_unpaired.fastq" --lr_type nanopore --longreads "path-to/ont_reads.fastq" --genomeSize 4m
 
     ## Hybrid assembly - by polishing (with shortreads) a longreads-only assembly
     ## Also using medaka prior to the polishing with shortreads
 
 \$ nextflow run fmalmeida/mpgap --outdir output --threads 5 --shortreads_paired "path-to/illumina_r{1,2}.fastq" \
---lr_type nanopore --longreads "path-to/ont_reads.fastq" --strategy_2 --medaka_sequencing_model r941_min_fast_g303
+--lr_type nanopore --longreads "path-to/ont_reads.fastq" --strategy_2 --medaka_sequencing_model r941_min_fast_g303 --genomeSize 4m
     """.stripIndent()
 }
