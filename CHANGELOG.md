@@ -42,6 +42,10 @@ Three more assemblers have been added to the pipeline:
 3. [Raven](https://github.com/lbcb-sci/raven)
   + For long reads assemblies
 
+### New QC summaries
+
+Finally, [MultiQC](https://multiqc.info/) has been added to the pipeline to provide a rapid and nice comparison between the generated assemblies.
+
 ## v2.1
 
 This version have no additions to the pipeline workflow. It has additions in the modes of configuring and executing the pipeline, which are highlighted below.
