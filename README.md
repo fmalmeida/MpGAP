@@ -151,10 +151,6 @@ It will result in the following:
 <img src="./images/nf-core-gui.png" width="400px"/>
 </p>
 
-#### nextflow tower
-
-This pipeline also accepts that users track its execution of processes via [nextflow tower](https://tower.nf/). For that users will have to use the parameters `--use_tower` and `--tower_token`.
-
 ## Known issues
 
 1. Whenever using unicycler with unpaired reads, an odd platform-specific SPAdes-related crash seems do randomly happen as it can be seen in the issue discussed at https://github.com/rrwick/Unicycler/issues/188.
