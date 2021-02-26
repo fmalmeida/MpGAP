@@ -8,7 +8,7 @@ process raven_assembly {
   file lreads
 
   output:
-  file "raven_contigs.fa" // Saves all files
+  file "raven_contigs.*" // Saves all files
   tuple file("raven_contigs.fa"), val(lrID), val('raven') // Gets contigs file
 
   script:
@@ -21,6 +21,7 @@ process raven_assembly {
     type = 'hybrid/strategy_2/longreads_only'
   }
   """
-  raven $lreads --threads ${params.threads} ${params.raven_additional_parameters} > raven_contigs.fa ;
+  raven --threads ${params.threads} --graphical-fragment-assembly raven_contigs.gfa \
+  ${params.raven_additional_parameters} $lreads > raven_contigs.fa ;
   """
 }
