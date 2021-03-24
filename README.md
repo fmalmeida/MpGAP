@@ -1,6 +1,22 @@
-# MpGAP (General multi-platform genome assembly pipeline)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3997375.svg)](https://doi.org/10.5281/zenodo.3445485) [![Releases](https://img.shields.io/github/v/release/fmalmeida/mpgap)](https://github.com/fmalmeida/mpgap/releases) [![Dockerhub](https://img.shields.io/badge/Docker-fmalmeida/mpgap-informational)](https://hub.docker.com/r/fmalmeida/mpgap) [![Docker build](https://img.shields.io/docker/cloud/build/fmalmeida/mpgap)](https://hub.docker.com/r/fmalmeida/mpgap) ![Docker Pulls](https://img.shields.io/docker/pulls/fmalmeida/mpgap) [![Nextflow version](https://img.shields.io/badge/Nextflow%20>=-v20.07-important)](https://www.nextflow.io/docs/latest/getstarted.html) [![License](https://img.shields.io/badge/License-GPL%203-black)](https://github.com/fmalmeida/ngs-preprocess/blob/master/LICENSE)
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3997375.svg)](https://doi.org/10.5281/zenodo.3445485) ![](https://img.shields.io/github/v/release/fmalmeida/mpgap) [![Build Status](https://travis-ci.org/fmalmeida/mpgap.svg?branch=master)](https://travis-ci.org/fmalmeida/mpgap) ![](https://img.shields.io/badge/dependencies-docker-informational) [![Documentation Status](https://readthedocs.org/projects/mpgap/badge/?version=latest)](https://mpgap.readthedocs.io/en/latest/?badge=latest) ![](https://img.shields.io/badge/Nextflow-v20.01-yellowgreen)
+<p align="center">
+
+  <h1 align="center">MpGAP pipeline</h2>
+
+  <p align="center">
+    <h3 align="center">A generic multi-platform genome assembly pipeline</h3>
+    <br />
+    <a href="https://mpgap.readthedocs.io/en/latest/index.html"><strong>See the documentation »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/fmalmeida/MpGAP/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/fmalmeida/MpGAP/issues">Request Feature</a>
+  </p>
+</p>
+
+## About
 
 MpGAP is an easy to use nextflow docker-based pipeline that adopts well known software for genome assembly of Illumina, Pacbio and Oxford Nanopore sequencing data through illumina only, long reads only or hybrid modes. This pipeline wraps up the following software:
 
