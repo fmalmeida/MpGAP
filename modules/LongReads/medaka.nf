@@ -20,7 +20,7 @@ process medaka {
   """
   # first step racon polish
   minimap ${draft} ${reads} > reads_mapped.paf ;
-  racon -t ${params.threads} ${reads} reads_mapped.paf ${draft} racon_consensus.fasta ;
+  racon -m 8 -x -6 -g -8 -w 500 -t ${params.threads} ${reads} reads_mapped.paf ${draft} > racon_consensus.fasta ;
 
   # second step medaka polish
   source activate MEDAKA ;
