@@ -44,29 +44,6 @@ The pipeline is capable of assembling Illumina, ONT and Pacbio reads in three ma
     + Haslr
     + Use short reads to correct errors (polish) in long reads assemblies. See `hybrid assembly strategy 2 <https://mpgap.readthedocs.io/en/latest/manual.html#strategy-2>`_.
 
-Hybrid assembly strategies
-==========================
-
-Hybrid assemblies can be produced using one of two available strategies:
-
-Strategy 1
-----------
-
-By using `Unicycler <https://github.com/rrwick/Unicycler#method-hybrid-assembly>`_, `Haslr <https://github.com/vpc-ccg/haslr>`_ and/or `SPAdes <https://pubmed.ncbi.nlm.nih.gov/26589280/>`_ specialized hybrid assembly modules.
-
-.. note::
-
-  It is achieved when not using the parameter ``--strategy_2``
-
-Strategy 2
-----------
-
-By polishing (correcting errors) a long reads only assembly with Illumina reads. For that, users will have to use the parameter ``--strategy_2``. This will tell the pipeline to produce a long reads only assembly (with canu, raven, flye or unicycler) and polish it with Pilon (for unpaired reads) or with `Unicycler-polish program <https://github.com/rrwick/Unicycler/blob/master/docs/unicycler-polish.md>`_ (for paired end reads).
-
-.. note::
-
-  Note that, ``--strategy_2`` parameter is an alternative workflow, when used, it will execute ONLY strategy 2 and not both strategies. When false, only strategy 1 will be executed.
-
 Parameters documentation
 ========================
 
@@ -137,6 +114,26 @@ Input files
 Hybrid assembly strategy
 ------------------------
 
+Hybrid assemblies can be produced using one of two available strategies:
+
+Strategy 1
+^^^^^^^^^^
+
+By using `Unicycler <https://github.com/rrwick/Unicycler#method-hybrid-assembly>`_, `Haslr <https://github.com/vpc-ccg/haslr>`_ and/or `SPAdes <https://pubmed.ncbi.nlm.nih.gov/26589280/>`_ specialized hybrid assembly modules.
+
+.. note::
+
+  It is achieved when not using the parameter ``--strategy_2``
+
+Strategy 2
+^^^^^^^^^^
+
+By polishing (correcting errors) a long reads only assembly with Illumina reads. For that, users will have to use the parameter ``--strategy_2``. This will tell the pipeline to produce a long reads only assembly (with canu, raven, flye or unicycler) and polish it with Pilon (for unpaired reads) or with `Unicycler-polish program <https://github.com/rrwick/Unicycler/blob/master/docs/unicycler-polish.md>`_ (for paired end reads).
+
+.. note::
+
+  Note that, ``--strategy_2`` parameter is an alternative workflow, when used, it will execute ONLY strategy 2 and not both strategies. When false, only strategy 1 will be executed.
+
 .. list-table::
    :widths: 20 10 20 50
    :header-rows: 1
@@ -152,6 +149,49 @@ Hybrid assembly strategy
      - | Tells the pipeline to create a long reads only assembly and polish it with short reads.
        | By default, the hybrid modes of Unicycler, Haslr and SPAdes are executed.
        | This parameter tells to excute the hybrid strategy 2 (longreads -> polish) instead of Unicycler/Haslr/SPAdes hybrid modes.
+
+Long reads assembly polishing parameters (also used for hybrid strategy 2)
+--------------------------------------------------------------------------
+
+Long reads only assemblies can also be polished with Nanopolish or Racon+Medaka tools for nanopore reads and Arrow for Pacbio reads. For that, users must properly set the parameters. given below.
+
+.. note::
+
+	 For assembly polishing with medaka models, the assembly is first polished one time with racon using the ``-m 8 -x -6 -g -8 -w 500`` as this is the dataset in which Medaka has been trained on. Therefore, the medaka polishing in this pipeline mean Racon 1X + Medaka.
+
+.. list-table::
+   :widths: 20 10 20 50
+   :header-rows: 1
+
+   * - Arguments
+     - Required
+     - Default value
+     - Description
+
+   * - ``--medaka_sequencing_model``
+     - N
+     - r941_min_high_g360
+     - | Used to polish a longreads-only assembly with Medaka. It selects a Medaka ONT sequencing model for polishing.
+       | Please read `medaka manual <https://github.com/nanoporetech/medaka#models>`_ for more instructions.
+
+   * - ``--nanopolish_fast5Path``
+     - N
+     - NA
+     - | Used to polish a longreads-only assembly with Nanopolish.
+       | It sets path to the directory containing all the FAST5 files containing the raw data.
+
+   * - ``--nanopolish_max_haplotypes``
+     - N
+     - 1000
+     - It sets the max number of haplotypes to be considered by Nanopolish. Sometimes the pipeline may crash because to much variation was found exceeding the limit.
+
+   * - ``--pacbio_all_bam_path``
+     - N
+     - NA
+     - | Path to all subreads.bam files for the given reads (can be '\*.bam')
+       | In order to nextflow properly use it, one needs to store all the data, from all the cells in one single directory and set the filepath as "some/data/\*bam".
+       | Whenever set, the pipeline will execute a polishing step with VarianCaller through arrow.
+       | Arrow is supported for PacBio Sequel data and RS data with the P6-C4 chemistry.
 
 Advanced assembler customization options
 ----------------------------------------
@@ -241,44 +281,6 @@ Advanced assembler customization options
      - NA
      - | Passes additional parameters for Shovill assembler. E.g. '--depth 15 --assembler skesa'.
        | Must be given as shown in Shovill' manual.
-
-Long reads assembly polishing parameters (also used for hybrid strategy 2)
---------------------------------------------------------------------------
-
-.. list-table::
-   :widths: 20 10 20 50
-   :header-rows: 1
-
-   * - Arguments
-     - Required
-     - Default value
-     - Description
-
-   * - ``--medaka_sequencing_model``
-     - N
-     - r941_min_fast_g303
-     - | Used to polish a longreads-only assembly with Medaka. It selects a Medaka ONT sequencing model for polishing.
-       | Please read `medaka manual <https://github.com/nanoporetech/medaka#models>`_ for more instructions.
-
-   * - ``--nanopolish_fast5Path``
-     - N
-     - NA
-     - | Used to polish a longreads-only assembly with Nanopolish.
-       | It sets path to the directory containing all the FAST5 files containing the raw data.
-
-   * - ``--nanopolish_max_haplotypes``
-     - N
-     - 1000
-     - It sets the max number of haplotypes to be considered by Nanopolish. Sometimes the pipeline may crash because to much variation was found exceeding the limit.
-
-   * - ``--pacbio_all_bam_path``
-     - N
-     - NA
-     - | Path to all subreads.bam files for the given reads (can be '\*.bam')
-       | In order to nextflow properly use it, one needs to store all the data, from all the cells in one single directory and set the filepath as "some/data/\*bam".
-       | Whenever set, the pipeline will execute a polishing step with VarianCaller through arrow.
-       | Arrow is supported for PacBio Sequel data and RS data with the P6-C4 chemistry.
-
 
 .. tip::
 

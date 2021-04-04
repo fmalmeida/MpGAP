@@ -79,12 +79,15 @@
                                                                                 Guppy basecaller version 3.0.3. Where a version of Guppy has been
                                                                                 used without an exactly corresponding medaka model, the medaka model
                                                                                 with the highest version equal to or less than the guppy version
-                                                                                should be selected. Models available: r941_min_fast_g303,
-                                                                                r941_min_high_g303, r941_min_high_g330, r941_min_high_g344,
-                                                                                r941_prom_fast_g303, r941_prom_high_g303, r941_prom_high_g344,
-                                                                                r941_prom_high_g330, r10_min_high_g303, r10_min_high_g340,
-                                                                                r103_min_high_g345, r941_prom_snp_g303, r941_prom_variant_g303,
-                                                                                r941_min_high_g340_rle.
+                                                                                should be selected. [ Default: r941_min_high_g360 ]
+
+                                                                                Models available: r103_min_high_g345, r103_min_high_g360, r103_prom_high_g360,
+                                                                                r103_prom_snp_g3210, r103_prom_variant_g3210, r10_min_high_g303, r10_min_high_g340,
+                                                                                r941_min_fast_g303, r941_min_high_g303, r941_min_high_g330, r941_min_high_g340_rle,
+                                                                                r941_min_high_g344, r941_min_high_g351, r941_min_high_g360, r941_prom_fast_g303,
+                                                                                r941_prom_high_g303, r941_prom_high_g330, r941_prom_high_g344, r941_prom_high_g360,
+                                                                                r941_prom_high_g4011, r941_prom_snp_g303, r941_prom_snp_g322, r941_prom_snp_g360,
+                                                                                r941_prom_variant_g303, r941_prom_variant_g322, r941_prom_variant_g360
 
 
      --nanopolish_fast5Path <string>                                            Path to directory containing FAST5 files for given reads.
