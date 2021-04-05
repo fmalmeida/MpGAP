@@ -17,7 +17,7 @@ import sphinx_rtd_theme
 
 # -- Project information -----------------------------------------------------
 
-project = 'fmalmeida/mpgap: A genome assembly pipeline for multiple sequencing platforms.'
+project = 'MpGAP: A generic multi-platform genome assembly pipeline'
 copyright = '2019, fmalmeida/mpgap: A genome assembly pipeline for multiple sequencing platforms.'
 author = 'Felipe Marques de Almeida'
 

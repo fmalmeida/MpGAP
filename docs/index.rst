@@ -1,8 +1,7 @@
 .. _index:
 
-*****
-MpGAP
-*****
+MpGAP - A generic multi-platform genome assembly pipeline
+=========================================================
 
 `MpGAP <https://github.com/fmalmeida/mpgap>`_ is a pipeline developed with `Nextflow <https://www.nextflow.io/docs/latest/index.html>`_
 and `Docker <https://www.docker.com/>`_. It was designed to provide an easy-to-use framework for genome assembly of Illumina, Pacbio and Oxford Nanopore
