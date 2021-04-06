@@ -224,18 +224,6 @@
                     "help_text": "Useful for longreads-only and hybrid assemblies using strategy 2.\nPath to all subreads.bam files for the given reads. Whenever set, the pipeline will execute a polishing step with VarianCaller through arrow. Arrow is supported for PacBio Sequel data and RS data with the P6-C4 chemistry."
                 }
             }
-        },
-        "container_management": {
-            "title": "Container management",
-            "type": "object",
-            "description": "",
-            "default": "",
-            "properties": {
-                "singularity": {
-                    "type": "boolean",
-                    "description": "Use Singularity instead of Docker"
-                }
-            }
         }
     },
     "allOf": [
@@ -259,9 +247,6 @@
         },
         {
             "$ref": "#/definitions/long_reads_assembly_polishing_parameters"
-        },
-        {
-            "$ref": "#/definitions/container_management"
         }
     ]
 }

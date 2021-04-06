@@ -40,7 +40,7 @@ This pipeline has two complementary pipelines (also written in nextflow) for [NG
 
 ## Requirements
 
-This pipeline has only two dependencies: [Docker](https://www.docker.com) (or [Singularity](https://sylabs.io/guides/3.5/user-guide/introduction.html)) and [Nextflow](https://github.com/nextflow-io/nextflow).
+This pipeline has only two dependencies: [Docker](https://www.docker.com) and [Nextflow](https://github.com/nextflow-io/nextflow).
 
 * Unix-like operating system (Linux, macOS, etc)
   + Windows users maybe can execute it using the linux subsystem for windows as shown in:
@@ -49,14 +49,13 @@ This pipeline has only two dependencies: [Docker](https://www.docker.com) (or [S
     + https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux
 * Java 8 (or higher)
 * Nextflow (version 20.01 or higher)
-* Docker or Singularity
+* Docker
   * Image: `fmalmeida/mpgap`
 
 ## Installation
 
-1. If you don't have it already install [Docker](https://docs.docker.com/) or [Singularity](https://sylabs.io/guides/3.5/user-guide/introduction.html) in your computer.
+1. If you don't have it already install [Docker](https://docs.docker.com/) in your computer.
     * After installed, you need to download the required Docker images
-    * If using singularity, nextflow automatically downloads and converts the docker images, just remember to properly set the `NXF_SINGULARITY_CACHEDIR` env variable as described at https://www.nextflow.io/docs/latest/singularity.html
 
           docker pull fmalmeida/mpgap
 

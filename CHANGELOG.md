@@ -6,10 +6,6 @@ The tracking for changes started in v2.1
 
 The main changes in the pipeline are summarized below. The majority of the changes were made to make the pipeline easier to rookies.
 
-### Update in 04-2021
-
-Added a parameter `--singularity` so that users can easily use Singularity instead of Docker, if wanted.
-
 ### Output directories organization
 
 The output files and folders that have been changed to have a easier and cleaner organization, to provide more readable output files. Now, each assembly is written as a sub-folder under the main output directory (`--outdir`). The sub-folders are written using the input reads basenames:
