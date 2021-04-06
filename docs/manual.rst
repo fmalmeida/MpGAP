@@ -7,9 +7,9 @@ Manual
 Input files
 ===========
 
-    * path to fastq files containing sequencing reads (Illumina, Nanopore or Pacbio)
-    * path to Pacbio subreads.bam file containing raw data (Optional)
-    * path to Nanopore FAST5 files containing raw data (Optional)
+    + path to fastq files containing sequencing reads (Illumina, Nanopore or Pacbio)
+    + path to Pacbio subreads.bam file containing raw data (Optional)
+    + path to Nanopore FAST5 files containing raw data (Optional)
 
 .. note::
 
