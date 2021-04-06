@@ -68,6 +68,8 @@ if (params.examples){
  /*
   * Load general parameters and establish defaults
   */
+// Container manager
+params.singularity = false
 
 // General
 params.outdir  = 'output'

@@ -18,13 +18,13 @@
     nextflow run fmalmeida/mpgap --examples
 
     Execution Reports:
-    nextflow run fmalmeida/mpgap [ -c nextflow.config ] -with-report
-    nextflow run fmalmeida/mpgap [ -c nextflow.config ] -with-trace
-    nextflow run fmalmeida/mpgap [ -c nextflow.config ] -with-timeline
-
-    OBS: These reports can also be enabled through the configuration file.
+    nextflow run fmalmeida/mpgap [OPTIONS] [-with-report] [-with-trace] [-with-timeline]
 
     OPTIONS:
+
+            # Use Singularity instead of Docker to manage containers?
+
+    --singularity                                                               This will tell the pipeline to use Singularity instead of Docker.
 
             # General Parameters
 
@@ -94,7 +94,7 @@
                                                                                 Whenever set, the pipeline will execute a polishing step
                                                                                 with Nanopolish. This makes the pipeline extremely SLOW!!
 
-     --cpus                                                                     Number of cores to run nanopolish in parallel.
+     --cpus <int>                                                               Number of cores to run nanopolish in parallel.
                                                                                 Beware of your system limits. Default: 2.
 
      --nanopolish_max_haplotypes <int>                                          This parameter sets to nanopolish the max number of haplotypes to be considered.

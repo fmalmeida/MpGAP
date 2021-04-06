@@ -12,8 +12,7 @@ This pipeline requires only `Docker <https://www.docker.com/>`_ (and its Docker 
 1. Installing Docker
 
   * Read more in their `manual <https://docs.docker.com/>`_
-
-  * Or give this `in-house script <https://github.com/fmalmeida/bioinfo/blob/master/dockerfiles/docker_install.sh>`_ a try.
+  * Alternatively users can use `Singularity <https://sylabs.io/singularity/>`_ instead.
 
 2. Installing Nextflow
 
@@ -38,6 +37,10 @@ This pipeline requires only `Docker <https://www.docker.com/>`_ (and its Docker 
 .. note::
 
   Now, everything is set up and ready to run. Remember to always keep your Docker images up to date (Docker pull will always download the latest).
+
+.. note::
+
+	 If using singularity you can use:  ``singularity pull docker://{docker image}``
 
 .. note::
 

@@ -2,9 +2,9 @@
  * Define log message
  */
 def logMessage() {
-  log.info "================================================================="
-  log.info " Docker-based, fmalmeida/mpgap, generic genome assembly pipeline "
-  log.info "================================================================="
+  log.info "===================================================================="
+  log.info " Container-based, fmalmeida/mpgap, generic genome assembly pipeline "
+  log.info "===================================================================="
   def summary = [:]
   // Generic parameters
   summary['Output directory      '] = params.outdir

@@ -158,6 +158,12 @@ Main config file
           skip_raven     = false                      // Longreads only assemblies
           raven_additional_parameters = ''            // Must be given as shown in Raven manual. E.g. '--polishing-rounds 4'
 
+                    /*
+                     *      Use singularity instead of Docker?
+                     */
+    // Use singularity instead of Docker
+          singularity = false
+
     }
 
 
@@ -182,22 +188,4 @@ Main config file
     report {
         enabled = false
         file = "${params.outdir}" + "/annotation_pipeline_nextflow_report.html"
-    }
-
-    /*
-     * Configuring Nextflow Scopes.
-     * Do NOT change any of the following
-     */
-
-    // Queue limit
-    if (params.parallel_jobs) {
-      executor.$local.queueSize = params.parallel_jobs
-    } else {
-      executor.$local.queueSize = 1
-    }
-
-    // Docker permissions
-    docker {
-      enabled = true
-      runOptions = '-u $(id -u):root'
     }

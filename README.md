@@ -1,4 +1,4 @@
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3997375.svg)](https://doi.org/10.5281/zenodo.3445485) [![Releases](https://img.shields.io/github/v/release/fmalmeida/mpgap)](https://github.com/fmalmeida/mpgap/releases) [![Dockerhub](https://img.shields.io/badge/Docker-fmalmeida/mpgap-informational)](https://hub.docker.com/r/fmalmeida/mpgap) [![Docker build](https://img.shields.io/docker/cloud/build/fmalmeida/mpgap)](https://hub.docker.com/r/fmalmeida/mpgap) ![Docker Pulls](https://img.shields.io/docker/pulls/fmalmeida/mpgap) [![Nextflow version](https://img.shields.io/badge/Nextflow%20>=-v20.07-important)](https://www.nextflow.io/docs/latest/getstarted.html) [![License](https://img.shields.io/badge/License-GPL%203-black)](https://github.com/fmalmeida/mpgap/blob/master/LICENSE)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3997375.svg)](https://doi.org/10.5281/zenodo.3445485) [![Releases](https://img.shields.io/github/v/release/fmalmeida/mpgap)](https://github.com/fmalmeida/mpgap/releases) [![Documentation](https://img.shields.io/badge/Documentation-readthedocs-brightgreen)](https://mpgap.readthedocs.io/en/latest/?badge=latest) [![Dockerhub](https://img.shields.io/badge/Docker-fmalmeida/mpgap-informational)](https://hub.docker.com/r/fmalmeida/mpgap) [![Docker build](https://img.shields.io/docker/cloud/build/fmalmeida/mpgap)](https://hub.docker.com/r/fmalmeida/mpgap) ![Docker Pulls](https://img.shields.io/docker/pulls/fmalmeida/mpgap) [![Nextflow version](https://img.shields.io/badge/Nextflow%20>=-v20.07-important)](https://www.nextflow.io/docs/latest/getstarted.html) [![License](https://img.shields.io/badge/License-GPL%203-black)](https://github.com/fmalmeida/mpgap/blob/master/LICENSE)
 
 <p align="center">
 
@@ -38,21 +38,9 @@ MpGAP is an easy to use nextflow docker-based pipeline that adopts well known so
 
 This pipeline has two complementary pipelines (also written in nextflow) for [NGS preprocessing](https://github.com/fmalmeida/mpgap) and [annotation](https://github.com/fmalmeida/bacannot) that can give the user a complete workflow for bacterial genomics analyses.
 
-## Table of contents
-
-* [Requirements](https://github.com/fmalmeida/mpgap#requirements)
-* [Installation](https://github.com/fmalmeida/mpgap#installation)
-* [Documentation](https://github.com/fmalmeida/mpgap#documentation)
-  * [Hybrid strategies explanation](https://github.com/fmalmeida/mpgap#explanation-of-hybrid-strategies)
-  * [Full usage](https://github.com/fmalmeida/mpgap#usage)
-  * [Command line examples](https://github.com/fmalmeida/mpgap#command-line-usage-examples)
-  * [Configuration File](https://github.com/fmalmeida/mpgap#using-the-configuration-file)
-  * [Interactive and graphical execution](https://github.com/fmalmeida/mpgap#interactive-graphical-configuration-and-execution)
-* [Known issues](https://github.com/fmalmeida/mpgap#known-issues)
-
 ## Requirements
 
-This pipeline has only two dependencies: [Docker](https://www.docker.com) and [Nextflow](https://github.com/nextflow-io/nextflow).
+This pipeline has only two dependencies: [Docker](https://www.docker.com) (or [Singularity](https://sylabs.io/guides/3.5/user-guide/introduction.html)) and [Nextflow](https://github.com/nextflow-io/nextflow).
 
 * Unix-like operating system (Linux, macOS, etc)
   + Windows users maybe can execute it using the linux subsystem for windows as shown in:
@@ -61,14 +49,14 @@ This pipeline has only two dependencies: [Docker](https://www.docker.com) and [N
     + https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux
 * Java 8 (or higher)
 * Nextflow (version 20.01 or higher)
-* Docker
+* Docker or Singularity
   * Image: `fmalmeida/mpgap`
 
 ## Installation
 
-1. If you don't have it already install Docker in your computer. Read more [here](https://docs.docker.com/).
-    * You can give this [in-house script](https://github.com/fmalmeida/bioinfo/blob/master/dockerfiles/docker_install.sh) a try.
-    * After installed, you need to download the required Docker image
+1. If you don't have it already install [Docker](https://docs.docker.com/) or [Singularity](https://sylabs.io/guides/3.5/user-guide/introduction.html) in your computer.
+    * After installed, you need to download the required Docker images
+    * If using singularity you can use: `singularity pull docker://{docker image}`
 
           docker pull fmalmeida/mpgap
 
@@ -109,11 +97,12 @@ By polishing a long reads only assembly with Illumina reads. For that, users wil
 
 ### Usage
 
+<a href="https://bacannot.readthedocs.io/en/latest/index.html"><strong>Users are advised to read the complete documentation »</strong></a>
+
 * Complete command line explanation of parameters:
     + `nextflow run fmalmeida/mpgap --help`
 * See usage examples in the command line:
     + `nextflow run fmalmeida/mpgap --examples`
-* However, users are encouraged to read the [complete online documentation](https://mpgap.readthedocs.io/en/latest/?badge=latest).
 
 ### Command line usage examples
 

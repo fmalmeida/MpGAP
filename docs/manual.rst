@@ -282,6 +282,23 @@ Advanced assembler customization options
      - | Passes additional parameters for Shovill assembler. E.g. '--depth 15 --assembler skesa'.
        | Must be given as shown in Shovill' manual.
 
+Container manager
+"""""""""""""""""
+
+.. list-table::
+   :widths: 20 10 20 30
+   :header-rows: 1
+
+   * - Arguments
+     - Required
+     - Default value
+     - Description
+
+   * - ``--singularity``
+     - N
+     - False
+     - Use Singularity instead of Docker to manage containers?
+
 .. tip::
 
   All these parameters are configurable through a configuration file. We encourage users to use the configuration file since it will keep your execution cleaner and more readable. See a :ref:`config` example.
