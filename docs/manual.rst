@@ -285,6 +285,8 @@ Advanced assembler customization options
 Container manager
 """""""""""""""""
 
+If using singularity, nextflow automatically downloads and converts the docker images, just remember to properly set the `NXF_SINGULARITY_CACHEDIR` env variable as described at https://www.nextflow.io/docs/latest/singularity.html
+
 .. list-table::
    :widths: 20 10 20 30
    :header-rows: 1

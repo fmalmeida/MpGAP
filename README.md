@@ -56,7 +56,7 @@ This pipeline has only two dependencies: [Docker](https://www.docker.com) (or [S
 
 1. If you don't have it already install [Docker](https://docs.docker.com/) or [Singularity](https://sylabs.io/guides/3.5/user-guide/introduction.html) in your computer.
     * After installed, you need to download the required Docker images
-    * If using singularity you can use: `singularity pull docker://{docker image}`
+    * If using singularity, nextflow automatically downloads and converts the docker images, just remember to properly set the `NXF_SINGULARITY_CACHEDIR` env variable as described at https://www.nextflow.io/docs/latest/singularity.html
 
           docker pull fmalmeida/mpgap
 
