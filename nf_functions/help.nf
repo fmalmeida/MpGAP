@@ -22,10 +22,6 @@
 
     OPTIONS:
 
-            # Use Singularity instead of Docker to manage containers?
-
-    --singularity                                                               This will tell the pipeline to use Singularity instead of Docker.
-
             # General Parameters
 
 
