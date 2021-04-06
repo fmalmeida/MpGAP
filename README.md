@@ -97,7 +97,7 @@ By polishing a long reads only assembly with Illumina reads. For that, users wil
 
 ### Usage
 
-<a href="https://bacannot.readthedocs.io/en/latest/index.html"><strong>Users are advised to read the complete documentation »</strong></a>
+<a href="https://mpgap.readthedocs.io/en/latest/index.html"><strong>Users are advised to read the complete documentation »</strong></a>
 
 * Complete command line explanation of parameters:
     + `nextflow run fmalmeida/mpgap --help`
