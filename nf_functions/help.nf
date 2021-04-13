@@ -51,6 +51,10 @@
 
      --lr_type <string>                                                         Sets wich type of long reads are being used: pacbio or nanopore
 
+     --corrected_lreads                                                         Tells the pipeline to interpret the long reads as "corrected" long reads.
+                                                                                This will activate (if available) the options for corrected reads in the
+                                                                                assemblers: -corrected (in canu), --pacbio-corr|--nano-corr (in flye), etc.
+
             # Activation of alternative hybrid assembly mode
             # Only useful when giving both short and long reads
 

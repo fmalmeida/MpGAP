@@ -32,7 +32,14 @@
                     ],
                     "default": "nanopore",
                     "description": "Tells whether input longreads are: pacbio or nanopore.",
-                    "help_text": "Your long reads are from pacbio or nanopore sequencing platforms?"
+                    "help_text": "Your long reads are from pacbio or nanopore sequencing platforms?",
+                    "fa_icon": "fas fa-question"
+                },
+                "corrected_lreads": {
+                    "type": "boolean",
+                    "description": "Tells the pipeline to interpret the long reads as \"corrected\" long reads.",
+                    "help_text": "This will activate (if available) the options for corrected reads in the assemblers: -corrected (in canu), --pacbio-corr|--nano-corr (in flye), etc.",
+                    "fa_icon": "fas fa-question"
                 },
                 "shortreads_paired": {
                     "type": "string",
@@ -60,17 +67,20 @@
                 "threads": {
                     "type": "integer",
                     "description": "Number of threads to use for each process",
-                    "default": "4"
+                    "default": "4",
+                    "fa_icon": "fas fa-cogs"
                 },
                 "parallel_jobs": {
                     "type": "integer",
                     "default": 1,
-                    "description": "Number of jobs to run in parallel. Each job can consume up to N threads (--threads)"
+                    "description": "Number of jobs to run in parallel. Each job can consume up to N threads (--threads)",
+                    "fa_icon": "fas fa-cogs"
                 },
                 "cpus": {
                     "type": "integer",
                     "description": "Number of cores to run nanopolish in parallel",
-                    "default": "2"
+                    "default": "2",
+                    "fa_icon": "fas fa-microchip"
                 }
             }
         },
@@ -90,7 +100,8 @@
                     "type": "number",
                     "description": "Max amount of memory allocated by Pilon (in gigabase)",
                     "default": 50,
-                    "help_text": "Whenever polishing long reads only assemblies with unpaired short reads (single end), the pipeline will directly execute one round of pilon polishing instead of using Unicycler's polish pipeline. Therefore we need to allocate the amount of memory allocated by Pilon. Default 50G. This step is crucial because with not enough memory will crash and not correct your assembly. When that happens you will not have the pilon output nor the QUAST assessment."
+                    "help_text": "Whenever polishing long reads only assemblies with unpaired short reads (single end), the pipeline will directly execute one round of pilon polishing instead of using Unicycler's polish pipeline. Therefore we need to allocate the amount of memory allocated by Pilon. Default 50G. This step is crucial because with not enough memory will crash and not correct your assembly. When that happens you will not have the pilon output nor the QUAST assessment.",
+                    "fa_icon": "fas fa-database"
                 }
             }
         },

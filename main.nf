@@ -98,6 +98,7 @@ params.shortreads_paired = ''
 params.shortreads_single = ''
 
 // Long reads
+params.corrected_lreads = false
 params.longreads = ''
 params.lr_type = ''
 params.medaka_sequencing_model = ''
