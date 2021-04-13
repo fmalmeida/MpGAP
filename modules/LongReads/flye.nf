@@ -12,9 +12,11 @@ process flye_assembly {
   tuple file("flye/flye_assembly.fasta"), val(lrID), val('flye') // Gets contigs file
 
   script:
-  lr    = (params.lr_type == 'nanopore') ? '--nano-raw' : '--pacbio-raw'
-  lrID  = lreads.getSimpleName()
-  gsize = (params.genomeSize) ? "--genome-size ${params.genomeSize}" : ""
+  lr        = (params.lr_type == 'nanopore') ? '--nano' : '--pacbio'
+  corrected = (params.corrected_lreads) ? '-corr' : '-raw'
+  lrparam   = lr + corrected
+  lrID      = lreads.getSimpleName()
+  gsize     = (params.genomeSize) ? "--genome-size ${params.genomeSize}" : ""
 
   // Check available reads
   if (!params.shortreads_paired && !params.shortreads_single && params.longreads && params.lr_type) {
@@ -24,7 +26,7 @@ process flye_assembly {
   }
   """
   source activate flye ;
-  flye ${lr} $lreads ${gsize} --out-dir flye \
+  flye ${lrparam} $lreads ${gsize} --out-dir flye \
   --threads ${params.threads} ${params.flye_additional_parameters} &> flye.log ;
   mv flye/assembly.fasta flye/flye_assembly.fasta
   """

@@ -113,7 +113,7 @@
 
      --skip_shovill                                                             Skip assembly with Shovill (paired shortreads only assembler)
 
-     --skip_unicycler                                                           Skip assembly with Unicycler (hybrid and shortreads only assembler)
+     --skip_unicycler                                                           Skip assembly with Unicycler (hybrid, long and short reads only assembler)
 
      --skip_haslr                                                               Skip assembly with Haslr (hybrid assembler)
 

@@ -8,7 +8,7 @@
 
 // Canu assembler
 include { canu_assembly } from '../modules/LongReads/canu.nf' params(outdir: params.outdir, lr_type: params.lr_type,
-  canu_additional_parameters: params.canu_additional_parameters, threads: params.threads,
+  canu_additional_parameters: params.canu_additional_parameters, threads: params.threads, corrected_lreads: params.corrected_lreads,
   genomeSize: params.genomeSize, longreads: params.longreads, shortreads_paired: params.shortreads_paired, shortreads_single: params.shortreads_single)
 
 // Unicycler assembler
@@ -17,7 +17,7 @@ include { unicycler_lreads_assembly } from '../modules/LongReads/unicycler_lread
   shortreads_paired: params.shortreads_paired, shortreads_single: params.shortreads_single, lr_type: params.lr_type)
 
 // Flye assembler
-include { flye_assembly } from '../modules/LongReads/flye.nf' params(outdir: params.outdir, lr_type: params.lr_type,
+include { flye_assembly } from '../modules/LongReads/flye.nf' params(outdir: params.outdir, lr_type: params.lr_type, corrected_lreads: params.corrected_lreads,
   flye_additional_parameters: params.flye_additional_parameters, threads: params.threads, genomeSize: params.genomeSize,
   longreads: params.longreads, shortreads_paired: params.shortreads_paired, shortreads_single: params.shortreads_single)
 
