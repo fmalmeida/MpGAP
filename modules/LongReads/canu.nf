@@ -9,7 +9,7 @@ process canu_assembly {
 
   output:
   file "canu/" // Saves all files
-  tuple file("canu/canu_${lrID}_contigs.fasta"), val(lrID), val('canu') // Gets contigs file
+  tuple file("canu/canu_assembly.fasta"), val(lrID), val('canu') // Gets contigs file
 
   script:
   lr        = (params.lr_type == 'nanopore') ? '-nanopore' : '-pacbio'
@@ -27,6 +27,6 @@ process canu_assembly {
   ${params.canu_additional_parameters} $corrected $lr $lreads
 
   # Rename contigs
-  mv canu/${lrID}.contigs.fasta canu/canu_${lrID}_contigs.fasta
+  mv canu/${lrID}.contigs.fasta canu/canu_assembly.fasta
   """
 }
