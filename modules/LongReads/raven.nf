@@ -8,8 +8,8 @@ process raven_assembly {
   file lreads
 
   output:
-  file "raven_contigs.*" // Saves all files
-  tuple file("raven_contigs.fa"), val(lrID), val('raven') // Gets contigs file
+  file "raven_assembly.*" // Saves all files
+  tuple file("raven_assembly.fa"), val(lrID), val('raven') // Gets contigs file
 
   script:
   lrID      = lreads.getSimpleName()
@@ -26,7 +26,7 @@ process raven_assembly {
   source activate RAVEN;
 
   # Run
-  raven --threads ${params.threads} --graphical-fragment-assembly raven_contigs.gfa \
-  ${params.raven_additional_parameters} $corrected $lreads > raven_contigs.fa ;
+  raven --threads ${params.threads} --graphical-fragment-assembly raven_assembly.gfa \
+  ${params.raven_additional_parameters} $corrected $lreads > raven_assembly.fa ;
   """
 }
