@@ -21,6 +21,8 @@ When using the `--corrected_lreads` parameter, the following assemblers will be 
 
 > Be cautious when using this parameter. If your reads are not corrected, and you use this parameter, you will probably do not generate any contig.
 
+> Additionally, assembly names have been standardised to `{assembler}_assembly`.
+
 ### Output directories organization
 
 The output files and folders that have been changed to have a easier and cleaner organization, to provide more readable output files. Now, each assembly is written as a sub-folder under the main output directory (`--outdir`). The sub-folders are written using the input reads basenames:
