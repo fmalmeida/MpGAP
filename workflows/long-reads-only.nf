@@ -19,7 +19,7 @@ include { flye_assembly } from '../modules/LongReads/flye.nf' params(outdir: par
 
 // Raven assembler
 include { raven_assembly } from '../modules/LongReads/raven.nf' params(outdir: params.outdir, threads: params.threads,
-  raven_additional_parameters: params.raven_additional_parameters, longreads: params.longreads,
+  raven_additional_parameters: params.raven_additional_parameters, longreads: params.longreads, corrected_lreads: params.corrected_lreads,
   shortreads_paired: params.shortreads_paired, shortreads_single: params.shortreads_single, lr_type: params.lr_type)
 
 /*

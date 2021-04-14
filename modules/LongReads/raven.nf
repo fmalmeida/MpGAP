@@ -12,7 +12,8 @@ process raven_assembly {
   tuple file("raven_contigs.fa"), val(lrID), val('raven') // Gets contigs file
 
   script:
-  lrID = lreads.getSimpleName()
+  lrID      = lreads.getSimpleName()
+  corrected = (params.corrected_lreads) ? '--weaken' : ''
 
   // Check available reads
   if (!params.shortreads_paired && !params.shortreads_single && params.longreads && params.lr_type) {
@@ -26,6 +27,6 @@ process raven_assembly {
 
   # Run
   raven --threads ${params.threads} --graphical-fragment-assembly raven_contigs.gfa \
-  ${params.raven_additional_parameters} $lreads > raven_contigs.fa ;
+  ${params.raven_additional_parameters} $corrected $lreads > raven_contigs.fa ;
   """
 }
