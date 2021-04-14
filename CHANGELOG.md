@@ -8,14 +8,14 @@ The main changes in the pipeline are summarized below. The majority of the chang
 
 ### Implementation from issue #7
 
-As stated in issue \#7, we have implemented an option (whenever available) for long reads assemblers to treat the input long reads as corrected long reads.
+As stated in issue \#7, we have implemented an option (whenever available) for long reads assemblers to treat the input long reads as **corrected long reads**.
 
 When using the `--corrected_lreads` parameter, the following assemblers will be affected:
 
 * [Canu](https://github.com/marbl/canu)
     + Will trigger the `-corrected` parameter
 * [Flye](https://github.com/fenderglass/Flye)
-    + Will pass the long reads as `--pacbio-corr` or `--nanopore-corr`
+    + Will pass the long reads as `--pacbio-corr` or `--nano-corr`
 * [Raven](https://github.com/lbcb-sci/raven)
     + Will trigger the `--weaken` parameter
 
