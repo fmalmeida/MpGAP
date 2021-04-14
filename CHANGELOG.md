@@ -6,6 +6,21 @@ The tracking for changes started in v2.1
 
 The main changes in the pipeline are summarized below. The majority of the changes were made to make the pipeline easier to rookies.
 
+### Implementation from issue #7
+
+As stated in issue \#7, we have implemented an option (whenever available) for long reads assemblers to treat the input long reads as corrected long reads.
+
+When using the `--corrected_lreads` parameter, the following assemblers will be affected:
+
+* [Canu](https://github.com/marbl/canu)
+    + Will trigger the `-corrected` parameter
+* [Flye](https://github.com/fenderglass/Flye)
+    + Will pass the long reads as `--pacbio-corr` or `--nanopore-corr`
+* [Raven](https://github.com/lbcb-sci/raven)
+    + Will trigger the `--weaken` parameter
+
+> Be cautious when using this parameter. If your reads are not corrected, and you use this parameter, you will probably do not generate any contig.
+
 ### Output directories organization
 
 The output files and folders that have been changed to have a easier and cleaner organization, to provide more readable output files. Now, each assembly is written as a sub-folder under the main output directory (`--outdir`). The sub-folders are written using the input reads basenames:
