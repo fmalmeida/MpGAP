@@ -51,6 +51,12 @@
 
      --lr_type <string>                                                         Sets wich type of long reads are being used: pacbio or nanopore
 
+     --corrected_lreads                                                         Tells the pipeline to interpret the long reads as "corrected" long reads.
+                                                                                This will activate (if available) the options for corrected reads in the
+                                                                                assemblers: -corrected (in canu), --pacbio-corr|--nano-corr (in flye), etc.
+                                                                                Be cautious when using this parameter. If your reads are not corrected, and
+                                                                                you use this parameter, you will probably do not generate any contig.
+
             # Activation of alternative hybrid assembly mode
             # Only useful when giving both short and long reads
 
@@ -109,7 +115,7 @@
 
      --skip_shovill                                                             Skip assembly with Shovill (paired shortreads only assembler)
 
-     --skip_unicycler                                                           Skip assembly with Unicycler (hybrid and shortreads only assembler)
+     --skip_unicycler                                                           Skip assembly with Unicycler (hybrid, long and short reads only assembler)
 
      --skip_haslr                                                               Skip assembly with Haslr (hybrid assembler)
 

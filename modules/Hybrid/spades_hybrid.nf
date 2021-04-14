@@ -11,7 +11,7 @@ process spades_hybrid {
 
   output:
   file "*" // Save everything
-  tuple file("spades/spades_contigs.fasta"), val(lrID), val('spades') // Gets contigs file
+  tuple file("spades/spades_assembly.fasta"), val(lrID), val('spades') // Gets contigs file
 
   script:
   // Check reads
@@ -32,6 +32,6 @@ process spades_hybrid {
   ${params.spades_additional_parameters} $parameter
 
   # Rename
-  mv spades/contigs.fasta spades/spades_contigs.fasta
+  mv spades/contigs.fasta spades/spades_assembly.fasta
   """
 }

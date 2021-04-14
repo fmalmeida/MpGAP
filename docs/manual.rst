@@ -111,6 +111,15 @@ Input files
      - nanopore
      - Tells whether input longreads are: pacbio or nanopore.
 
+   * - ``--corrected_lreads``
+     - N
+     - False
+     - | Tells the pipeline to interpret the long reads as "corrected" long reads.
+       | This will activate (if available) the options for corrected reads in the
+       | assemblers: -corrected (in canu), --pacbio-corr|--nano-corr (in flye), etc.
+       | Be cautious when using this parameter. If your reads are not corrected, and
+       | you use this parameter, you will probably do not generate any contig.
+
 Hybrid assembly strategy
 ------------------------
 

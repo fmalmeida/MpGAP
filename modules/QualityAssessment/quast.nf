@@ -39,6 +39,6 @@ process quast {
 
   """
   quast.py -o ${assembler} -t ${params.threads} ${quast_parameter} \\
-  --circos --conserved-genes-finding --rna-finding ${contigs}
+  --circos --conserved-genes-finding --rna-finding ${contigs} --min-contig 100
   """
 }
