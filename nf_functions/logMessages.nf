@@ -42,7 +42,7 @@ def logMessage() {
   // Workflow information
   if(workflow.revision) summary['Pipeline Release'] = workflow.revision
   summary['Current home']   = "$HOME"
-  summary['Current user']   = "$USER"
+  //summary['Current user']   = "$USER"
   summary['Current path']   = "$PWD"
   summary['Command used']   = "$workflow.commandLine"
   log.info summary.collect { k,v -> "${k.padRight(15)}: $v" }.join("\n")
