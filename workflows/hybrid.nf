@@ -211,9 +211,9 @@ workflow hybrid_nf {
         pilon_ch = pilon_polish.out[1]
       }
 
-      // Run quast
+      // Run quast (with all)
       quast(
-        hybrid_assemblies_ch.mix(lreads_assemblies_ch, pilon_ch).combine(
+        hybrid_assemblies_ch.mix(lreads_assemblies_ch, medaka_ch, nanopolish_ch, arrow_ch, pilon_ch).combine(
           preads.combine(sreads).collect().toList()
         )
       )
