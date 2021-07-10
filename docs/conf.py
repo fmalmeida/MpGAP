@@ -80,7 +80,7 @@ html_theme_options = {
     'logo_icon': "book",
 
     # repo info
-    "repo_url": "https://github.com/fmalmeida/mpgap",
+    "repo_url": "https://github.com/fmalmeida/MpGAP",
     "repo_name": "MpGAP",
     "repo_type": "github",
 
