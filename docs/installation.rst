@@ -11,27 +11,27 @@ This pipeline requires only `Docker <https://www.docker.com/>`_ (and its Docker 
 
 1. Installing Docker
 
-  + Read more in their `manual <https://docs.docker.com/>`_
+   + Read more in their `manual <https://docs.docker.com/>`_
 
 2. Installing Nextflow
 
-    ``curl -s https://get.nextflow.io | bash``
+   ``curl -s https://get.nextflow.io | bash``
 
 3. Download the pipeline
 
-    ``./nextflow pull fmalmeida/mpgap``
+   ``./nextflow pull fmalmeida/mpgap``
 
 4. Test your installation
 
-    ``./nextflow run fmalmeida/mpgap --help``
+   ``./nextflow run fmalmeida/mpgap --help``
 
 5. Download required Docker images
 
-    ``docker pull fmalmeida/mpgap``
+   ``docker pull fmalmeida/mpgap``
 
 6. (Optional) Install nf-core
 
-    ``pip install nf-core>=1.10``
+   ``pip install nf-core>=1.10``
 
 .. note::
 

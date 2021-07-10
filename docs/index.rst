@@ -8,18 +8,27 @@ MpGAP - A generic multi-platform genome assembly pipeline
 
 It wraps up the following tools:
 
-+ `Canu <https://github.com/marbl/canu>`_
-+ `Flye <https://github.com/fenderglass/Flye>`_
-+ `Raven <https://github.com/lbcb-sci/raven>`_
-+ `Haslr <https://github.com/vpc-ccg/haslr>`_
-+ `Unicycler <https://github.com/rrwick/Unicycler>`_
-+ `SPAdes <https://github.com/ablab/spades>`_
-+ `Shovill <https://github.com/tseemann/shovill>`_
-+ `Nanopolish <https://github.com/jts/nanopolish>`_
-+ `Medaka <https://github.com/nanoporetech/medaka>`_
-+ `Quast <https://github.com/ablab/quast>`_
-+ `GenomicConsensus <https://github.com/PacificBiosciences/GenomicConsensus>`_
-+ `Pilon <https://github.com/broadinstitute/pilon>`_
+.. list-table::
+   :widths: 200 200
+   :header-rows: 1
+
+   * - Analysis steps
+     - Used software
+
+   * - Long reads assembly
+     - `Canu <https://github.com/marbl/canu>`_, `Flye <https://github.com/fenderglass/Flye>`_, `Unicycler <https://github.com/rrwick/Unicycler>`_ and `Raven <https://github.com/lbcb-sci/raven>`_
+
+   * - Hybrid assembly
+     - `Haslr <https://github.com/vpc-ccg/haslr>`_, `Unicycler <https://github.com/rrwick/Unicycler>`_ and `SPAdes <https://github.com/ablab/spades>`_
+
+   * - Short reads assembly
+     - `Shovill <https://github.com/tseemann/shovill>`_, `Unicycler <https://github.com/rrwick/Unicycler>`_ and `SPAdes <https://github.com/ablab/spades>`_
+
+   * - Assembly polishing
+     - `Nanopolish <https://github.com/jts/nanopolish>`_, `Medaka <https://github.com/nanoporetech/medaka>`_, `GenomicConsensus <https://github.com/PacificBiosciences/GenomicConsensus>`_ and `Pilon <https://github.com/broadinstitute/pilon>`_
+
+   * - Assembly QC
+     - `Quast <https://github.com/ablab/quast>`_ and `MultiQC <https://multiqc.info/>`_
 
 .. toctree::
    :hidden:

@@ -7,9 +7,9 @@ Manual
 Input files
 ===========
 
-    + path to fastq files containing sequencing reads (Illumina, Nanopore or Pacbio)
-    + path to Pacbio subreads.bam file containing raw data (Optional)
-    + path to Nanopore FAST5 files containing raw data (Optional)
+* path to fastq files containing sequencing reads (Illumina, Nanopore or Pacbio)
+* path to Pacbio subreads.bam file containing raw data (Optional)
+* path to Nanopore FAST5 files containing raw data (Optional)
 
 .. note::
 
@@ -26,23 +26,23 @@ The pipeline is capable of assembling Illumina, ONT and Pacbio reads in three ma
 
 1. Short reads only assemblies
 
-    + Unicycler
-    + SPAdes
-    + Shovill (for paired reads only)
+   + Unicycler
+   + SPAdes
+   + Shovill (for paired reads only)
 
 2. Long reads only assemblies
 
-    + Unicycler
-    + Canu
-    + Flye
-    + Raven
+   + Unicycler
+   + Canu
+   + Flye
+   + Raven
 
 3. Hybrid (both short and long reads)
 
-    + Unicycler
-    + SPAdes
-    + Haslr
-    + Use short reads to correct errors (polish) in long reads assemblies. See `hybrid assembly strategy 2 <https://mpgap.readthedocs.io/en/latest/manual.html#strategy-2>`_.
+   + Unicycler
+   + SPAdes
+   + Haslr
+   + Use short reads to correct errors (polish) in long reads assemblies. See `hybrid assembly strategy 2 <https://mpgap.readthedocs.io/en/latest/manual.html#strategy-2>`_.
 
 Parameters documentation
 ========================
@@ -51,7 +51,7 @@ General parameters
 ------------------
 
 .. list-table::
-   :widths: 20 10 20 50
+   :widths: 20 25 10 50
    :header-rows: 1
 
    * - Arguments
@@ -65,7 +65,8 @@ General parameters
      - Name of directory to store output values. Input reads basenames will be used to create sub-folder under this directory.
 
    * - ``--genomeSize``
-     - Y (for Canu and Haslr assemblers)
+     - | Y
+       | (for Canu and Haslr assemblers)
      - NA
      - Sets expected genome size. E.g. 5.6m; 1.2g.
 
@@ -83,7 +84,7 @@ Input files
 -----------
 
 .. list-table::
-   :widths: 20 10 20 50
+   :widths: 20 25 10 50
    :header-rows: 1
 
    * - Arguments
@@ -92,22 +93,26 @@ Input files
      - Description
 
    * - ``--shortreads_paired``
-     - Y (for hybrid and illumina-only modes)
+     - | Y
+       | (for hybrid and illumina-only modes)
      - NA
      - Path to Illumina paired end reads. E.g. "read_pair\_{1,2}.fastq".
 
    * - ``--shortreads_single``
-     - Y (for hybrid and illumina-only modes)
+     - | Y
+       | (for hybrid and illumina-only modes)
      - NA
      - Path to Illumina single end reads. E.g. "reads\*.fastq".
 
    * - ``--longreads``
-     - Y (for hybrid and longreads-only modes)
+     - | Y
+       | (for hybrid and longreads-only modes)
      - NA
      - Path to longreads in FASTA or FASTQ formats.
 
    * - ``--lr_type``
-     - Y (for hybrid and longreads-only modes)
+     - | Y
+       | (for hybrid and longreads-only modes)
      - nanopore
      - Tells whether input longreads are: pacbio or nanopore.
 
@@ -115,10 +120,9 @@ Input files
      - N
      - False
      - | Tells the pipeline to interpret the long reads as "corrected" long reads.
+       |
        | This will activate (if available) the options for corrected reads in the
-       | assemblers: -corrected (in canu), --pacbio-corr|--nano-corr (in flye), etc.
-       | Be cautious when using this parameter. If your reads are not corrected, and
-       | you use this parameter, you will probably do not generate any contig.
+       | assemblers: ``-corrected`` (in canu), ``--pacbio-corr|--nano-corr`` (in flye), etc. Be cautious when using this parameter. If your reads are not corrected, and you use this parameter, you will probably do not generate any contig.
 
 Hybrid assembly strategy
 ------------------------
@@ -144,7 +148,7 @@ By polishing (correcting errors) a long reads only assembly with Illumina reads.
   Note that, ``--strategy_2`` parameter is an alternative workflow, when used, it will execute ONLY strategy 2 and not both strategies. When false, only strategy 1 will be executed.
 
 .. list-table::
-   :widths: 20 10 20 50
+   :widths: 20 30 10 50
    :header-rows: 1
 
    * - Arguments
@@ -156,8 +160,8 @@ By polishing (correcting errors) a long reads only assembly with Illumina reads.
      - N
      - False
      - | Tells the pipeline to create a long reads only assembly and polish it with short reads.
-       | By default, the hybrid modes of Unicycler, Haslr and SPAdes are executed.
-       | This parameter tells to excute the hybrid strategy 2 (longreads -> polish) instead of Unicycler/Haslr/SPAdes hybrid modes.
+       |
+       | By default, the hybrid modes of Unicycler, Haslr and SPAdes are executed. This parameter tells to excute the hybrid strategy 2 (longreads -> polish) instead of Unicycler/Haslr/SPAdes hybrid modes.
 
 Long reads assembly polishing parameters (also used for hybrid strategy 2)
 --------------------------------------------------------------------------
@@ -199,14 +203,16 @@ Long reads only assemblies can also be polished with Nanopolish or Racon+Medaka 
      - NA
      - | Path to all subreads.bam files for the given reads (can be '\*.bam')
        | In order to nextflow properly use it, one needs to store all the data, from all the cells in one single directory and set the filepath as "some/data/\*bam".
+       |
        | Whenever set, the pipeline will execute a polishing step with VarianCaller through arrow.
+       |
        | Arrow is supported for PacBio Sequel data and RS data with the P6-C4 chemistry.
 
 Advanced assembler customization options
 ----------------------------------------
 
 .. list-table::
-   :widths: 20 10 20 50
+   :widths: 30 10 10 50
    :header-rows: 1
 
    * - Arguments
@@ -222,8 +228,7 @@ Advanced assembler customization options
    * - ``--canu_additional_parameters``
      - N
      - NA
-     - | Passes additional parameters for Canu assembler. E.g. 'correctedErrorRate=0.075 corOutCoverage=200'.
-       | Must be given as shown in Canu's manual.
+     - | Passes additional parameters for Canu assembler. E.g. ``'correctedErrorRate=0.075 corOutCoverage=200'``. Must be given as shown in Canu's manual.
 
    * - ``--skip_flye``
      - N
@@ -233,8 +238,7 @@ Advanced assembler customization options
    * - ``--flye_additional_parameters``
      - N
      - NA
-     - | Passes additional parameters for Flye assembler. E.g. '--meta --iterations 4'.
-       | Must be given as shown in Flye's manual.
+     - | Passes additional parameters for Flye assembler. E.g. ``'--meta --iterations 4'``. Must be given as shown in Flye's manual.
 
    * - ``--skip_raven``
      - N
@@ -244,8 +248,7 @@ Advanced assembler customization options
    * - ``--raven_additional_parameters``
      - N
      - NA
-     - | Passes additional parameters for Raven assembler. E.g. '--polishing-rounds 4'.
-       | Must be given as shown in Raven's manual.
+     - | Passes additional parameters for Raven assembler. E.g. ``'--polishing-rounds 4'``. Must be given as shown in Raven's manual.
 
    * - ``--skip_unicycler``
      - N
@@ -255,8 +258,7 @@ Advanced assembler customization options
    * - ``--unicycler_additional_parameters``
      - N
      - NA
-     - | Passes additional parameters for Unicycler assembler. E.g. '--mode conservative --no_correct'.
-       | Must be given as shown in Unicycler's manual.
+     - | Passes additional parameters for Unicycler assembler. E.g. ``'--mode conservative --no_correct'``. Must be given as shown in Unicycler's manual.
 
    * - ``--skip_spades``
      - N
@@ -266,8 +268,7 @@ Advanced assembler customization options
    * - ``--spades_additional_parameters``
      - N
      - NA
-     - | Passes additional parameters for SPAdes assembler. E.g. '--meta --plasmids'.
-       | Must be given as shown in Spades' manual.
+     - | Passes additional parameters for SPAdes assembler. E.g. ``'--meta --plasmids'``. Must be given as shown in Spades' manual.
 
    * - ``--skip_haslr``
      - N
@@ -277,8 +278,7 @@ Advanced assembler customization options
    * - ``--haslr_additional_parameters``
      - N
      - NA
-     - | Passes additional parameters for Haslr assembler. E.g. '--cov-lr 30'.
-       | Must be given as shown in Haslr' manual.
+     - | Passes additional parameters for Haslr assembler. E.g. ``'--cov-lr 30'``. Must be given as shown in Haslr' manual.
 
    * - ``--skip_shovill``
      - N
@@ -288,8 +288,7 @@ Advanced assembler customization options
    * - ``--shovill_additional_parameters``
      - N
      - NA
-     - | Passes additional parameters for Shovill assembler. E.g. '--depth 15 --assembler skesa'.
-       | Must be given as shown in Shovill' manual.
+     - | Passes additional parameters for Shovill assembler. E.g. ``'--depth 15 --assembler skesa'``. Must be given as shown in Shovill' manual.
 
 .. tip::
 

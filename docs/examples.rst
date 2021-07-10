@@ -13,7 +13,9 @@ Some execution examples
 Illumina-only assembly with paired end reads
 ============================================
 
-::
+.. code-block:: bash
+
+   code content
 
    ./nextflow run fmalmeida/mpgap \
       --outdir output \
@@ -27,7 +29,7 @@ Illumina-only assembly with paired end reads
 Illumina-only assembly with single end reads
 ============================================
 
-::
+.. code-block:: bash
 
   ./nextflow run fmalmeida/mpgap \
      --outdir output \
@@ -41,7 +43,7 @@ Illumina-only assembly with single end reads
 Illumina-only assembly with both paired and single end reads
 ============================================================
 
-::
+.. code-block:: bash
 
   ./nextflow run fmalmeida/mpgap \
      --outdir output \
@@ -58,7 +60,7 @@ Long reads only with ONT reads
 
 Take note that in this example, we also polish the resulting assembly with both Nanopolish and Medaka polishers.
 
-::
+.. code-block:: bash
 
   ./nextflow run fmalmeida/mpgap \
      --outdir output \
@@ -81,9 +83,9 @@ Take note that in this example, we also polish the resulting assembly with both 
 Long reads only with pacbio reads
 =================================
 
-Take note that in this example, we also polish the resulting assembly with both Arrow polisher.
+Take note that in this example, we also polish the resulting assembly with Arrow polisher.
 
-::
+.. code-block:: bash
 
   ./nextflow run fmalmeida/mpgap \
      --outdir output \
@@ -107,7 +109,7 @@ Assembly in Hybrid strategy 1
 
 Assembling directly via Unicycler, Haslr and SPAdes modules, using Pacbio reads.
 
-::
+.. code-block:: bash
 
   ./nextflow run fmalmeida/mpgap \
      --outdir output \
@@ -126,7 +128,7 @@ Assembly in Hybrid strategy 2
 
 By using shortreads to correct errors (polish) in longreads-only assemblies (generated with canu, raven, unicycler and/or flye). Additionally, in this example, we also execute the medaka and nanopolish poloishers before the polishing with shortreads.
 
-::
+.. code-block:: bash
 
   ./nextflow run fmalmeida/mpgap \
      --outdir output \
@@ -147,13 +149,13 @@ By using shortreads to correct errors (polish) in longreads-only assemblies (gen
 Running with a configuration file
 =================================
 
-::
+.. code-block:: bash
 
       ./nextflow run fmalmeida/mpgap -c nextflow.config
 
 Running and configure from an interactive graphical interface
 =============================================================
 
-::
+.. code-block:: bash
 
       nf-core launch fmalmeida/mpgap
