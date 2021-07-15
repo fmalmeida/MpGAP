@@ -1,6 +1,6 @@
 process nanopolish {
   publishDir "${params.outdir}/${lrID}/${type}/nanopolished_contigs/${assembler}", mode: 'copy'
-  container 'fmalmeida/mpgap'
+  label 'main'
   cpus params.threads
 
   input:

@@ -1,6 +1,6 @@
 process quast {
   publishDir "${params.outdir}/${id}/${type}/00_quality_assessment", mode: 'copy'
-  container 'fmalmeida/mpgap'
+  label 'main'
   tag "Assessing ${assembler} assembly quality"
 
   input:

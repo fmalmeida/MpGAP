@@ -1,6 +1,6 @@
 process medaka {
   publishDir "${params.outdir}/${lrID}/${type}/medaka_polished_contigs", mode: 'copy'
-  container 'fmalmeida/mpgap'
+  label 'main'
   tag "Polishing assembly with Medaka"
 
   input:

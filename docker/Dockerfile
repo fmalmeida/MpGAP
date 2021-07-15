@@ -17,9 +17,10 @@ RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -
 ENV PATH="/miniconda/bin:$PATH"
 
 # Set ncbi-blast+
-RUN wget https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.11.0/ncbi-blast-2.11.0+-x64-linux.tar.gz && \
-        tar -zxvf ncbi-blast-2.11.0+-x64-linux.tar.gz && \
-				cp ncbi-blast-2.11.0+/bin/* /usr/local/bin/
+RUN export NCBI=$(curl -s ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ | grep "x64-linux.tar.gz$" | rev | cut -d' ' -f1 | rev) && \
+ 			wget "ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/${NCBI}" -O blast.tar.gz
+RUN 			tar -zxvf blast.tar.gz && \
+			cp ncbi-blast-*/bin/* /usr/local/bin/
 
 # INSTALL Racon
 RUN git clone --recursive https://github.com/isovic/racon.git racon && \
@@ -28,7 +29,7 @@ RUN git clone --recursive https://github.com/isovic/racon.git racon && \
 			make && make install
 
 # INSTALL Medaka
-RUN conda create -y -n MEDAKA python=3.8 && \
+RUN conda create -y -n MEDAKA "python=3.8" && \
 			conda install -y -n MEDAKA -c conda-forge -c bioconda medaka nomkl && \
 			conda clean -afy
 
@@ -37,12 +38,15 @@ RUN conda install -y -c bioconda pilon nomkl && \
 			conda clean -afy
 
 # Set Canu assembler
-RUN wget https://github.com/marbl/canu/releases/download/v2.1.1/canu-2.1.1.Linux-amd64.tar.xz && \
-			tar -xJf canu-2.*.tar.xz && \
-			ln -rs canu-2.*/*/bin/* /usr/local/bin
+RUN curl -s https://api.github.com/repos/marbl/canu/releases/latest | grep "browser_download_url.*.Linux-amd64.tar.xz" | cut -d ":" -f 2,3  | tr -d '"' | wget -qi - -O canu.tar.xz && \
+			tar -xJf canu.tar.xz && \
+			ln -rs canu-*/*/bin/* /usr/local/bin
 
 # Set SPAdes assembler
-RUN conda install -y -c bioconda spades nomkl && \
+## install compatible spades for unicycler
+## unicycler edge sorting functions of illumina graph
+## only works until spades 3.13.0
+RUN conda install -y -c bioconda "spades==3.13.0"	 nomkl && \
 			conda clean -afy
 
 # Set Unicycler
@@ -53,9 +57,10 @@ RUN pip install --upgrade pip && \
 			pip install setuptools && \
 			pip3 install setuptools && \
 			apt install zlib1g-dev && \
-			wget https://github.com/rrwick/Unicycler/archive/v0.4.8.tar.gz && \
-			tar zxvf v0.4.8.tar.gz && \
-			mv Unicycler-0.4.8 Unicycler && \
+			export UNICYCLER_TAG=$(curl -s https://api.github.com/repos/rrwick/Unicycler/releases/latest | grep "tag_name" | cut -d ":" -f 2,3  | tr -d '"' | tr -d "," | tr -d " ") && \
+			wget "https://github.com/rrwick/Unicycler/archive/refs/tags/${UNICYCLER_TAG}.tar.gz" -O unicycler.tar.gz && \
+			tar zxvf unicycler.tar.gz && \
+			mv Unicycler-* Unicycler && \
 			cd Unicycler && python3 setup.py install
 
 ## Set Unicycler complementary tools
@@ -68,7 +73,9 @@ RUN apt-get install -y mummer && \
 			#conda install -y -c conda-forge arrow && \
 			git clone https://github.com/sc932/ALE.git && cd ALE/src && make && ln -rs ALE /usr/local/bin && \
 			conda install -y -c bioconda minimap nomkl && \
-			curl -L https://github.com/lh3/minimap2/releases/download/v2.10/minimap2-2.10_x64-linux.tar.bz2 | tar -jxvf - ; ln -rs minimap2-2.10_x64-linux/minimap2 /usr/local/bin && \
+			curl -s https://api.github.com/repos/lh3/minimap2/releases/latest | grep "browser_download_url.*x64-linux.tar.bz2" | cut -d ":" -f 2,3  | tr -d '"' | wget -qi - -O minimap.tar.bz2 && \
+			tar -jxvf minimap.tar.bz2 && \
+			ln -rs minimap2-*-linux/minimap2 /usr/local/bin && \
 			chmod a+x /miniconda/bin/* && \
 			conda clean -afy
 
@@ -81,9 +88,8 @@ RUN apt-get install -y libhdf5-dev parallel && \
       conda install -y -n NANOPOLISH nanopolish nomkl && \
 			conda clean -afy
 
-# Set PACBIO GENOMICONSENSUS
-RUN conda create --name pacbio python=2 && \
-			conda install -y -c bioconda -n pacbio genomicconsensus openssl=1.0 pbalign blasr bax2bam pbcore pbcommand pbcopper nomkl && \
+# Set PACBIO polisher (newest gcpp and mm2)
+RUN conda create --name pacbio -y -c bioconda pbgcpp pbmm2 nomkl && \
 			chmod a+x /miniconda/bin/* && \
 			conda clean -afy
 
@@ -110,7 +116,7 @@ RUN chmod -R 777 /miniconda/envs/MEDAKA/lib/python3.8/site-packages/medaka/data
 RUN conda info -e
 
 # Fix Canu links
-RUN ln -frs canu-2.1.1/bin/* /usr/local/bin/
+RUN ln -frs canu-*/bin/* /usr/local/bin/
 
 # Install seqtk
 RUN git clone https://github.com/lh3/seqtk.git && \

@@ -1,6 +1,6 @@
 process raven_assembly {
   publishDir "${params.outdir}/${lrID}/${type}/raven", mode: 'copy'
-  container 'fmalmeida/mpgap'
+  label 'main'
   cpus params.threads
   tag "Performing a longreads only assembly with raven"
 

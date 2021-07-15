@@ -1,6 +1,6 @@
 process spades_hybrid {
   publishDir "${params.outdir}/${lrID}/hybrid/strategy_1", mode: 'copy'
-  container 'fmalmeida/mpgap'
+  label 'main'
   tag { x }
   cpus params.threads
 

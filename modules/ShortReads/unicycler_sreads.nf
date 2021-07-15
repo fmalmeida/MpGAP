@@ -1,6 +1,6 @@
 process unicycler_sreads_assembly {
   publishDir "${params.outdir}/${out_ids}/shortreads_only", mode: 'copy'
-  container 'fmalmeida/mpgap'
+  label 'main'
   tag { x }
   cpus params.threads
 

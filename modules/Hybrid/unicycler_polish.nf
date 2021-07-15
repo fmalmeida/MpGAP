@@ -1,6 +1,6 @@
 process pilon_polish {
   publishDir "${params.outdir}/${id}/hybrid/strategy_2", mode: 'copy'
-  container 'fmalmeida/mpgap'
+  label 'main'
   cpus params.threads
   tag "Polishing a longreads-only assembly with shortreads (through Pilon)"
 

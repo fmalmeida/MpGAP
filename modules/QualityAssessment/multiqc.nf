@@ -1,6 +1,6 @@
 process multiqc {
   publishDir "${params.outdir}/${id}/${dir}/00_quality_assessment", mode: 'copy'
-  container 'fmalmeida/mpgap'
+  label 'main'
   tag "Collecting Quast quality reports"
 
   input:

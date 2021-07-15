@@ -1,6 +1,6 @@
 process shovill_sreads_assembly {
   publishDir "${params.outdir}/${id}/shortreads_only", mode: 'copy'
-  container 'fmalmeida/mpgap'
+  label 'main'
   tag "Performing a illumina-only assembly with shovill, using paired end reads"
   cpus params.threads
 

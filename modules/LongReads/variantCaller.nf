@@ -1,6 +1,6 @@
 process variantCaller {
   publishDir "${params.outdir}/${lrID}/${type}/arrow_polished_contigs", mode: 'copy'
-  container 'fmalmeida/mpgap'
+  label 'main'
   cpus params.threads
 
   input:
