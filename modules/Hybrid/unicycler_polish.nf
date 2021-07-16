@@ -18,7 +18,7 @@ process pilon_polish {
       mkdir pilon_results_${assembler};
 
       # Execute Unicycler polishing pilon wrapper
-      unicycler_polish --minimap /miniconda/bin/miniasm --pilon /miniconda/share/pilon-1.23-2/pilon-1.23.jar \
+      unicycler_polish --minimap /miniconda/bin/miniasm --pilon /miniconda/share/pilon*/pilon*jar \
       -a $draft -1 ${reads[1]} -2 ${reads[2]} --threads ${params.threads} &> polish.log ;
 
       # Save files in the desired directory
@@ -38,7 +38,7 @@ process pilon_polish {
       samtools index ${id}_${assembler}_aln.bam ;
 
       # Execute pilon a single time (for single end reads)
-      java -Xmx${params.pilon_memory_limit}G -jar /miniconda/share/pilon-1.23-2/pilon-1.23.jar \
+      java -Xmx${params.pilon_memory_limit}G -jar /miniconda/share/pilon*/pilon*jar \
       --genome ${draft} --bam ${id}_${assembler}_aln.bam --output ${assembler}_final_pilon_polish \
       --outdir pilon_results_${assembler} &> pilon.log
 
@@ -57,12 +57,12 @@ process pilon_polish {
       samtools index ${id}_${assembler}_aln.bam ;
 
       # Execute pilon a single time (for single end reads)
-      java -Xmx${params.pilon_memory_limit}G -jar /miniconda/share/pilon-1.23-2/pilon-1.23.jar \
+      java -Xmx${params.pilon_memory_limit}G -jar /miniconda/share/pilon*/pilon*jar \
       --genome ${draft} --bam ${id}_${assembler}_aln.bam --output first_polish \
       --outdir . &> pilon.log
 
       # Execute Unicycler polishing pilon wrapper (for paired reads)
-      unicycler_polish --minimap /miniconda/bin/miniasm --pilon /miniconda/share/pilon-1.23-2/pilon-1.23.jar \
+      unicycler_polish --minimap /miniconda/bin/miniasm --pilon /miniconda/share/pilon*/pilon*jar \
       -a first_polish.fasta -1 ${reads[1]} -2 ${reads[2]} --threads ${params.threads} &> polish.log ;
 
       # Save files in the desired directory
