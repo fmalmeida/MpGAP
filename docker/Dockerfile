@@ -142,6 +142,10 @@ RUN conda create -y -n RAVEN && \
 RUN conda install -y -c bioconda -c conda-forge multiqc nomkl && \
 			conda clean -afy
 
+# fix tbb libraries
+RUN conda install -y -c conda-forge 'tbb=2020.2' && \
+			conda clean -afy
+
 # Remove tars
 RUN rm -rf *.tar.gz *.tar.xz
 
