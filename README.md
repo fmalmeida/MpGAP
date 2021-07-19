@@ -170,20 +170,4 @@ It will result in the following:
 
 ## Citation
 
-To cite this pipeline users can use our Zenodo tag or directly via the github url.
-
-Users are encouraged to cite the programs used in this pipeline whenever they are used:
-
-* [Canu](https://github.com/marbl/canu)
-* [Flye](https://github.com/fenderglass/Flye)
-* [Raven](https://github.com/lbcb-sci/raven)
-* [Haslr](https://github.com/vpc-ccg/haslr)
-* [Unicycler](https://github.com/rrwick/Unicycler)
-* [Spades](https://github.com/ablab/spades)
-* [Shovill](https://github.com/tseemann/shovill)
-* [Nanopolish](https://github.com/jts/nanopolish)
-* [Medaka](https://github.com/nanoporetech/medaka)
-* [GenomicConsensus](https://github.com/PacificBiosciences/GenomicConsensus)
-* [Pilon](https://github.com/broadinstitute/pilon)
-* [QUAST](https://github.com/ablab/quast)
-* [MultiQC](https://multiqc.info/)
+To cite this pipeline users can use our Zenodo tag or directly via the github url. Users are encouraged to cite the programs used in this pipeline whenever they are used.
