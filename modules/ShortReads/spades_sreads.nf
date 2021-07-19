@@ -31,8 +31,7 @@ process spades_sreads_assembly {
   }
 
   """
-  spades.py -o spades -t ${params.threads} \\
-  ${params.spades_additional_parameters} $parameter
+  spades.py -o spades -t ${params.threads} ${params.spades_additional_parameters} $parameter
 
   # Rename assembly
   mv spades/contigs.fasta spades/spades_assembly.fasta

@@ -20,19 +20,9 @@
 
 MpGAP is an easy to use nextflow docker-based pipeline that adopts well known software for genome assembly of Illumina, Pacbio and Oxford Nanopore sequencing data through illumina only, long reads only or hybrid modes. This pipeline wraps up the following software:
 
-* [Canu](https://github.com/marbl/canu)
-* [Flye](https://github.com/fenderglass/Flye)
-* [Raven](https://github.com/lbcb-sci/raven)
-* [Haslr](https://github.com/vpc-ccg/haslr)
-* [Unicycler](https://github.com/rrwick/Unicycler)
-* [Spades](https://github.com/ablab/spades)
-* [Shovill](https://github.com/tseemann/shovill)
-* [Nanopolish](https://github.com/jts/nanopolish)
-* [Medaka](https://github.com/nanoporetech/medaka)
-* [GenomicConsensus](https://github.com/PacificBiosciences/GenomicConsensus)
-* [Pilon](https://github.com/broadinstitute/pilon)
-* [QUAST](https://github.com/ablab/quast)
-* [MultiQC](https://multiqc.info/)
+| **Assemblers** | [Canu](https://github.com/marbl/canu), [Flye](https://github.com/fenderglass/Flye), [Raven](https://github.com/lbcb-sci/raven), [Haslr](https://github.com/vpc-ccg/haslr), [Unicycler](https://github.com/rrwick/Unicycler), [Spades](https://github.com/ablab/spades), [Shovill](https://github. com/tseemann/shovill) |
+| **Polishers** | [Nanopolish](https://github.com/jts/nanopolish), [Medaka](https://github.com/nanoporetech/medaka), [gcpp](https://github.com/PacificBiosciences/gcpp), [Pilon](https://github.com/broadinstitute/pilon) |
+| Quality check | [QUAST](https://github.com/ablab/quast), [MultiQC](https://multiqc.info/) |
 
 ## Further reading
 
