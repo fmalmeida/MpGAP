@@ -15,12 +15,12 @@ process unicycler_sreads_assembly {
   script:
 
   if ((params.shortreads_single) && (params.shortreads_paired)) {
-    parameter = "-1 $sread1 -2 $sread2 -s $sreads --no_correct"
+    parameter = "-1 $sread1 -2 $sread2 -s $sreads"
     x = "Performing a illumina-only assembly with Unicycler, using paired and single end reads"
     srId = (sreads - ".gz")[0].getBaseName()
     out_ids = "${id}_and_${srId}"
   } else if ((params.shortreads_single) && (!params.shortreads_paired)) {
-    parameter = "-s $sreads --no_correct"
+    parameter = "-s $sreads"
     id = (sreads - ".gz")[0].getBaseName()
     x = "Performing a illumina-only assembly with Unicycler, using single end reads"
     out_ids = "${id}"

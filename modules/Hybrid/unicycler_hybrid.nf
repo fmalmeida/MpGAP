@@ -17,10 +17,10 @@ process unicycler_hybrid {
   // Check reads
   lrID = (lreads - ".gz")[0].getBaseName()
   if ((params.shortreads_single) && (params.shortreads_paired)) {
-    parameter = "-1 $sread1 -2 $sread2 -s $sreads -l $lreads --no_correct"
+    parameter = "-1 $sread1 -2 $sread2 -s $sreads -l $lreads"
     x = "Performing a hybrid assembly with Unicycler, using paired and single end reads"
   } else if ((params.shortreads_single) && (!params.shortreads_paired)) {
-    parameter = "-s $sreads -l $lreads --no_correct"
+    parameter = "-s $sreads -l $lreads"
     x = "Performing a hybrid assembly with Unicycler, using single end reads"
   } else if ((params.shortreads_paired) && (!params.shortreads_single)) {
     parameter = "-1 $sread1 -2 $sread2 -l $lreads"
