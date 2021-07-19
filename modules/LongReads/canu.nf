@@ -14,7 +14,7 @@ process canu_assembly {
   script:
   lr        = (params.lr_type == 'nanopore') ? '-nanopore' : '-pacbio'
   corrected = (params.corrected_lreads) ? '-corrected' : ''
-  lrID      = lreads.getSimpleName()
+  lrID      = (lreads - ".gz")[0].getBaseName()
 
   // Check available reads
   if (!params.shortreads_paired && !params.shortreads_single && params.longreads && params.lr_type) {

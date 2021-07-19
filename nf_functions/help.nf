@@ -67,13 +67,13 @@
                                                                                 another hybrid methodology.
 
                                                                                 It is also possible to polish the longreads-only assemblies with Nanopolish,
-                                                                                Medaka or Arrow (depending on the sequencing technology) before polishing
+                                                                                Medaka or gcpp (depending on the sequencing technology) before polishing
                                                                                 it with shortreads. For that, users must check the longreads parameters:
-                                                                                --medaka_sequencing_model, --nanopolish_fast5Path and --pacbio_all_bam_path
+                                                                                --medaka_sequencing_model, --nanopolish_fast5Path and --pacbio_bams
 
             # Assembly polishing using long reads raw data
             # Parameters useful for polishing longreads-only assemblies
-            # Polishers ==> ONT: Nanopolish or Medaka; Pacbio: Arrow.
+            # Polishers ==> ONT: Nanopolish or Medaka; Pacbio: gcpp.
 
     --medaka_sequencing_model <string>                                          Tells Medaka polisher which model to use according to the basecaller
                                                                                 used. For example the model named r941_min_fast_g303 should be used
@@ -103,9 +103,12 @@
                                                                                 Sometimes the pipeline may crash because to much variation was found exceeding the
                                                                                 limit. Try augmenting this value (Default: 1000)
 
-     --pacbio_all_bam_path <string>                                             Path to all subreads bam files for given reads. Whenever set, the pipeline
-                                                                                will execute a polishing step with VarianCaller with arrow.
-                                                                                Arrow is supported for PacBio Sequel data and RS data with the P6-C4 chemistry
+     --pacbio_bams <string>                                                     Path to all subreads bam files for given reads. Whenever set, the pipeline
+                                                                                will execute a polishing step with gcpp. GCpp is the machine-code successor 
+                                                                                of the venerable GenomicConsensus suite which has reached EOL, with the 
+                                                                                exception of not supporting Quiver/RSII anymore. In order to nextflow properly
+                                                                                use it, one needs to store all the data, from all the cells in one single 
+                                                                                directory and set the filepath as "some/data/*bam".
 
             # Advanced parameters
             # Controlling the execution of assemblers

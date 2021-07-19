@@ -83,7 +83,7 @@ Take note that in this example, we also polish the resulting assembly with both 
 Long reads only with pacbio reads
 =================================
 
-Take note that in this example, we also polish the resulting assembly with Arrow polisher.
+Take note that in this example, we also polish the resulting assembly with gcpp polisher. GCpp is the machine-code successor of the venerable GenomicConsensus suite which has reached EOL, with the exception of not supporting Quiver/RSII anymore.
 
 .. code-block:: bash
 
@@ -94,15 +94,16 @@ Take note that in this example, we also polish the resulting assembly with Arrow
      --genomeSize 2m \
      --lr_type "pacbio" \
      --longreads "path-to/pacbio.subreads.fastq" \
-     --pacbio_all_bam_path "path-to/pacbio.*.subreads.bam"
+     --pacbio_bams "path-to/pacbio.*.subreads.bam"
 
 .. note::
 
-  This will perform a long reads only assembly using pacbio data with Canu, Raven, and Flye assemblers (skipping unicycler). This specific command will also execute a polishing step with arrow (see ``--pacbio_all_bam_path``).
+  This will perform a long reads only assembly using pacbio data with Canu, Raven, and Flye assemblers (skipping unicycler).
+  This specific command will also execute a polishing step with gcpp (see ``--pacbio_bams``).
 
 .. tip::
 
-  If ``--pacbio_all_bam_path`` is not set, the pipeline will not try to polish the assemblies using arrow.
+  If ``--pacbio_bams`` is not set, the pipeline will not try to polish the assemblies using gcpp.
 
 Assembly in Hybrid strategy 1
 =============================

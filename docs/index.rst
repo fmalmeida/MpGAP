@@ -25,7 +25,7 @@ It wraps up the following tools:
      - `Shovill <https://github.com/tseemann/shovill>`_, `Unicycler <https://github.com/rrwick/Unicycler>`_ and `SPAdes <https://github.com/ablab/spades>`_
 
    * - Assembly polishing
-     - `Nanopolish <https://github.com/jts/nanopolish>`_, `Medaka <https://github.com/nanoporetech/medaka>`_, `GenomicConsensus <https://github.com/PacificBiosciences/GenomicConsensus>`_ and `Pilon <https://github.com/broadinstitute/pilon>`_
+     - `Nanopolish <https://github.com/jts/nanopolish>`_, `Medaka <https://github.com/nanoporetech/medaka>`_, `gcpp <https://github.com/PacificBiosciences/gcpp>`_ and `Pilon <https://github.com/broadinstitute/pilon>`_
 
    * - Assembly QC
      - `Quast <https://github.com/ablab/quast>`_ and `MultiQC <https://multiqc.info/>`_

@@ -41,8 +41,8 @@ include { medaka } from '../modules/LongReads/medaka.nf' params(medaka_sequencin
   outdir: params.outdir, longreads: params.longreads,
   shortreads_paired: params.shortreads_paired, shortreads_single: params.shortreads_single, lr_type: params.lr_type)
 
-// VariantCaller Pacbio
-include { variantCaller } from '../modules/LongReads/variantCaller.nf' params(threads: params.threads, outdir: params.outdir, longreads: params.longreads,
+// gcpp Pacbio
+include { gcpp } from '../modules/LongReads/gcpp.nf' params(threads: params.threads, outdir: params.outdir, longreads: params.longreads,
   shortreads_paired: params.shortreads_paired, shortreads_single: params.shortreads_single, lr_type: params.lr_type)
 
 /*
@@ -108,7 +108,7 @@ workflow hybrid_nf {
        */
       medaka_ch     = Channel.empty()
       nanopolish_ch = Channel.empty()
-      arrow_ch      = Channel.empty()
+      gcpp_ch       = Channel.empty()
       pilon_ch      = Channel.empty()
 
       /*
@@ -193,18 +193,18 @@ workflow hybrid_nf {
         }
 
         /*
-         * VariantCaller?
+         * gcpp?
          */
-        if (params.pacbio_all_bam_path && params.lr_type == 'pacbio') {
-          variantCaller(lreads_assemblies_ch.combine(bamFile).combine(nBams))
-          arrow_ch = variantCaller.out[1]
+        if (params.pacbio_bams && params.lr_type == 'pacbio') {
+          gcpp(lreads_assemblies_ch.combine(bamFile.collect().toList()).combine(nBams))
+          gcpp_ch = gcpp.out[1]
         }
 
         /*
          * Finally, run pilon for all
          */
         pilon_polish(
-          lreads_assemblies_ch.mix(medaka_ch, nanopolish_ch, arrow_ch).combine(
+          lreads_assemblies_ch.mix(medaka_ch, nanopolish_ch, gcpp_ch).combine(
             preads.combine(sreads).collect().toList()
           )
         )
@@ -213,7 +213,7 @@ workflow hybrid_nf {
 
       // Run quast (with all)
       quast(
-        hybrid_assemblies_ch.mix(lreads_assemblies_ch, medaka_ch, nanopolish_ch, arrow_ch, pilon_ch).combine(
+        hybrid_assemblies_ch.mix(lreads_assemblies_ch, medaka_ch, nanopolish_ch, gcpp_ch, pilon_ch).combine(
           preads.combine(sreads).collect().toList()
         )
       )

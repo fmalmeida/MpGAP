@@ -17,11 +17,11 @@ process spades_sreads_assembly {
   if ((params.shortreads_single) && (params.shortreads_paired)) {
     parameter = "-1 $sread1 -2 $sread2 -s $sreads"
     x = "Performing a illumina-only assembly with SPAdes, using paired and single end reads"
-    srId = sreads.getSimpleName()
+    srId = (sreads - ".gz")[0].getBaseName()
     out_ids = "${id}_and_${srId}"
   } else if ((params.shortreads_single) && (!params.shortreads_paired)) {
     parameter = "-s $sreads"
-    id = sreads.getSimpleName()
+    id = (sreads - ".gz")[0].getBaseName()
     x = "Performing a illumina-only assembly with SPAdes, using single end reads"
     out_ids = "${id}"
   } else if ((params.shortreads_paired) && (!params.shortreads_single)) {

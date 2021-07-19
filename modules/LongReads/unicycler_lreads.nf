@@ -12,7 +12,7 @@ process unicycler_lreads_assembly {
   tuple file("unicycler/unicycler_assembly.fasta"), val(lrID), val('unicycler') // Gets contigs file
 
   script:
-  lrID = lreads.getSimpleName()
+  lrID = (lreads - ".gz")[0].getBaseName()
 
   // Check available reads
   if (!params.shortreads_paired && !params.shortreads_single && params.longreads && params.lr_type) {

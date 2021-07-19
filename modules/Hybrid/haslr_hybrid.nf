@@ -15,7 +15,7 @@ process haslr_hybrid {
 
   script:
   // Check reads
-  lrID  = lreads.getSimpleName()
+  lrID = (lreads - ".gz")[0].getBaseName()
   if ((params.shortreads_single) && (params.shortreads_paired)) {
     parameter = "-s $sread1 $sread2 $sreads"
     x = "Performing a hybrid assembly with haslr, using paired and single end reads"

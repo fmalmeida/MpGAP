@@ -166,7 +166,7 @@ By polishing (correcting errors) a long reads only assembly with Illumina reads.
 Long reads assembly polishing parameters (also used for hybrid strategy 2)
 --------------------------------------------------------------------------
 
-Long reads only assemblies can also be polished with Nanopolish or Racon+Medaka tools for nanopore reads and Arrow for Pacbio reads. For that, users must properly set the parameters. given below.
+Long reads only assemblies can also be polished with Nanopolish or Racon+Medaka tools for nanopore reads and gcpp for Pacbio reads. For that, users must properly set the parameters. given below.
 
 .. note::
 
@@ -198,15 +198,13 @@ Long reads only assemblies can also be polished with Nanopolish or Racon+Medaka 
      - 1000
      - It sets the max number of haplotypes to be considered by Nanopolish. Sometimes the pipeline may crash because to much variation was found exceeding the limit.
 
-   * - ``--pacbio_all_bam_path``
+   * - ``--pacbio_bams``
      - N
      - NA
      - | Path to all subreads.bam files for the given reads (can be '\*.bam')
        | In order to nextflow properly use it, one needs to store all the data, from all the cells in one single directory and set the filepath as "some/data/\*bam".
        |
-       | Whenever set, the pipeline will execute a polishing step with VarianCaller through arrow.
-       |
-       | Arrow is supported for PacBio Sequel data and RS data with the P6-C4 chemistry.
+       | Whenever set, the pipeline will execute a polishing step with gcpp. GCpp is the machine-code successor of the venerable GenomicConsensus suite which has reached EOL, with the exception of not supporting Quiver/RSII anymore.
 
 Advanced assembler customization options
 ----------------------------------------

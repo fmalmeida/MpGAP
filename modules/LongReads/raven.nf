@@ -12,7 +12,7 @@ process raven_assembly {
   tuple file("raven_assembly.fa"), val(lrID), val('raven') // Gets contigs file
 
   script:
-  lrID      = lreads.getSimpleName()
+  lrID      = (lreads - ".gz")[0].getBaseName()
   corrected = (params.corrected_lreads) ? '--weaken' : ''
 
   // Check available reads

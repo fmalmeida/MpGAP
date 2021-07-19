@@ -80,8 +80,8 @@ Main config file
     // shortreads. It executes an alternative workflow and DOES NOT RUN unicycler/spades/haslr default hybrid modes.
     //
     // Whenever using this parameter, it is also possible to polish the longreads-only assemblies with Nanopolish,
-    // Medaka or VarianCaller (Arrow) before the polishing with shortreads (using Pilon). For that it is necessary to set
-    // the right parameters: pacbio_all_bam_path, nanopolish_fast5Path or medaka_sequencing_model.
+    // Medaka or gcpp before the polishing with shortreads (using Pilon). For that it is necessary to set
+    // the right parameters: pacbio_bams, nanopolish_fast5Path or medaka_sequencing_model.
           strategy_2 = false
 
     // Whenever polishing long reads only assemblies with unpaired short reads (single end), the pipeline
@@ -94,7 +94,7 @@ Main config file
                     /*
                      * Parameters for assembly polishing using long reads raw data
                      * Parameters useful for polishing longreads-only assemblies
-                     * Polishers ==> ONT: Nanopolish or Medaka; Pacbio: Arrow.
+                     * Polishers ==> ONT: Nanopolish or Medaka; Pacbio: gcpp.
                      *
                      * They can be used for hybrid assembly strategy 2, to polish
                      * the assemblies with longreads data before shortreads polishing
@@ -135,7 +135,7 @@ Main config file
     // This parameter loads all the subreads *.bam pacbio raw files for polishing with VariantCaller.
     // In order to nextflow properly use it, one needs to store all the data, from all the cells
     // in one single directory and set the filepath as "some/data/*bam".
-          pacbio_all_bam_path = ''
+          pacbio_bams = ''
 
                     /*
                      * Advanced parameters

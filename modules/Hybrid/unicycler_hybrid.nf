@@ -15,7 +15,7 @@ process unicycler_hybrid {
 
   script:
   // Check reads
-  lrID  = lreads.getSimpleName()
+  lrID = (lreads - ".gz")[0].getBaseName()
   if ((params.shortreads_single) && (params.shortreads_paired)) {
     parameter = "-1 $sread1 -2 $sread2 -s $sreads -l $lreads --no_correct"
     x = "Performing a hybrid assembly with Unicycler, using paired and single end reads"

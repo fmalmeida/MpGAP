@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
 
-MAINTAINER Felipe Marques de Almeida <200055801@aluno.unb.br>
+LABEL MAINTAINER "Felipe Marques de Almeida <200055801@aluno.unb.br>"
 SHELL ["/bin/bash", "-c"]
 
 # SET DIR

@@ -15,8 +15,8 @@ process spades_hybrid {
 
   script:
   // Check reads
-  lr = (params.lr_type == 'nanopore') ? '--nanopore' : '--pacbio'
-  lrID  = lreads.getSimpleName()
+  lr   = (params.lr_type == 'nanopore') ? '--nanopore' : '--pacbio'
+  lrID = (lreads - ".gz")[0].getBaseName()
   if ((params.shortreads_single) && (params.shortreads_paired)) {
     parameter = "-1 $sread1 -2 $sread2 -s $sreads $lr $lreads"
     x = "Performing a hybrid assembly with SPAdes, using paired and single end reads"

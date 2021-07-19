@@ -104,7 +104,7 @@ params.lr_type = ''
 params.medaka_sequencing_model = ''
 params.nanopolish_fast5Path = ''
 params.nanopolish_max_haplotypes = 1000
-params.pacbio_all_bam_path = ''
+params.pacbio_bams = ''
 
 // Hybrid strategy 2
 params.strategy_2 = false
@@ -150,9 +150,9 @@ workflow {
       (params.nanopolish_fast5Path && params.lr_type == 'nanopore') ? Channel.fromPath(params.nanopolish_fast5Path) : Channel.value(''),
       (params.nanopolish_fast5Path && params.lr_type == 'nanopore') ? Channel.fromPath(params.nanopolish_fast5Path, type: 'dir') : Channel.value(''),
 
-      // Will run Arrow?
-      (params.pacbio_all_bam_path && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_all_bam_path).collect() : Channel.value(''),
-      (params.pacbio_all_bam_path && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_all_bam_path).count().subscribe { println it } : Channel.value('')
+      // Will run gcpp?
+      (params.pacbio_bams && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_bams).collect() : Channel.value(''),
+      (params.pacbio_bams && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_bams).count().subscribe { println it } : Channel.value('')
     )
   }
 
@@ -197,8 +197,8 @@ workflow {
       (params.nanopolish_fast5Path && params.lr_type == 'nanopore') ? Channel.fromPath(params.nanopolish_fast5Path, type: 'dir') : Channel.value(''),
 
       // Will run Arrow?
-      (params.pacbio_all_bam_path && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_all_bam_path).collect() : Channel.value(''),
-      (params.pacbio_all_bam_path && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_all_bam_path).count().subscribe { println it } : Channel.value('')
+      (params.pacbio_bams && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_bams).collect() : Channel.value(''),
+      (params.pacbio_bams && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_bams).count().subscribe { println it } : Channel.value('')
      )
    }
 

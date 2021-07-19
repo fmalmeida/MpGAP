@@ -20,9 +20,9 @@ def exampleMessage() {
 \$ nextflow run fmalmeida/mpgap --outdir output --threads 5 --medaka_sequencing_model r941_min_fast_g303 --nanopolish_fast5Path "path-to/fast5_pass" \
 --nanopolish_max_haplotypes 2000 --genomeSize 2m --lr_type nanopore --longreads "path-to/ont_reads.fastq"
 
-    ## Long reads only - Pacbio (Using VariantCaller):
+    ## Long reads only - Pacbio (Using gcpp):
 
-\$ nextflow run fmalmeida/mpgap --outdir output --threads 5 --genomeSize 2m --lr_type "pacbio" --longreads "path-to/pacbio.subreads.fastq" --pacbio_all_bam_path "path-to/pacbio.*.subreads.bam"
+\$ nextflow run fmalmeida/mpgap --outdir output --threads 5 --genomeSize 2m --lr_type "pacbio" --longreads "path-to/pacbio.subreads.fastq" --pacbio_bams "path-to/pacbio.*.subreads.bam"
 
     ## Hybrid assembly - Using both paired and single end short reads:
 
