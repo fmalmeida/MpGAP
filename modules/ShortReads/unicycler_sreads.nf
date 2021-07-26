@@ -17,11 +17,11 @@ process unicycler_sreads_assembly {
   if ((params.shortreads_single) && (params.shortreads_paired)) {
     parameter = "-1 $sread1 -2 $sread2 -s $sreads"
     x = "Performing a illumina-only assembly with Unicycler, using paired and single end reads"
-    srId = (sreads - ".gz")[0].getBaseName()
+    srId = (sreads.getName() - ".gz").toString().substring(0, (sreads.getName() - ".gz").toString().lastIndexOf("."))
     out_ids = "${id}_and_${srId}"
   } else if ((params.shortreads_single) && (!params.shortreads_paired)) {
     parameter = "-s $sreads"
-    id = (sreads - ".gz")[0].getBaseName()
+    id = (sreads.getName() - ".gz").toString().substring(0, (sreads.getName() - ".gz").toString().lastIndexOf("."))
     x = "Performing a illumina-only assembly with Unicycler, using single end reads"
     out_ids = "${id}"
   } else if ((params.shortreads_paired) && (!params.shortreads_single)) {

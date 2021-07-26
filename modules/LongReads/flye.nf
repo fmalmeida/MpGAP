@@ -15,7 +15,7 @@ process flye_assembly {
   lr        = (params.lr_type == 'nanopore') ? '--nano' : '--pacbio'
   corrected = (params.corrected_lreads) ? '-corr' : '-raw'
   lrparam   = lr + corrected
-  lrID      = (lreads - ".gz")[0].getBaseName()
+  lrID      = (lreads.getName() - ".gz").toString().substring(0, (lreads.getName() - ".gz").toString().lastIndexOf("."))
   gsize     = (params.genomeSize) ? "--genome-size ${params.genomeSize}" : ""
 
   // Check available reads

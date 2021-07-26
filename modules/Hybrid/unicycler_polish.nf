@@ -1,5 +1,5 @@
 process pilon_polish {
-  publishDir "${params.outdir}/${id}/hybrid/strategy_2", mode: 'copy'
+  publishDir "${params.outdir}/${id}/hybrid/strategy_2/${out_ids}", mode: 'copy'
   label 'main'
   cpus params.threads
   tag "Polishing a longreads-only assembly with shortreads (through Pilon)"
@@ -12,6 +12,16 @@ process pilon_polish {
   tuple file("pilon_results_${assembler}/${assembler}_final_pilon_polish.fasta"), val(id), val("${assembler}_pilon_polished")
 
   script:
+  if ((params.shortreads_single) && (params.shortreads_paired)) {
+    srId = (reads[3].getName() - ".gz").toString().substring(0, (reads[3].getName() - ".gz").toString().lastIndexOf("."))
+    out_ids = "${reads[1]}_and_${srId}"
+  } else if ((params.shortreads_single) && (!params.shortreads_paired)) {
+    id = (reads[3].getName() - ".gz").toString().substring(0, (reads[3].getName() - ".gz").toString().lastIndexOf("."))
+    out_ids = "${id}"
+  } else if ((params.shortreads_paired) && (!params.shortreads_single)) {
+    out_ids = "${reads[0]}"
+  }
+
   if(params.shortreads_paired != '' && params.shortreads_single == '')
       """
       # Create the results dir
