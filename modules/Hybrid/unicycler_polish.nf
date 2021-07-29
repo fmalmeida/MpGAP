@@ -14,12 +14,14 @@ process pilon_polish {
   script:
   if ((params.shortreads_single) && (params.shortreads_paired)) {
     srId = (reads[3].getName() - ".gz").toString().substring(0, (reads[3].getName() - ".gz").toString().lastIndexOf("."))
-    out_ids = "${reads[1]}_and_${srId}"
+    prId = (reads[1].getName() - ".gz").toString().substring(0, (reads[1].getName() - ".gz").toString().lastIndexOf("."))
+    out_ids = "${prId}_and_${srId}"
   } else if ((params.shortreads_single) && (!params.shortreads_paired)) {
-    id = (reads[3].getName() - ".gz").toString().substring(0, (reads[3].getName() - ".gz").toString().lastIndexOf("."))
-    out_ids = "${id}"
+    srId = (reads[3].getName() - ".gz").toString().substring(0, (reads[3].getName() - ".gz").toString().lastIndexOf("."))
+    out_ids = "${srId}"
   } else if ((params.shortreads_paired) && (!params.shortreads_single)) {
-    out_ids = "${reads[0]}"
+    prId = (reads[1].getName() - ".gz").toString().substring(0, (reads[1].getName() - ".gz").toString().lastIndexOf("."))
+    out_ids = "${prId}"
   }
 
   if(params.shortreads_paired != '' && params.shortreads_single == '')

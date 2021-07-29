@@ -1,5 +1,5 @@
 process quast {
-  publishDir "${params.outdir}/${id}/${type}/00_quality_assessment", mode: 'copy'
+  publishDir "${params.outdir}/${id}/${out_dir}/00_quality_assessment", mode: 'copy'
   label 'main'
   tag "Assessing ${assembler} assembly quality"
 
@@ -9,10 +9,22 @@ process quast {
   output:
   file("${assembler}")
   val(id)
-  val(type)
+  val(out_dir)
 
   script:
   // Check available reads
+  if ((params.shortreads_single) && (params.shortreads_paired)) {
+    srId = (reads[3].getName() - ".gz").toString().substring(0, (reads[3].getName() - ".gz").toString().lastIndexOf("."))
+    prId = (reads[1].getName() - ".gz").toString().substring(0, (reads[1].getName() - ".gz").toString().lastIndexOf("."))
+    out_ids = "${prId}_and_${srId}"
+  } else if ((params.shortreads_single) && (!params.shortreads_paired)) {
+    srId = (reads[3].getName() - ".gz").toString().substring(0, (reads[3].getName() - ".gz").toString().lastIndexOf("."))
+    out_ids = "${srId}"
+  } else if ((params.shortreads_paired) && (!params.shortreads_single)) {
+    prId = (reads[1].getName() - ".gz").toString().substring(0, (reads[1].getName() - ".gz").toString().lastIndexOf("."))
+    out_ids = "${prId}"
+  }
+
   if (!params.shortreads_paired && !params.shortreads_single && params.longreads && params.lr_type) {
     type = 'longreads_only'
   } else if ((params.shortreads_paired || params.shortreads_single) && !params.longreads ) {
@@ -24,6 +36,9 @@ process quast {
     type = 'hybrid/strategy_1'
     }
   }
+
+  // save dir
+  out_dir = "${type}/${out_ids}"
 
   // Alignment parameters
   if (params.shortreads_paired && !params.shortreads_single) {
