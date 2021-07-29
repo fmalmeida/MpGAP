@@ -27,18 +27,18 @@ process quast {
 
   if (!params.shortreads_paired && !params.shortreads_single && params.longreads && params.lr_type) {
     type = 'longreads_only'
+    out_dir = "${type}"
   } else if ((params.shortreads_paired || params.shortreads_single) && !params.longreads ) {
     type = 'shortreads_only'
+    out_dir = "${type}"
   } else {
     if (params.strategy_2) {
     type = 'hybrid/strategy_2'
     } else {
     type = 'hybrid/strategy_1'
     }
+    out_dir = "${type}/${out_ids}"
   }
-
-  // save dir
-  out_dir = "${type}/${out_ids}"
 
   // Alignment parameters
   if (params.shortreads_paired && !params.shortreads_single) {
