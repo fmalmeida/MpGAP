@@ -15,13 +15,13 @@ process quast {
   // Check available reads
   if ((params.shortreads_single) && (params.shortreads_paired)) {
     srId = (reads[3].getName() - ".gz").toString().substring(0, (reads[3].getName() - ".gz").toString().lastIndexOf("."))
-    prId = (reads[1].getName() - ".gz").toString().substring(0, (reads[1].getName() - ".gz").toString().lastIndexOf("."))
+    prId = reads[0]
     out_ids = "${prId}_and_${srId}"
   } else if ((params.shortreads_single) && (!params.shortreads_paired)) {
     srId = (reads[3].getName() - ".gz").toString().substring(0, (reads[3].getName() - ".gz").toString().lastIndexOf("."))
     out_ids = "${srId}"
   } else if ((params.shortreads_paired) && (!params.shortreads_single)) {
-    prId = (reads[1].getName() - ".gz").toString().substring(0, (reads[1].getName() - ".gz").toString().lastIndexOf("."))
+    prId = reads[0]
     out_ids = "${prId}"
   }
 
