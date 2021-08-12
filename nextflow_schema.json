@@ -162,6 +162,18 @@
                 }
             }
         },
+        "quast_parameters": {
+            "type": "string",
+            "title": "Quast parameters",
+            "properties": {
+                "quast_additional_parameters": {
+                    "type": "string",
+                    "description": "Quast additional parameters",
+                    "help_text": "Give additional parameters to Quast while assessing assembly metrics. Must be in quotes and separated by spaces. Must be given as shown in Quast manual. E.g. '--large --eukaryote'."
+                }
+            },
+            "description": "Pass additional parameters to Quast"
+        },
         "assemblers_additional_parameters": {
             "title": "Assemblers' additional parameters",
             "type": "object",
@@ -252,6 +264,9 @@
         },
         {
             "$ref": "#/definitions/expected_genome_size"
+        },
+        {
+            "$ref": "#/definitions/quast_parameters"
         },
         {
             "$ref": "#/definitions/assemblers_additional_parameters"

@@ -7,24 +7,16 @@
  */
 
 // Canu assembler
-include { canu_assembly } from '../modules/LongReads/canu.nf' params(outdir: params.outdir, lr_type: params.lr_type,
-  canu_additional_parameters: params.canu_additional_parameters, threads: params.threads, corrected_lreads: params.corrected_lreads,
-  genomeSize: params.genomeSize, longreads: params.longreads, shortreads_paired: params.shortreads_paired, shortreads_single: params.shortreads_single)
+include { canu_assembly } from '../modules/LongReads/canu.nf'
 
 // Unicycler assembler
-include { unicycler_lreads_assembly } from '../modules/LongReads/unicycler_lreads.nf' params(outdir: params.outdir,
-  unicycler_additional_parameters: params.unicycler_additional_parameters, threads: params.threads, longreads: params.longreads,
-  shortreads_paired: params.shortreads_paired, shortreads_single: params.shortreads_single, lr_type: params.lr_type)
+include { unicycler_lreads_assembly } from '../modules/LongReads/unicycler_lreads.nf'
 
 // Flye assembler
-include { flye_assembly } from '../modules/LongReads/flye.nf' params(outdir: params.outdir, lr_type: params.lr_type, corrected_lreads: params.corrected_lreads,
-  flye_additional_parameters: params.flye_additional_parameters, threads: params.threads, genomeSize: params.genomeSize,
-  longreads: params.longreads, shortreads_paired: params.shortreads_paired, shortreads_single: params.shortreads_single)
+include { flye_assembly } from '../modules/LongReads/flye.nf'
 
 // Raven assembler
-include { raven_assembly } from '../modules/LongReads/raven.nf' params(outdir: params.outdir, threads: params.threads,
-  raven_additional_parameters: params.raven_additional_parameters, longreads: params.longreads, corrected_lreads: params.corrected_lreads,
-  shortreads_paired: params.shortreads_paired, shortreads_single: params.shortreads_single, lr_type: params.lr_type)
+include { raven_assembly } from '../modules/LongReads/raven.nf'
 
 
 /*
@@ -32,50 +24,35 @@ include { raven_assembly } from '../modules/LongReads/raven.nf' params(outdir: p
  */
 
 // Nanopolish (for nanopore data)
-include { nanopolish } from '../modules/LongReads/nanopolish.nf' params(outdir: params.outdir, cpus: params.cpus, threads: params.threads,
-  nanopolish_max_haplotypes: params.nanopolish_max_haplotypes, longreads: params.longreads, shortreads_paired: params.shortreads_paired,
-  shortreads_single: params.shortreads_single, lr_type: params.lr_type)
+include { nanopolish } from '../modules/LongReads/nanopolish.nf'
 
 // Medaka (for nanopore data)
-include { medaka } from '../modules/LongReads/medaka.nf' params(medaka_sequencing_model: params.medaka_sequencing_model, threads: params.threads,
-  outdir: params.outdir, longreads: params.longreads,
-  shortreads_paired: params.shortreads_paired, shortreads_single: params.shortreads_single, lr_type: params.lr_type)
+include { medaka } from '../modules/LongReads/medaka.nf'
 
 // gcpp Pacbio
-include { gcpp } from '../modules/LongReads/gcpp.nf' params(threads: params.threads, outdir: params.outdir, longreads: params.longreads,
-  shortreads_paired: params.shortreads_paired, shortreads_single: params.shortreads_single, lr_type: params.lr_type)
+include { gcpp } from '../modules/LongReads/gcpp.nf'
 
 /*
  * Modules for Hybrid assemblies
  */
 
 // Unicycler hybrid
-include { unicycler_hybrid } from '../modules/Hybrid/unicycler_hybrid.nf' params(outdir: params.outdir,
-  threads: params.threads, unicycler_additional_parameters: params.unicycler_additional_parameters,
-  shortreads_single: params.shortreads_single, shortreads_paired: params.shortreads_paired)
+include { unicycler_hybrid } from '../modules/Hybrid/unicycler_hybrid.nf'
 
 // Unicycler hybrid
-include { haslr_hybrid } from '../modules/Hybrid/haslr_hybrid.nf' params(outdir: params.outdir,
-  threads: params.threads, haslr_additional_parameters: params.haslr_additional_parameters,
-  shortreads_single: params.shortreads_single, shortreads_paired: params.shortreads_paired,
-  longreads: params.longreads, lr_type: params.lr_type, genomeSize: params.genomeSize)
+include { haslr_hybrid } from '../modules/Hybrid/haslr_hybrid.nf'
 
 // SPAdes hybrid
-include { spades_hybrid } from '../modules/Hybrid/spades_hybrid.nf' params(outdir: params.outdir,
-  threads: params.threads, spades_additional_parameters: params.spades_additional_parameters,
-  shortreads_single: params.shortreads_single, shortreads_paired: params.shortreads_paired,
-  lr_type: params.lr_type)
+include { spades_hybrid } from '../modules/Hybrid/spades_hybrid.nf'
 
 // Pilon polish paired
-include { pilon_polish } from '../modules/Hybrid/unicycler_polish.nf' params(outdir: params.outdir, threads: params.threads,
-  pilon_memory_limit: params.pilon_memory_limit, shortreads_paired: params.shortreads_paired, shortreads_single: params.shortreads_single)
+include { pilon_polish } from '../modules/Hybrid/unicycler_polish.nf'
 
 /*
  * Module for assessing assembly qualities
  */
-include { quast } from '../modules/QualityAssessment/quast.nf' params(threads: params.threads, outdir: params.outdir, longreads: params.longreads,
-  shortreads_paired: params.shortreads_paired, shortreads_single: params.shortreads_single, lr_type: params.lr_type, strategy_2: params.strategy_2)
-include { multiqc } from '../modules/QualityAssessment/multiqc.nf' params(outdir: params.outdir)
+include { quast } from '../modules/QualityAssessment/quast.nf'
+include { multiqc } from '../modules/QualityAssessment/multiqc.nf'
 
 workflow hybrid_nf {
   take:
@@ -215,7 +192,8 @@ workflow hybrid_nf {
       quast(
         hybrid_assemblies_ch.mix(lreads_assemblies_ch, medaka_ch, nanopolish_ch, gcpp_ch, pilon_ch).combine(
           preads.combine(sreads).collect().toList()
-        )
+        ),
+        preads.combine(sreads).collect()
       )
 
       // Run multiqc

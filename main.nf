@@ -83,8 +83,9 @@ params.skip_unicycler = false
 params.skip_haslr     = false
 params.skip_raven     = false
 
-// Additional parameters for assemblers
+// Additional parameters for assemblers and quast
 params.genomeSize = ''
+params.quast_additional_parameters     = ''
 params.canu_additional_parameters      = ''
 params.unicycler_additional_parameters = ''
 params.flye_additional_parameters      = ''

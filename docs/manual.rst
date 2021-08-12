@@ -218,6 +218,11 @@ Advanced assembler customization options
      - Default value
      - Description
 
+   * - ``--quast_additional_parameters``
+     - N
+     - NA
+     - | Give additional parameters to Quast while assessing assembly metrics. Must be in quotes and separated by spaces. Must be given as shown in Quast manual. E.g. ``'--large --eukaryote'``.
+
    * - ``--skip_canu``
      - N
      - False

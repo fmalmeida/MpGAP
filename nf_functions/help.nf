@@ -111,7 +111,7 @@
                                                                                 directory and set the filepath as "some/data/*bam".
 
             # Advanced parameters
-            # Controlling the execution of assemblers
+            # Controlling the execution of assemblers and QUAST
             # Also adding the possibility to pass additional parameters to them
 
      --skip_spades                                                              Skip assembly with Spades (hybrid and shortreads only assembler)
@@ -127,6 +127,11 @@
      --skip_flye                                                                Skip assembly with Flye (longreads only assembler)
 
      --skip_raven                                                               Skip assembly with Raven (longreads only assembler)
+
+     --quast_additional_parameters <string>                                     Give additional parameters to Quast while assessing assembly metrics.
+                                                                                Must be in quotes and separated by spaces. 
+                                                                                Must be given as shown in Quast manual. 
+                                                                                E.g. '--large --eukaryote'.
 
      --spades_additional_parameters <string>                                    Give additional parameters to Spades assembler. Must be in quotes
                                                                                 and separated by one space. Must be given as shown in Spades manual.

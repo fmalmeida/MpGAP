@@ -56,9 +56,8 @@ workflow sreads_only_nf {
 
   // Run quast
   quast(
-    assemblies_ch.combine(
-      preads.combine(sreads).collect().toList()
-    )
+    assemblies_ch.combine(preads.combine(sreads).collect().toList()),
+    preads.combine(sreads).collect()
   )
 
   // Run multiqc

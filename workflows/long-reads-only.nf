@@ -137,7 +137,7 @@ workflow lreadsonly_nf {
       /*
        * Run quast
        */
-      quast(assemblies_ch.mix(polished_ch).combine(reads))
+      quast(assemblies_ch.mix(polished_ch).combine(reads),reads)
 
       /*
        * Run multiqc
