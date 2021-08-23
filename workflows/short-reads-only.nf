@@ -3,26 +3,19 @@
  */
 
 // SPAdes sreads
-include { spades_sreads_assembly } from '../modules/ShortReads/spades_sreads.nf' params(outdir: params.outdir,
-  threads: params.threads, spades_additional_parameters: params.spades_additional_parameters,
-  shortreads_single: params.shortreads_single, shortreads_paired: params.shortreads_paired)
+include { spades_sreads_assembly } from '../modules/ShortReads/spades_sreads.nf'
 
 // Unicycler sreads
-include { unicycler_sreads_assembly } from '../modules/ShortReads/unicycler_sreads.nf' params(outdir: params.outdir,
-  threads: params.threads, unicycler_additional_parameters: params.unicycler_additional_parameters,
-  shortreads_single: params.shortreads_single, shortreads_paired: params.shortreads_paired)
+include { unicycler_sreads_assembly } from '../modules/ShortReads/unicycler_sreads.nf'
 
 // Shovill sreads
-include { shovill_sreads_assembly } from '../modules/ShortReads/shovill_sreads.nf' params(outdir: params.outdir,
-  threads: params.threads, shovill_additional_parameters: params.shovill_additional_parameters,
-  shortreads_single: params.shortreads_single, shortreads_paired: params.shortreads_paired)
+include { shovill_sreads_assembly } from '../modules/ShortReads/shovill_sreads.nf'
 
 /*
  * Module for assessing assembly qualities
  */
-include { quast } from '../modules/QualityAssessment/quast.nf' params(threads: params.threads, outdir: params.outdir, strategy_2: params.strategy_2,
-  longreads: params.longreads, shortreads_paired: params.shortreads_paired, shortreads_single: params.shortreads_single, lr_type: params.lr_type)
-include { multiqc } from '../modules/QualityAssessment/multiqc.nf' params(outdir: params.outdir)
+include { quast } from '../modules/QualityAssessment/quast.nf'
+include { multiqc } from '../modules/QualityAssessment/multiqc.nf'
 
 workflow sreads_only_nf {
   take:
