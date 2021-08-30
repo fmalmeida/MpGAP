@@ -17,8 +17,7 @@ RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -
 ENV PATH="/miniconda/bin:$PATH"
 
 # Set ncbi-blast+
-RUN export NCBI=$(curl -s ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ | grep "x64-linux.tar.gz$" | rev | cut -d' ' -f1 | rev) && \
- 			wget "ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/${NCBI}" -O blast.tar.gz
+RUN wget "https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/2.12.0/ncbi-blast-2.12.0+-x64-linux.tar.gz" -O blast.tar.gz
 RUN 			tar -zxvf blast.tar.gz && \
 			cp ncbi-blast-*/bin/* /usr/local/bin/
 
@@ -66,7 +65,7 @@ RUN pip install --upgrade pip && \
 ## Set Unicycler complementary tools
 RUN apt-get install -y mummer && \
 			#conda install -y -c bioconda samtools && \
-			conda install -y -c bioconda bowtie2 nomkl && \
+			conda install -y -c bioconda -c anaconda -c conda-forge -c defaults bowtie2 nomkl && \
 			conda install -y -c bioconda freebayes nomkl && \
 			#conda create -y -n legacy_python python=2.7 && conda install -y -c bioconda -n legacy_python pbalign && \
 			#conda install -y -n legacy_python -c bioconda bax2bam && \
@@ -81,11 +80,11 @@ RUN apt-get install -y mummer && \
 
 # Set Nanopolish
 RUN apt-get install -y libhdf5-dev parallel && \
-    	conda config --add channels defaults && \
-      conda config --add channels conda-forge && \
-      conda config --add channels bioconda && \
-      conda create -y -n NANOPOLISH && \
-      conda install -y -n NANOPOLISH nanopolish nomkl && \
+    		conda config --add channels defaults && \
+      		conda config --add channels conda-forge && \
+      		conda config --add channels bioconda && \
+      		conda create -y -n NANOPOLISH && \
+      		conda install -y -n NANOPOLISH nanopolish nomkl && \
 			conda clean -afy
 
 # Set PACBIO polisher (newest gcpp and mm2)
@@ -108,6 +107,10 @@ RUN python -m pip install -U matplotlib && \
 # Set miniasm
 RUN conda install -y -c bioconda miniasm nomkl && \
 			conda clean -afy
+
+# Set circos
+RUN apt-get install -y circos cpanminus libgd-perl
+RUN cpanm -f Clone Config::General Font::TTF::Font Math::Bezier Math::Round Math::VecStat Params::Validate Readonly Regexp::Common SVG Set::IntSpan Statistics::Basic Text::Format
 
 # Custom Permissions
 RUN chmod -R 777 /miniconda/envs/MEDAKA/lib/python3.8/site-packages/medaka/data
@@ -141,6 +144,17 @@ RUN conda create -y -n RAVEN && \
 # Install multiqc
 RUN conda install -y -c bioconda -c conda-forge multiqc nomkl && \
 			conda clean -afy
+
+# Install wtdbg2
+RUN git clone https://github.com/ruanjue/wtdbg2 && \
+			cd wtdbg2 && make && \
+			ln -s wtdbg2.pl /usr/local/bin
+
+# Install shasta
+RUN curl -s https://api.github.com/repos/chanzuckerberg/shasta/releases/latest  | grep "browser_download_url" | grep "Ubuntu-20.04" | cut -d ":" -f 2,3  | tr -d '"' | wget -qi - -O shasta.tar && \
+			tar xvf shasta.tar && \
+			cd shasta-Ubuntu-20.04/bin && \
+			ln -s /usr/local/bin
 
 # fix tbb libraries
 RUN conda install -y -c conda-forge 'tbb=2020.2' && \

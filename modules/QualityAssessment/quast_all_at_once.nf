@@ -1,10 +1,11 @@
-process quast {
+process quast_all_vs_all {
   publishDir "${params.outdir}/${id}/${out_dir}/00_quality_assessment", mode: 'copy'
   label 'main'
   tag "Assessing ${assembler} assembly quality"
 
   input:
   tuple file(contigs), val(id), val(assembler), file(reads)
+  val(reads_values)
 
   output:
   file("${assembler}")
@@ -15,13 +16,13 @@ process quast {
   // Check available reads
   if ((params.shortreads_single) && (params.shortreads_paired)) {
     srId = (reads[3].getName() - ".gz").toString().substring(0, (reads[3].getName() - ".gz").toString().lastIndexOf("."))
-    prId = reads[0]
+    prId = reads_values[0]
     out_ids = "${prId}_and_${srId}"
   } else if ((params.shortreads_single) && (!params.shortreads_paired)) {
     srId = (reads[3].getName() - ".gz").toString().substring(0, (reads[3].getName() - ".gz").toString().lastIndexOf("."))
     out_ids = "${srId}"
   } else if ((params.shortreads_paired) && (!params.shortreads_single)) {
-    prId = reads[0]
+    prId = reads_values[0]
     out_ids = "${prId}"
   }
 
@@ -53,8 +54,8 @@ process quast {
   }
 
   """
-  quast.py -o ${assembler} -t ${params.threads} ${quast_parameter} \\
-  --circos --conserved-genes-finding --rna-finding ${contigs} --min-contig 100 \\
+  quast.py -o all_vs_all -t ${params.threads} ${quast_parameter} \\
+  --circos --conserved-genes-finding --rna-finding $contigs.join( " " ) --min-contig 100 \\
   ${params.quast_additional_parameters}
   """
 }
