@@ -133,6 +133,10 @@
 
      --skip_raven                                                               Skip assembly with Raven (longreads only assembler)
 
+     --skip_wtdbg2                                                              Skip assembly with wtdbg2 (longreads only assembler)
+
+     --skip_shasta                                                              Skip assembly with Shasta (nanopore longreads only assembler)
+
      --quast_additional_parameters <string>                                     Give additional parameters to Quast while assessing assembly metrics.
                                                                                 Must be in quotes and separated by spaces. 
                                                                                 Must be given as shown in Quast manual. 
@@ -167,7 +171,11 @@
                                                                                 E.g. " --polishing-rounds 4 "
 
      --wtdbg2_additional_parameters <string>                                    Give additional parameters to wtdbg2 assembler. Must be in quotes
-                                                                                and separated by one space. Must be given as shown in Raven manual.
+                                                                                and separated by one space. Must be given as shown in wtdbg2 manual.
                                                                                 E.g. " --tidy-reads 5000 "
+
+     --shasta_additional_parameters <string>                                    Give additional parameters to shasta assembler. Must be in quotes
+                                                                                and separated by one space. Must be given as shown in shasta manual.
+                                                                                E.g. " --Reads.minReadLength 5000 "  
     """.stripIndent()
  }

@@ -22,7 +22,7 @@ process wtdbg2_assembly {
     type = 'hybrid/strategy_2/longreads_only'
   }
   """
-  /work/wtdbg2/wtdbg2.pl -t ${params.threads} -x $lr -g ${params.genomeSize} -o ${lrID} ${params.wtdbg2_additional_parameters} $lreads
+  wtdbg2.pl -t ${params.threads} -x $lr -g ${params.genomeSize} -o ${lrID} ${params.wtdbg2_additional_parameters} $lreads
 
   # Rename contigs
   cp ${lrID}.cns.fa wtdbg2_assembly.fasta

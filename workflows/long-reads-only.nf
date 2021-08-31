@@ -17,6 +17,9 @@ include { raven_assembly } from '../modules/LongReads/raven.nf'
 // wtdbg2 assembler
 include { wtdbg2_assembly } from '../modules/LongReads/wtdbg2.nf'
 
+// Shasta assembler
+include { shasta_assembly } from '../modules/LongReads/shasta.nf'
+
 /*
  * Modules for long reads assemblies polishment
  */
@@ -53,6 +56,7 @@ workflow lreadsonly_nf {
       flye_ch      = Channel.empty()
       raven_ch     = Channel.empty()
       wtdbg2_ch    = Channel.empty()
+      shasta_ch    = Channel.empty()
 
       /*
        * Channels for placing polished assemblies
@@ -95,6 +99,14 @@ workflow lreadsonly_nf {
       }
 
       /*
+       * Shasta
+       */
+      if (!params.skip_shasta && params.lr_type == 'nanopore') {
+        shasta_assembly(reads)
+        shasta_ch = shasta_assembly.out[1]
+      }
+
+      /*
        * wtdbg2
        */
       if (!params.skip_wtdbg2) {
@@ -103,7 +115,7 @@ workflow lreadsonly_nf {
       }
 
       // gather assemblies
-      assemblies_ch = canu_ch.mix(unicycler_ch, flye_ch, raven_ch, wtdbg2_ch)
+      assemblies_ch = canu_ch.mix(unicycler_ch, flye_ch, raven_ch, wtdbg2_ch, shasta_ch)
 
       /*
        * Run medaka?
@@ -135,7 +147,7 @@ workflow lreadsonly_nf {
       /*
        * Run quast
        */
-      quast(assemblies_ch.mix(polished_ch).combine(reads),reads)
+      quast(assemblies_ch.mix(polished_ch).combine(reads), reads)
 
       /*
        * Run multiqc

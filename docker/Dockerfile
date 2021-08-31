@@ -148,12 +148,13 @@ RUN conda install -y -c bioconda -c conda-forge multiqc nomkl && \
 # Install wtdbg2
 RUN git clone https://github.com/ruanjue/wtdbg2 && \
 			cd wtdbg2 && make
+ENV PATH="$PATH:/work/wtdbg2"
 
 # Install shasta
 RUN curl -s https://api.github.com/repos/chanzuckerberg/shasta/releases/latest  | grep "browser_download_url" | grep "Ubuntu-20.04" | cut -d ":" -f 2,3  | tr -d '"' | wget -qi - -O shasta.tar && \
 			tar xvf shasta.tar && \
-			cd shasta-Ubuntu-20.04/bin && \
-			ln -s * /usr/local/bin
+			cd shasta-Ubuntu-20.04/bin
+ENV PATH="$PATH:/work/shasta-Ubuntu-20.04/bin"
 
 # fix tbb libraries
 RUN conda install -y -c conda-forge 'tbb=2020.2' && \

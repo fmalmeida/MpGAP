@@ -8,10 +8,10 @@ nextflow.enable.dsl=2
 /*
  * Include functions
  */
-include { helpMessage } from './nf_functions/help.nf'
+include { helpMessage    } from './nf_functions/help.nf'
 include { exampleMessage } from './nf_functions/examples.nf'
-include { paramsCheck } from './nf_functions/paramsCheck.nf'
-include { logMessage } from './nf_functions/logMessages.nf'
+include { paramsCheck    } from './nf_functions/paramsCheck.nf'
+include { logMessage     } from './nf_functions/logMessages.nf'
 
 /*
  * Check parameters
@@ -82,6 +82,8 @@ params.skip_canu      = false
 params.skip_unicycler = false
 params.skip_haslr     = false
 params.skip_raven     = false
+params.skip_wtdbg2    = false
+params.skip_shasta    = false
 
 // Additional parameters for assemblers and quast
 params.genomeSize = ''
@@ -95,6 +97,7 @@ params.haslr_additional_parameters     = ''
 params.raven_additional_parameters     = ''
 params.wtdbg2_additional_parameters    = ''
 params.wtdbg2_technology               = ''
+params.shasta_additional_parameters    = ''
 
 // Short reads
 params.shortreads_paired = ''
