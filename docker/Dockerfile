@@ -147,8 +147,7 @@ RUN conda install -y -c bioconda -c conda-forge multiqc nomkl && \
 
 # Install wtdbg2
 RUN git clone https://github.com/ruanjue/wtdbg2 && \
-			cd wtdbg2 && make && \
-			ln -s wtdbg2.pl /usr/local/bin
+			cd wtdbg2 && make
 
 # Install shasta
 RUN curl -s https://api.github.com/repos/chanzuckerberg/shasta/releases/latest  | grep "browser_download_url" | grep "Ubuntu-20.04" | cut -d ":" -f 2,3  | tr -d '"' | wget -qi - -O shasta.tar && \
