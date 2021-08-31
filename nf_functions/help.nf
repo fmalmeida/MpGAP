@@ -136,38 +136,38 @@
      --quast_additional_parameters <string>                                     Give additional parameters to Quast while assessing assembly metrics.
                                                                                 Must be in quotes and separated by spaces. 
                                                                                 Must be given as shown in Quast manual. 
-                                                                                E.g. ' --large --eukaryote '.
+                                                                                E.g. " --large --eukaryote ".
 
      --spades_additional_parameters <string>                                    Give additional parameters to Spades assembler. Must be in quotes
                                                                                 and separated by one space. Must be given as shown in Spades manual.
-                                                                                E.g. ' --meta --plasmids '
+                                                                                E.g. " --meta --plasmids "
 
      --shovill_additional_parameters <string>                                   Give additional parameters to Shovill assembler. Must be in quotes
                                                                                 and separated by one space. Must be given as shown in Shovill manual.
-                                                                                E.g. ' --depth 15 --assembler skesa '
+                                                                                E.g. " --depth 15 --assembler skesa "
 
      --unicycler_additional_parameters <string>                                 Give additional parameters to Unicycler assembler. Must be in quotes
                                                                                 and separated by one space. Must be given as shown in Unicycler manual.
-                                                                                E.g. ' --mode conservative --no_correct '
+                                                                                E.g. " --mode conservative --no_correct "
 
      --haslr_additional_parameters <string>                                     Give additional parameters to Haslr assembler. Must be in quotes
                                                                                 and separated by one space. Must be given as shown in Haslr manual.
-                                                                                E.g. ' --cov-lr 30 '
+                                                                                E.g. " --cov-lr 30 "
 
      --canu_additional_parameters <string>                                      Give additional parameters to Canu assembler. Must be in quotes
                                                                                 and separated by one space. Must be given as shown in Canu manual.
-                                                                                E.g. ' correctedErrorRate=0.075 corOutCoverage=200 '
+                                                                                E.g. " correctedErrorRate=0.075 corOutCoverage=200 "
 
      --flye_additional_parameters <string>                                      Give additional parameters to Flye assembler. Must be in quotes
                                                                                 and separated by one space. Must be given as shown in Flye manual.
-                                                                                E.g. ' --meta --iterations 4 '
+                                                                                E.g. " --meta --iterations 4 "
 
      --raven_additional_parameters <string>                                     Give additional parameters to Raven assembler. Must be in quotes
                                                                                 and separated by one space. Must be given as shown in Raven manual.
-                                                                                E.g. ' --polishing-rounds 4 '
+                                                                                E.g. " --polishing-rounds 4 "
 
      --wtdbg2_additional_parameters <string>                                    Give additional parameters to wtdbg2 assembler. Must be in quotes
                                                                                 and separated by one space. Must be given as shown in Raven manual.
-                                                                                E.g. ' --tidy-reads 5000 '
+                                                                                E.g. " --tidy-reads 5000 "
     """.stripIndent()
  }

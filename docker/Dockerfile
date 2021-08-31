@@ -153,7 +153,7 @@ RUN git clone https://github.com/ruanjue/wtdbg2 && \
 RUN curl -s https://api.github.com/repos/chanzuckerberg/shasta/releases/latest  | grep "browser_download_url" | grep "Ubuntu-20.04" | cut -d ":" -f 2,3  | tr -d '"' | wget -qi - -O shasta.tar && \
 			tar xvf shasta.tar && \
 			cd shasta-Ubuntu-20.04/bin && \
-			ln -s /usr/local/bin
+			ln -s * /usr/local/bin
 
 # fix tbb libraries
 RUN conda install -y -c conda-forge 'tbb=2020.2' && \
