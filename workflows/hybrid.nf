@@ -18,6 +18,11 @@ include { flye_assembly } from '../modules/LongReads/flye.nf'
 // Raven assembler
 include { raven_assembly } from '../modules/LongReads/raven.nf'
 
+// wtdbg2 assembler
+include { wtdbg2_assembly } from '../modules/LongReads/wtdbg2.nf'
+
+// Shasta assembler
+include { shasta_assembly } from '../modules/LongReads/shasta.nf'
 
 /*
  * Modules for long reads assemblies polishment
@@ -74,6 +79,9 @@ workflow hybrid_nf {
       unicycler_ch         = Channel.empty()
       flye_ch              = Channel.empty()
       raven_ch             = Channel.empty()
+      wtdbg2_ch     = Channel.empty()
+      shasta_ch     = Channel.empty()
+
        // hybrid
       hybrid_assemblies_ch = Channel.empty()
       spades_ch            = Channel.empty()
@@ -93,6 +101,7 @@ workflow hybrid_nf {
        */
 
       if (!params.strategy_2) {
+
         // SPAdes
         if (!params.skip_spades) {
           spades_hybrid(lreads, preads, sreads)
@@ -111,6 +120,7 @@ workflow hybrid_nf {
 
         // Get hybrid assemblies
         hybrid_assemblies_ch = spades_ch.mix(unicycler_h_ch, haslr_ch)
+
       }
 
       /*
@@ -150,8 +160,24 @@ workflow hybrid_nf {
           raven_ch = raven_assembly.out[1]
         }
 
+        /*
+         * Shasta
+         */
+        if (!params.skip_shasta && params.lr_type == 'nanopore') {
+          shasta_assembly(lreads)
+          shasta_ch = shasta_assembly.out[1]
+        }
+
+        /*
+         * wtdbg2
+         */
+        if (!params.skip_wtdbg2) {
+          wtdbg2_assembly(lreads)
+          wtdbg2_ch = wtdbg2_assembly.out[1]
+        }
+
         // Get long reads assemblies
-        lreads_assemblies_ch = canu_ch.mix(flye_ch, unicycler_ch, raven_ch)
+        lreads_assemblies_ch = canu_ch.mix(flye_ch, unicycler_ch, raven_ch, wtdbg2_ch, shasta_ch)
 
         /*
          * Run medaka?
