@@ -161,7 +161,7 @@ RUN conda install -y -c conda-forge 'tbb=2020.2' && \
 			conda clean -afy
 
 # Remove tars
-RUN rm -rf *.tar.gz *.tar.xz
+RUN rm -rf *.tar.gz *.tar.xz *.tar *.tgz
 
 # Set WorkDir
 WORKDIR /work
