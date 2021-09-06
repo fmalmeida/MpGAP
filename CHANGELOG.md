@@ -13,6 +13,8 @@ The tracking for changes started in v2.
 
 4. The nextflow config file have been altered so it now properly calls for a versioned Docker image. Docker images will now have version tags. E.g. `fmalmeida/mpgap:v2.3`.
 
+5. Two other longreads assemblers have been added: wtdbg2 and shasta. Please read the docs to check the parameters related to them.
+
 ## v2.2
 
 The main changes in the pipeline are summarized below. The majority of the changes were made to make the pipeline easier to rookies.

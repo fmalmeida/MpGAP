@@ -36,7 +36,7 @@ include { gcpp } from '../modules/LongReads/gcpp.nf'
 /*
  * Module for assessing assembly qualities
  */
-include { quast } from '../modules/QualityAssessment/quast.nf'
+include { quast   } from '../modules/QualityAssessment/quast.nf'
 include { multiqc } from '../modules/QualityAssessment/multiqc.nf'
 
 workflow lreadsonly_nf {
@@ -51,12 +51,12 @@ workflow lreadsonly_nf {
       /*
        * Channels for placing the assemblies
        */
-      canu_ch      = Channel.empty()
-      unicycler_ch = Channel.empty()
-      flye_ch      = Channel.empty()
-      raven_ch     = Channel.empty()
-      wtdbg2_ch    = Channel.empty()
-      shasta_ch    = Channel.empty()
+      canu_ch       = Channel.empty()
+      unicycler_ch  = Channel.empty()
+      flye_ch       = Channel.empty()
+      raven_ch      = Channel.empty()
+      wtdbg2_ch     = Channel.empty()
+      shasta_ch     = Channel.empty()
 
       /*
        * Channels for placing polished assemblies
@@ -147,7 +147,10 @@ workflow lreadsonly_nf {
       /*
        * Run quast
        */
-      quast(assemblies_ch.mix(polished_ch).combine(reads), reads)
+      quast(
+        assemblies_ch.mix(polished_ch).combine(reads), 
+        reads.collect() // it is necessary to use .collect() to make it a channel that can be re-used
+      )
 
       /*
        * Run multiqc
