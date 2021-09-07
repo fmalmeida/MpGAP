@@ -1,5 +1,5 @@
 process pilon_polish {
-  publishDir "${params.outdir}/${id}/hybrid/strategy_2/${out_ids}", mode: 'copy'
+  publishDir "${params.outdir}/${id}/${out_dir}", mode: 'copy'
   label 'main'
   cpus params.threads
   tag "Polishing a longreads-only assembly with shortreads (through Pilon)"
@@ -12,16 +12,33 @@ process pilon_polish {
   tuple file("pilon_results_${assembler}/${assembler}_final_pilon_polish.fasta"), val(id), val("${assembler}_pilon_polished")
 
   script:
+  // Check available reads
   if ((params.shortreads_single) && (params.shortreads_paired)) {
     srId = (reads[3].getName() - ".gz").toString().substring(0, (reads[3].getName() - ".gz").toString().lastIndexOf("."))
-    prId = (reads[1].getName() - ".gz").toString().substring(0, (reads[1].getName() - ".gz").toString().lastIndexOf("."))
+    prId = reads_values[0]
     out_ids = "${prId}_and_${srId}"
   } else if ((params.shortreads_single) && (!params.shortreads_paired)) {
     srId = (reads[3].getName() - ".gz").toString().substring(0, (reads[3].getName() - ".gz").toString().lastIndexOf("."))
     out_ids = "${srId}"
   } else if ((params.shortreads_paired) && (!params.shortreads_single)) {
-    prId = (reads[1].getName() - ".gz").toString().substring(0, (reads[1].getName() - ".gz").toString().lastIndexOf("."))
+    prId = reads_values[0]
     out_ids = "${prId}"
+  }
+
+  // Create output dir variable
+  if (!params.shortreads_paired && !params.shortreads_single && params.longreads && params.lr_type) {
+    type = 'longreads_only'
+    out_dir = "${type}"
+  } else if ((params.shortreads_paired || params.shortreads_single) && !params.longreads ) {
+    type = 'shortreads_only'
+    out_dir = "${type}"
+  } else {
+    if (params.strategy_2) {
+    type = 'hybrid/strategy_2'
+    } else {
+    type = 'hybrid/strategy_1'
+    }
+    out_dir = "${type}/${out_ids}"
   }
 
   if(params.shortreads_paired != '' && params.shortreads_single == '')
