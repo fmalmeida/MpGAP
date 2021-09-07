@@ -6,6 +6,7 @@ process pilon_polish {
 
   input:
   tuple file(draft), val(id), val(assembler), file(reads)
+  val(reads_values)
 
   output:
   file("pilon_results_${assembler}/*") // Get everything

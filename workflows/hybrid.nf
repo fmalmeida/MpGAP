@@ -209,7 +209,8 @@ workflow hybrid_nf {
         pilon_polish(
           lreads_assemblies_ch.mix(medaka_ch, nanopolish_ch, gcpp_ch).combine(
             preads.combine(sreads).collect().toList()
-          )
+          ),
+          preads.combine(sreads).collect()
         )
         pilon_ch = pilon_polish.out[1]
       }
