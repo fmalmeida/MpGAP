@@ -1,22 +1,16 @@
 process nanopolish {
-  publishDir "${params.outdir}/${lrID}/${type}/nanopolished_contigs/${assembler}", mode: 'copy'
+  publishDir "${params.outdir}/${prefix}/nanopolished_contigs/${assembler}", mode: 'copy'
   label 'main'
   cpus params.threads
 
   input:
-  tuple file(draft), val(lrID), val(assembler), file(reads), file(fast5), val(fast5_dir)
+  tuple file(draft), val(lrID), val(assembler), file(reads), file(fast5), val(fast5_dir), val(prefix)
 
   output:
   tuple file("${assembler}_nanopolished.fa"), val(lrID), val("${assembler}_nanopolish") // Save nanopolished contigs
   file "${assembler}_nanopolished.complete.vcf" // Save VCF
 
   script:
-  // Check available reads
-  if (!params.shortreads_paired && !params.shortreads_single && params.longreads && params.lr_type) {
-    type = 'longreads_only'
-  } else if ((params.shortreads_paired || params.shortreads_single) && params.longreads && params.lr_type) {
-    type = 'hybrid/strategy_2/longreads_only'
-  }
   """
   source activate NANOPOLISH ;
   seqtk seq -A ${reads} > reads.fa ;

@@ -1,13 +1,12 @@
 process multiqc {
-  publishDir "${params.outdir}/${id}/${dir}/00_quality_assessment", mode: 'copy'
+  publishDir "${params.outdir}/${prefix}/00_quality_assessment", mode: 'copy'
   label 'main'
   tag "Collecting Quast quality reports"
 
   input:
   file(quast_dirs)
-  val(id)
-  val(dir)
-  val(nfRun)
+  val prefix
+  val nfRun
 
   output:
   file "multiqc_report_${nfRun}.html"

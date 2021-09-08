@@ -1,11 +1,11 @@
 process shasta_assembly {
-  publishDir "${params.outdir}/${lrID}/${type}", mode: 'copy'
+  publishDir "${params.outdir}/${prefix}", mode: 'copy'
   label 'main'
   cpus params.threads
   tag "Performing a longreads only assembly with shasta"
 
   input:
-  file lreads
+  tuple file(lreads), val(prefix)
 
   output:
   file "shasta/" // Saves all files
@@ -16,12 +16,6 @@ process shasta_assembly {
   in_reads  = (lreads.getName() - ".gz")
   lrID      = (lreads.getName() - ".gz").toString().substring(0, (lreads.getName() - ".gz").toString().lastIndexOf("."))
 
-  // Check available reads
-  if (!params.shortreads_paired && !params.shortreads_single && params.longreads && params.lr_type) {
-    type = 'longreads_only'
-  } else if ((params.shortreads_paired || params.shortreads_single) && params.longreads && params.lr_type) {
-    type = 'hybrid/strategy_2/longreads_only'
-  }
   """
   # unzip reads
   gunzip -d -f $lreads

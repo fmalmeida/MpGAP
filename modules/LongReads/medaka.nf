@@ -1,22 +1,16 @@
 process medaka {
-  publishDir "${params.outdir}/${lrID}/${type}/medaka_polished_contigs", mode: 'copy'
+  publishDir "${params.outdir}/${prefix}/medaka_polished_contigs", mode: 'copy'
   label 'main'
   tag "Polishing assembly with Medaka"
 
   input:
-  tuple file(draft), val(lrID), val(assembler), file(reads)
+  tuple file(draft), val(lrID), val(assembler), file(reads), val(prefix)
 
   output:
   file "${assembler}" // Save everything
   tuple file("${assembler}/${assembler}_medaka_consensus.fa"), val(lrID), val("${assembler}_medaka") // Save medaka contigs
 
   script:
-  // Check available reads
-  if (!params.shortreads_paired && !params.shortreads_single && params.longreads && params.lr_type) {
-    type = 'longreads_only'
-  } else if ((params.shortreads_paired || params.shortreads_single) && params.longreads && params.lr_type) {
-    type = 'hybrid/strategy_2/longreads_only'
-  }
   """
   # first step racon polish
   minimap ${draft} ${reads} > reads_mapped.paf ;

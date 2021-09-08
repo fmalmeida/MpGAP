@@ -3,6 +3,11 @@
  */
 
 /*
+ * Module for prefix evaluation
+ */
+include { define_prefix } from '../modules/misc/define_prefix.nf'
+
+/*
  * Modules for assembling long reads
  */
 
@@ -68,7 +73,14 @@ workflow hybrid_nf {
       fast5_dir
       bamFile
       nBams
+  
   main:
+
+      /*
+       * Check input reads in order to evaluate better prefix
+       */
+      define_prefix(lreads, preads, sreads)
+      prefix_ch = define_prefix.out[0]
 
       /*
        * Channels for placing the assemblies
@@ -79,8 +91,8 @@ workflow hybrid_nf {
       unicycler_ch         = Channel.empty()
       flye_ch              = Channel.empty()
       raven_ch             = Channel.empty()
-      wtdbg2_ch     = Channel.empty()
-      shasta_ch     = Channel.empty()
+      wtdbg2_ch            = Channel.empty()
+      shasta_ch            = Channel.empty()
 
        // hybrid
       hybrid_assemblies_ch = Channel.empty()
@@ -132,7 +144,7 @@ workflow hybrid_nf {
          * Canu
          */
         if (!params.skip_canu) {
-          canu_assembly(lreads)
+          canu_assembly(lreads.combine(prefix_ch))
           canu_ch = canu_assembly.out[1]
         }
 
@@ -140,7 +152,7 @@ workflow hybrid_nf {
          * Flye
          */
         if (!params.skip_flye) {
-          flye_assembly(lreads)
+          flye_assembly(lreads.combine(prefix_ch))
           flye_ch = flye_assembly.out[1]
         }
 
@@ -148,7 +160,7 @@ workflow hybrid_nf {
          * Unicycler
          */
         if (!params.skip_unicycler) {
-          unicycler_lreads_assembly(lreads)
+          unicycler_lreads_assembly(lreads.combine(prefix_ch))
           unicycler_ch = unicycler_lreads_assembly.out[1]
         }
 
@@ -156,7 +168,7 @@ workflow hybrid_nf {
          * Raven
          */
         if (!params.skip_raven) {
-          raven_assembly(lreads)
+          raven_assembly(lreads.combine(prefix_ch))
           raven_ch = raven_assembly.out[1]
         }
 
@@ -164,7 +176,7 @@ workflow hybrid_nf {
          * Shasta
          */
         if (!params.skip_shasta && params.lr_type == 'nanopore') {
-          shasta_assembly(lreads)
+          shasta_assembly(lreads.combine(prefix_ch))
           shasta_ch = shasta_assembly.out[1]
         }
 
@@ -172,7 +184,7 @@ workflow hybrid_nf {
          * wtdbg2
          */
         if (!params.skip_wtdbg2) {
-          wtdbg2_assembly(lreads)
+          wtdbg2_assembly(lreads.combine(prefix_ch))
           wtdbg2_ch = wtdbg2_assembly.out[1]
         }
 
@@ -183,7 +195,7 @@ workflow hybrid_nf {
          * Run medaka?
          */
         if (params.medaka_sequencing_model && params.lr_type == 'nanopore') {
-          medaka(lreads_assemblies_ch.combine(lreads))
+          medaka(lreads_assemblies_ch.combine(lreads).combine(prefix_ch))
           medaka_ch = medaka.out[1]
         }
 
@@ -191,7 +203,9 @@ workflow hybrid_nf {
          * Run nanopolish?
          */
         if (params.nanopolish_fast5Path && params.lr_type == 'nanopore') {
-          nanopolish(lreads_assemblies_ch.combine(lreads).combine(fast5).combine(fast5_dir))
+          nanopolish(
+            lreads_assemblies_ch.combine(lreads).combine(fast5).combine(fast5_dir).combine(prefix_ch),
+          )
           nanopolish_ch = nanopolish.out[0]
         }
 
@@ -199,7 +213,9 @@ workflow hybrid_nf {
          * gcpp?
          */
         if (params.pacbio_bams && params.lr_type == 'pacbio') {
-          gcpp(lreads_assemblies_ch.combine(bamFile.collect().toList()).combine(nBams))
+          gcpp(
+            lreads_assemblies_ch.combine(bamFile.collect().toList()).combine(nBams).combine(prefix_ch),
+          )
           gcpp_ch = gcpp.out[1]
         }
 
@@ -207,23 +223,32 @@ workflow hybrid_nf {
          * Finally, run pilon for all
          */
         pilon_polish(
-          lreads_assemblies_ch.mix(medaka_ch, nanopolish_ch, gcpp_ch).combine(
+          lreads_assemblies_ch.mix(
+            medaka_ch, 
+            nanopolish_ch, 
+            gcpp_ch).combine(
             preads.combine(sreads).collect().toList()
+          ).combine(
+            prefix_ch
           ),
-          preads.combine(sreads).collect()
         )
         pilon_ch = pilon_polish.out[1]
       }
 
       // Run quast (with all)
       quast(
-        hybrid_assemblies_ch.mix(lreads_assemblies_ch, medaka_ch, nanopolish_ch, gcpp_ch, pilon_ch).combine(
+        hybrid_assemblies_ch.mix(
+          lreads_assemblies_ch, 
+          medaka_ch, nanopolish_ch, 
+          gcpp_ch, 
+          pilon_ch).combine(
           preads.combine(sreads).collect().toList()
-        ),
-        preads.combine(sreads).collect()
+        ).combine(
+          prefix_ch
+        )
       )
 
       // Run multiqc
-      multiqc(quast.out[0].collect(), quast.out[1].distinct(), quast.out[2], Channel.value("$workflow.runName"))
+      multiqc(quast.out[0].collect(), prefix_ch, Channel.value("$workflow.runName"))
 
 }

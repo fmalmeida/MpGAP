@@ -1,11 +1,11 @@
 process unicycler_lreads_assembly {
-  publishDir "${params.outdir}/${lrID}/${type}", mode: 'copy'
+  publishDir "${params.outdir}/${prefix}", mode: 'copy'
   label 'main'
   cpus params.threads
   tag "Performing a longreads only assembly with Unicycler"
 
   input:
-  file lreads
+  tuple file(lreads), val(prefix)
 
   output:
   file "unicycler/*" // Save all files
@@ -14,12 +14,6 @@ process unicycler_lreads_assembly {
   script:
   lrID = (lreads.getName() - ".gz").toString().substring(0, (lreads.getName() - ".gz").toString().lastIndexOf("."))
 
-  // Check available reads
-  if (!params.shortreads_paired && !params.shortreads_single && params.longreads && params.lr_type) {
-    type = 'longreads_only'
-  } else if ((params.shortreads_paired || params.shortreads_single) && params.longreads && params.lr_type) {
-    type = 'hybrid/strategy_2/longreads_only'
-  }
   """
   unicycler -l $lreads \
   -o unicycler -t ${params.threads} \

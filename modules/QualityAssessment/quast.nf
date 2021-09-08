@@ -1,46 +1,15 @@
 process quast {
-  publishDir "${params.outdir}/${id}/${out_dir}/00_quality_assessment", mode: 'copy'
+  publishDir "${params.outdir}/${prefix}/00_quality_assessment", mode: 'copy'
   label 'main'
-  tag "Assessing ${assembler} assembly quality"
+  tag "Assessing ${assembler} assembly quality for multiqc"
 
   input:
-  tuple file(contigs), val(id), val(assembler), file(reads)
-  val(reads_values)
+  tuple file(contigs), val(id), val(assembler), file(reads), val(prefix)
 
   output:
   file("${assembler}")
-  val(id)
-  val(out_dir)
 
   script:
-  // Check available reads
-  if ((params.shortreads_single) && (params.shortreads_paired)) {
-    srId = (reads[3].getName() - ".gz").toString().substring(0, (reads[3].getName() - ".gz").toString().lastIndexOf("."))
-    prId = reads_values[0]
-    out_ids = "${prId}_and_${srId}"
-  } else if ((params.shortreads_single) && (!params.shortreads_paired)) {
-    srId = (reads[3].getName() - ".gz").toString().substring(0, (reads[3].getName() - ".gz").toString().lastIndexOf("."))
-    out_ids = "${srId}"
-  } else if ((params.shortreads_paired) && (!params.shortreads_single)) {
-    prId = reads_values[0]
-    out_ids = "${prId}"
-  }
-
-  if (!params.shortreads_paired && !params.shortreads_single && params.longreads && params.lr_type) {
-    type = 'longreads_only'
-    out_dir = "${type}"
-  } else if ((params.shortreads_paired || params.shortreads_single) && !params.longreads ) {
-    type = 'shortreads_only'
-    out_dir = "${type}"
-  } else {
-    if (params.strategy_2) {
-    type = 'hybrid/strategy_2'
-    } else {
-    type = 'hybrid/strategy_1'
-    }
-    out_dir = "${type}/${out_ids}"
-  }
-
   // Alignment parameters
   if (params.shortreads_paired && !params.shortreads_single) {
     quast_parameter = "--pe1 ${reads[1]} --pe2 ${reads[2]}"
@@ -55,7 +24,7 @@ process quast {
 
   """
   quast.py -o ${assembler} -t ${params.threads} ${quast_parameter} \\
-  --circos --conserved-genes-finding --rna-finding --min-contig 100 \\
+  --conserved-genes-finding --rna-finding --min-contig 100 \\
   ${params.quast_additional_parameters} \\
   ${contigs}
   """

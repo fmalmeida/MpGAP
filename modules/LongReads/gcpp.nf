@@ -1,23 +1,17 @@
 process gcpp {
-  publishDir "${params.outdir}/${lrID}/${type}/gcpp_polished_contigs", mode: 'copy'
+  publishDir "${params.outdir}/${prefix}/gcpp_polished_contigs", mode: 'copy'
   label 'main'
   tag "Computing pacbio assembly consensus with gcpp"
   cpus params.threads
 
   input:
-  tuple file(draft), val(lrID), val(assembler), file(bams), val(nBams)
+  tuple file(draft), val(lrID), val(assembler), file(bams), val(nBams), val(prefix)
 
   output:
   file "${assembler}_pbvariants.gff" // Save gff
   tuple file("${assembler}_pbconsensus.fasta"), val("${lrID}"), val("${assembler}_gcpp") // Save contigs
 
   script:
-  // Check available reads
-  if (!params.shortreads_paired && !params.shortreads_single && params.longreads && params.lr_type) {
-    type = 'longreads_only'
-  } else if ((params.shortreads_paired || params.shortreads_single) && params.longreads && params.lr_type) {
-    type = 'hybrid/strategy_2/longreads_only'
-  }
   """
   # Activate env
   source activate pacbio;
