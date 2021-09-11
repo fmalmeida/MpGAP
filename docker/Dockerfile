@@ -160,6 +160,9 @@ ENV PATH="$PATH:/work/shasta-Ubuntu-20.04/bin"
 RUN conda install -y -c conda-forge 'tbb=2020.2' && \
 			conda clean -afy
 
+# install csvtk
+RUN conda install -y -c bioconda csvtk
+
 # Remove tars
 RUN rm -rf *.tar.gz *.tar.xz *.tar *.tgz
 
