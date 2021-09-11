@@ -5,15 +5,14 @@ process unicycler_sreads_assembly {
   cpus params.threads
 
   input:
-  tuple val(id), file(sread1), file(sread2)
-  file(sreads)
+  tuple val(id), file(sread1), file(sread2), file(sreads), val(prefix)
 
   output:
   file "unicycler" // Save everything
   tuple file("unicycler/unicycler_assembly.fasta"), val(out_ids), val('unicycler') // Gets contigs file
 
   script:
-
+  // Check reads
   if ((params.shortreads_single) && (params.shortreads_paired)) {
     parameter = "-1 $sread1 -2 $sread2 -s $sreads"
     x = "Performing a illumina-only assembly with Unicycler, using paired and single end reads"

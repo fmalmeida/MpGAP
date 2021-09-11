@@ -116,17 +116,17 @@ workflow hybrid_nf {
 
         // SPAdes
         if (!params.skip_spades) {
-          spades_hybrid(lreads, preads, sreads)
+          spades_hybrid(lreads, preads, sreads, prefix_ch)
           spades_ch = spades_hybrid.out[1]
         }
         // Unicycler
         if (!params.skip_unicycler) {
-          unicycler_hybrid(lreads, preads, sreads)
+          unicycler_hybrid(lreads, preads, sreads, prefix_ch)
           unicycler_h_ch = unicycler_hybrid.out[1]
         }
         // Haslr
         if (!params.skip_haslr) {
-          haslr_hybrid(lreads, preads, sreads)
+          haslr_hybrid(lreads, preads, sreads, prefix_ch)
           haslr_ch = haslr_hybrid.out[1]
         }
 

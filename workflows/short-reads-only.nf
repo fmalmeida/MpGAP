@@ -2,6 +2,11 @@
  * Include modules
  */
 
+/*
+ * Module for prefix evaluation
+ */
+include { define_prefix } from '../modules/misc/define_prefix.nf'
+
 // SPAdes sreads
 include { spades_sreads_assembly } from '../modules/ShortReads/spades_sreads.nf'
 
@@ -23,6 +28,12 @@ workflow sreads_only_nf {
       sreads
   main:
 
+  /*
+   * Check input reads in order to evaluate better prefix
+   */
+  define_prefix(Channel.value(''), preads, sreads)
+  prefix_ch = define_prefix.out[0]
+
   // Channels for quast
   spades_ch    = Channel.empty()
   unicycler_ch = Channel.empty()
@@ -30,17 +41,17 @@ workflow sreads_only_nf {
 
   // SPAdes
   if (!params.skip_spades) {
-    spades_sreads_assembly(preads, sreads)
+    spades_sreads_assembly(preads.combine(sreads).combine(prefix_ch))
     spades_ch = spades_sreads_assembly.out[1]
   }
   // Unicycler
   if (!params.skip_unicycler) {
-    unicycler_sreads_assembly(preads, sreads)
+    unicycler_sreads_assembly(preads.combine(sreads).combine(prefix_ch))
     unicycler_ch = unicycler_sreads_assembly.out[1]
   }
   // Shovill
   if (!params.skip_shovill && !params.shortreads_single && params.shortreads_paired) {
-    shovill_sreads_assembly(preads)
+    shovill_sreads_assembly(preads.combine(prefix_ch))
     shovill_ch = shovill_sreads_assembly.out[1]
   }
 
@@ -49,11 +60,10 @@ workflow sreads_only_nf {
 
   // Run quast
   quast(
-    assemblies_ch.combine(preads.combine(sreads).collect().toList()),
-    preads.combine(sreads).collect()
+    assemblies_ch.combine(preads.combine(sreads).collect().toList()).combine(prefix_ch)
   )
 
   // Run multiqc
-  multiqc(quast.out[0].collect(), quast.out[1].distinct(), quast.out[2], Channel.value("$workflow.runName"))
+  multiqc(quast.out[0].collect(), prefix_ch, Channel.value("$workflow.runName"))
 
 }

@@ -1,19 +1,18 @@
 process spades_sreads_assembly {
-  publishDir "${params.outdir}/${out_ids}/shortreads_only", mode: 'copy'
+  publishDir "${params.outdir}/${prefix}", mode: 'copy'
   label 'main'
   tag { x }
   cpus params.threads
 
   input:
-  tuple val(id), file(sread1), file(sread2)
-  file(sreads)
+  tuple val(id), file(sread1), file(sread2), file(sreads), val(prefix)
 
   output:
   file "spades" // Save all output
   tuple file("spades/spades_assembly.fasta"), val(out_ids), val('spades') // Gets contigs file
 
   script:
-
+  // Check reads
   if ((params.shortreads_single) && (params.shortreads_paired)) {
     parameter = "-1 $sread1 -2 $sread2 -s $sreads"
     x = "Performing a illumina-only assembly with SPAdes, using paired and single end reads"

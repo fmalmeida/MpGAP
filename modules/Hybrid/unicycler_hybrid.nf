@@ -1,13 +1,14 @@
 process unicycler_hybrid {
-  publishDir "${params.outdir}/${lrID}/hybrid/strategy_1/${out_ids}", mode: 'copy'
+  publishDir "${params.outdir}/${prefix}", mode: 'copy'
   label 'main'
   tag { x }
   cpus params.threads
 
   input:
-  file lreads
+  file(lreads)
   tuple val(id), file(sread1), file(sread2)
   file(sreads)
+  val(prefix)
 
   output:
   file "*" // Save everything
@@ -19,17 +20,12 @@ process unicycler_hybrid {
   if ((params.shortreads_single) && (params.shortreads_paired)) {
     parameter = "-1 $sread1 -2 $sread2 -s $sreads -l $lreads"
     x = "Performing a hybrid assembly with Unicycler, using paired and single end reads"
-    srId = (sreads.getName() - ".gz").toString().substring(0, (sreads.getName() - ".gz").toString().lastIndexOf("."))
-    out_ids = "${id}_and_${srId}"
   } else if ((params.shortreads_single) && (!params.shortreads_paired)) {
     parameter = "-s $sreads -l $lreads"
     x = "Performing a hybrid assembly with Unicycler, using single end reads"
-    id = (sreads.getName() - ".gz").toString().substring(0, (sreads.getName() - ".gz").toString().lastIndexOf("."))
-    out_ids = "${id}"
   } else if ((params.shortreads_paired) && (!params.shortreads_single)) {
     parameter = "-1 $sread1 -2 $sread2 -l $lreads"
     x = "Performing a hybrid assembly with Unicycler, using paired end reads"
-    out_ids = "${id}"
   }
 
   """

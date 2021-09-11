@@ -1,4 +1,9 @@
 /*
+ * Module for prefix evaluation
+ */
+include { define_prefix } from '../modules/misc/define_prefix.nf'
+
+/*
  * Modules for assembling long reads
  */
 
@@ -49,6 +54,12 @@ workflow lreadsonly_nf {
   main:
 
       /*
+       * Check input reads in order to evaluate better prefix
+       */
+      define_prefix(reads, Channel.value(['', '', '']), Channel.value(''))
+      prefix_ch = define_prefix.out[0]
+
+      /*
        * Channels for placing the assemblies
        */
       canu_ch       = Channel.empty()
@@ -70,7 +81,7 @@ workflow lreadsonly_nf {
        * Canu
        */
       if (!params.skip_canu) {
-        canu_assembly(reads)
+        canu_assembly(reads.combine(prefix_ch))
         canu_ch = canu_assembly.out[1]
       }
 
@@ -78,7 +89,7 @@ workflow lreadsonly_nf {
        * Flye
        */
       if (!params.skip_flye) {
-        flye_assembly(reads)
+        flye_assembly(reads.combine(prefix_ch))
         flye_ch = flye_assembly.out[1]
       }
 
@@ -86,7 +97,7 @@ workflow lreadsonly_nf {
        * Unicycler
        */
       if (!params.skip_unicycler) {
-        unicycler_lreads_assembly(reads)
+        unicycler_lreads_assembly(reads.combine(prefix_ch))
         unicycler_ch = unicycler_lreads_assembly.out[1]
       }
 
@@ -94,7 +105,7 @@ workflow lreadsonly_nf {
        * Raven
        */
       if (!params.skip_raven) {
-        raven_assembly(reads)
+        raven_assembly(reads.combine(prefix_ch))
         raven_ch = raven_assembly.out[1]
       }
 
@@ -102,7 +113,7 @@ workflow lreadsonly_nf {
        * Shasta
        */
       if (!params.skip_shasta && params.lr_type == 'nanopore') {
-        shasta_assembly(reads)
+        shasta_assembly(reads.combine(prefix_ch))
         shasta_ch = shasta_assembly.out[1]
       }
 
@@ -110,7 +121,7 @@ workflow lreadsonly_nf {
        * wtdbg2
        */
       if (!params.skip_wtdbg2) {
-        wtdbg2_assembly(reads)
+        wtdbg2_assembly(reads.combine(prefix_ch))
         wtdbg2_ch = wtdbg2_assembly.out[1]
       }
 
@@ -121,7 +132,7 @@ workflow lreadsonly_nf {
        * Run medaka?
        */
       if (params.medaka_sequencing_model && params.lr_type == 'nanopore') {
-        medaka(assemblies_ch.combine(reads))
+        medaka(assemblies_ch.combine(reads).combine(prefix_ch))
         medaka_ch = medaka.out[1]
       }
 
@@ -129,7 +140,7 @@ workflow lreadsonly_nf {
        * Run nanopolish?
        */
       if (params.nanopolish_fast5Path && params.lr_type == 'nanopore') {
-        nanopolish(assemblies_ch.combine(reads).combine(fast5).combine(fast5_dir))
+        nanopolish(assemblies_ch.combine(reads).combine(fast5).combine(fast5_dir).combine(prefix_ch))
         nanopolish_ch = nanopolish.out[0]
       }
 
@@ -137,7 +148,7 @@ workflow lreadsonly_nf {
        * gcpp?
        */
       if (params.pacbio_bams && params.lr_type == 'pacbio') {
-        gcpp(assemblies_ch.combine(bamFile.collect().toList()).combine(nBams))
+        gcpp(assemblies_ch.combine(bamFile.collect().toList()).combine(nBams).combine(prefix_ch))
         gcpp_ch = gcpp.out[1]
       }
 
@@ -148,12 +159,11 @@ workflow lreadsonly_nf {
        * Run quast
        */
       quast(
-        assemblies_ch.mix(polished_ch).combine(reads), 
-        reads.collect() // it is necessary to use .collect() to make it a channel that can be re-used
+        assemblies_ch.mix(polished_ch).combine(reads).combine(prefix_ch)
       )
 
       /*
        * Run multiqc
        */
-      multiqc(quast.out[0].collect(), quast.out[1].distinct(), quast.out[2], Channel.value("$workflow.runName"))
+      multiqc(quast.out[0].collect(), prefix_ch, Channel.value("$workflow.runName"))
 }
