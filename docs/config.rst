@@ -69,6 +69,13 @@ Main config file
     // This parameter is used to specify the long read sequencing technology used.
     // It might be set as one of both: nanopore ; pacbio
           lr_type = ''
+    
+    // Tells the pipeline to interpret the long reads as "corrected" long reads.
+    // This will activate (if available) the options for corrected reads in the
+    // assemblers: -corrected (in canu), --pacbio-corr|--nano-corr (in flye), etc.
+    // Be cautious when using this parameter. If your reads are not corrected, and
+    // you use this parameter, you will probably do not generate any contig.
+          corrected_lreads = false
 
                     /*
                      * Activation of alternative hybrid assembly mode
