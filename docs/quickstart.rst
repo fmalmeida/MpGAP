@@ -60,6 +60,18 @@ By default, when assembling long and short reads together (hybrid assemblies) th
 
 	Specific software can be turned off with the parameters ``--skip_{assembler}``
 
+.. note::
+  
+  Remember to **always** write input paths inside double quotes.
+
+.. note::
+
+  When using paired end reads it is **required** that input reads are set with the “{1,2}” pattern. For example: “SRR6307304_{1,2}.fastq”. This will properly load reads “SRR6307304_1.fastq” and “SRR6307304_2.fastq”
+
+.. warning::
+
+  When running hybrid assemblies or mixing read types it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. So that the pipeline does not load any different read that also matches the REGEX and avoid confusions with the inputs.
+
 Hybrid assembly (strategy 2)
 ============================
 
@@ -87,6 +99,18 @@ The execution is actually the same as for the strategy 1, however users must use
 .. tip::
 
 	Additionally, users can also execute a long reads polishing step in their assemblies prior to the polishing with short reads. The long reads polishers available are: ONT ==> Medaka and Nanopolish; Pacbio ==> Arrow. For that, users must check the longreads parameters: ``--medaka_sequencing_model``, ``--nanopolish_fast5Path`` and ``--pacbio_all_bam_path``. This will make de pipeline work as: ``long reads assembly -> polishing with long reads models -> polishing with short reads with Pilon``
+
+.. note::
+  
+  Remember to **always** write input paths inside double quotes.
+
+.. note::
+
+  When using paired end reads it is **required** that input reads are set with the “{1,2}” pattern. For example: “SRR6307304_{1,2}.fastq”. This will properly load reads “SRR6307304_1.fastq” and “SRR6307304_2.fastq”
+
+.. warning::
+
+  When running hybrid assemblies or mixing read types it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. So that the pipeline does not load any different read that also matches the REGEX and avoid confusions with the inputs.
 
 Afterwards
 ==========

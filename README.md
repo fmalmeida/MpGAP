@@ -107,6 +107,12 @@ By polishing a long reads only assembly with Illumina reads. For that, users wil
 
 Command line executions are exemplified [in the manual](https://mpgap.readthedocs.io/en/latest/examples.html).
 
+#### Warnings
+
+* Remember to **always** write input paths inside double quotes.
+* When using paired end reads it is **required** that input reads are set with the “{1,2}” pattern. For example: “SRR6307304_{1,2}.fastq”. This will properly load reads “SRR6307304_1.fastq” and “SRR6307304_2.fastq”
+* When running hybrid assemblies or mixing read types it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. So that the pipeline does not load any different read that also matches the REGEX and avoid confusions with the inputs.
+
 ### Using the configuration file
 
 All parameters showed above can be, and are advised to be, set through the configuration file. When a configuration file is used the pipeline is executed as `nextflow run fmalmeida/mpgap -c ./configuration-file`. Your configuration file is what will tell the pipeline which type of data you have, and which processes to execute. Therefore, it needs to be correctly configured.
