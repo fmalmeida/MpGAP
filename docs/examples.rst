@@ -6,7 +6,7 @@ Some execution examples
 
 .. warning::
 
-  When running hybrid assemblies or mixing read types it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. So that the pipeline does not load any different read that also matches the REGEX and avoid confusions with the inputs.
+  When running hybrid assemblies or mixing short read types it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. So that the pipeline does not load any different read that also matches the REGEX and avoid confusions with the inputs.
 
 .. note::
 
@@ -75,7 +75,7 @@ Illumina-only assembly with both paired and single end reads
 
 .. warning::
 
-  When mixing read types it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. So that the pipeline does not load any different read that also matches the REGEX and avoid confusions with the inputs.
+  When mixing short read types it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. So that the pipeline does not load any different read that also matches the REGEX and avoid confusions with the inputs.
 
 Long reads only with ONT reads
 ==============================
@@ -152,7 +152,7 @@ Assembling directly via Unicycler, Haslr and SPAdes modules, using Pacbio reads.
 
 .. warning::
 
-  When running hybrid assemblies or mixing read types it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. So that the pipeline does not load any different read that also matches the REGEX and avoid confusions with the inputs.
+  When running hybrid assemblies it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. So that the pipeline does not load any different read that also matches the REGEX and avoid confusions with the inputs.
 
 Assembly in Hybrid strategy 2
 =============================
@@ -183,7 +183,7 @@ By using shortreads to correct errors (polish) in longreads-only assemblies (gen
 
 .. warning::
 
-  When running hybrid assemblies or mixing read types it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. So that the pipeline does not load any different read that also matches the REGEX and avoid confusions with the inputs.
+  When running hybrid assemblies it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. So that the pipeline does not load any different read that also matches the REGEX and avoid confusions with the inputs.
 
 Running with a configuration file
 =================================

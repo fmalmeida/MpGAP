@@ -70,7 +70,7 @@ By default, when assembling long and short reads together (hybrid assemblies) th
 
 .. warning::
 
-  When running hybrid assemblies or mixing read types it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. So that the pipeline does not load any different read that also matches the REGEX and avoid confusions with the inputs.
+  When running hybrid assemblies it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. So that the pipeline does not load any different read that also matches the REGEX and avoid confusions with the inputs.
 
 Hybrid assembly (strategy 2)
 ============================
@@ -111,7 +111,7 @@ The execution is actually the same as for the strategy 1, however users must use
 
 .. warning::
 
-  When running hybrid assemblies or mixing read types it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. So that the pipeline does not load any different read that also matches the REGEX and avoid confusions with the inputs.
+  When running hybrid assemblies it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. So that the pipeline does not load any different read that also matches the REGEX and avoid confusions with the inputs.
 
 Afterwards
 ==========
