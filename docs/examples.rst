@@ -6,9 +6,11 @@ Some execution examples
 
 .. warning::
 
-  Remember: the pipeline does not concatenate the reads. Whenever you use a pattern such as \* the pipeline will assemble each pair
-  separately. When doing hybrid assemblies or mixing read types it is advised to **not use REGEX** and instead write the full file
-  path.
+  When running hybrid assemblies or mixing read types it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. So that the pipeline does not load any different read that also matches the REGEX and avoid confusions with the inputs.
+
+.. note::
+
+  When using paired end reads it is **required** that input reads are set with the “{1,2}” pattern. For example: “SRR6307304_{1,2}.fastq”. This will properly load reads “SRR6307304_1.fastq” and “SRR6307304_2.fastq”
 
 Illumina-only assembly with paired end reads
 ============================================
@@ -24,7 +26,15 @@ Illumina-only assembly with paired end reads
 
 .. note::
 
-  This command will perform an illumina-only assembly using paired end reads with Unicycler, SPAdes and Shovill assemblers. Since fastq files will be found by a pattern match users MUST ALWAYS double quote as: Example "illumina/SRR\*_{1,2}.fastq.gz"
+  This command will perform an illumina-only assembly using paired end reads with Unicycler, SPAdes and Shovill assemblers.
+
+.. note::
+
+  Since fastq files will be found by a pattern match users MUST ALWAYS double quote as: Example "illumina/SRR\*_{1,2}.fastq.gz"
+
+.. note::
+
+  When using paired end reads it is **required** that input reads are set with the “{1,2}” pattern. For example: “SRR6307304_{1,2}.fastq”. This will properly load reads “SRR6307304_1.fastq” and “SRR6307304_2.fastq”
 
 Illumina-only assembly with single end reads
 ============================================
@@ -38,7 +48,11 @@ Illumina-only assembly with single end reads
 
 .. note::
 
-  This command will perform an illumina-only assembly using unpaired reads with Unicycler and SPAdes assemblers. Since fastq files will be found by a pattern match users MUST ALWAYS double quote as: Example "SRR9696\*.fastq.gz"
+  This command will perform an illumina-only assembly using unpaired reads with Unicycler and SPAdes assemblers.
+
+.. note::
+  
+  Since fastq files will be found by a pattern match users MUST ALWAYS double quote as: Example "SRR9696\*.fastq.gz"
 
 Illumina-only assembly with both paired and single end reads
 ============================================================
@@ -53,7 +67,15 @@ Illumina-only assembly with both paired and single end reads
 
 .. note::
 
-  This command will perform an illumina-only assembly using both paired and unpaired reads with Unicycler and SPAdes assemblers. Since fastq files will be found by a pattern match users MUST ALWAYS double quote it.
+  This command will perform an illumina-only assembly using both paired and unpaired reads with Unicycler and SPAdes assemblers.
+
+.. note::
+
+  When using paired end reads it is **required** that input reads are set with the “{1,2}” pattern. For example: “SRR6307304_{1,2}.fastq”. This will properly load reads “SRR6307304_1.fastq” and “SRR6307304_2.fastq”
+
+.. warning::
+
+  When mixing read types it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. So that the pipeline does not load any different read that also matches the REGEX and avoid confusions with the inputs.
 
 Long reads only with ONT reads
 ==============================
@@ -124,6 +146,14 @@ Assembling directly via Unicycler, Haslr and SPAdes modules, using Pacbio reads.
 
   This command will execute a hybrid assembly directly through Unicycler's, Haslr's and SPAdes' hybrid assembly modules.
 
+.. note::
+
+  When using paired end reads it is **required** that input reads are set with the “{1,2}” pattern. For example: “SRR6307304_{1,2}.fastq”. This will properly load reads “SRR6307304_1.fastq” and “SRR6307304_2.fastq”
+
+.. warning::
+
+  When running hybrid assemblies or mixing read types it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. So that the pipeline does not load any different read that also matches the REGEX and avoid confusions with the inputs.
+
 Assembly in Hybrid strategy 2
 =============================
 
@@ -146,6 +176,14 @@ By using shortreads to correct errors (polish) in longreads-only assemblies (gen
 
   This command will execute a hybrid assembly by polishing a longreads-only assembly with shortreads. The usage of ``nanopolish_fast5Path`` and ``medaka_sequencing_model``
   tells the pipeline to create additional assemblies where medaka and/or nanopolish are executed before Pilon (polishment with shortreads).
+
+.. note::
+
+  When using paired end reads it is **required** that input reads are set with the “{1,2}” pattern. For example: “SRR6307304_{1,2}.fastq”. This will properly load reads “SRR6307304_1.fastq” and “SRR6307304_2.fastq”
+
+.. warning::
+
+  When running hybrid assemblies or mixing read types it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. So that the pipeline does not load any different read that also matches the REGEX and avoid confusions with the inputs.
 
 Running with a configuration file
 =================================

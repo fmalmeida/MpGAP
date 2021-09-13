@@ -13,11 +13,19 @@ Input files
 
 .. note::
 
-  Users must **never** use hard or symbolic links. This will make nextflow fail. When setting the parameters, please **always** give full path to a hard file, not to a link. This will prevent file access fail. Remember to **always** write input paths inside double quotes.
+  Users must **never** use hard or symbolic links. This will probably make nextflow fail.
+  
+.. note::
+  
+  Remember to **always** write input paths inside double quotes.
+
+.. note::
+
+  When using paired end reads it is **required** that input reads are set with the “{1,2}” pattern. For example: “SRR6307304_{1,2}.fastq”. This will properly load reads “SRR6307304_1.fastq” and “SRR6307304_2.fastq”
 
 .. warning::
 
-  Remember: the pipeline does not concatenate the reads. Whenever you use a pattern such as \* the pipeline will assemble each pair separately. When doing hybrid assemblies or mixing read types it is advised to **not use REGEX** and instead write the full file path.
+  When running hybrid assemblies or mixing read types it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. So that the pipeline does not load any different read that also matches the REGEX and avoid confusions with the inputs.
 
 Assembly possibilities
 ======================
@@ -82,6 +90,18 @@ General parameters
 
 Input files
 -----------
+
+.. note::
+  
+  Remember to **always** write input paths inside double quotes.
+
+.. note::
+
+  When using paired end reads it is **required** that input reads are set with the “{1,2}” pattern. For example: “SRR6307304_{1,2}.fastq”. This will properly load reads “SRR6307304_1.fastq” and “SRR6307304_2.fastq”
+
+.. warning::
+
+  When running hybrid assemblies or mixing read types it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. So that the pipeline does not load any different read that also matches the REGEX and avoid confusions with the inputs.
 
 .. list-table::
    :widths: 20 25 10 50
