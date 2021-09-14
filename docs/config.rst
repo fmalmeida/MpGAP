@@ -48,16 +48,21 @@ Main config file
 
                     /*
                      * Input reads
-                     * The pipeline will choose between: hybrid, shortreads or longreads only assemblies
-                     * based on the combination of input files given
-                     * Remember to always quote file paths.
+                     *
+                     * The pipeline will choose between: hybrid, shortreads or longreads only assemblies based on the combination of input files given.
+                     *
+                     * Remember to always double quote file paths.
+                     *
+                     * When running hybrid assemblies or mixing short read types it is advised to **avoid not required REGEX** and write the full file path, 
+                     * using only the required REGEX for paired end reads ("{1,2}") when applicable. So that the pipeline does not load any different read 
+                     * that also matches the REGEX and avoid confusions with the inputs.
                      */
 
     // Short reads input files. They need to be specified in case of hybrid or shortreads-only assembly.
     // If none of these are wanted it may be left in blank. The files might be single or paired ended. They just
     // need to be properly identified as the examples below.
     // Examples for illumina reads:
-    // Paired: shortreads_paired = 'SRR6307304_{1,2}.fastq' // For read pairs SRR6307304_1.fastq and SRR6307304_2.fastq
+    // Paired: shortreads_paired = 'SRR6307304_{1,2}.fastq'. For paired end reads it is **required** the “{1,2}” pattern.
     // Single: shortreads_single = 'SRR7128258.fastq'
           shortreads_paired = ''
           shortreads_single = ''
@@ -82,7 +87,7 @@ Main config file
                      * Only useful when giving both short and long reads
                      */
 
-    // This parameter below is to define wheter one wants or not to execute the alternative hybrid assembly method.
+    // This parameter below is to define whether one wants or not to execute the alternative hybrid assembly method.
     // It first creates a long reads only assembly with canu, flye, raven or unicycler and then polishes it using the provided
     // shortreads. It executes an alternative workflow and DOES NOT RUN unicycler/spades/haslr default hybrid modes.
     //
