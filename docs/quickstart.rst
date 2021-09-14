@@ -34,6 +34,13 @@ Now we have the necessary data to perform the quickstart.
 
   Remember, the pipeline can always be executed with a config file. In fact, the best way to execute these pipelines is by using a configuration file. With a proper configuration, users can easily run the pipeline.
 
+.. warning::
+
+  When running hybrid assemblies or mixing short read types it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. 
+  Since nextflow loads inputs randomly, this is said so that the pipeline does not load all reads that match the REGEX and avoid unwanted combination of inputs.
+
+  We are currently working in provinding a way to run multiple samples at once avoinding unwanted combination.
+
 Hybrid assembly (strategy 1)
 ============================
 
@@ -67,10 +74,6 @@ By default, when assembling long and short reads together (hybrid assemblies) th
 .. note::
 
   When using paired end reads it is **required** that input reads are set with the “{1,2}” pattern. For example: “SRR6307304_{1,2}.fastq”. This will properly load reads “SRR6307304_1.fastq” and “SRR6307304_2.fastq”
-
-.. warning::
-
-  When running hybrid assemblies it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. So that the pipeline does not load any different read that also matches the REGEX and avoid confusions with the inputs.
 
 Hybrid assembly (strategy 2)
 ============================
@@ -107,10 +110,6 @@ The execution is actually the same as for the strategy 1, however users must use
 .. note::
 
   When using paired end reads it is **required** that input reads are set with the “{1,2}” pattern. For example: “SRR6307304_{1,2}.fastq”. This will properly load reads “SRR6307304_1.fastq” and “SRR6307304_2.fastq”
-
-.. warning::
-
-  When running hybrid assemblies it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. So that the pipeline does not load any different read that also matches the REGEX and avoid confusions with the inputs.
 
 Afterwards
 ==========
