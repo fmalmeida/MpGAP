@@ -22,7 +22,7 @@ MpGAP is an easy to use nextflow docker-based pipeline that adopts well known so
 
 || **Source** |
 |:- | :- |
-| **Assemblers** | [Canu](https://github.com/marbl/canu), [Flye](https://github.com/fenderglass/Flye), [Raven](https://github.com/lbcb-sci/raven), [Haslr](https://github.com/vpc-ccg/haslr), [Unicycler](https://github.com/rrwick/Unicycler), [Spades](https://github.com/ablab/spades), [Shovill](https://github.com/tseemann/shovill) |
+| **Assemblers** | [Canu](https://github.com/marbl/canu), [Flye](https://github.com/fenderglass/Flye), [Raven](https://github.com/lbcb-sci/raven), [Shasta](https://github.com/chanzuckerberg/shasta) and [wtdbg2](https://github.com/ruanjue/wtdbg2), [Haslr](https://github.com/vpc-ccg/haslr), [Unicycler](https://github.com/rrwick/Unicycler), [Spades](https://github.com/ablab/spades), [Shovill](https://github.com/tseemann/shovill) |
 | **Polishers** | [Nanopolish](https://github.com/jts/nanopolish), [Medaka](https://github.com/nanoporetech/medaka), [gcpp](https://github.com/PacificBiosciences/gcpp), [Pilon](https://github.com/broadinstitute/pilon) |
 | **Quality check** | [QUAST](https://github.com/ablab/quast), [MultiQC](https://multiqc.info/) |
 
@@ -49,7 +49,7 @@ This pipeline has only two dependencies: [Docker](https://www.docker.com) and [N
 1. If you don't have it already install [Docker](https://docs.docker.com/) in your computer.
     * After installed, you need to download the required Docker images
 
-          docker pull fmalmeida/mpgap
+          docker pull fmalmeida/mpgap:v2.3
 
 > Each release is accompanied by a Dockerfile in the docker folder. When using releases older releases, users can create the correct image using
 the Dockerfile that goes alongside with the release (Remember to give the image the correct name, as it is in dockerhub and the nextflow script).
