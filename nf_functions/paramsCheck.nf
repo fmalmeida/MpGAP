@@ -40,7 +40,7 @@ def paramsCheck() {
    * Checking whether wtdbg2 assembler is used with pacbio but the technology
    * is not properly set.
    */
-  if (!params.skip_wtdbg2 && params.lr_type == 'pacbio' && !params.wtdbg2_technology) {
+  if (!params.skip_wtdbg2 && params.lr_type == 'pacbio' && params.wtdbg2_technology == "ont") {
     println """
     ERROR!
     A minor error has occurred

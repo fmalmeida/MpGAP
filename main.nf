@@ -96,7 +96,7 @@ params.shovill_additional_parameters   = ''
 params.haslr_additional_parameters     = ''
 params.raven_additional_parameters     = ''
 params.wtdbg2_additional_parameters    = ''
-params.wtdbg2_technology               = ''
+params.wtdbg2_technology               = 'ont'
 params.shasta_additional_parameters    = ''
 
 // Short reads

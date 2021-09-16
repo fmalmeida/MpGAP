@@ -35,6 +35,13 @@
                     "help_text": "Your long reads are from pacbio or nanopore sequencing platforms?",
                     "fa_icon": "fas fa-question"
                 },
+                "wtdbg2_technology": {
+                    "type": "string",
+                    "description": "Set  correct long reads technology specification for wtdbg2",
+                    "default": "ont",
+                    "help_text": "When assembling pacbio long reads with wtdbg2, it is necessary to tell the pipeline whether reads are \"rs\" for PacBio RSII, \"sq\" for PacBio Sequel, \"ccs\" for PacBio CCS reads.\n\nThis parameter defaults to ont, such it is required to change when using pacbio reads.",
+                    "fa_icon": "fas fa-question"
+                },
                 "corrected_lreads": {
                     "type": "boolean",
                     "description": "Tells the pipeline to interpret the long reads as \"corrected\" long reads.",
@@ -67,7 +74,7 @@
                 "threads": {
                     "type": "integer",
                     "description": "Number of threads to use for each process",
-                    "default": "4",
+                    "default": 4,
                     "fa_icon": "fas fa-cogs"
                 },
                 "parallel_jobs": {
@@ -79,7 +86,7 @@
                 "cpus": {
                     "type": "integer",
                     "description": "Number of cores to run nanopolish in parallel",
-                    "default": "2",
+                    "default": 2,
                     "fa_icon": "fas fa-microchip"
                 }
             }
@@ -146,6 +153,16 @@
                     "type": "boolean",
                     "description": "Skip Raven assembler",
                     "help_text": "Raven is a long reads only assembler. Can be use for hybrid assemblies in strategy 2."
+                },
+                "skip_wtdbg2": {
+                    "type": "boolean",
+                    "description": "Skip wtdbg2 assembler",
+                    "help_text": "wtdbg2 is a long reads only assembler. Can be use for hybrid assemblies in strategy 2."
+                },
+                "skip_shasta": {
+                    "type": "boolean",
+                    "description": "Skip Shasta assembler",
+                    "help_text": "Shasta is a long reads only assembler. Can be use for hybrid assemblies in strategy 2."
                 }
             }
         },
@@ -162,24 +179,17 @@
                 }
             }
         },
-        "quast_parameters": {
-            "type": "string",
-            "title": "Quast parameters",
+        "software_additional_parameters": {
+            "title": "Software' additional parameters",
+            "type": "object",
+            "description": "Pass additional parameters to the software",
+            "default": "",
             "properties": {
                 "quast_additional_parameters": {
                     "type": "string",
-                    "description": "Quast additional parameters",
-                    "help_text": "Give additional parameters to Quast while assessing assembly metrics. Must be in quotes and separated by spaces. Must be given as shown in Quast manual. E.g. '--large --eukaryote'."
-                }
-            },
-            "description": "Pass additional parameters to Quast"
-        },
-        "assemblers_additional_parameters": {
-            "title": "Assemblers' additional parameters",
-            "type": "object",
-            "description": "Pass additional parameters to the assemblers",
-            "default": "",
-            "properties": {
+                    "description": "QUAST additional parameters",
+                    "help_text": "Give additional parameters to Quast while assessing assembly metrics. \nMust be in quotes and separated by spaces.\nMust be given as shown in Quast manual. E.g. \" --large --eukaryote \"."
+                },
                 "shovill_additional_parameters": {
                     "type": "string",
                     "description": "Shovill additional parameters",
@@ -214,6 +224,16 @@
                     "type": "string",
                     "description": "Raven additional parameters",
                     "help_text": "Passes additional parameters for Raven assembler. E.g. '--polishing-rounds 4'. Must be given as shown in Raven\u2019 manual."
+                },
+                "wtdbg2_additional_parameters": {
+                    "type": "string",
+                    "description": "wtdbg2 additional parameters",
+                    "help_text": "Must be given as shown in wtdbg2 manual. E.g. \" --tidy-reads 5000 \", inside quotes and separated by spaces."
+                },
+                "shasta_additional_parameters": {
+                    "type": "string",
+                    "description": "Shasta additional parameters",
+                    "help_text": "Must be given as shown in shasta manual. E.g. \" --Reads.minReadLength 5000 \", inside quotes and separated by spaces"
                 }
             },
             "fa_icon": "fas fa-list-ul"
@@ -243,8 +263,8 @@
                 },
                 "pacbio_bams": {
                     "type": "string",
-                    "description": "Polish with gcpp? Set path to pacbio subreads.bam",
-                    "help_text": "Useful for longreads-only and hybrid assemblies using strategy 2.\nPath to all subreads.bam files for the given reads. Whenever set, the pipeline will execute a polishing step with gcpp."
+                    "description": "Loads all the subreads *.bam pacbio raw files for polishing with gcpp",
+                    "help_text": "This parameter loads all the subreads *.bam pacbio raw files for polishing with VariantCaller.\nIn order to nextflow properly use it, one needs to store all the data, from all the cells in one single directory and set the filepath as \"some/data/*bam\"."
                 }
             }
         }
@@ -266,10 +286,7 @@
             "$ref": "#/definitions/expected_genome_size"
         },
         {
-            "$ref": "#/definitions/quast_parameters"
-        },
-        {
-            "$ref": "#/definitions/assemblers_additional_parameters"
+            "$ref": "#/definitions/software_additional_parameters"
         },
         {
             "$ref": "#/definitions/long_reads_assembly_polishing_parameters"
