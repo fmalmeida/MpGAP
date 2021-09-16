@@ -16,7 +16,7 @@ It wraps up the following tools:
      - Used software
 
    * - Long reads assembly
-     - `Canu <https://github.com/marbl/canu>`_, `Flye <https://github.com/fenderglass/Flye>`_, `Unicycler <https://github.com/rrwick/Unicycler>`_ and `Raven <https://github.com/lbcb-sci/raven>`_
+     - `Canu <https://github.com/marbl/canu>`_, `Flye <https://github.com/fenderglass/Flye>`_, `Unicycler <https://github.com/rrwick/Unicycler>`_, `Raven <https://github.com/lbcb-sci/raven>`_, `Shasta <https://github.com/chanzuckerberg/shasta>`_ and `wtdbg2 <https://github.com/ruanjue/wtdbg2>`_
 
    * - Hybrid assembly
      - `Haslr <https://github.com/vpc-ccg/haslr>`_, `Unicycler <https://github.com/rrwick/Unicycler>`_ and `SPAdes <https://github.com/ablab/spades>`_

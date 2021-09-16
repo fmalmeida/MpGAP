@@ -78,7 +78,7 @@ By default, when assembling long and short reads together (hybrid assemblies) th
 Hybrid assembly (strategy 2)
 ============================
 
-Additionally to the conventional hybrid assembly method (strategy 1), users can also hybrid assemble their genomes using an alternative method called, in this pipeline, **strategy 2**. In this method, long reads are first assembled with specialized long reads assemblers, such as Canu, Flye, Raven and Unicycler. And, after that, this long reads only assembly is polished (error correction step) using the available short reads with the Pilon software.
+Additionally to the conventional hybrid assembly method (strategy 1), users can also hybrid assemble their genomes using an alternative method called, in this pipeline, **strategy 2**. In this method, long reads are first assembled with specialized long reads assemblers, such as Canu, Flye, Raven, Shasta, wtdbg2 and Unicycler. And, after that, this long reads only assembly is polished (error correction step) using the available short reads with the Pilon software.
 
 The execution is actually the same as for the strategy 1, however users must use the ``--strategy_2`` parameter to use this alternative method.
 
@@ -97,7 +97,7 @@ The execution is actually the same as for the strategy 1, however users must use
 
 .. note::
 
-	Remember that in this method, the assemblers used are the long reads assemblers (Canu, Flye, Raven and Unicycler), not the hybrid ones used in strategy 1.
+	Remember that in this method, the assemblers used are the long reads assemblers, not the hybrid ones used in strategy 1.
 
 .. tip::
 

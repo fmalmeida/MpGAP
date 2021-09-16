@@ -102,7 +102,7 @@ Take note that in this example, we also polish the resulting assembly with both 
 
 .. note::
 
-  This will perform a long reads only assembly using nanopore data with Canu, Raven, Flye and Unicycler assemblers. This specific command will also execute a polishing step with nanopolish (see ``--nanopolish_fast5Path``) and medaka (see ``--medaka_sequencing_model``).
+  This will perform a long reads only assembly using nanopore data with Canu, Raven, Flye, wtdbg2, shasta and Unicycler assemblers. This specific command will also execute a polishing step with nanopolish (see ``--nanopolish_fast5Path``) and medaka (see ``--medaka_sequencing_model``).
 
 .. tip::
 
@@ -121,13 +121,15 @@ Take note that in this example, we also polish the resulting assembly with gcpp 
      --skip_unicycler \
      --genomeSize 2m \
      --lr_type "pacbio" \
+     --wtdbg2_technology "rs" \
      --longreads "path-to/pacbio.subreads.fastq" \
      --pacbio_bams "path-to/pacbio.*.subreads.bam"
 
 .. note::
 
-  This will perform a long reads only assembly using pacbio data with Canu, Raven, and Flye assemblers (skipping unicycler).
-  This specific command will also execute a polishing step with gcpp (see ``--pacbio_bams``).
+  This will perform a long reads only assembly using pacbio data with Canu, Raven, wtdbg2, shasta and Flye assemblers (skipping unicycler).
+  When executing wtdbg2 with pacbio reads it is required to tell with reads are RSII, Sequel, or CCS (check ``--wtdbg2_technology`` parameter.
+  Also, this specific command will also execute a polishing step with gcpp (see ``--pacbio_bams``).
 
 .. tip::
 
