@@ -149,7 +149,7 @@ Main config file
       // Beware of your system limits
             cpus = 2
 
-      // This parameter loads all the subreads *.bam pacbio raw files for polishing with VariantCaller.
+      // This parameter loads all the subreads *.bam pacbio raw files for polishing with gcpp.
       // In order to nextflow properly use it, one needs to store all the data, from all the cells
       // in one single directory and set the filepath as "some/data/*bam".
             pacbio_bams = ""
@@ -161,8 +161,8 @@ Main config file
                   * Also adding the possibility to pass additional parameters to them
                   */
             quast_additional_parameters = ""           // Give additional parameters to Quast while assessing assembly metrics. 
-                                                      // Must be in quotes and separated by spaces.
-                                                      // Must be given as shown in Quast manual. E.g. " --large --eukaryote ".
+                                                       // Must be in quotes and separated by spaces.
+                                                       // Must be given as shown in Quast manual. E.g. " --large --eukaryote ".
 
             skip_spades    = false                      // Hybrid and shortreads only assemblies
             spades_additional_parameters = ""           // Must be given as shown in Spades manual. E.g. " --meta --plasmids "
