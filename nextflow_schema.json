@@ -264,7 +264,7 @@
                 "pacbio_bams": {
                     "type": "string",
                     "description": "Loads all the subreads *.bam pacbio raw files for polishing with gcpp",
-                    "help_text": "This parameter loads all the subreads *.bam pacbio raw files for polishing with VariantCaller.\nIn order to nextflow properly use it, one needs to store all the data, from all the cells in one single directory and set the filepath as \"some/data/*bam\"."
+                    "help_text": "This parameter loads all the subreads *.bam pacbio raw files for polishing with gcpp.\nIn order to nextflow properly use it, one needs to store all the data, from all the cells in one single directory and set the filepath as \"some/data/*bam\"."
                 }
             }
         }
