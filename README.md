@@ -1,3 +1,5 @@
+<img src="images/lOGO_3_transparente.png" width="250px">
+
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3997375.svg)](https://doi.org/10.5281/zenodo.3445485) [![Releases](https://img.shields.io/github/v/release/fmalmeida/mpgap)](https://github.com/fmalmeida/mpgap/releases) [![Documentation](https://img.shields.io/badge/Documentation-readthedocs-brightgreen)](https://mpgap.readthedocs.io/en/latest/?badge=latest) [![Dockerhub](https://img.shields.io/badge/Docker-fmalmeida/mpgap-informational)](https://hub.docker.com/r/fmalmeida/mpgap) [![Docker build](https://img.shields.io/docker/cloud/build/fmalmeida/mpgap)](https://hub.docker.com/r/fmalmeida/mpgap) ![Docker Pulls](https://img.shields.io/docker/pulls/fmalmeida/mpgap) [![Nextflow version](https://img.shields.io/badge/Nextflow%20>=-v20.07-important)](https://www.nextflow.io/docs/latest/getstarted.html) [![License](https://img.shields.io/badge/License-GPL%203-black)](https://github.com/fmalmeida/mpgap/blob/master/LICENSE)
 
 <p align="center">
@@ -22,7 +24,7 @@ MpGAP is an easy to use nextflow docker-based pipeline that adopts well known so
 
 || **Source** |
 |:- | :- |
-| **Assemblers** | [Canu](https://github.com/marbl/canu), [Flye](https://github.com/fenderglass/Flye), [Raven](https://github.com/lbcb-sci/raven), [Shasta](https://github.com/chanzuckerberg/shasta) and [wtdbg2](https://github.com/ruanjue/wtdbg2), [Haslr](https://github.com/vpc-ccg/haslr), [Unicycler](https://github.com/rrwick/Unicycler), [Spades](https://github.com/ablab/spades), [Shovill](https://github.com/tseemann/shovill) |
+| **Assemblers** | [Canu](https://github.com/marbl/canu), [Flye](https://github.com/fenderglass/Flye), [Raven](https://github.com/lbcb-sci/raven), [Shasta](https://github.com/chanzuckerberg/shasta), [wtdbg2](https://github.com/ruanjue/wtdbg2), [Haslr](https://github.com/vpc-ccg/haslr), [Unicycler](https://github.com/rrwick/Unicycler), [Spades](https://github.com/ablab/spades), [Shovill](https://github.com/tseemann/shovill) |
 | **Polishers** | [Nanopolish](https://github.com/jts/nanopolish), [Medaka](https://github.com/nanoporetech/medaka), [gcpp](https://github.com/PacificBiosciences/gcpp), [Pilon](https://github.com/broadinstitute/pilon) |
 | **Quality check** | [QUAST](https://github.com/ablab/quast), [MultiQC](https://multiqc.info/) |
 
@@ -42,7 +44,7 @@ This pipeline has only two dependencies: [Docker](https://www.docker.com) and [N
 * Java 8 (or higher)
 * Nextflow (version 20.01 or higher)
 * Docker
-  * Image: `fmalmeida/mpgap`
+  * Image: `fmalmeida/mpgap:v2.3`
 
 ## Installation
 
