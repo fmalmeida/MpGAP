@@ -79,7 +79,7 @@ General parameters
 
    * - ``--genomeSize``
      - | Y
-       | (for Canu and Haslr assemblers)
+       | (for Canu, wtdbg2 and Haslr assemblers)
      - NA
      - Sets expected genome size. E.g. 5.6m; 1.2g.
 
