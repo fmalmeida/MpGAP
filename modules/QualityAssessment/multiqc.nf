@@ -11,7 +11,7 @@ process multiqc {
   output:
   file "multiqc_report_${nfRun}.html"
   file "multiqc_data"
-  file "ASSEMBLY_SUMMARY.md"
+  file "ASSEMBLY_SUMMARY.txt"
 
   script:
   """
@@ -22,14 +22,14 @@ process multiqc {
   mv multiqc_report.html multiqc_report_${nfRun}.html ;
 
   # Create the markdown file resuming the main statistics
-  echo \"# A summary of the main assembly statistics\" >> ASSEMBLY_SUMMARY.md
-  echo \"\" >> ASSEMBLY_SUMMARY.md
-  echo \"## Main QUAST statistics\" >> ASSEMBLY_SUMMARY.md
-  echo \"\" >> ASSEMBLY_SUMMARY.md
-  csvtk cut -t -f 1,14,15,16,17,18,22,25,26,32 multiqc_data/multiqc_quast.txt | csvtk -t pretty >> ASSEMBLY_SUMMARY.md
-  echo \"\" >> ASSEMBLY_SUMMARY.md
-  echo \"## Main BUSCO statistics\" >> ASSEMBLY_SUMMARY.md
-  echo \"\" >> ASSEMBLY_SUMMARY.md
-  csvtk -t pretty multiqc_data/multiqc_busco.txt >> ASSEMBLY_SUMMARY.md
+  echo \"# A summary of the main assembly statistics\" >> ASSEMBLY_SUMMARY.txt
+  echo \"\" >> ASSEMBLY_SUMMARY.txt
+  echo \"## Main QUAST statistics\" >> ASSEMBLY_SUMMARY.txt
+  echo \"\" >> ASSEMBLY_SUMMARY.txt
+  csvtk cut -t -f 1,14,15,16,17,18,22,25,26,32 multiqc_data/multiqc_quast.txt | csvtk -t pretty >> ASSEMBLY_SUMMARY.txt
+  echo \"\" >> ASSEMBLY_SUMMARY.txt
+  echo \"## Main BUSCO statistics\" >> ASSEMBLY_SUMMARY.txt
+  echo \"\" >> ASSEMBLY_SUMMARY.txt
+  csvtk -t pretty multiqc_data/multiqc_busco.txt >> ASSEMBLY_SUMMARY.txt
   """
 }
