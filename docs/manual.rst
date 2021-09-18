@@ -131,11 +131,11 @@ Input files
    
    * - ``--wtdbg2_technology``
      - | Y
-       | (when running wtdbg2 longreads-only assembly with pacbio)
+       | (when running wtdbg2 with pacbio)
      - ont
      - | When assembling pacbio long reads with wtdbg2, it is necessary to tell the pipeline
        | whether reads are "rs" for PacBio RSII, "sq" for PacBio Sequel, "ccs" for PacBio CCS reads.
-       | With do not want it, consider using ``--skip_wtdbg2``.
+       | With not wanted it, consider using ``--skip_wtdbg2``.
 
    * - ``--corrected_lreads``
      - N
