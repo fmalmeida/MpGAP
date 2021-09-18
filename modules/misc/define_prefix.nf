@@ -61,7 +61,7 @@ process define_prefix {
   if (params.longreads && (params.shortreads_single || params.shortreads_paired)) {
 
     // check strategy
-    type = (params.strategy_2) ? 'hybrid/strategy_2' : 'hybrid/strategy_1'
+    type = (params.strategy_2) ? 'hybrid_strategy_2' : 'hybrid_strategy_1'
 
     // required long reads
     lrID    = (lreads.getName() - ".gz").toString().substring(0, (lreads.getName() - ".gz").toString().lastIndexOf("."))
