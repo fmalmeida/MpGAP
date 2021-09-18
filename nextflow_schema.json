@@ -1,5 +1,5 @@
 {
-    "$schema": "https://json-schema.org/draft-07/schema",
+    "$schema": "http://json-schema.org/draft-07/schema",
     "$id": "https://raw.githubusercontent.com/./master/nextflow_schema.json",
     "title": ". pipeline parameters",
     "description": "",
@@ -21,7 +21,6 @@
                 "prefix": {
                     "type": "string",
                     "description": "Gives a custom prefix for sample results.",
-                    "default": "",
                     "help_text": "If is not given, the pipeline will use the reads names to create a custom prefix"
                 },
                 "longreads": {
