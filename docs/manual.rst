@@ -194,7 +194,7 @@ Long reads only assemblies can also be polished with Nanopolish or Racon+Medaka 
 	 For assembly polishing with medaka models, the assembly is first polished one time with racon using the ``-m 8 -x -6 -g -8 -w 500`` as this is the dataset in which Medaka has been trained on. Therefore, the medaka polishing in this pipeline mean Racon 1X + Medaka.
 
 .. list-table::
-   :widths: 20 10 20 50
+   :widths: 25 5 20 50
    :header-rows: 1
 
    * - Arguments
