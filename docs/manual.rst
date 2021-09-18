@@ -17,12 +17,11 @@ Input files
 
 .. note::
 
-  When using paired end reads it is **required** that input reads are set with the “{1,2}” pattern. For example: “SRR6307304_{1,2}.fastq”. This will properly load reads “SRR6307304_1.fastq” and “SRR6307304_2.fastq”
+  When using paired end reads it is **required** that input reads are set with the “{1,2}” pattern. For example: “SRR6307304_{1,2}.fastq”. This will properly load reads "SRR6307304_1.fastq" and "SRR6307304_2.fastq".
 
 .. warning::
 
-  When running hybrid assemblies or mixing short read types it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. 
-  Since nextflow loads inputs randomly, this is said so that the pipeline does not load all reads that match the REGEX and avoid unwanted combination of inputs.
+  When running hybrid assemblies or mixing short read types it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. Since nextflow randomly loads inputs, this is said to avoid unwanted combination of inputs while loading all reads that match the REGEX.
 
   We are currently working in provinding a way to run multiple samples at once avoinding unwanted combination.
 
@@ -72,6 +71,11 @@ General parameters
      - Y
      - output
      - Name of directory to store output values. Input reads basenames will be used to create sub-folder under this directory.
+   
+   * - ``--prefix``
+     - N
+     - By default the pipeline creates one using the input reads names
+     - Gives a custom prefix for sample results.
 
    * - ``--genomeSize``
      - | Y
@@ -228,7 +232,7 @@ Advanced assembler customization options
 
 .. note::
 
-  Additional parameters must be given in quotes with a blank space in the end and in the beginning. For example, ``'--meta --iterations 4'`` is wrong but ``' --meta --iterations 4 '`` is correct. 
+  Additional parameters must be given inside double quotes separated by blank spaces.
 
 .. list-table::
    :widths: 30 10 10 50
@@ -242,7 +246,7 @@ Advanced assembler customization options
    * - ``--quast_additional_parameters``
      - N
      - NA
-     - | Give additional parameters to Quast while assessing assembly metrics. Must be in quotes and separated by spaces. Must be given as shown in Quast manual. E.g. ``' --large --eukaryote '``.
+     - | Give additional parameters to Quast while assessing assembly metrics. Must be given as shown in Quast manual. E.g. ``' --large --eukaryote '``.
 
    * - ``--skip_canu``
      - N

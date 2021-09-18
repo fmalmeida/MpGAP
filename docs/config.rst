@@ -33,6 +33,10 @@ Main config file
       // Output folder name
             outdir = "output"
 
+      // Prefix for sample results
+      // If not is given, the pipeline will use the reads names to create a custom prefix
+            prefix = ""
+
       // Number of threads to be used by each software.
             threads = 3
 
@@ -76,9 +80,9 @@ Main config file
             lr_type = ""
 
       // When assembling pacbio long reads with wtdbg2, it is necessary to tell the pipeline
-      // whether reads are rs, sq or ccs, so it is properly passed to the assembler.
-      // Which could take value "rs" for PacBio RSII, "sq" for PacBio Sequel, "ccs" for PacBio CCS reads
-            wtdbg2_technology = ""
+      // whether reads are "rs" for PacBio RSII, "sq" for PacBio Sequel, "ccs" for PacBio CCS reads.
+      // It defaults to "ont" so users must change it when using pacbio.
+            wtdbg2_technology = "ont"
 
       // Tells the pipeline to interpret the long reads as "corrected" long reads.
       // This will activate (if available) the options for corrected reads in the
@@ -159,10 +163,10 @@ Main config file
                   * Controlling the execution of assemblers
                   * It must be set as true to skip the software and false to use it.
                   * Also adding the possibility to pass additional parameters to them
+                  * Additional parameters must be in quotes and separated by spaces.
                   */
-            quast_additional_parameters = ""           // Give additional parameters to Quast while assessing assembly metrics. 
-                                                       // Must be in quotes and separated by spaces.
-                                                       // Must be given as shown in Quast manual. E.g. " --large --eukaryote ".
+            quast_additional_parameters = ""            // Give additional parameters to Quast while assessing assembly metrics.
+                                                      // Must be given as shown in Quast manual. E.g. " --large --eukaryote ".
 
             skip_spades    = false                      // Hybrid and shortreads only assemblies
             spades_additional_parameters = ""           // Must be given as shown in Spades manual. E.g. " --meta --plasmids "

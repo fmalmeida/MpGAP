@@ -18,6 +18,12 @@
                     "fa_icon": "fas fa-folder-open",
                     "help_text": "All the outputs will be stored under this directory. Sub-folders for each dataset will be written in this folder using reads basenames. Short reads basenames for short reads only assemblies and long reads basenames for hybrid and long reads only assemblies."
                 },
+                "prefix": {
+                    "type": "string",
+                    "description": "Gives a custom prefix for sample results.",
+                    "default": "",
+                    "help_text": "If is not given, the pipeline will use the reads names to create a custom prefix"
+                },
                 "longreads": {
                     "type": "string",
                     "description": "Path to input long reads (ONT or Pacbio) in fastq",

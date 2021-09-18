@@ -19,7 +19,7 @@ process define_prefix {
 
     type    = "longreads_only"
     lrID    = (lreads.getName() - ".gz").toString().substring(0, (lreads.getName() - ".gz").toString().lastIndexOf("."))
-    out_dir = "${lrID}/${type}"
+    out_dir = (params.prefix) ? "${params.prefix}/${type}" : "${lrID}/${type}"
 
   }
 
@@ -32,7 +32,7 @@ process define_prefix {
 
     type    = "shortreads_only"
     srID    = (sreads.getName() - ".gz").toString().substring(0, (sreads.getName() - ".gz").toString().lastIndexOf("."))
-    out_dir = "${srID}/${type}"
+    out_dir = (params.prefix) ? "${params.prefix}/${type}" : "${srID}/${type}"
 
   }
 
@@ -41,7 +41,7 @@ process define_prefix {
 
     type    = "shortreads_only"
     prID    = pair_id
-    out_dir = "${prID}/${type}"
+    out_dir = (params.prefix) ? "${params.prefix}/${type}" : "${prID}/${type}"
 
   }
 
@@ -51,7 +51,7 @@ process define_prefix {
     type    = "shortreads_only"
     srID    = (sreads.getName() - ".gz").toString().substring(0, (sreads.getName() - ".gz").toString().lastIndexOf("."))
     prID    = pair_id
-    out_dir = "${prID}_and_${srID}/${type}"
+    out_dir = (params.prefix) ? "${params.prefix}/${type}" : "${prID}_and_${srID}/${type}"
 
   }
 
@@ -69,20 +69,20 @@ process define_prefix {
     // only single end reads
     if (params.shortreads_single && !params.shortreads_paired) {
       srID    = (sreads.getName() - ".gz").toString().substring(0, (sreads.getName() - ".gz").toString().lastIndexOf("."))
-      out_dir = "${lrID}_and_${srID}/${type}"
+      out_dir = (params.prefix) ? "${params.prefix}/${type}" : "${lrID}_and_${srID}/${type}"
     }
 
     // only paired end reads
     if (!params.shortreads_single && params.shortreads_paired) {
       prID    = pair_id
-      out_dir = "${lrID}_and_${prID}/${type}"
+      out_dir = (params.prefix) ? "${params.prefix}/${type}" : "${lrID}_and_${prID}/${type}"
     }
 
     // both single and paired end reads
     if (params.shortreads_single && params.shortreads_paired) {
       srID    = (sreads.getName() - ".gz").toString().substring(0, (sreads.getName() - ".gz").toString().lastIndexOf("."))
       prID    = pair_id
-      out_dir = "${lrID}_and_${prID}_and_${srID}/${type}"
+      out_dir = (params.prefix) ? "${params.prefix}/${type}" : "${lrID}_and_${prID}_and_${srID}/${type}"
     }
   }
 

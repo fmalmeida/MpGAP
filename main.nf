@@ -71,6 +71,7 @@ if (params.examples){
 
 // General
 params.outdir  = 'output'
+params.prefix  = ''
 params.threads = 4
 params.cpus    = 2
 

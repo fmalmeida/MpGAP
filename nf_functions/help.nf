@@ -29,6 +29,9 @@
                                                                                 in this directory, using the input reads basename: For shortreads
                                                                                 assemblies we will use the shortreads basename, for the others,
                                                                                 either hybrid and longreads-only, we will use the longreads basename.
+     
+     --prefix <string>                                                          Gives a custom prefix for sample results. If not given, the pipeline 
+                                                                                will use the reads names to create a custom prefix.
 
      --threads <int>                                                            Number of threads to use.
 
@@ -118,6 +121,7 @@
             # Advanced parameters
             # Controlling the execution of assemblers and QUAST
             # Also adding the possibility to pass additional parameters to them
+            # Additional parameters must be in quotes and separated by spaces.
 
      --skip_spades                                                              Skip assembly with Spades (hybrid and shortreads only assembler)
 
@@ -138,7 +142,6 @@
      --skip_shasta                                                              Skip assembly with Shasta (nanopore longreads only assembler)
 
      --quast_additional_parameters <string>                                     Give additional parameters to Quast while assessing assembly metrics.
-                                                                                Must be in quotes and separated by spaces. 
                                                                                 Must be given as shown in Quast manual. 
                                                                                 E.g. " --large --eukaryote ".
 
