@@ -15,6 +15,10 @@ The tracking for changes started in v2.
 
 5. Two other longreads assemblers have been added: wtdbg2 and shasta. Please read the docs to check the parameters related to them.
 
+6. A new parameter called `--prefix` has been added so users can create custom prefixes for their samples. By default (if not used), the pipeline will create a custom prefix using the input reads names.
+
+7. A new document called ASSEMBLY_SUMMARY.txt is now given. Before the pipeline only produced a HTML report with multiqc, however, HTML can not be read in the terminal. Thus, we now also produce this text file.
+
 ## v2.2
 
 The main changes in the pipeline are summarized below. The majority of the changes were made to make the pipeline easier to rookies.
