@@ -33,8 +33,8 @@ Main config file
       // Output folder name
             outdir = "output"
 
-      // Prefix for sample results
-      // If not is given, the pipeline will use the reads names to create a custom prefix
+      // Gives a custom prefix for sample results
+      // If is not given, the pipeline will use the reads names to create a custom prefix
             prefix = ""
 
       // Number of threads to be used by each software.
@@ -166,7 +166,7 @@ Main config file
                   * Additional parameters must be in quotes and separated by spaces.
                   */
             quast_additional_parameters = ""            // Give additional parameters to Quast while assessing assembly metrics.
-                                                      // Must be given as shown in Quast manual. E.g. " --large --eukaryote ".
+                                                        // Must be given as shown in Quast manual. E.g. " --large --eukaryote ".
 
             skip_spades    = false                      // Hybrid and shortreads only assemblies
             spades_additional_parameters = ""           // Must be given as shown in Spades manual. E.g. " --meta --plasmids "
