@@ -1,30 +1,15 @@
 process quast {
-  publishDir "${params.outdir}/${id}/${type}/00_quality_assessment", mode: 'copy'
-  container 'fmalmeida/mpgap'
-  tag "Assessing ${assembler} assembly quality"
+  publishDir "${params.outdir}/${prefix}/00_quality_assessment", mode: 'copy'
+  label 'main'
+  tag "Assessing ${assembler} assembly quality for multiqc"
 
   input:
-  tuple file(contigs), val(id), val(assembler), file(reads)
+  tuple file(contigs), val(id), val(assembler), file(reads), val(prefix)
 
   output:
   file("${assembler}")
-  val(id)
-  val(type)
 
   script:
-  // Check available reads
-  if (!params.shortreads_paired && !params.shortreads_single && params.longreads && params.lr_type) {
-    type = 'longreads_only'
-  } else if ((params.shortreads_paired || params.shortreads_single) && !params.longreads ) {
-    type = 'shortreads_only'
-  } else {
-    if (params.strategy_2) {
-    type = 'hybrid/strategy_2'
-    } else {
-    type = 'hybrid/strategy_1'
-    }
-  }
-
   // Alignment parameters
   if (params.shortreads_paired && !params.shortreads_single) {
     quast_parameter = "--pe1 ${reads[1]} --pe2 ${reads[2]}"
@@ -39,6 +24,8 @@ process quast {
 
   """
   quast.py -o ${assembler} -t ${params.threads} ${quast_parameter} \\
-  --circos --conserved-genes-finding --rna-finding ${contigs} --min-contig 100
+  --conserved-genes-finding --rna-finding --min-contig 100 \\
+  ${params.quast_additional_parameters} \\
+  ${contigs}
   """
 }

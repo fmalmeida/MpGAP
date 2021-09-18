@@ -27,7 +27,7 @@ This pipeline requires only `Docker <https://www.docker.com/>`_ (and its Docker 
 
 5. Download required Docker images
 
-   ``docker pull fmalmeida/mpgap``
+   ``docker pull fmalmeida/mpgap:v2.3``
 
 6. (Optional) Install nf-core
 

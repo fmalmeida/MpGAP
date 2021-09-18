@@ -17,199 +17,224 @@ Main config file
 
 .. code-block:: groovy
 
-    /*
-     * Configuration File to run fmalmeida/mpgap pipeline.
-     */
+     /*
+      * Configuration File to run fmalmeida/mpgap pipeline.
+      */
 
-    /*
-     * Customizable parameters
-     */
-    params {
+      /*
+      * Customizable parameters
+      */
+      params {
 
-                    /*
-                     * General parameters
-                     */
+                  /*
+                  * General parameters
+                  */
 
-    // Output folder name
-          outdir = 'output'
+      // Output folder name
+            outdir = "output"
 
-    // Number of threads to be used by each software.
-          threads = 3
+      // Gives a custom prefix for sample results
+      // If is not given, the pipeline will use the reads names to create a custom prefix
+            prefix = ""
 
-    // Number of jobs to run in parallel. Be aware that each job (in parallel) can consume
-    // N threads (set above). Be sure to carefully check your resources before augmenting
-    // this parameter. For example: parallel_jobs = 2 + threads = 5 can consume until 10
-    // threads at once.
-          parallel_jobs = 1
+      // Number of threads to be used by each software.
+            threads = 3
 
-    // This parameter only needs to be set if the software chosen is Canu or Haslr. Is optional for Flye.
-    // It is an estimate of the size of the genome. Common suffices are allowed, for example, 3.7m or 2.8g
-          genomeSize = ''
+      // Number of jobs to run in parallel. Be aware that each job (in parallel) can consume
+      // N threads (set above). Be sure to carefully check your resources before augmenting
+      // this parameter. For example: parallel_jobs = 2 + threads = 5 can consume until 10
+      // threads at once.
+            parallel_jobs = 1
 
-                    /*
-                     * Input reads
-                     *
-                     * The pipeline will choose between: hybrid, shortreads or longreads only assemblies based on the combination of input files given.
-                     *
-                     * Remember to always double quote file paths.
-                     *
-                     * When running hybrid assemblies or mixing short read types it is advised to **avoid not required REGEX** and write the full file path, 
-                     * using only the required REGEX for paired end reads ("{1,2}") when applicable. So that the pipeline does not load any different read 
-                     * that also matches the REGEX and avoid confusions with the inputs.
-                     */
+      // This parameter only needs to be set if the software chosen is Canu, wtdbg2 or Haslr. Is optional for Flye.
+      // It is an estimate of the size of the genome. Common suffices are allowed, for example, 3.7m or 2.8g
+            genomeSize = ""
 
-    // Short reads input files. They need to be specified in case of hybrid or shortreads-only assembly.
-    // If none of these are wanted it may be left in blank. The files might be single or paired ended. They just
-    // need to be properly identified as the examples below.
-    // Examples for illumina reads:
-    // Paired: shortreads_paired = 'SRR6307304_{1,2}.fastq'. For paired end reads it is **required** the “{1,2}” pattern.
-    // Single: shortreads_single = 'SRR7128258.fastq'
-          shortreads_paired = ''
-          shortreads_single = ''
+                  /*
+                  * Input reads
+                  *
+                  * The pipeline will choose between: hybrid, shortreads or longreads only assemblies based on the combination of input files given.
+                  *
+                  * Remember to always double quote file paths.
+                  *
+                  * When running hybrid assemblies or mixing short read types it is advised to **avoid not required REGEX** and write the full file path, 
+                  * using only the required REGEX for paired end reads ("{1,2}") when applicable. So that the pipeline does not load any different read 
+                  * that also matches the REGEX and avoid confusions with the inputs.
+                  */
 
-    // Long reads input files. Just needed to be specified in case of hybrid or longreads-only assembly.
-    // If none of these are wanted it may be left in blank.
-          longreads = '' // Already extracted in fasta or fastq
+      // Short reads input files. They need to be specified in case of hybrid or shortreads-only assembly.
+      // If none of these are wanted it may be left in blank. The files might be single or paired ended. They just
+      // need to be properly identified as the examples below.
+      // Examples for illumina reads:
+      // Paired: shortreads_paired = 'SRR6307304_{1,2}.fastq'. For paired end reads it is **required** the “{1,2}” pattern.
+      // Single: shortreads_single = 'SRR7128258.fastq'
+            shortreads_paired = ''
+            shortreads_single = ''
 
-    // This parameter is used to specify the long read sequencing technology used.
-    // It might be set as one of both: nanopore ; pacbio
-          lr_type = ''
-    
-    // Tells the pipeline to interpret the long reads as "corrected" long reads.
-    // This will activate (if available) the options for corrected reads in the
-    // assemblers: -corrected (in canu), --pacbio-corr|--nano-corr (in flye), etc.
-    // Be cautious when using this parameter. If your reads are not corrected, and
-    // you use this parameter, you will probably do not generate any contig.
-          corrected_lreads = false
+      // Long reads input files. Just needed to be specified in case of hybrid or longreads-only assembly.
+      // If none of these are wanted it may be left in blank.
+            longreads = "" // Already extracted in fasta or fastq
 
-                    /*
-                     * Activation of alternative hybrid assembly mode
-                     * Only useful when giving both short and long reads
-                     */
+      // This parameter is used to specify the long read sequencing technology used.
+      // It might be set as one of both: nanopore ; pacbio
+            lr_type = ""
 
-    // This parameter below is to define whether one wants or not to execute the alternative hybrid assembly method.
-    // It first creates a long reads only assembly with canu, flye, raven or unicycler and then polishes it using the provided
-    // shortreads. It executes an alternative workflow and DOES NOT RUN unicycler/spades/haslr default hybrid modes.
-    //
-    // Whenever using this parameter, it is also possible to polish the longreads-only assemblies with Nanopolish,
-    // Medaka or VarianCaller (Arrow) before the polishing with shortreads (using Pilon). For that it is necessary to set
-    // the right parameters: pacbio_all_bam_path, nanopolish_fast5Path or medaka_sequencing_model.
-          strategy_2 = false
+      // When assembling pacbio long reads with wtdbg2, it is necessary to tell the pipeline
+      // whether reads are "rs" for PacBio RSII, "sq" for PacBio Sequel, "ccs" for PacBio CCS reads.
+      // It defaults to "ont" so users must change it when using pacbio.
+            wtdbg2_technology = "ont"
 
-    // Whenever polishing long reads only assemblies with unpaired short reads (single end), the pipeline
-    // will directly execute one round of pilon polishing instead of using Unicycler's polish pipeline.
-    // Therefore we need to allocate the amount of memory allocated by Pilon. Default 50G.
-    // This step is crucial because with not enough memory will crash and not correct your assembly.
-    // When that happens you will not have the pilon output nor the QUAST assessment.
-          pilon_memory_limit = 50
+      // Tells the pipeline to interpret the long reads as "corrected" long reads.
+      // This will activate (if available) the options for corrected reads in the
+      // assemblers: -corrected (in canu), --pacbio-corr|--nano-corr (in flye), etc.
+      // Be cautious when using this parameter. If your reads are not corrected, and
+      // you use this parameter, you will probably do not generate any contig.
+            corrected_lreads = false
 
-                    /*
-                     * Parameters for assembly polishing using long reads raw data
-                     * Parameters useful for polishing longreads-only assemblies
-                     * Polishers ==> ONT: Nanopolish or Medaka; Pacbio: Arrow.
-                     *
-                     * They can be used for hybrid assembly strategy 2, to polish
-                     * the assemblies with longreads data before shortreads polishing
-                     */
+                  /*
+                  * Activation of alternative hybrid assembly mode
+                  * Only useful when giving both short and long reads
+                  */
 
-    // Tells Medaka polisher which model to use according to the basecaller used.
-    // For example the model named r941_min_fast_g303 should be used with data from
-    // MinION (or GridION) R9.4.1 flowcells using the fast Guppy basecaller version 3.0.3.
-    //
-    // Where a version of Guppy has been used without an exactly corresponding medaka model,
-    // the medaka model with the highest version equal to or less than the guppy version
-    // should be selected.
-    //
-    // Models Available: r103_min_high_g345, r103_min_high_g360, r103_prom_high_g360, r103_prom_snp_g3210, r103_prom_variant_g3210, r10_min_high_g303, r10_min_high_g340,
-    // r941_min_fast_g303, r941_min_high_g303, r941_min_high_g330, r941_min_high_g340_rle, r941_min_high_g344, r941_min_high_g351, r941_min_high_g360, r941_prom_fast_g303,
-    // r941_prom_high_g303, r941_prom_high_g330, r941_prom_high_g344, r941_prom_high_g360, r941_prom_high_g4011, r941_prom_snp_g303, r941_prom_snp_g322, r941_prom_snp_g360,
-    // r941_prom_variant_g303, r941_prom_variant_g322, r941_prom_variant_g360
-    //
-    // If left in blank, medaka will not be executed.
-          medaka_sequencing_model = 'r941_min_high_g360'
+      // This parameter below (strategy_2) is to define whether one wants or not to execute the alternative hybrid assembly method.
+      // It first creates a long reads only assembly with canu, flye, raven or unicycler and then polishes it using the provided
+      // shortreads. It executes an alternative workflow and DOES NOT RUN unicycler/spades/haslr default hybrid modes.
+      //
+      // Whenever using this parameter, it is also possible to polish the longreads-only assemblies with Nanopolish,
+      // Medaka or VarianCaller (Arrow) before the polishing with shortreads (using Pilon). For that it is necessary to set
+      // the right parameters: pacbio_bams, nanopolish_fast5Path or medaka_sequencing_model.
+            strategy_2 = false
 
-    // The polishing step is performed (and advised) with Medaka (--sequencing_model parameter).
-    // This parameter tells the pipeline to also try Nanopolish.
-    //
-    // This parameter loads the directory where all the nanopore FAST5 files are stored.
-    // If this parameter is set, the pipeline is able to execute the polishing step with nanopolish.
-          nanopolish_fast5Path = ''
+      // Whenever polishing long reads only assemblies with unpaired short reads (single end), the pipeline
+      // will directly execute one round of pilon polishing instead of using Unicycler"s polish pipeline.
+      // Therefore we need to allocate the amount of memory allocated by Pilon. Default 50G.
+      // This step is crucial because with not enough memory will crash and not correct your assembly.
+      // When that happens you will not have the pilon output nor the QUAST assessment.
+            pilon_memory_limit = 50
 
-    // This parameter sets to nanopolish the max number of haplotypes to be considered.
-    // Sometimes the pipeline may crash because to much variation was found exceeding the
-    // limit. Try augmenting this value (Default: 1000)
-          nanopolish_max_haplotypes = 1000
+                  /*
+                  * Parameters for assembly polishing using long reads raw data
+                  * Parameters useful for polishing longreads-only assemblies
+                  * Polishers ==> ONT: Nanopolish or Medaka; Pacbio: Arrow.
+                  *
+                  * They can be used for hybrid assembly strategy 2, to polish
+                  * the assemblies with longreads data before shortreads polishing
+                  */
 
-    // Number of cores to run nanopolish in parallel
-    // Beware of your system limits
-          cpus = 2
+      // Tells Medaka polisher which model to use according to the basecaller used.
+      // For example the model named r941_min_fast_g303 should be used with data from
+      // MinION (or GridION) R9.4.1 flowcells using the fast Guppy basecaller version 3.0.3.
+      //
+      // Where a version of Guppy has been used without an exactly corresponding medaka model,
+      // the medaka model with the highest version equal to or less than the guppy version
+      // should be selected.
+      //
+      // Models Available: r103_min_high_g345, r103_min_high_g360, r103_prom_high_g360, r103_prom_snp_g3210, r103_prom_variant_g3210, r10_min_high_g303, r10_min_high_g340,
+      // r941_min_fast_g303, r941_min_high_g303, r941_min_high_g330, r941_min_high_g340_rle, r941_min_high_g344, r941_min_high_g351, r941_min_high_g360, r941_prom_fast_g303,
+      // r941_prom_high_g303, r941_prom_high_g330, r941_prom_high_g344, r941_prom_high_g360, r941_prom_high_g4011, r941_prom_snp_g303, r941_prom_snp_g322, r941_prom_snp_g360,
+      // r941_prom_variant_g303, r941_prom_variant_g322, r941_prom_variant_g360
+      //
+      // If left in blank, medaka will not be executed.
+            medaka_sequencing_model = "r941_min_high_g360"
 
-    // This parameter loads all the subreads *.bam pacbio raw files for polishing with VariantCaller.
-    // In order to nextflow properly use it, one needs to store all the data, from all the cells
-    // in one single directory and set the filepath as "some/data/*bam".
-          pacbio_all_bam_path = ''
+      // The polishing step is performed (and advised) with Medaka (--sequencing_model parameter).
+      // This parameter tells the pipeline to also try Nanopolish.
+      //
+      // This parameter loads the directory where all the nanopore FAST5 files are stored.
+      // If this parameter is set, the pipeline is able to execute the polishing step with nanopolish.
+            nanopolish_fast5Path = ""
 
-                    /*
-                     * Advanced parameters
-                     * Controlling the execution of assemblers
-                     * It must be set as true to skip the software and false to use it.
-                     * Also adding the possibility to pass additional parameters to them
-                     */
-          skip_spades    = false                      // Hybrid and shortreads only assemblies
-          spades_additional_parameters = ''           // Must be given as shown in Spades manual. E.g. '--meta --plasmids'
-          skip_shovill   = false                      // Paired shortreads only assemblies
-          shovill_additional_parameters = ''          // Must be given as shown in Shovill manual. E.g. '--depth 15 --assembler skesa'
-          skip_unicycler = false                      // Hybrid and shortreads only assemblies
-          unicycler_additional_parameters = ''        // Must be given as shown in Unicycler manual. E.g. '--mode conservative --no_correct'
-          skip_haslr     = false                      // Hybrid assemblies
-          haslr_additional_parameters = ''            // Must be given as shown in Haslr manual. E.g. '--cov-lr 30'
-          skip_canu      = false                      // Longreads only assemblies
-          canu_additional_parameters = ''             // Must be given as shown in Canu manual. E.g. 'correctedErrorRate=0.075 corOutCoverage=200'
-          skip_flye      = false                      // Longreads only assemblies
-          flye_additional_parameters = ''             // Must be given as shown in Flye manual. E.g. '--meta --iterations 4'
-          skip_raven     = false                      // Longreads only assemblies
-          raven_additional_parameters = ''            // Must be given as shown in Raven manual. E.g. '--polishing-rounds 4'
+      // This parameter sets to nanopolish the max number of haplotypes to be considered.
+      // Sometimes the pipeline may crash because to much variation was found exceeding the
+      // limit. Try augmenting this value (Default: 1000)
+            nanopolish_max_haplotypes = 1000
 
-    }
+      // Number of cores to run nanopolish in parallel
+      // Beware of your system limits
+            cpus = 2
 
+      // This parameter loads all the subreads *.bam pacbio raw files for polishing with gcpp.
+      // In order to nextflow properly use it, one needs to store all the data, from all the cells
+      // in one single directory and set the filepath as "some/data/*bam".
+            pacbio_bams = ""
 
-    /*
-     * Configuring Nextflow reports
-     */
+                  /*
+                  * Advanced parameters
+                  * Controlling the execution of assemblers
+                  * It must be set as true to skip the software and false to use it.
+                  * Also adding the possibility to pass additional parameters to them
+                  * Additional parameters must be in quotes and separated by spaces.
+                  */
+            quast_additional_parameters = ""            // Give additional parameters to Quast while assessing assembly metrics.
+                                                        // Must be given as shown in Quast manual. E.g. " --large --eukaryote ".
 
-    //Trace Report
-    trace {
-        enabled = false
-        file = "${params.outdir}" + "/annotation_pipeline_trace.txt"
-        fields = 'task_id,name,status,exit,realtime,cpus,%cpu,memory,%mem,rss'
-    }
+            skip_spades    = false                      // Hybrid and shortreads only assemblies
+            spades_additional_parameters = ""           // Must be given as shown in Spades manual. E.g. " --meta --plasmids "
 
-    //Timeline Report
-    timeline {
-        enabled = false
-        file = "${params.outdir}" + "/annotation_pipeline_timeline.html"
-    }
+            skip_shovill   = false                      // Paired shortreads only assemblies
+            shovill_additional_parameters = ""          // Must be given as shown in Shovill manual. E.g. " --depth 15 --assembler skesa "
 
-    //Complete Report
-    report {
-        enabled = false
-        file = "${params.outdir}" + "/annotation_pipeline_nextflow_report.html"
-    }
+            skip_unicycler = false                      // Hybrid and shortreads only assemblies
+            unicycler_additional_parameters = ""        // Must be given as shown in Unicycler manual. E.g. " --mode conservative --no_correct "
 
-    /*
-     * Setting up NF profiles
-     * To use different profiles and executors
-     * please read more at: https://www.nextflow.io/docs/latest/config.html#config-profiles
-     */
-    profiles {
-      standard {
-        // Executor
-        process.executor = 'local'
-        // QueueSize limit
-        qs = (params.parallel_jobs) ? params.parallel_jobs : 1
-        executor {
-              name = 'local'
-              queueSize = qs
-        }
+            skip_haslr     = false                      // Hybrid assemblies
+            haslr_additional_parameters = ""            // Must be given as shown in Haslr manual. E.g. " --cov-lr 30 "
+
+            skip_canu      = false                      // Longreads only assemblies
+            canu_additional_parameters = ""             // Must be given as shown in Canu manual. E.g. " correctedErrorRate=0.075 corOutCoverage=200 "
+
+            skip_flye      = false                      // Longreads only assemblies
+            flye_additional_parameters = ""             // Must be given as shown in Flye manual. E.g. " --meta --iterations 4 "
+
+            skip_raven     = false                      // Longreads only assemblies
+            raven_additional_parameters = ""            // Must be given as shown in Raven manual. E.g. " --polishing-rounds 4 "
+
+            skip_wtdbg2    = false                      // Longreads only assemblies
+            wtdbg2_additional_parameters = ""           // Must be given as shown in wtdbg2 manual. E.g. " --tidy-reads 5000 "
+
+            skip_shasta    = false                      // Nanopore longreads only assemblies
+            shasta_additional_parameters = ""           // Must be given as shown in shasta manual. E.g. " --Reads.minReadLength 5000 "
+
       }
-    }
+
+
+      /*
+      * Configuring Nextflow reports
+      */
+
+      //Trace Report
+      trace {
+      enabled = false
+      file = "${params.outdir}" + "/mpgap_trace.txt"
+      fields = 'task_id,name,status,exit,realtime,cpus,%cpu,memory,%mem,rss'
+      }
+
+      //Timeline Report
+      timeline {
+      enabled = false
+      file = "${params.outdir}" + "/mpgap_timeline.html"
+      }
+
+      //Complete Report
+      report {
+      enabled = true
+      file = "${params.outdir}" + "/mpgap_nextflow_report.html"
+      }
+
+      /*
+      * Setting up NF profiles
+      * To use different profiles and executors
+      * please read more at: https://www.nextflow.io/docs/latest/config.html#config-profiles
+      */
+      profiles {
+      standard {
+      // Executor
+      process.executor = "local"
+      // QueueSize limit
+      qs = (params.parallel_jobs) ? params.parallel_jobs : 1
+      executor {
+            name = "local"
+            queueSize = qs
+      }
+      }
+      }

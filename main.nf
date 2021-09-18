@@ -8,10 +8,10 @@ nextflow.enable.dsl=2
 /*
  * Include functions
  */
-include { helpMessage } from './nf_functions/help.nf'
+include { helpMessage    } from './nf_functions/help.nf'
 include { exampleMessage } from './nf_functions/examples.nf'
-include { paramsCheck } from './nf_functions/paramsCheck.nf'
-include { logMessage } from './nf_functions/logMessages.nf'
+include { paramsCheck    } from './nf_functions/paramsCheck.nf'
+include { logMessage     } from './nf_functions/logMessages.nf'
 
 /*
  * Check parameters
@@ -71,6 +71,7 @@ if (params.examples){
 
 // General
 params.outdir  = 'output'
+params.prefix  = ''
 params.threads = 4
 params.cpus    = 2
 
@@ -82,9 +83,12 @@ params.skip_canu      = false
 params.skip_unicycler = false
 params.skip_haslr     = false
 params.skip_raven     = false
+params.skip_wtdbg2    = false
+params.skip_shasta    = false
 
-// Additional parameters for assemblers
+// Additional parameters for assemblers and quast
 params.genomeSize = ''
+params.quast_additional_parameters     = ''
 params.canu_additional_parameters      = ''
 params.unicycler_additional_parameters = ''
 params.flye_additional_parameters      = ''
@@ -92,6 +96,9 @@ params.spades_additional_parameters    = ''
 params.shovill_additional_parameters   = ''
 params.haslr_additional_parameters     = ''
 params.raven_additional_parameters     = ''
+params.wtdbg2_additional_parameters    = ''
+params.wtdbg2_technology               = 'ont'
+params.shasta_additional_parameters    = ''
 
 // Short reads
 params.shortreads_paired = ''
@@ -104,7 +111,7 @@ params.lr_type = ''
 params.medaka_sequencing_model = ''
 params.nanopolish_fast5Path = ''
 params.nanopolish_max_haplotypes = 1000
-params.pacbio_all_bam_path = ''
+params.pacbio_bams = ''
 
 // Hybrid strategy 2
 params.strategy_2 = false
@@ -150,9 +157,9 @@ workflow {
       (params.nanopolish_fast5Path && params.lr_type == 'nanopore') ? Channel.fromPath(params.nanopolish_fast5Path) : Channel.value(''),
       (params.nanopolish_fast5Path && params.lr_type == 'nanopore') ? Channel.fromPath(params.nanopolish_fast5Path, type: 'dir') : Channel.value(''),
 
-      // Will run Arrow?
-      (params.pacbio_all_bam_path && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_all_bam_path).collect() : Channel.value(''),
-      (params.pacbio_all_bam_path && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_all_bam_path).count().subscribe { println it } : Channel.value('')
+      // Will run gcpp?
+      (params.pacbio_bams && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_bams).collect() : Channel.value(''),
+      (params.pacbio_bams && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_bams).count().subscribe { println it } : Channel.value('')
     )
   }
 
@@ -197,8 +204,8 @@ workflow {
       (params.nanopolish_fast5Path && params.lr_type == 'nanopore') ? Channel.fromPath(params.nanopolish_fast5Path, type: 'dir') : Channel.value(''),
 
       // Will run Arrow?
-      (params.pacbio_all_bam_path && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_all_bam_path).collect() : Channel.value(''),
-      (params.pacbio_all_bam_path && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_all_bam_path).count().subscribe { println it } : Channel.value('')
+      (params.pacbio_bams && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_bams).collect() : Channel.value(''),
+      (params.pacbio_bams && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_bams).count().subscribe { println it } : Channel.value('')
      )
    }
 

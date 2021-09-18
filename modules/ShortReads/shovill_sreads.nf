@@ -1,15 +1,15 @@
 process shovill_sreads_assembly {
-  publishDir "${params.outdir}/${id}/shortreads_only", mode: 'copy'
-  container 'fmalmeida/mpgap'
+  publishDir "${params.outdir}/${prefix}", mode: 'copy'
+  label 'main'
   tag "Performing a illumina-only assembly with shovill, using paired end reads"
   cpus params.threads
 
   input:
-  tuple val(id), file(sread1), file(sread2)
+  tuple val(id), file(sread1), file(sread2), val(prefix)
 
   output:
   file "shovill" // Save all output
-  tuple file("shovill/shovill_assembly.fa"), val(id), val('shovill') // Gets contigs file
+  tuple file("shovill/shovill_assembly.fasta"), val(id), val('shovill') // Gets contigs file
 
   when:
   ((params.shortreads_paired) && (!params.shortreads_single))
@@ -24,6 +24,6 @@ process shovill_sreads_assembly {
   --cpus ${params.threads} --trim ${params.shovill_additional_parameters}
 
   # Rename assembly
-  mv shovill/contigs.fa shovill/shovill_assembly.fa
+  mv shovill/contigs.fa shovill/shovill_assembly.fasta
   """
 }

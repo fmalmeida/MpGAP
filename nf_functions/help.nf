@@ -29,13 +29,16 @@
                                                                                 in this directory, using the input reads basename: For shortreads
                                                                                 assemblies we will use the shortreads basename, for the others,
                                                                                 either hybrid and longreads-only, we will use the longreads basename.
+     
+     --prefix <string>                                                          Gives a custom prefix for sample results. If not given, the pipeline 
+                                                                                will use the reads names to create a custom prefix.
 
      --threads <int>                                                            Number of threads to use.
 
      --parallel_jobs <int>                                                      Number of jobs to run in parallel. Each job can consume up
                                                                                 to N threads (--threads). Default: 1.
 
-     --genomeSize <string>                                                      Canu and Haslr require an estimative of genome size in order
+     --genomeSize <string>                                                      Canu, wtdbg2 and Haslr require an estimative of genome size in order
                                                                                 to be executed. It is optional for Flye. Examples: 5.6m; 1.2g
 
             # Input parameters.
@@ -50,6 +53,11 @@
      --longreads <string>                                                       Path to longreads in FASTA or FASTQ formats.
 
      --lr_type <string>                                                         Sets wich type of long reads are being used: pacbio or nanopore
+
+     --wtdbg2_technology <string>                                               When assembling pacbio long reads with wtdbg2, it is necessary to 
+                                                                                tell the pipeline whether reads are rs, sq or ccs, so it is properly 
+                                                                                passed to the assembler. Which could take value "rs" for 
+                                                                                PacBio RSII, "sq" for PacBio Sequel, "ccs" for PacBio CCS reads                                             
 
      --corrected_lreads                                                         Tells the pipeline to interpret the long reads as "corrected" long reads.
                                                                                 This will activate (if available) the options for corrected reads in the
@@ -67,13 +75,13 @@
                                                                                 another hybrid methodology.
 
                                                                                 It is also possible to polish the longreads-only assemblies with Nanopolish,
-                                                                                Medaka or Arrow (depending on the sequencing technology) before polishing
+                                                                                Medaka or gcpp (depending on the sequencing technology) before polishing
                                                                                 it with shortreads. For that, users must check the longreads parameters:
-                                                                                --medaka_sequencing_model, --nanopolish_fast5Path and --pacbio_all_bam_path
+                                                                                --medaka_sequencing_model, --nanopolish_fast5Path and --pacbio_bams
 
             # Assembly polishing using long reads raw data
             # Parameters useful for polishing longreads-only assemblies
-            # Polishers ==> ONT: Nanopolish or Medaka; Pacbio: Arrow.
+            # Polishers ==> ONT: Nanopolish or Medaka; Pacbio: gcpp.
 
     --medaka_sequencing_model <string>                                          Tells Medaka polisher which model to use according to the basecaller
                                                                                 used. For example the model named r941_min_fast_g303 should be used
@@ -103,13 +111,17 @@
                                                                                 Sometimes the pipeline may crash because to much variation was found exceeding the
                                                                                 limit. Try augmenting this value (Default: 1000)
 
-     --pacbio_all_bam_path <string>                                             Path to all subreads bam files for given reads. Whenever set, the pipeline
-                                                                                will execute a polishing step with VarianCaller with arrow.
-                                                                                Arrow is supported for PacBio Sequel data and RS data with the P6-C4 chemistry
+     --pacbio_bams <string>                                                     Path to all subreads bam files for given reads. Whenever set, the pipeline
+                                                                                will execute a polishing step with gcpp. GCpp is the machine-code successor 
+                                                                                of the venerable GenomicConsensus suite which has reached EOL, with the 
+                                                                                exception of not supporting Quiver/RSII anymore. In order to nextflow properly
+                                                                                use it, one needs to store all the data, from all the cells in one single 
+                                                                                directory and set the filepath as "some/data/*bam".
 
             # Advanced parameters
-            # Controlling the execution of assemblers
+            # Controlling the execution of assemblers and QUAST
             # Also adding the possibility to pass additional parameters to them
+            # Additional parameters must be in quotes and separated by spaces.
 
      --skip_spades                                                              Skip assembly with Spades (hybrid and shortreads only assembler)
 
@@ -125,34 +137,48 @@
 
      --skip_raven                                                               Skip assembly with Raven (longreads only assembler)
 
+     --skip_wtdbg2                                                              Skip assembly with wtdbg2 (longreads only assembler)
+
+     --skip_shasta                                                              Skip assembly with Shasta (nanopore longreads only assembler)
+
+     --quast_additional_parameters <string>                                     Give additional parameters to Quast while assessing assembly metrics.
+                                                                                Must be given as shown in Quast manual. 
+                                                                                E.g. " --large --eukaryote ".
+
      --spades_additional_parameters <string>                                    Give additional parameters to Spades assembler. Must be in quotes
                                                                                 and separated by one space. Must be given as shown in Spades manual.
-                                                                                E.g. '--meta --plasmids'
+                                                                                E.g. " --meta --plasmids "
 
      --shovill_additional_parameters <string>                                   Give additional parameters to Shovill assembler. Must be in quotes
                                                                                 and separated by one space. Must be given as shown in Shovill manual.
-                                                                                E.g. '--depth 15 --assembler skesa'
+                                                                                E.g. " --depth 15 --assembler skesa "
 
      --unicycler_additional_parameters <string>                                 Give additional parameters to Unicycler assembler. Must be in quotes
                                                                                 and separated by one space. Must be given as shown in Unicycler manual.
-                                                                                E.g. '--mode conservative --no_correct'
+                                                                                E.g. " --mode conservative --no_correct "
 
      --haslr_additional_parameters <string>                                     Give additional parameters to Haslr assembler. Must be in quotes
                                                                                 and separated by one space. Must be given as shown in Haslr manual.
-                                                                                E.g. '--cov-lr 30'
+                                                                                E.g. " --cov-lr 30 "
 
      --canu_additional_parameters <string>                                      Give additional parameters to Canu assembler. Must be in quotes
                                                                                 and separated by one space. Must be given as shown in Canu manual.
-                                                                                E.g. 'correctedErrorRate=0.075 corOutCoverage=200'
-
-
+                                                                                E.g. " correctedErrorRate=0.075 corOutCoverage=200 "
 
      --flye_additional_parameters <string>                                      Give additional parameters to Flye assembler. Must be in quotes
                                                                                 and separated by one space. Must be given as shown in Flye manual.
-                                                                                E.g. '--meta --iterations 4'
+                                                                                E.g. " --meta --iterations 4 "
 
      --raven_additional_parameters <string>                                     Give additional parameters to Raven assembler. Must be in quotes
                                                                                 and separated by one space. Must be given as shown in Raven manual.
-                                                                                E.g. '--polishing-rounds 4'
+                                                                                E.g. " --polishing-rounds 4 "
+
+     --wtdbg2_additional_parameters <string>                                    Give additional parameters to wtdbg2 assembler. Must be in quotes
+                                                                                and separated by one space. Must be given as shown in wtdbg2 manual.
+                                                                                E.g. " --tidy-reads 5000 "
+
+     --shasta_additional_parameters <string>                                    Give additional parameters to shasta assembler. Must be in quotes
+                                                                                and separated by one space. Must be given as shown in shasta manual.
+                                                                                E.g. " --Reads.minReadLength 5000 "  
     """.stripIndent()
  }

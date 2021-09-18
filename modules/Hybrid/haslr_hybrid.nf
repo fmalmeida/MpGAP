@@ -1,13 +1,14 @@
 process haslr_hybrid {
-  publishDir "${params.outdir}/${lrID}/hybrid/strategy_1", mode: 'copy'
-  container 'fmalmeida/mpgap'
+  publishDir "${params.outdir}/${prefix}", mode: 'copy'
+  label 'main'
   tag { x }
   cpus params.threads
 
   input:
-  file lreads
+  file(lreads)
   tuple val(id), file(sread1), file(sread2)
   file(sreads)
+  val(prefix)
 
   output:
   file "*" // Save everything
@@ -15,7 +16,7 @@ process haslr_hybrid {
 
   script:
   // Check reads
-  lrID  = lreads.getSimpleName()
+  lrID = (lreads.getName() - ".gz").toString().substring(0, (lreads.getName() - ".gz").toString().lastIndexOf("."))
   if ((params.shortreads_single) && (params.shortreads_paired)) {
     parameter = "-s $sread1 $sread2 $sreads"
     x = "Performing a hybrid assembly with haslr, using paired and single end reads"

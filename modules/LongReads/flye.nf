@@ -1,11 +1,11 @@
 process flye_assembly {
-  publishDir "${params.outdir}/${lrID}/${type}", mode: 'copy'
-  container 'fmalmeida/mpgap'
+  publishDir "${params.outdir}/${prefix}", mode: 'copy'
+  label 'main'
   cpus params.threads
   tag "Performing a longreads only assembly with Flye"
 
   input:
-  file lreads
+  tuple file(lreads), val(prefix)
 
   output:
   file "flye" // Saves all files
@@ -15,15 +15,9 @@ process flye_assembly {
   lr        = (params.lr_type == 'nanopore') ? '--nano' : '--pacbio'
   corrected = (params.corrected_lreads) ? '-corr' : '-raw'
   lrparam   = lr + corrected
-  lrID      = lreads.getSimpleName()
+  lrID      = (lreads.getName() - ".gz").toString().substring(0, (lreads.getName() - ".gz").toString().lastIndexOf("."))
   gsize     = (params.genomeSize) ? "--genome-size ${params.genomeSize}" : ""
 
-  // Check available reads
-  if (!params.shortreads_paired && !params.shortreads_single && params.longreads && params.lr_type) {
-    type = 'longreads_only'
-  } else if ((params.shortreads_paired || params.shortreads_single) && params.longreads && params.lr_type) {
-    type = 'hybrid/strategy_2/longreads_only'
-  }
   """
   source activate flye ;
   flye ${lrparam} $lreads ${gsize} --out-dir flye \

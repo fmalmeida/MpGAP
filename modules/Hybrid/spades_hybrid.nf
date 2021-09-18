@@ -1,13 +1,14 @@
 process spades_hybrid {
-  publishDir "${params.outdir}/${lrID}/hybrid/strategy_1", mode: 'copy'
-  container 'fmalmeida/mpgap'
+  publishDir "${params.outdir}/${prefix}", mode: 'copy'
+  label 'main'
   tag { x }
   cpus params.threads
 
   input:
-  file lreads
+  file(lreads)
   tuple val(id), file(sread1), file(sread2)
   file(sreads)
+  val(prefix)
 
   output:
   file "*" // Save everything
@@ -15,8 +16,8 @@ process spades_hybrid {
 
   script:
   // Check reads
-  lr = (params.lr_type == 'nanopore') ? '--nanopore' : '--pacbio'
-  lrID  = lreads.getSimpleName()
+  lr   = (params.lr_type == 'nanopore') ? '--nanopore' : '--pacbio'
+  lrID = (lreads.getName() - ".gz").toString().substring(0, (lreads.getName() - ".gz").toString().lastIndexOf("."))
   if ((params.shortreads_single) && (params.shortreads_paired)) {
     parameter = "-1 $sread1 -2 $sread2 -s $sreads $lr $lreads"
     x = "Performing a hybrid assembly with SPAdes, using paired and single end reads"

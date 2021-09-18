@@ -1,3 +1,5 @@
+<img src="images/lOGO_3.png" width="300px">
+
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3997375.svg)](https://doi.org/10.5281/zenodo.3445485) [![Releases](https://img.shields.io/github/v/release/fmalmeida/mpgap)](https://github.com/fmalmeida/mpgap/releases) [![Documentation](https://img.shields.io/badge/Documentation-readthedocs-brightgreen)](https://mpgap.readthedocs.io/en/latest/?badge=latest) [![Dockerhub](https://img.shields.io/badge/Docker-fmalmeida/mpgap-informational)](https://hub.docker.com/r/fmalmeida/mpgap) [![Docker build](https://img.shields.io/docker/cloud/build/fmalmeida/mpgap)](https://hub.docker.com/r/fmalmeida/mpgap) ![Docker Pulls](https://img.shields.io/docker/pulls/fmalmeida/mpgap) [![Nextflow version](https://img.shields.io/badge/Nextflow%20>=-v20.07-important)](https://www.nextflow.io/docs/latest/getstarted.html) [![License](https://img.shields.io/badge/License-GPL%203-black)](https://github.com/fmalmeida/mpgap/blob/master/LICENSE)
 
 <p align="center">
@@ -20,19 +22,11 @@
 
 MpGAP is an easy to use nextflow docker-based pipeline that adopts well known software for genome assembly of Illumina, Pacbio and Oxford Nanopore sequencing data through illumina only, long reads only or hybrid modes. This pipeline wraps up the following software:
 
-* [Canu](https://github.com/marbl/canu)
-* [Flye](https://github.com/fenderglass/Flye)
-* [Raven](https://github.com/lbcb-sci/raven)
-* [Haslr](https://github.com/vpc-ccg/haslr)
-* [Unicycler](https://github.com/rrwick/Unicycler)
-* [Spades](https://github.com/ablab/spades)
-* [Shovill](https://github.com/tseemann/shovill)
-* [Nanopolish](https://github.com/jts/nanopolish)
-* [Medaka](https://github.com/nanoporetech/medaka)
-* [GenomicConsensus](https://github.com/PacificBiosciences/GenomicConsensus)
-* [Pilon](https://github.com/broadinstitute/pilon)
-* [QUAST](https://github.com/ablab/quast)
-* [MultiQC](https://multiqc.info/)
+|| **Source** |
+|:- | :- |
+| **Assemblers** | [Canu](https://github.com/marbl/canu), [Flye](https://github.com/fenderglass/Flye), [Raven](https://github.com/lbcb-sci/raven), [Shasta](https://github.com/chanzuckerberg/shasta), [wtdbg2](https://github.com/ruanjue/wtdbg2), [Haslr](https://github.com/vpc-ccg/haslr), [Unicycler](https://github.com/rrwick/Unicycler), [Spades](https://github.com/ablab/spades), [Shovill](https://github.com/tseemann/shovill) |
+| **Polishers** | [Nanopolish](https://github.com/jts/nanopolish), [Medaka](https://github.com/nanoporetech/medaka), [gcpp](https://github.com/PacificBiosciences/gcpp), [Pilon](https://github.com/broadinstitute/pilon) |
+| **Quality check** | [QUAST](https://github.com/ablab/quast), [MultiQC](https://multiqc.info/) |
 
 ## Further reading
 
@@ -50,14 +44,14 @@ This pipeline has only two dependencies: [Docker](https://www.docker.com) and [N
 * Java 8 (or higher)
 * Nextflow (version 20.01 or higher)
 * Docker
-  * Image: `fmalmeida/mpgap`
+  * Image: `fmalmeida/mpgap:v2.3`
 
 ## Installation
 
 1. If you don't have it already install [Docker](https://docs.docker.com/) in your computer.
     * After installed, you need to download the required Docker images
 
-          docker pull fmalmeida/mpgap
+          docker pull fmalmeida/mpgap:v2.3
 
 > Each release is accompanied by a Dockerfile in the docker folder. When using releases older releases, users can create the correct image using
 the Dockerfile that goes alongside with the release (Remember to give the image the correct name, as it is in dockerhub and the nextflow script).
@@ -168,7 +162,8 @@ It will result in the following:
 ## Known issues
 
 1. Whenever using unicycler with unpaired reads, an odd platform-specific SPAdes-related crash seems do randomly happen as it can be seen in the issue discussed at https://github.com/rrwick/Unicycler/issues/188.
-  + As a workaround, Ryan says to use the `--no_correct` parameter which solves the issue and does not have a negative impact on assembly quality. Therefore, whenever using Illumina unpaired reads, this parameter is automatically used by the pipeline.
+  + As a workaround, Ryan says to use the `--no_correct` parameter which solves the issue and does not have a negative impact on assembly quality.
+  + Therefore, if you run into this error when using unpaired data you can activate this workaroud with `--unicycler_additional_parameters "--no_correct"`.
 2. Whenever running the pipeline for multiple samples at once using glob patterns such as '*' and '?', users are advised to do not perform hybrid assemblies, nor combining both paired and unpaired short reads in short reads only assemblies. Because the pipeline is not yet trained to properly search for the correct pairs, and since nextflow channels are random, we cannot ensure that the combination of data used in these to assembly types will be right. The pipeline treats each input file as a unique sample, and it will execute it individually.
   + To date, the use of glob patterns only works properly with long reads only assembly, or short reads only assemblies using either paired or unpaired reads, not both at the same time. For example:
     + `nextflow run [...] --longreads 'my_data/*.fastq' --lr_type 'nanopore' --outdir my_results`
@@ -176,27 +171,11 @@ It will result in the following:
     + `nextflow run [...] --shortreads_single 'my_data/*.fastq' --outdir my_results`
     + The pipeline will load and assembly each fastq in the `my_data` folder and assemble it, writing the results for each read in a sub-folder with the reads basename in the `my_results` output folder.
 
-> However, we are currently working in a proper way to execute the hybrid and combination of short reads in assemblies for multiple samples at once so that users can properly execute it without confusion. But it will come in v2.3.
+> However, we are currently working in a proper way to execute the hybrid and combination of short reads in assemblies for multiple samples at once so that users can properly execute it without confusion.
 
 3. Sometimes, shovill assembler can fail and cause the pipeline to fail due to problems in estimating the genome size. This, is actually super simple to solve! Instead of letting the shovill assembler estimate the genome size, you can pass the information to it and prevent its fail:
     + `--shovill_additional_parameters '--gsize 3m'`
 
 ## Citation
 
-To cite this pipeline users can use our Zenodo tag or directly via the github url.
-
-Users are encouraged to cite the programs used in this pipeline whenever they are used:
-
-* [Canu](https://github.com/marbl/canu)
-* [Flye](https://github.com/fenderglass/Flye)
-* [Raven](https://github.com/lbcb-sci/raven)
-* [Haslr](https://github.com/vpc-ccg/haslr)
-* [Unicycler](https://github.com/rrwick/Unicycler)
-* [Spades](https://github.com/ablab/spades)
-* [Shovill](https://github.com/tseemann/shovill)
-* [Nanopolish](https://github.com/jts/nanopolish)
-* [Medaka](https://github.com/nanoporetech/medaka)
-* [GenomicConsensus](https://github.com/PacificBiosciences/GenomicConsensus)
-* [Pilon](https://github.com/broadinstitute/pilon)
-* [QUAST](https://github.com/ablab/quast)
-* [MultiQC](https://multiqc.info/)
+To cite this pipeline users can use our Zenodo tag or directly via the github url. Users are encouraged to cite the programs used in this pipeline whenever they are used.

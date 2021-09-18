@@ -4,6 +4,10 @@
 Quickstart
 **********
 
+.. tip::
+
+  Remember: the pipeline can always be executed with a config file. In fact, it is the best and easier way to execute the pipeline.
+
 Overview
 ========
 
@@ -23,21 +27,19 @@ We have made this subsampled dataset available in `Figshare <https://figshare.co
   # Unzip
   unzip reads.zip
 
-
 Now we have the necessary data to perform the quickstart.
 
 .. note::
 
-  The pipeline will always use the fastq file name as prefix for sub-folders and output files. For instance, if users use a fastq file named SRR7128258.fastq the output files and directories will have the string "SRR7128258" in it.
+  Users must **never** use hard or symbolic links. This will probably make nextflow fail. Remember to **always** write input paths inside double quotes.
 
-.. tip::
+.. note::
 
-  Remember, the pipeline can always be executed with a config file. In fact, the best way to execute these pipelines is by using a configuration file. With a proper configuration, users can easily run the pipeline.
+  When using paired end reads it is **required** that input reads are set with the “{1,2}” pattern. For example: “SRR6307304_{1,2}.fastq”. This will properly load reads "SRR6307304_1.fastq" and "SRR6307304_2.fastq".
 
 .. warning::
 
-  When running hybrid assemblies or mixing short read types it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. 
-  Since nextflow loads inputs randomly, this is said so that the pipeline does not load all reads that match the REGEX and avoid unwanted combination of inputs.
+  When running hybrid assemblies or mixing short read types it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. Since nextflow randomly loads inputs, this is said to avoid unwanted combination of inputs while loading all reads that match the REGEX.
 
   We are currently working in provinding a way to run multiple samples at once avoinding unwanted combination.
 
@@ -67,18 +69,10 @@ By default, when assembling long and short reads together (hybrid assemblies) th
 
 	Specific software can be turned off with the parameters ``--skip_{assembler}``
 
-.. note::
-  
-  Remember to **always** write input paths inside double quotes.
-
-.. note::
-
-  When using paired end reads it is **required** that input reads are set with the “{1,2}” pattern. For example: “SRR6307304_{1,2}.fastq”. This will properly load reads “SRR6307304_1.fastq” and “SRR6307304_2.fastq”
-
 Hybrid assembly (strategy 2)
 ============================
 
-Additionally to the conventional hybrid assembly method (strategy 1), users can also hybrid assemble their genomes using an alternative method called, in this pipeline, **strategy 2**. In this method, long reads are first assembled with specialized long reads assemblers, such as Canu, Flye, Raven and Unicycler. And, after that, this long reads only assembly is polished (error correction step) using the available short reads with the Pilon software.
+Additionally to the conventional hybrid assembly method (strategy 1), users can also hybrid assemble their genomes using an alternative method called, in this pipeline, **strategy 2**. In this method, long reads are first assembled with specialized long reads assemblers, such as Canu, Flye, Raven, Shasta, wtdbg2 and Unicycler. And, after that, this long reads only assembly is polished (error correction step) using the available short reads with the Pilon software.
 
 The execution is actually the same as for the strategy 1, however users must use the ``--strategy_2`` parameter to use this alternative method.
 
@@ -97,19 +91,11 @@ The execution is actually the same as for the strategy 1, however users must use
 
 .. note::
 
-	Remember that in this method, the assemblers used are the long reads assemblers (Canu, Flye, Raven and Unicycler), not the hybrid ones used in strategy 1.
+	Remember that in this method, the assemblers used are the long reads assemblers, not the hybrid ones used in strategy 1.
 
 .. tip::
 
-	Additionally, users can also execute a long reads polishing step in their assemblies prior to the polishing with short reads. The long reads polishers available are: ONT ==> Medaka and Nanopolish; Pacbio ==> Arrow. For that, users must check the longreads parameters: ``--medaka_sequencing_model``, ``--nanopolish_fast5Path`` and ``--pacbio_all_bam_path``. This will make de pipeline work as: ``long reads assembly -> polishing with long reads models -> polishing with short reads with Pilon``
-
-.. note::
-  
-  Remember to **always** write input paths inside double quotes.
-
-.. note::
-
-  When using paired end reads it is **required** that input reads are set with the “{1,2}” pattern. For example: “SRR6307304_{1,2}.fastq”. This will properly load reads “SRR6307304_1.fastq” and “SRR6307304_2.fastq”
+	Additionally, users can also execute a long reads polishing step in their assemblies prior to the polishing with short reads.  The long reads polishers available are: ONT ==> Medaka and Nanopolish; Pacbio ==> gcpp. For that, users must check the longreads parameters: ``--medaka_sequencing_model``, ``--nanopolish_fast5Path`` and ``--pacbio_bams``. This will make de pipeline work as: ``long reads assembly -> polishing with long reads models -> polishing with short reads with Pilon``
 
 Afterwards
 ==========

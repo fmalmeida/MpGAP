@@ -13,20 +13,15 @@ Input files
 
 .. note::
 
-  Users must **never** use hard or symbolic links. This will probably make nextflow fail.
-  
-.. note::
-  
-  Remember to **always** write input paths inside double quotes.
+  Users must **never** use hard or symbolic links. This will probably make nextflow fail. Remember to **always** write input paths inside double quotes.
 
 .. note::
 
-  When using paired end reads it is **required** that input reads are set with the “{1,2}” pattern. For example: “SRR6307304_{1,2}.fastq”. This will properly load reads “SRR6307304_1.fastq” and “SRR6307304_2.fastq”
+  When using paired end reads it is **required** that input reads are set with the "{1,2}" pattern. For example: "SRR6307304_{1,2}.fastq". This will properly load reads "SRR6307304_1.fastq" and "SRR6307304_2.fastq".
 
 .. warning::
 
-  When running hybrid assemblies or mixing short read types it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. 
-  Since nextflow loads inputs randomly, this is said so that the pipeline does not load all reads that match the REGEX and avoid unwanted combination of inputs.
+  When running hybrid assemblies or mixing short read types it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. Since nextflow randomly loads inputs, this is said to avoid unwanted combination of inputs while loading all reads that match the REGEX.
 
   We are currently working in provinding a way to run multiple samples at once avoinding unwanted combination.
 
@@ -47,6 +42,8 @@ The pipeline is capable of assembling Illumina, ONT and Pacbio reads in three ma
    + Canu
    + Flye
    + Raven
+   + Shasta
+   + wtdbg2
 
 3. Hybrid (both short and long reads)
 
@@ -62,7 +59,7 @@ General parameters
 ------------------
 
 .. list-table::
-   :widths: 20 25 10 50
+   :widths: 15 15 20 50
    :header-rows: 1
 
    * - Arguments
@@ -74,10 +71,15 @@ General parameters
      - Y
      - output
      - Name of directory to store output values. Input reads basenames will be used to create sub-folder under this directory.
+   
+   * - ``--prefix``
+     - N
+     - Input reads names
+     - Gives a custom prefix for sample results. By default the pipeline creates one using the input reads names
 
    * - ``--genomeSize``
      - | Y
-       | (for Canu and Haslr assemblers)
+       | (for Canu, wtdbg2 and Haslr assemblers)
      - NA
      - Sets expected genome size. E.g. 5.6m; 1.2g.
 
@@ -126,6 +128,14 @@ Input files
        | (for hybrid and longreads-only modes)
      - nanopore
      - Tells whether input longreads are: pacbio or nanopore.
+   
+   * - ``--wtdbg2_technology``
+     - | Y
+       | (when running wtdbg2 with pacbio)
+     - ont
+     - | When assembling pacbio long reads with wtdbg2, it is necessary to tell the pipeline
+       | whether reads are "rs" for PacBio RSII, "sq" for PacBio Sequel, "ccs" for PacBio CCS reads.
+       | With not wanted it, consider using ``--skip_wtdbg2``.
 
    * - ``--corrected_lreads``
      - N
@@ -177,14 +187,14 @@ By polishing (correcting errors) a long reads only assembly with Illumina reads.
 Long reads assembly polishing parameters (also used for hybrid strategy 2)
 --------------------------------------------------------------------------
 
-Long reads only assemblies can also be polished with Nanopolish or Racon+Medaka tools for nanopore reads and Arrow for Pacbio reads. For that, users must properly set the parameters. given below.
+Long reads only assemblies can also be polished with Nanopolish or Racon+Medaka tools for nanopore reads and gcpp for Pacbio reads. For that, users must properly set the parameters. given below.
 
 .. note::
 
 	 For assembly polishing with medaka models, the assembly is first polished one time with racon using the ``-m 8 -x -6 -g -8 -w 500`` as this is the dataset in which Medaka has been trained on. Therefore, the medaka polishing in this pipeline mean Racon 1X + Medaka.
 
 .. list-table::
-   :widths: 20 10 20 50
+   :widths: 25 5 20 50
    :header-rows: 1
 
    * - Arguments
@@ -209,18 +219,20 @@ Long reads only assemblies can also be polished with Nanopolish or Racon+Medaka 
      - 1000
      - It sets the max number of haplotypes to be considered by Nanopolish. Sometimes the pipeline may crash because to much variation was found exceeding the limit.
 
-   * - ``--pacbio_all_bam_path``
+   * - ``--pacbio_bams``
      - N
      - NA
      - | Path to all subreads.bam files for the given reads (can be '\*.bam')
        | In order to nextflow properly use it, one needs to store all the data, from all the cells in one single directory and set the filepath as "some/data/\*bam".
        |
-       | Whenever set, the pipeline will execute a polishing step with VarianCaller through arrow.
-       |
-       | Arrow is supported for PacBio Sequel data and RS data with the P6-C4 chemistry.
+       | Whenever set, the pipeline will execute a polishing step with gcpp. GCpp is the machine-code successor of the venerable GenomicConsensus suite which has reached EOL, with the exception of not supporting Quiver/RSII anymore.
 
 Advanced assembler customization options
 ----------------------------------------
+
+.. note::
+
+  Additional parameters must be given inside double quotes separated by blank spaces.
 
 .. list-table::
    :widths: 30 10 10 50
@@ -231,6 +243,11 @@ Advanced assembler customization options
      - Default value
      - Description
 
+   * - ``--quast_additional_parameters``
+     - N
+     - NA
+     - | Give additional parameters to Quast while assessing assembly metrics. Must be given as shown in Quast manual. E.g. ``' --large --eukaryote '``.
+
    * - ``--skip_canu``
      - N
      - False
@@ -239,7 +256,7 @@ Advanced assembler customization options
    * - ``--canu_additional_parameters``
      - N
      - NA
-     - | Passes additional parameters for Canu assembler. E.g. ``'correctedErrorRate=0.075 corOutCoverage=200'``. Must be given as shown in Canu's manual.
+     - | Passes additional parameters for Canu assembler. E.g. ``' correctedErrorRate=0.075 corOutCoverage=200 '``. Must be given as shown in Canu's manual.
 
    * - ``--skip_flye``
      - N
@@ -249,7 +266,7 @@ Advanced assembler customization options
    * - ``--flye_additional_parameters``
      - N
      - NA
-     - | Passes additional parameters for Flye assembler. E.g. ``'--meta --iterations 4'``. Must be given as shown in Flye's manual.
+     - | Passes additional parameters for Flye assembler. E.g. ``' --meta --iterations 4 '``. Must be given as shown in Flye's manual.
 
    * - ``--skip_raven``
      - N
@@ -259,7 +276,27 @@ Advanced assembler customization options
    * - ``--raven_additional_parameters``
      - N
      - NA
-     - | Passes additional parameters for Raven assembler. E.g. ``'--polishing-rounds 4'``. Must be given as shown in Raven's manual.
+     - | Passes additional parameters for Raven assembler. E.g. ``' --polishing-rounds 4 '``. Must be given as shown in Raven's manual.
+   
+   * - ``--skip_shasta``
+     - N
+     - False
+     - Skip the execution of Shasta
+
+   * - ``--shasta_additional_parameters``
+     - N
+     - NA
+     - | Passes additional parameters for Raven assembler. E.g. ``' --Assembly.detangleMethod 1 '``. Must be given as shown in Shasta's manual.
+   
+   * - ``--skip_wtdbg2``
+     - N
+     - False
+     - Skip the execution of Raven
+
+   * - ``--wtdbg2_additional_parameters``
+     - N
+     - NA
+     - | Passes additional parameters for wtdbg2 assembler. E.g. ``' -k 250 '``. Must be given as shown in wtdbg2's manual. Remember, the script called for wtdbg2 is ``wtdbg2.pl`` thus you must give the parameters used by it.
 
    * - ``--skip_unicycler``
      - N
@@ -269,7 +306,7 @@ Advanced assembler customization options
    * - ``--unicycler_additional_parameters``
      - N
      - NA
-     - | Passes additional parameters for Unicycler assembler. E.g. ``'--mode conservative --no_correct'``. Must be given as shown in Unicycler's manual.
+     - | Passes additional parameters for Unicycler assembler. E.g. ``' --mode conservative --no_correct '``. Must be given as shown in Unicycler's manual.
 
    * - ``--skip_spades``
      - N
@@ -279,7 +316,7 @@ Advanced assembler customization options
    * - ``--spades_additional_parameters``
      - N
      - NA
-     - | Passes additional parameters for SPAdes assembler. E.g. ``'--meta --plasmids'``. Must be given as shown in Spades' manual.
+     - | Passes additional parameters for SPAdes assembler. E.g. ``' --meta --plasmids '``. Must be given as shown in Spades' manual.
 
    * - ``--skip_haslr``
      - N
@@ -289,7 +326,7 @@ Advanced assembler customization options
    * - ``--haslr_additional_parameters``
      - N
      - NA
-     - | Passes additional parameters for Haslr assembler. E.g. ``'--cov-lr 30'``. Must be given as shown in Haslr' manual.
+     - | Passes additional parameters for Haslr assembler. E.g. ``' --cov-lr 30 '``. Must be given as shown in Haslr' manual.
 
    * - ``--skip_shovill``
      - N
@@ -299,7 +336,7 @@ Advanced assembler customization options
    * - ``--shovill_additional_parameters``
      - N
      - NA
-     - | Passes additional parameters for Shovill assembler. E.g. ``'--depth 15 --assembler skesa'``. Must be given as shown in Shovill' manual.
+     - | Passes additional parameters for Shovill assembler. E.g. ``' --depth 15 --assembler skesa '``. Must be given as shown in Shovill' manual.
 
 .. tip::
 

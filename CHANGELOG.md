@@ -1,6 +1,19 @@
 # MpGAP pipeline changelog
 
-The tracking for changes started in v2.1
+The tracking for changes started in v2.
+
+## v2.3
+
+1. Since pacbio GenomicConsensus and Arrow have reached its end of life, these software have been replaced by their new polisher [gcpp](https://github.com/PacificBiosciences/gcpp).
+
+2. I have identified a small error when using more than one pacbio BAM for polishing. The pipeline, was not loading them all into a nextflow channel list and it was causing the input channel tuple in the pacbio polisher module to have wrong size and wrongly match its variables.
+    + The parameter to load pacbio bams has been changed from `--pacbio_all_bam_path` to `--pacbio_bams`.
+
+3. The dockerfile have been changed so it now properly downloads the latest version of software when built. Some of the software were being download with wget but were being set to a specific freezed version.
+
+4. The nextflow config file have been altered so it now properly calls for a versioned Docker image. Docker images will now have version tags. E.g. `fmalmeida/mpgap:v2.3`.
+
+5. Two other longreads assemblers have been added: wtdbg2 and shasta. Please read the docs to check the parameters related to them.
 
 ## v2.2
 

@@ -1,35 +1,35 @@
 process pilon_polish {
-  publishDir "${params.outdir}/${id}/hybrid/strategy_2", mode: 'copy'
-  container 'fmalmeida/mpgap'
+  publishDir "${params.outdir}/${prefix}", mode: 'copy'
+  label 'main'
   cpus params.threads
   tag "Polishing a longreads-only assembly with shortreads (through Pilon)"
 
   input:
-  tuple file(draft), val(id), val(assembler), file(reads)
+  tuple file(draft), val(id), val(assembler), file(reads), val(prefix)
 
   output:
-  file("pilon_results_${assembler}/*") // Get everything
-  tuple file("pilon_results_${assembler}/${assembler}_final_pilon_polish.fasta"), val(id), val("${assembler}_pilon_polished")
+  file("pilon_polished_${assembler}/*") // Get everything
+  tuple file("pilon_polished_${assembler}/${assembler}_final_pilon_polish.fasta"), val(id), val("${assembler}_pilon_polished")
 
   script:
   if(params.shortreads_paired != '' && params.shortreads_single == '')
       """
       # Create the results dir
-      mkdir pilon_results_${assembler};
+      mkdir pilon_polished_${assembler};
 
       # Execute Unicycler polishing pilon wrapper
       unicycler_polish --minimap /miniconda/bin/miniasm --pilon /miniconda/share/pilon*/pilon*jar \
       -a $draft -1 ${reads[1]} -2 ${reads[2]} --threads ${params.threads} &> polish.log ;
 
       # Save files in the desired directory
-      mv 0* polish.log pilon_results_${assembler};
-      mv pilon_results_${assembler}/*_final_polish.fasta pilon_results_${assembler}/${assembler}_final_pilon_polish.fasta ;
+      mv 0* polish.log pilon_polished_${assembler};
+      mv pilon_polished_${assembler}/*_final_polish.fasta pilon_polished_${assembler}/${assembler}_final_pilon_polish.fasta ;
       """
 
   else if(params.shortreads_paired == '' && params.shortreads_single != '')
       """
       # Create the results dir
-      mkdir pilon_results_${assembler};
+      mkdir pilon_polished_${assembler};
 
       # Index and align reads with bwa
       bwa index ${draft} ;
@@ -40,15 +40,15 @@ process pilon_polish {
       # Execute pilon a single time (for single end reads)
       java -Xmx${params.pilon_memory_limit}G -jar /miniconda/share/pilon*/pilon*jar \
       --genome ${draft} --bam ${id}_${assembler}_aln.bam --output ${assembler}_final_pilon_polish \
-      --outdir pilon_results_${assembler} &> pilon.log
+      --outdir pilon_polished_${assembler} &> pilon.log
 
       # save bam file in the desired directory
-      mv ${id}_${assembler}_aln.bam pilon.log pilon_results_${assembler};
+      mv ${id}_${assembler}_aln.bam pilon.log pilon_polished_${assembler};
       """
   else if(params.shortreads_paired != '' && params.shortreads_single != '')
       """
       # Create the results dir
-      mkdir pilon_results_${assembler};
+      mkdir pilon_polished_${assembler};
 
       # Index and align reads with bwa
       bwa index ${draft} ;
@@ -66,7 +66,7 @@ process pilon_polish {
       -a first_polish.fasta -1 ${reads[1]} -2 ${reads[2]} --threads ${params.threads} &> polish.log ;
 
       # Save files in the desired directory
-      mv 0* polish.log pilon_results_${assembler};
-      mv pilon_results_${assembler}/*_final_polish.fasta pilon_results_${assembler}/${assembler}_final_pilon_polish.fasta ;
+      mv 0* polish.log pilon_polished_${assembler};
+      mv pilon_polished_${assembler}/*_final_polish.fasta pilon_polished_${assembler}/${assembler}_final_pilon_polish.fasta ;
       """
 }
