@@ -17,7 +17,7 @@ Input files
 
 .. note::
 
-  When using paired end reads it is **required** that input reads are set with the “{1,2}” pattern. For example: “SRR6307304_{1,2}.fastq”. This will properly load reads "SRR6307304_1.fastq" and "SRR6307304_2.fastq".
+  When using paired end reads it is **required** that input reads are set with the "{1,2}" pattern. For example: "SRR6307304_{1,2}.fastq". This will properly load reads "SRR6307304_1.fastq" and "SRR6307304_2.fastq".
 
 .. warning::
 
@@ -59,7 +59,7 @@ General parameters
 ------------------
 
 .. list-table::
-   :widths: 20 25 10 50
+   :widths: 15 15 20 50
    :header-rows: 1
 
    * - Arguments
@@ -74,8 +74,8 @@ General parameters
    
    * - ``--prefix``
      - N
-     - By default the pipeline creates one using the input reads names
-     - Gives a custom prefix for sample results.
+     - Input reads names
+     - Gives a custom prefix for sample results. By default the pipeline creates one using the input reads names
 
    * - ``--genomeSize``
      - | Y
