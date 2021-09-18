@@ -6,7 +6,7 @@ Quickstart
 
 .. tip::
 
-  Remember: the pipeline can always be executed with a config file. In fact, the best way to execute these pipelines is by using a configuration file. With a proper configuration, users can easily run the pipeline.
+  Remember: the pipeline can always be executed with a config file. In fact, it is the best and easier way to execute the pipeline.
 
 Overview
 ========
