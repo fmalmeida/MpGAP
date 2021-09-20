@@ -1,5 +1,5 @@
 process unicycler_sreads_assembly {
-  publishDir "${params.outdir}/${out_ids}/shortreads_only", mode: 'copy'
+  publishDir "${params.outdir}/${prefix}", mode: 'copy'
   label 'main'
   tag { x }
   cpus params.threads
