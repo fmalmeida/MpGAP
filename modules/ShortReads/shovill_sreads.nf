@@ -3,7 +3,7 @@ assemblers = ['spades', 'skesa', 'megahit']
 process shovill_sreads_assembly {
   publishDir "${params.outdir}/${prefix}/shovill", mode: 'copy'
   label 'main'
-  tag "Performing a illumina-only assembly with shovill, using paired end reads"
+  tag "Performing a illumina-only assembly with shovill (${assembler}), using paired end reads"
   cpus params.threads
 
   input:
