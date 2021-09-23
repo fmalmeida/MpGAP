@@ -51,7 +51,7 @@ workflow sreads_only_nf {
   }
   // Shovill
   if (!params.skip_shovill && !params.shortreads_single && params.shortreads_paired) {
-    shovill_sreads_assembly(preads.combine(prefix_ch))
+    shovill_sreads_assembly(preads.combine(prefix_ch), Channel.fromList(['spades', 'skesa', 'megahit']))
     shovill_ch = shovill_sreads_assembly.out[1]
   }
 
