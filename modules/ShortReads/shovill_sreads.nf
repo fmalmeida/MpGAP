@@ -5,8 +5,7 @@ process shovill_sreads_assembly {
   cpus params.threads
 
   input:
-  tuple val(id), file(sread1), file(sread2), val(prefix)
-  each val(assembler)
+  tuple val(id), file(sread1), file(sread2), val(prefix), val(assembler)
 
   output:
   file "${assembler}" // Save all output
