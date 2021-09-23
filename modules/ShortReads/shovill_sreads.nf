@@ -1,4 +1,4 @@
-assembler = Channel.value('spades', 'skesa', 'megahit')
+assembler = Channel.fromList(['spades', 'skesa', 'megahit'])
 
 process shovill_sreads_assembly {
   publishDir "${params.outdir}/${prefix}/shovill", mode: 'copy'
