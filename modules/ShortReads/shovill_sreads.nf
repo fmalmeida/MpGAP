@@ -1,4 +1,4 @@
-assemblers = ['spades', 'skesa', 'megahit']
+assembler = Channel.value('spades', 'skesa', 'megahit')
 
 process shovill_sreads_assembly {
   publishDir "${params.outdir}/${prefix}/shovill", mode: 'copy'
@@ -8,7 +8,7 @@ process shovill_sreads_assembly {
 
   input:
   tuple val(id), file(sread1), file(sread2), val(prefix)
-  each assembler from assemblers
+  each val(assembler)
 
   output:
   file "${assembler}" // Save all output
