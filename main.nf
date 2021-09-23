@@ -135,11 +135,19 @@ include { lreadsonly_nf } from './workflows/long-reads-only.nf'
 // Hybrid
 include { hybrid_nf } from './workflows/hybrid.nf'
 
+include { medaka_models } from './modules/LongReads/medaka_models.nf'
+
                                   /*
                                    * DEFINE (RUN) MAIN WORKFLOW
                                    */
 
 workflow {
+
+  if (params.see_medaka_models) {
+    medaka_models
+    medaka_models.out.view()
+    exit 0
+  }
 
   /*
    * Long reads only assembly
