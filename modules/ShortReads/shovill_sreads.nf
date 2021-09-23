@@ -1,7 +1,7 @@
 process shovill_sreads_assembly {
   publishDir "${params.outdir}/${prefix}/shovill", mode: 'copy'
   label 'main'
-  tag "Performing a illumina-only assembly with shovill (${assembler}), using paired end reads"
+  tag "Shovill paired end assembly with ${assembler}"
   cpus params.threads
 
   input:
