@@ -75,7 +75,7 @@ General parameters
    * - ``--prefix``
      - N
      - Input reads names
-     - Gives a custom prefix for sample results. By default the pipeline creates one using the input reads names
+     - Gives a custom prefix for sample results. By default the pipeline creates one using the input reads names. Must only be used if running the pipeline for a single sample.
 
    * - ``--genomeSize``
      - | Y

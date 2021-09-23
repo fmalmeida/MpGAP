@@ -35,6 +35,7 @@ Main config file
 
       // Gives a custom prefix for sample results
       // If is not given, the pipeline will use the reads names to create a custom prefix
+      // Must only be used if running the pipeline for a single sample.
             prefix = ""
 
       // Number of threads to be used by each software.

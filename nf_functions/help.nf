@@ -31,7 +31,8 @@
                                                                                 either hybrid and longreads-only, we will use the longreads basename.
      
      --prefix <string>                                                          Gives a custom prefix for sample results. If not given, the pipeline 
-                                                                                will use the reads names to create a custom prefix.
+                                                                                will use the reads names to create a custom prefix. Must only be used 
+                                                                                if running the pipeline for a single sample.
 
      --threads <int>                                                            Number of threads to use.
 
