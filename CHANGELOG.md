@@ -2,6 +2,12 @@
 
 The tracking for changes started in v2.
 
+## v2.3.1
+
+This patch release is related to the issue [#19](https://github.com/fmalmeida/MpGAP/issues/19) which raises attention that shovill was not being used to its fully extent. Shovill was just being used with spades as its core.
+
+Now this has been fixed and shovill now will produce three assemblies for comparisons, with both spades, megahit and skesa as its core. However this limits the functionality of the  `--shovill_additional_parameters`. Since these three assemblers are already done with shovill, users cannot pass anymore the shovill `--assembler` parameter with `--shovill_additional_parameters`. Which means, something as `--shovill_additional_parameters " --assembler skesa "` will raise an error.
+
 ## v2.3
 
 1. Since pacbio GenomicConsensus and Arrow have reached its end of life, these software have been replaced by their new polisher [gcpp](https://github.com/PacificBiosciences/gcpp).
