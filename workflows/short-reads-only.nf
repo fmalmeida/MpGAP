@@ -54,7 +54,7 @@ workflow sreads_only_nf {
     shovill_sreads_assembly(
       preads.combine(prefix_ch).combine(Channel.from('spades', 'skesa', 'megahit'))
     )
-    shovill_ch = shovill_sreads_assembly.out[1]
+    shovill_ch.mix(shovill_sreads_assembly.out[1])
   }
 
   // Get assemblies
