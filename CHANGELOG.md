@@ -8,6 +8,8 @@ This patch release is related to the issue [#19](https://github.com/fmalmeida/Mp
 
 Now this has been fixed and shovill now will produce three assemblies for comparisons, with both spades, megahit and skesa as its core. However this limits the functionality of the  `--shovill_additional_parameters`. Since these three assemblers are already done with shovill, users cannot pass anymore the shovill `--assembler` parameter with `--shovill_additional_parameters`. Which means, something as `--shovill_additional_parameters " --assembler skesa "` will raise an error.
 
+Also, the CLI help messages and in the config were made a bit more clear to avoid confusions.
+
 ## v2.3
 
 1. Since pacbio GenomicConsensus and Arrow have reached its end of life, these software have been replaced by their new polisher [gcpp](https://github.com/PacificBiosciences/gcpp).
