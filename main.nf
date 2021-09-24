@@ -145,7 +145,7 @@ include { hybrid_nf } from './workflows/hybrid.nf'
                                    * DEFINE (RUN) MAIN WORKFLOW
                                    */
 
-workflow medaka_models{
+workflow {
 
   /*
    * Long reads only assembly
