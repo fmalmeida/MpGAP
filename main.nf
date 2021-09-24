@@ -9,6 +9,7 @@ nextflow.enable.dsl=2
  * Include functions
  */
 include { helpMessage    } from './nf_functions/help.nf'
+include { helpMessageAdvanced    } from './nf_functions/help.nf'
 include { exampleMessage } from './nf_functions/examples.nf'
 include { paramsCheck    } from './nf_functions/paramsCheck.nf'
 include { logMessage     } from './nf_functions/logMessages.nf'
@@ -20,6 +21,11 @@ paramsCheck()
 params.help = false
 if (params.help){
   helpMessage()
+  exit 0
+}
+params.show_advanced_parameters = false
+if (params.show_advanced_parameters){
+  helpMessageAdvanced()
   exit 0
 }
 params.examples = false
@@ -135,28 +141,11 @@ include { lreadsonly_nf } from './workflows/long-reads-only.nf'
 // Hybrid
 include { hybrid_nf } from './workflows/hybrid.nf'
 
-process medaka_models {
-  label 'main'
-  output:
-    stdout
-
-  """
-  source activate MEDAKA;
-  medaka tools list\_models | grep "Available"
-  """
-}
-
                                   /*
                                    * DEFINE (RUN) MAIN WORKFLOW
                                    */
 
-workflow {
-
-  if (params.see_medaka_models) {
-    medaka_models()
-    medaka_models.out.view()
-    exit 0
-  }
+workflow medaka_models{
 
   /*
    * Long reads only assembly
