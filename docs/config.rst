@@ -173,7 +173,8 @@ Main config file
             spades_additional_parameters = ""           // Must be given as shown in Spades manual. E.g. " --meta --plasmids "
 
             skip_shovill   = false                      // Paired shortreads only assemblies
-            shovill_additional_parameters = ""          // Must be given as shown in Shovill manual. E.g. " --depth 15 --assembler skesa "
+            shovill_additional_parameters = ""          // Must be given as shown in Shovill manual. E.g. " --depth 15 "
+                                                        // The pipeline already executes shovill with spades, skesa and megahit, so please, do not use it with shovill's ``--assembler`` parameter.
 
             skip_unicycler = false                      // Hybrid and shortreads only assemblies
             unicycler_additional_parameters = ""        // Must be given as shown in Unicycler manual. E.g. " --mode conservative --no_correct "
