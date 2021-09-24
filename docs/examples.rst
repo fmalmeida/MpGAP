@@ -4,6 +4,9 @@
 Some execution examples
 ***********************
 
+Some considerations
+===================
+
 .. note::
 
   Users must **never** use hard or symbolic links. This will probably make nextflow fail. Remember to **always** write input paths inside double quotes.

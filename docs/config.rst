@@ -35,6 +35,7 @@ Main config file
 
       // Gives a custom prefix for sample results
       // If is not given, the pipeline will use the reads names to create a custom prefix
+      // Must only be used if running the pipeline for a single sample.
             prefix = ""
 
       // Number of threads to be used by each software.
@@ -121,27 +122,15 @@ Main config file
                   * the assemblies with longreads data before shortreads polishing
                   */
 
-      // Tells Medaka polisher which model to use according to the basecaller used.
-      // For example the model named r941_min_fast_g303 should be used with data from
-      // MinION (or GridION) R9.4.1 flowcells using the fast Guppy basecaller version 3.0.3.
-      //
-      // Where a version of Guppy has been used without an exactly corresponding medaka model,
-      // the medaka model with the highest version equal to or less than the guppy version
-      // should be selected.
-      //
-      // Models Available: r103_min_high_g345, r103_min_high_g360, r103_prom_high_g360, r103_prom_snp_g3210, r103_prom_variant_g3210, r10_min_high_g303, r10_min_high_g340,
-      // r941_min_fast_g303, r941_min_high_g303, r941_min_high_g330, r941_min_high_g340_rle, r941_min_high_g344, r941_min_high_g351, r941_min_high_g360, r941_prom_fast_g303,
-      // r941_prom_high_g303, r941_prom_high_g330, r941_prom_high_g344, r941_prom_high_g360, r941_prom_high_g4011, r941_prom_snp_g303, r941_prom_snp_g322, r941_prom_snp_g360,
-      // r941_prom_variant_g303, r941_prom_variant_g322, r941_prom_variant_g360
+      // Tells Medaka polisher which model to use according to the basecaller
+      // used. Please see their page to check for possibilities:
+      //  https://github.com/nanoporetech/medaka#models.
       //
       // If left in blank, medaka will not be executed.
             medaka_sequencing_model = "r941_min_high_g360"
 
-      // The polishing step is performed (and advised) with Medaka (--sequencing_model parameter).
-      // This parameter tells the pipeline to also try Nanopolish.
-      //
       // This parameter loads the directory where all the nanopore FAST5 files are stored.
-      // If this parameter is set, the pipeline is able to execute the polishing step with nanopolish.
+      // If this parameter is set, the pipeline is able to also execute the polishing step with nanopolish.
             nanopolish_fast5Path = ""
 
       // This parameter sets to nanopolish the max number of haplotypes to be considered.
@@ -172,7 +161,8 @@ Main config file
             spades_additional_parameters = ""           // Must be given as shown in Spades manual. E.g. " --meta --plasmids "
 
             skip_shovill   = false                      // Paired shortreads only assemblies
-            shovill_additional_parameters = ""          // Must be given as shown in Shovill manual. E.g. " --depth 15 --assembler skesa "
+            shovill_additional_parameters = ""          // Must be given as shown in Shovill manual. E.g. " --depth 15 "
+                                                        // The pipeline already executes shovill with spades, skesa and megahit, so please, do not use it with shovill's ``--assembler`` parameter.
 
             skip_unicycler = false                      // Hybrid and shortreads only assemblies
             unicycler_additional_parameters = ""        // Must be given as shown in Unicycler manual. E.g. " --mode conservative --no_correct "

@@ -4,7 +4,7 @@
  def helpMessage() {
     log.info """
     Usage:
-    nextflow run fmalmeida/mpgap [--help] [ -c nextflow.config ] [OPTIONS] [-with-report] [-with-trace] [-with-timeline]
+    nextflow run fmalmeida/mpgap [--help] [--show_advanced_parameters] [ -c nextflow.config ] [OPTIONS]
 
     Comments:
     This pipeline contains a massive amount of configuration variables and its usage as CLI parameters would
@@ -26,12 +26,11 @@
 
 
      --outdir <string>                                                          Main output directory. Results will be written in a sub-folder
-                                                                                in this directory, using the input reads basename: For shortreads
-                                                                                assemblies we will use the shortreads basename, for the others,
-                                                                                either hybrid and longreads-only, we will use the longreads basename.
+                                                                                in this directory, using the prefix or the input reads basenames.
      
      --prefix <string>                                                          Gives a custom prefix for sample results. If not given, the pipeline 
-                                                                                will use the reads names to create a custom prefix.
+                                                                                will use the reads names to create a custom prefix. Must only be used 
+                                                                                if running the pipeline for a single sample.
 
      --threads <int>                                                            Number of threads to use.
 
@@ -84,20 +83,9 @@
             # Polishers ==> ONT: Nanopolish or Medaka; Pacbio: gcpp.
 
     --medaka_sequencing_model <string>                                          Tells Medaka polisher which model to use according to the basecaller
-                                                                                used. For example the model named r941_min_fast_g303 should be used
-                                                                                with data from MinION (or GridION) R9.4.1 flowcells using the fast
-                                                                                Guppy basecaller version 3.0.3. Where a version of Guppy has been
-                                                                                used without an exactly corresponding medaka model, the medaka model
-                                                                                with the highest version equal to or less than the guppy version
-                                                                                should be selected. [ Default: r941_min_high_g360 ]
-
-                                                                                Models available: r103_min_high_g345, r103_min_high_g360, r103_prom_high_g360,
-                                                                                r103_prom_snp_g3210, r103_prom_variant_g3210, r10_min_high_g303, r10_min_high_g340,
-                                                                                r941_min_fast_g303, r941_min_high_g303, r941_min_high_g330, r941_min_high_g340_rle,
-                                                                                r941_min_high_g344, r941_min_high_g351, r941_min_high_g360, r941_prom_fast_g303,
-                                                                                r941_prom_high_g303, r941_prom_high_g330, r941_prom_high_g344, r941_prom_high_g360,
-                                                                                r941_prom_high_g4011, r941_prom_snp_g303, r941_prom_snp_g322, r941_prom_snp_g360,
-                                                                                r941_prom_variant_g303, r941_prom_variant_g322, r941_prom_variant_g360
+                                                                                used. Please see their page to check for possibilities: 
+                                                                                https://github.com/nanoporetech/medaka#models.
+                                                                                [ Default: r941_min_high_g360 ].
 
 
      --nanopolish_fast5Path <string>                                            Path to directory containing FAST5 files for given reads.
@@ -108,20 +96,34 @@
                                                                                 Beware of your system limits. Default: 2.
 
      --nanopolish_max_haplotypes <int>                                          This parameter sets to nanopolish the max number of haplotypes to be considered.
-                                                                                Sometimes the pipeline may crash because to much variation was found exceeding the
-                                                                                limit. Try augmenting this value (Default: 1000)
+                                                                                Sometimes the pipeline may crash because to much variation was found 
+                                                                                exceeding the limit. Try augmenting this value (Default: 1000)
 
      --pacbio_bams <string>                                                     Path to all subreads bam files for given reads. Whenever set, the pipeline
-                                                                                will execute a polishing step with gcpp. GCpp is the machine-code successor 
-                                                                                of the venerable GenomicConsensus suite which has reached EOL, with the 
-                                                                                exception of not supporting Quiver/RSII anymore. In order to nextflow properly
-                                                                                use it, one needs to store all the data, from all the cells in one single 
-                                                                                directory and set the filepath as "some/data/*bam".
+                                                                                will execute a polishing step with gcpp. All bams for the read must be in 
+                                                                                one single directory. E.g. "some/data/*bam".
 
             # Advanced parameters
-            # Controlling the execution of assemblers and QUAST
-            # Also adding the possibility to pass additional parameters to them
+            # Controlling the execution of assemblers (on/off)
+            # Also adding the possibility to pass additional parameters to them and to QUAST
             # Additional parameters must be in quotes and separated by spaces.
+     
+     --show_advanced_parameters                                                 Show the advanced parameters.
+    """.stripIndent()
+ }
+
+/*
+ * Define help message
+ */
+ def helpMessageAdvanced() {
+    log.info """
+
+            # Advanced parameters
+            # Controlling the execution of assemblers (on/off)
+            # Also adding the possibility to pass additional parameters to them and to QUAST
+            # Additional parameters must be in quotes and separated by spaces.
+     
+     --show_advanced_parameters                                                 Show the advanced parameters.
 
      --skip_spades                                                              Skip assembly with Spades (hybrid and shortreads only assembler)
 
@@ -151,7 +153,8 @@
 
      --shovill_additional_parameters <string>                                   Give additional parameters to Shovill assembler. Must be in quotes
                                                                                 and separated by one space. Must be given as shown in Shovill manual.
-                                                                                E.g. " --depth 15 --assembler skesa "
+                                                                                E.g. " --depth 15 ". The pipeline already executes shovill with spades, skesa 
+                                                                                and megahit, so please, do not use it with shovill's ``--assembler`` parameter.
 
      --unicycler_additional_parameters <string>                                 Give additional parameters to Unicycler assembler. Must be in quotes
                                                                                 and separated by one space. Must be given as shown in Unicycler manual.
@@ -182,3 +185,4 @@
                                                                                 E.g. " --Reads.minReadLength 5000 "  
     """.stripIndent()
  }
+

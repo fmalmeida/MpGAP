@@ -1,15 +1,15 @@
 process shovill_sreads_assembly {
-  publishDir "${params.outdir}/${prefix}", mode: 'copy'
+  publishDir "${params.outdir}/${prefix}/shovill", mode: 'copy'
   label 'main'
-  tag "Performing a illumina-only assembly with shovill, using paired end reads"
+  tag "Shovill paired end assembly with ${assembler}"
   cpus params.threads
 
   input:
-  tuple val(id), file(sread1), file(sread2), val(prefix)
+  tuple val(id), file(sread1), file(sread2), val(prefix), val(assembler)
 
   output:
-  file "shovill" // Save all output
-  tuple file("shovill/shovill_assembly.fasta"), val(id), val('shovill') // Gets contigs file
+  file "${assembler}" // Save all output
+  tuple file("${assembler}/shovill_${assembler}_final.fasta"), val(id), val("shovill_${assembler}") // Gets contigs file
 
   when:
   ((params.shortreads_paired) && (!params.shortreads_single))
@@ -20,10 +20,15 @@ process shovill_sreads_assembly {
   source activate shovill ;
 
   # Run
-  shovill --outdir shovill --R1 $sread1 --R2 $sread2 \
-  --cpus ${params.threads} --trim ${params.shovill_additional_parameters}
+  shovill \
+    --outdir ${assembler} \
+    --assembler ${assembler} \
+    --R1 $sread1 --R2 $sread2 \
+    --cpus ${params.threads} \
+    --trim \
+    ${params.shovill_additional_parameters}
 
   # Rename assembly
-  mv shovill/contigs.fa shovill/shovill_assembly.fasta
+  mv ${assembler}/contigs.fa ${assembler}/shovill_${assembler}_final.fasta
   """
 }
