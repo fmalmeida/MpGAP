@@ -1,5 +1,6 @@
 #!/usr/bin/env nextflow
 nextflow.enable.dsl=2
+import org.yaml.snakeyaml.Yaml
 
 /*
  * Generic multiplatform genome assembly pipeline (MpGAP)
@@ -13,6 +14,9 @@ include { helpMessageAdvanced    } from './nf_functions/help.nf'
 include { exampleMessage } from './nf_functions/examples.nf'
 include { paramsCheck    } from './nf_functions/paramsCheck.nf'
 include { logMessage     } from './nf_functions/logMessages.nf'
+include { write_csv } from './nf_functions/writeCSV.nf'
+include { parse_csv } from './nf_functions/parseCSV.nf'
+include { filter_ch } from './nf_functions/parseCSV.nf'
 
 /*
  * Check parameters
@@ -80,6 +84,7 @@ params.outdir  = 'output'
 params.prefix  = ''
 params.threads = 4
 params.cpus    = 2
+params.in_yaml = ''
 
 // Assemblers?
 params.skip_flye      = false
@@ -132,8 +137,11 @@ logMessage()
  * Define custom workflows
  */
 
+include { parse_samplesheet } from './workflows/parse_samples.nf'
+
 // Short reads only
 include { sreads_only_nf } from './workflows/short-reads-only.nf'
+include { sreads_only_batch_nf } from './workflows/short-reads-only-batch.nf'
 
 // Long reads only
 include { lreadsonly_nf } from './workflows/long-reads-only.nf'
@@ -147,27 +155,44 @@ include { hybrid_nf } from './workflows/hybrid.nf'
 
 workflow {
 
+  // with samplesheet?
+  if (params.in_yaml) {
+
+    parameter_yaml = new FileInputStream(new File(params.in_yaml))
+    new Yaml().load(parameter_yaml).each { k, v -> params[k] = v }
+
+    // Read YAML file
+    parse_samplesheet(params.samplesheet)
+
+    // Convert it to CSV for usability
+    samples_ch = write_csv(parse_samplesheet.out)
+
+    // short reads only samples
+    sreads_only_batch_nf(filter_ch(samples_ch, "sr-only"))
+
+  } else {
+
   /*
    * Long reads only assembly
    */
 
-  if (!params.shortreads_paired && !params.shortreads_single &&
-      params.longreads && params.lr_type) {
+    if (!params.shortreads_paired && !params.shortreads_single &&
+        params.longreads && params.lr_type) {
 
-    // Giving inputs
-    lreadsonly_nf(
-      // Longreads - required
-      Channel.fromPath(params.longreads),
+      // Giving inputs
+      lreadsonly_nf(
+        // Longreads - required
+        Channel.fromPath(params.longreads),
 
-      // Will run Nanopolish?
-      (params.nanopolish_fast5Path && params.lr_type == 'nanopore') ? Channel.fromPath(params.nanopolish_fast5Path) : Channel.value(''),
-      (params.nanopolish_fast5Path && params.lr_type == 'nanopore') ? Channel.fromPath(params.nanopolish_fast5Path, type: 'dir') : Channel.value(''),
+        // Will run Nanopolish?
+        (params.nanopolish_fast5Path && params.lr_type == 'nanopore') ? Channel.fromPath(params.nanopolish_fast5Path) : Channel.value(''),
+        (params.nanopolish_fast5Path && params.lr_type == 'nanopore') ? Channel.fromPath(params.nanopolish_fast5Path, type: 'dir') : Channel.value(''),
 
-      // Will run gcpp?
-      (params.pacbio_bams && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_bams).collect() : Channel.value(''),
-      (params.pacbio_bams && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_bams).count().subscribe { println it } : Channel.value('')
-    )
-  }
+        // Will run gcpp?
+        (params.pacbio_bams && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_bams).collect() : Channel.value(''),
+        (params.pacbio_bams && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_bams).count().subscribe { println it } : Channel.value('')
+      )
+    }
 
 
   /*
@@ -214,6 +239,8 @@ workflow {
       (params.pacbio_bams && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_bams).count().subscribe { println it } : Channel.value('')
      )
    }
+
+  } // end of else statement
 
 }
 

@@ -12,7 +12,7 @@ def logMessage() {
   summary['Assembly method       '] = 'longreads-only'
   } else if ((params.shortreads_paired || params.shortreads_single) && !params.longreads ) {
   summary['Assembly method       '] = 'shortreads-only'
-  } else {
+  } else if ((params.shortreads_paired || params.shortreads_single) && params.longreads ) {
   summary['Assembly method       '] = 'hybrid'
   }
   summary['Number of threads     '] = params.threads

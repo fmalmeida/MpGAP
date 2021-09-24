@@ -1,4 +1,4 @@
-process unicycler_sreads_assembly {
+process unicycler {
   publishDir "${params.outdir}/${prefix}", mode: 'copy'
   label 'main'
   tag { x }

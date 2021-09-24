@@ -8,13 +8,13 @@
 include { define_prefix } from '../modules/misc/define_prefix.nf'
 
 // SPAdes sreads
-include { spades_sreads_assembly } from '../modules/ShortReads/spades_sreads.nf'
+include { spades } from '../modules/ShortReads/spades_sreads.nf'
 
 // Unicycler sreads
-include { unicycler_sreads_assembly } from '../modules/ShortReads/unicycler_sreads.nf'
+include { unicycler } from '../modules/ShortReads/unicycler_sreads.nf'
 
 // Shovill sreads
-include { shovill_sreads_assembly } from '../modules/ShortReads/shovill_sreads.nf'
+include { shovill } from '../modules/ShortReads/shovill_sreads.nf'
 
 /*
  * Module for assessing assembly qualities
@@ -41,20 +41,20 @@ workflow sreads_only_nf {
 
   // SPAdes
   if (!params.skip_spades) {
-    spades_sreads_assembly(preads.combine(sreads).combine(prefix_ch))
-    spades_ch = spades_sreads_assembly.out[1]
+    spades(preads.combine(sreads).combine(prefix_ch))
+    spades_ch = spades.out[1]
   }
   // Unicycler
   if (!params.skip_unicycler) {
-    unicycler_sreads_assembly(preads.combine(sreads).combine(prefix_ch))
-    unicycler_ch = unicycler_sreads_assembly.out[1]
+    unicycler(preads.combine(sreads).combine(prefix_ch))
+    unicycler_ch = unicycler.out[1]
   }
   // Shovill
   if (!params.skip_shovill && !params.shortreads_single && params.shortreads_paired) {
-    shovill_sreads_assembly(
+    shovill(
       preads.combine(prefix_ch).combine(Channel.from('spades', 'skesa', 'megahit'))
     )
-    shovill_ch = shovill_sreads_assembly.out[1]
+    shovill_ch = shovill.out[1]
   }
 
   // Get assemblies
