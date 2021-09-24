@@ -81,7 +81,7 @@ def paramsCheck() {
       ==> The pipeline already executes shovill with both spades, skesa and megahit. Therefore, you can't pass the 
     "--assembler" parameter as an additional parameter for shovill inside "--shovill_additional_parameters".
 
-    Please, remove the shovill addional parameter "--assembler" and re-run the pipeline.
+    Please, remove the shovill additional parameter "--assembler" and re-run the pipeline.
 
     Cheers.
     """.stripIndent()
