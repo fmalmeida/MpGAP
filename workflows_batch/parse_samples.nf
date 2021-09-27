@@ -41,6 +41,12 @@ workflow parse_samplesheet {
       // Check fast5
       it['fast5'] = (it.fast5)   ? it.fast5  : "missing_fast5"
 
+      // Check for medaka
+      // it['medaka'] = (it.medaka) ? it.medaka : params.medaka_sequencing_model
+
+      // Check for bams
+      it['pacbio_bams'] = (it.pacbio_bams) ? it.pacbio_bams : "missing_pacbio_bams"
+
       // Save
       parsed.add(it)
     }

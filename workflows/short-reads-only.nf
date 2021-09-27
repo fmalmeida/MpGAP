@@ -1,4 +1,9 @@
 /*
+ * DEFINITION OF SINGLE SAMPLE MODE
+ */
+
+
+/*
  * Include modules
  */
 

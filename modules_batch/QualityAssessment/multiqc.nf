@@ -4,7 +4,7 @@ process multiqc {
   tag "Collecting Quast quality reports"
 
   input:
-  file(quast_dirs)
+  tuple val(id), file(quast_dirs)
   val prefix
   val nfRun
 

@@ -137,11 +137,11 @@ logMessage()
  * Define custom workflows
  */
 
-include { parse_samplesheet } from './workflows/parse_samples.nf'
+include { parse_samplesheet } from './workflows_batch/parse_samples.nf'
 
 // Short reads only
 include { sreads_only_nf } from './workflows/short-reads-only.nf'
-include { sreads_only_batch_nf } from './workflows/short-reads-only-batch.nf'
+include { sreads_only_batch_nf } from './workflows_batch/short-reads-only.nf'
 
 // Long reads only
 include { lreadsonly_nf } from './workflows/long-reads-only.nf'

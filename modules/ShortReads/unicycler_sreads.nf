@@ -30,6 +30,7 @@ process unicycler {
   }
 
   """
+  # run unicycler
   unicycler $parameter -o unicycler -t ${params.threads} ${params.unicycler_additional_parameters}
 
   # Rename assembly

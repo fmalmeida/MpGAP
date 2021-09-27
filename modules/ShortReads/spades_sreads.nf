@@ -30,45 +30,10 @@ process spades {
   }
 
   """
+  # run spades
   spades.py -o spades -t ${params.threads} ${params.spades_additional_parameters} $parameter
 
   # Rename assembly
   mv spades/contigs.fasta spades/spades_assembly.fasta
-  """
-}
-
-// batch mode
-process spades_batch {
-  publishDir "${params.outdir}/${prefix}", mode: 'copy'
-  label 'main'
-  tag "${id}: spades assembly"
-  cpus params.threads
-
-  input:
-  tuple val(id), val(entrypoint), file(sread1), file(sread2), file(single), val(prefix)
-
-  output:
-  file "${assembler}" // Save all output
-  tuple file("${assembler}/shovill_${assembler}_final.fasta"), val(id), val("shovill_${assembler}"), val(prefix), file(sread1), file(sread2), file(single) 
-
-  when:
-  (sread1 !=~ /input.?/ || sread2 !=~ /input.?/) && (single =~ /input.?/)
-
-  script:
-  """
-  # Activate env
-  source activate shovill ;
-
-  # Run
-  shovill \
-    --outdir ${assembler} \
-    --assembler ${assembler} \
-    --R1 $sread1 --R2 $sread2 \
-    --cpus ${params.threads} \
-    --trim \
-    ${params.shovill_additional_parameters}
-
-  # Rename assembly
-  mv ${assembler}/contigs.fa ${assembler}/shovill_${assembler}_final.fasta
   """
 }
