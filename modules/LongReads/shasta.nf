@@ -18,7 +18,7 @@ process shasta {
 
   """
   # unzip reads
-  gunzip -d -f $lreads
+  gunzip -dcf $lreads > $in_reads
 
   # assemble
   shasta --assemblyDirectory shasta --threads ${params.threads} ${params.shasta_additional_parameters} --input $in_reads
