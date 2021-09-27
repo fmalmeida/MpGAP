@@ -1,4 +1,4 @@
-process wtdbg2_assembly {
+process wtdbg2 {
   publishDir "${params.outdir}/${prefix}/wtdbg2", mode: 'copy'
   label 'main'
   cpus params.threads

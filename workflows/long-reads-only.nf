@@ -8,22 +8,22 @@ include { define_prefix } from '../modules/misc/define_prefix.nf'
  */
 
 // Canu assembler
-include { canu_assembly } from '../modules/LongReads/canu.nf'
+include { canu } from '../modules/LongReads/canu.nf'
 
 // Unicycler assembler
-include { unicycler_lreads_assembly } from '../modules/LongReads/unicycler_lreads.nf'
+include { unicycler } from '../modules/LongReads/unicycler.nf'
 
 // Flye assembler
-include { flye_assembly } from '../modules/LongReads/flye.nf'
+include { flye } from '../modules/LongReads/flye.nf'
 
 // Raven assembler
-include { raven_assembly } from '../modules/LongReads/raven.nf'
+include { raven } from '../modules/LongReads/raven.nf'
 
 // wtdbg2 assembler
-include { wtdbg2_assembly } from '../modules/LongReads/wtdbg2.nf'
+include { wtdbg2 } from '../modules/LongReads/wtdbg2.nf'
 
 // Shasta assembler
-include { shasta_assembly } from '../modules/LongReads/shasta.nf'
+include { shasta } from '../modules/LongReads/shasta.nf'
 
 /*
  * Modules for long reads assemblies polishment
@@ -81,48 +81,48 @@ workflow lreadsonly_nf {
        * Canu
        */
       if (!params.skip_canu) {
-        canu_assembly(reads.combine(prefix_ch))
-        canu_ch = canu_assembly.out[1]
+        canu(reads.combine(prefix_ch))
+        canu_ch = canu.out[1]
       }
 
       /*
        * Flye
        */
       if (!params.skip_flye) {
-        flye_assembly(reads.combine(prefix_ch))
-        flye_ch = flye_assembly.out[1]
+        flye(reads.combine(prefix_ch))
+        flye_ch = flye.out[1]
       }
 
       /*
        * Unicycler
        */
       if (!params.skip_unicycler) {
-        unicycler_lreads_assembly(reads.combine(prefix_ch))
-        unicycler_ch = unicycler_lreads_assembly.out[1]
+        unicycler(reads.combine(prefix_ch))
+        unicycler_ch = unicycler.out[1]
       }
 
       /*
        * Raven
        */
       if (!params.skip_raven) {
-        raven_assembly(reads.combine(prefix_ch))
-        raven_ch = raven_assembly.out[1]
+        raven(reads.combine(prefix_ch))
+        raven_ch = raven.out[1]
       }
 
       /*
        * Shasta
        */
       if (!params.skip_shasta && params.lr_type == 'nanopore') {
-        shasta_assembly(reads.combine(prefix_ch))
-        shasta_ch = shasta_assembly.out[1]
+        shasta(reads.combine(prefix_ch))
+        shasta_ch = shasta.out[1]
       }
 
       /*
        * wtdbg2
        */
       if (!params.skip_wtdbg2) {
-        wtdbg2_assembly(reads.combine(prefix_ch))
-        wtdbg2_ch = wtdbg2_assembly.out[1]
+        wtdbg2(reads.combine(prefix_ch))
+        wtdbg2_ch = wtdbg2.out[1]
       }
 
       // gather assemblies

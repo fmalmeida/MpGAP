@@ -1,4 +1,4 @@
-process shasta_assembly {
+process shasta {
   publishDir "${params.outdir}/${prefix}", mode: 'copy'
   label 'main'
   cpus params.threads

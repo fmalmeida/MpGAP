@@ -1,4 +1,4 @@
-process raven_assembly {
+process raven {
   publishDir "${params.outdir}/${prefix}/raven", mode: 'copy'
   label 'main'
   cpus params.threads

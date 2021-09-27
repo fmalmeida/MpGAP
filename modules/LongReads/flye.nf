@@ -1,4 +1,4 @@
-process flye_assembly {
+process flye {
   publishDir "${params.outdir}/${prefix}", mode: 'copy'
   label 'main'
   cpus params.threads

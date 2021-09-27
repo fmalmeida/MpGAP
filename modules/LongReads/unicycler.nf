@@ -1,4 +1,4 @@
-process unicycler_lreads_assembly {
+process unicycler {
   publishDir "${params.outdir}/${prefix}", mode: 'copy'
   label 'main'
   cpus params.threads

@@ -118,8 +118,8 @@ params.shortreads_single = ''
 // Long reads
 params.corrected_lreads = false
 params.longreads = ''
-params.lr_type = ''
-params.medaka_sequencing_model = ''
+params.lr_type = 'nanopore'
+params.medaka_sequencing_model = 'r941_min_high_g360'
 params.nanopolish_fast5Path = ''
 params.nanopolish_max_haplotypes = 1000
 params.pacbio_bams = ''
@@ -176,8 +176,7 @@ workflow {
    * Long reads only assembly
    */
 
-    if (!params.shortreads_paired && !params.shortreads_single &&
-        params.longreads && params.lr_type) {
+    if (!params.shortreads_paired && !params.shortreads_single && params.longreads && params.lr_type) {
 
       // Giving inputs
       lreadsonly_nf(
