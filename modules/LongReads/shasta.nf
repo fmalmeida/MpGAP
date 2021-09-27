@@ -18,10 +18,10 @@ process shasta {
 
   """
   # unzip reads
-  gunzip -dcf $lreads > $in_reads
+  gunzip -dcf $lreads > uncompressed_${in_reads}
 
   # assemble
-  shasta --assemblyDirectory shasta --threads ${params.threads} ${params.shasta_additional_parameters} --input $in_reads
+  shasta --assemblyDirectory shasta --threads ${params.threads} ${params.shasta_additional_parameters} --input uncompressed_${in_reads}
 
   # Rename contigs
   cp shasta/Assembly.fasta shasta/shasta_assembly.fasta
