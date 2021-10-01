@@ -1,19 +1,18 @@
-process raven_assembly {
+process raven {
   publishDir "${params.outdir}/${prefix}/raven", mode: 'copy'
   label 'main'
   cpus params.threads
-  tag "Performing a longreads only assembly with raven"
+  tag "${id}: raven assembly"
 
   input:
-  tuple file(lreads), val(prefix)
+  tuple val(id), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), val(wtdbg2_technology), val(genomeSize), val(corrected_lreads), val(medaka_model),file(fast5), val(fast5_dir), file(bams), val(nBams), val(prefix)
 
   output:
   file "raven_assembly.*" // Saves all files
-  tuple file("raven_assembly.fasta"), val(lrID), val('raven') // Gets contigs file
+  tuple val(id), file("raven_assembly.fasta"), val('raven') // Gets contigs file
 
   script:
-  lrID      = (lreads.getName() - ".gz").toString().substring(0, (lreads.getName() - ".gz").toString().lastIndexOf("."))
-  corrected = (params.corrected_lreads) ? '--weaken' : ''
+  corrected = (corrected_lreads == 'true') ? '--weaken' : ''
 
   """
   # Activate env

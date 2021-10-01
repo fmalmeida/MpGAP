@@ -9,10 +9,6 @@ def write_csv(in_list) {
     /*
      * Create entrypoints
      */
-
-    /*
-     * Short reads only
-     */
     if ((it.paired != "missing_paired" || it.single != "missing_single") && it.lreads == "missing_lreads") {
       entrypoint = 'sr-only'
     } else if (((it.paired != "missing_paired" || it.single != "missing_single") && it.lreads != "missing_lreads")) {
@@ -28,9 +24,13 @@ def write_csv(in_list) {
       exit 1
     }
 
+    /*
+     * Create rules to check given parameters
+     */
+
   /*
    * Output tuple
    */
-  "${it.id},${entrypoint},${fwd_pair},${rev_pair},${it.single},${it.lreads},${it.lr_type},${it.fast5},${it.pacbio_bams}"
+  "${it.id},${entrypoint},${fwd_pair},${rev_pair},${it.single},${it.lreads},${it.lr_type},${it.wtdbg2_technology},${it.genomeSize},${it.corrected_lreads},${it.medaka_model},${it.fast5},${it.pacbio_bams}"
   }
 }

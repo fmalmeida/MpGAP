@@ -1,63 +1,53 @@
 /*
- * Module for prefix evaluation
+ * DEFINITION OF MULTI-SAMPLE (BATCH) MODE
  */
-include { define_prefix } from '../modules/misc/define_prefix.nf'
 
 /*
  * Modules for assembling long reads
  */
 
 // Canu assembler
-include { canu_assembly } from '../modules/LongReads/canu.nf'
+include { canu } from '../modules_batch/LongReads/canu.nf'
 
 // Unicycler assembler
-include { unicycler_lreads_assembly } from '../modules/LongReads/unicycler_lreads.nf'
+include { unicycler } from '../modules_batch/LongReads/unicycler.nf'
 
 // Flye assembler
-include { flye_assembly } from '../modules/LongReads/flye.nf'
+include { flye } from '../modules_batch/LongReads/flye.nf'
 
 // Raven assembler
-include { raven_assembly } from '../modules/LongReads/raven.nf'
+include { raven } from '../modules_batch/LongReads/raven.nf'
 
 // wtdbg2 assembler
-include { wtdbg2_assembly } from '../modules/LongReads/wtdbg2.nf'
+include { wtdbg2 } from '../modules_batch/LongReads/wtdbg2.nf'
 
 // Shasta assembler
-include { shasta_assembly } from '../modules/LongReads/shasta.nf'
+include { shasta } from '../modules_batch/LongReads/shasta.nf'
 
 /*
  * Modules for long reads assemblies polishment
  */
 
 // Nanopolish (for nanopore data)
-include { nanopolish } from '../modules/LongReads/nanopolish.nf'
+include { nanopolish } from '../modules_batch/LongReads/nanopolish.nf'
 
 // Medaka (for nanopore data)
-include { medaka } from '../modules/LongReads/medaka.nf'
+include { medaka } from '../modules_batch/LongReads/medaka.nf'
 
 // gcpp Pacbio
-include { gcpp } from '../modules/LongReads/gcpp.nf'
+include { gcpp } from '../modules_batch/LongReads/gcpp.nf'
 
 /*
  * Module for assessing assembly qualities
  */
-include { quast   } from '../modules/QualityAssessment/quast.nf'
-include { multiqc } from '../modules/QualityAssessment/multiqc.nf'
+include { quast   } from '../modules_batch/QualityAssessment/quast.nf'
+include { multiqc } from '../modules_batch/QualityAssessment/multiqc.nf'
 
 workflow lreadsonly_nf {
   take:
-      reads
-      fast5
-      fast5_dir
-      bamFile
-      nBams
-  main:
+      input_tuple
 
-      /*
-       * Check input reads in order to evaluate better prefix
-       */
-      define_prefix(reads, Channel.value(['', '', '']), Channel.value(''))
-      prefix_ch = define_prefix.out[0]
+  main:
 
       /*
        * Channels for placing the assemblies
@@ -81,48 +71,48 @@ workflow lreadsonly_nf {
        * Canu
        */
       if (!params.skip_canu) {
-        canu_assembly(reads.combine(prefix_ch))
-        canu_ch = canu_assembly.out[1]
+        canu(input_tuple)
+        canu_ch = canu.out[1]
       }
 
       /*
        * Flye
        */
       if (!params.skip_flye) {
-        flye_assembly(reads.combine(prefix_ch))
-        flye_ch = flye_assembly.out[1]
+        flye(input_tuple)
+        flye_ch = flye.out[1]
       }
 
       /*
        * Unicycler
        */
       if (!params.skip_unicycler) {
-        unicycler_lreads_assembly(reads.combine(prefix_ch))
-        unicycler_ch = unicycler_lreads_assembly.out[1]
+        unicycler(input_tuple)
+        unicycler_ch = unicycler.out[1]
       }
 
       /*
        * Raven
        */
       if (!params.skip_raven) {
-        raven_assembly(reads.combine(prefix_ch))
-        raven_ch = raven_assembly.out[1]
+        raven(input_tuple)
+        raven_ch = raven.out[1]
       }
 
       /*
        * Shasta
        */
-      if (!params.skip_shasta && params.lr_type == 'nanopore') {
-        shasta_assembly(reads.combine(prefix_ch))
-        shasta_ch = shasta_assembly.out[1]
+      if (!params.skip_shasta) {
+        shasta(input_tuple)
+        shasta_ch = shasta.out[1]
       }
 
       /*
        * wtdbg2
        */
       if (!params.skip_wtdbg2) {
-        wtdbg2_assembly(reads.combine(prefix_ch))
-        wtdbg2_ch = wtdbg2_assembly.out[1]
+        wtdbg2(input_tuple)
+        wtdbg2_ch = wtdbg2.out[1]
       }
 
       // gather assemblies
@@ -131,26 +121,20 @@ workflow lreadsonly_nf {
       /*
        * Run medaka?
        */
-      if (params.medaka_sequencing_model && params.lr_type == 'nanopore') {
-        medaka(assemblies_ch.combine(reads).combine(prefix_ch))
-        medaka_ch = medaka.out[1]
-      }
+      medaka(assemblies_ch.combine(input_tuple, by: 0))
+      medaka_ch = medaka.out[1]
 
       /*
        * Run nanopolish?
        */
-      if (params.nanopolish_fast5Path && params.lr_type == 'nanopore') {
-        nanopolish(assemblies_ch.combine(reads).combine(fast5).combine(fast5_dir).combine(prefix_ch))
-        nanopolish_ch = nanopolish.out[0]
-      }
+      nanopolish(assemblies_ch.combine(input_tuple, by: 0))
+      nanopolish_ch = nanopolish.out[0]
 
       /*
        * gcpp?
        */
-      if (params.pacbio_bams && params.lr_type == 'pacbio') {
-        gcpp(assemblies_ch.combine(bamFile.collect().toList()).combine(nBams).combine(prefix_ch))
-        gcpp_ch = gcpp.out[1]
-      }
+      gcpp(assemblies_ch.combine(input_tuple, by: 0))
+      gcpp_ch = gcpp.out[1]
 
       // Gather polishings
       polished_ch = medaka_ch.mix(nanopolish_ch, gcpp_ch)
@@ -158,9 +142,7 @@ workflow lreadsonly_nf {
       /*
        * Run quast
        */
-      quast(
-        assemblies_ch.mix(polished_ch).combine(reads).combine(prefix_ch)
-      )
+      quast(assemblies_ch.mix(polished_ch).combine(input_tuple, by: 0))
 
       /*
        * Run multiqc

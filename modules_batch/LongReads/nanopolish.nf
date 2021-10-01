@@ -2,18 +2,22 @@ process nanopolish {
   publishDir "${params.outdir}/${prefix}/nanopolished_contigs/${assembler}", mode: 'copy'
   label 'main'
   cpus params.threads
+  tag "${id}: nanopolish consensus"
 
   input:
-  tuple file(draft), val(lrID), val(assembler), file(reads), file(fast5), val(fast5_dir), val(prefix)
+  tuple val(id), file(draft), val(assembler), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), val(wtdbg2_technology), val(genomeSize), val(corrected_lreads), val(medaka_model), file(fast5), val(fast5_dir), file(bams), val(nBams), val(prefix)
 
   output:
-  tuple file("${assembler}_nanopolished.fa"), val(lrID), val("${assembler}_nanopolish") // Save nanopolished contigs
+  tuple val(id), file("${assembler}_nanopolished.fa"), val("${assembler}_nanopolish") // Save nanopolished contigs
   file "${assembler}_nanopolished.complete.vcf" // Save VCF
+
+  when:
+  !(fast5 =~ /input.*/)
 
   script:
   """
   source activate NANOPOLISH ;
-  seqtk seq -A ${reads} > reads.fa ;
+  seqtk seq -A ${lreads} > reads.fa ;
   nanopolish index -d "${fast5_dir}" reads.fa ;
   minimap2 -d draft.mmi ${draft} ;
   minimap2 -ax map-ont -t ${params.threads} ${draft} reads.fa | samtools sort -o reads.sorted.bam -T reads.tmp ;

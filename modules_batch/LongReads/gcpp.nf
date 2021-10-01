@@ -1,15 +1,18 @@
 process gcpp {
   publishDir "${params.outdir}/${prefix}/gcpp_polished_contigs", mode: 'copy'
   label 'main'
-  tag "Computing pacbio assembly consensus with gcpp"
+  tag "${id}: gcpp consensus"
   cpus params.threads
 
   input:
-  tuple file(draft), val(lrID), val(assembler), file(bams), val(nBams), val(prefix)
+  tuple val(id), file(draft), val(assembler), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), val(wtdbg2_technology), val(genomeSize), val(corrected_lreads), val(medaka_model),file(fast5), val(fast5_dir), file(bams), val(nBams), val(prefix)
 
   output:
   file "${assembler}_pbvariants.gff" // Save gff
-  tuple file("${assembler}_pbconsensus.fasta"), val("${lrID}"), val("${assembler}_gcpp") // Save contigs
+  tuple val(id), file("${assembler}_pbconsensus.fasta"), val("${assembler}_gcpp") // Save contigs
+
+  when:
+  !(bams =~ /input.*/)
 
   script:
   """

@@ -4,7 +4,7 @@ process quast {
   tag "Assessing ${assembler} assembly quality for multiqc"
 
   input:
-  tuple val(id), file(contigs), val(assembler), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), file(fast5), val(fast5_dir), file(bams), val(nBams), val(prefix)
+  tuple val(id), file(contigs), val(assembler), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), val(wtdbg2_technology), val(genomeSize), val(corrected_lreads), val(medaka_model),file(fast5), val(fast5_dir), file(bams), val(nBams), val(prefix)
 
   output:
   tuple val(id), file("${assembler}")
@@ -14,7 +14,7 @@ process quast {
   // Alignment parameters
   paired_param = !(sread1 =~ /input.*/ || sread2 =~ /input.*/) ? "--pe1 ${sread1} --pe2 ${sread2}" : ""
   single_param = !(single =~ /input.?/) ? "--single ${single}" : ""
-  ltype = (params.lr_type == 'nanopore') ? "ont2d" : "pacbio"
+  ltype        = (params.lr_type == 'nanopore') ? "ont2d" : "pacbio"
   lreads_param = !(lreads =~ /input.?/) ? "--${params.lr_type} ${lreads}" : ""
 
   """

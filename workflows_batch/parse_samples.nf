@@ -9,7 +9,9 @@ workflow parse_samplesheet {
 
     data.each {
 
-      // Check for Illumina reads
+      /*
+       * Check for illumina reads
+       */
       if (it.illumina) {
         if (it.illumina.size() == 1) {
           it['paired'] = "missing_paired"
@@ -26,26 +28,67 @@ workflow parse_samplesheet {
         it['single'] = "missing_single"
       }
 
-      // Check long reads
+      /*
+       * Check for long reads
+       */
       if (it.nanopore) {
         it['lr_type'] = "nanopore"
-        it['lreads'] = it.nanopore
+        it['lreads']  = it.nanopore
       } else if (it.pacbio) {
         it['lr_type'] = "pacbio"
-        it['lreads'] = it.pacbio
+        it['lreads']  = it.pacbio
       } else {
         it['lr_type'] = "missing_lr_type"
-        it['lreads'] = "missing_lreads"
+        it['lreads']  = "missing_lreads"
       }
 
-      // Check fast5
+      /*
+       * Check if long reads are corrected
+       */
+      if (params.corrected_lreads || it.corrected_lreads) {
+        it['corrected_lreads'] = 'true'
+      } else {
+        it['corrected_lreads'] = 'false'
+      }
+
+      /*
+       * Check for fast5 directory
+       */
       it['fast5'] = (it.fast5)   ? it.fast5  : "missing_fast5"
 
-      // Check for medaka
-      // it['medaka'] = (it.medaka) ? it.medaka : params.medaka_sequencing_model
+      /*
+       * Check for medaka model
+       */
+      if (it.medaka_model) {
+        it['medaka_model'] = it.medaka_model
+      } else {
+        it['medaka_model'] = params.medaka_sequencing_model
+      }
 
-      // Check for bams
+      /*
+       * Check for sample genomeSize
+       */
+      if (params.genomeSize) {
+        it['genomeSize'] = params.genomeSize
+      } else if (!params.genomeSize && it.genomeSize) {
+        it['genomeSize'] = it.genomeSize
+      } else {
+        it['genomeSize'] = 'missing_genomeSize'
+      }
+
+      /*
+       * Check for pacbio bams
+       */
       it['pacbio_bams'] = (it.pacbio_bams) ? it.pacbio_bams : "missing_pacbio_bams"
+
+      /*
+       * Check for wtdbg2 technology
+       */
+      if (it.wtdbg2_technology) {
+        it['wtdbg2_technology'] = it.wtdbg2_technology
+      } else {
+        it['wtdbg2_technology'] = params.wtdbg2_technology
+      }
 
       // Save
       parsed.add(it)

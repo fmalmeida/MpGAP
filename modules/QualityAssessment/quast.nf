@@ -18,8 +18,7 @@ process quast {
   } else if (params.shortreads_paired && params.shortreads_single) {
     quast_parameter = "--single ${reads[3]} --pe1 ${reads[1]} --pe2 ${reads[2]}"
   } else {
-    lr_type = (params.lr_type == 'nanopore') ? "ont2d" : "pacbio"
-    quast_parameter = "--${lr_type} ${reads}"
+    quast_parameter = "--${params.lr_type} ${reads}"
   }
 
   """

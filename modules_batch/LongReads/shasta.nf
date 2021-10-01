@@ -1,20 +1,22 @@
-process shasta_assembly {
+process shasta {
   publishDir "${params.outdir}/${prefix}", mode: 'copy'
   label 'main'
   cpus params.threads
-  tag "Performing a longreads only assembly with shasta"
+  tag "${id}: shasta assembly"
 
   input:
-  tuple file(lreads), val(prefix)
+  tuple val(id), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), val(wtdbg2_technology), val(genomeSize), val(corrected_lreads), val(medaka_model),file(fast5), val(fast5_dir), file(bams), val(nBams), val(prefix)
 
   output:
   file "shasta/" // Saves all files
-  tuple file("shasta/shasta_assembly.fasta"), val(lrID), val('shasta') // Gets contigs file
+  tuple val(id), file("shasta/shasta_assembly.fasta"), val('shasta') // Gets contigs file
+
+  when:
+  (lr_type == 'nanopore')
 
   script:
-  lr        = (params.lr_type == 'nanopore') ? '-nanopore' : '-pacbio'
+  lr        = (lr_type == 'nanopore') ? '-nanopore' : '-pacbio'
   in_reads  = (lreads.getName() - ".gz")
-  lrID      = (lreads.getName() - ".gz").toString().substring(0, (lreads.getName() - ".gz").toString().lastIndexOf("."))
 
   """
   # unzip reads
