@@ -173,13 +173,13 @@ workflow {
 
     // short reads only samples
     sr_empty = is_empty(parse_samplesheet.out[0], 'sr_empty')
-    if (sr_empty == 'false') {
+    if (sr_empty == 'OK') {
       sreads_only_batch_nf(parse_samplesheet.out[0])
     }
 
     // long reads only samples
     lr_empty = is_empty(parse_samplesheet.out[1], 'lr_empty')
-    if (lr_empty == 'false') {
+    if (lr_empty == 'OK') {
       lreads_only_batch_nf(parse_samplesheet.out[1])
     }
 
@@ -188,6 +188,10 @@ workflow {
     // if (hybrid_empty == 'false') {
     //   lreads_only_batch_nf(parse_samplesheet.out[2])
     // }
+
+    // clean dir
+    file("sr_empty.txt", checkIfExists: false).delete()
+    file("lr_empty.txt", checkIfExists: false).delete()
 
   } else {
 
