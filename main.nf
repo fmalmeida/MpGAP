@@ -172,16 +172,22 @@ workflow {
     """)
 
     // short reads only samples
-    sr_empty = is_empty(parse_samplesheet.out[0])
+    sr_empty = is_empty(parse_samplesheet.out[0], 'sr_empty')
     if (sr_empty == 'false') {
       sreads_only_batch_nf(parse_samplesheet.out[0])
     }
 
     // long reads only samples
-    lr_empty = is_empty(parse_samplesheet.out[1])
+    lr_empty = is_empty(parse_samplesheet.out[1], 'lr_empty')
     if (lr_empty == 'false') {
       lreads_only_batch_nf(parse_samplesheet.out[1])
     }
+
+    // hybrid samples
+    // hybrid_empty = is_empty(parse_samplesheet.out[2])
+    // if (hybrid_empty == 'false') {
+    //   lreads_only_batch_nf(parse_samplesheet.out[2])
+    // }
 
   } else {
 
