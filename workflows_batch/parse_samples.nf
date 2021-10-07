@@ -36,9 +36,15 @@ workflow parse_samplesheet {
     }
 
     // now we create the filtered channels
-    parsed_csv
+    parsed_csv.branch{
+      lronly: it[1] == 'lr-only'
+      sronly: it[1] == 'sr-only'
+      hybrid: it[1] =~ /hybrid/
+    }.set { results }
 
   emit:
-  parsed_csv
+  results.sronly
+  results.lronly
+  results.hybrid
 
 }

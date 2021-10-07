@@ -14,6 +14,7 @@ include { helpMessageAdvanced    } from './nf_functions/help.nf'
 include { exampleMessage } from './nf_functions/examples.nf'
 include { paramsCheck    } from './nf_functions/paramsCheck.nf'
 include { logMessage     } from './nf_functions/logMessages.nf'
+include { is_empty       } from './nf_functions/check_emptiness.nf'
 
 /*
  * Check parameters
@@ -171,10 +172,16 @@ workflow {
     """)
 
     // short reads only samples
-    sreads_only_batch_nf(parse_samplesheet.out)
+    sr_empty = is_empty(parse_samplesheet.out[0])
+    if (sr_empty == 'false') {
+      sreads_only_batch_nf(parse_samplesheet.out[0])
+    }
 
     // long reads only samples
-    lreads_only_batch_nf(parse_samplesheet.out)
+    lr_empty = is_empty(parse_samplesheet.out[1])
+    if (lr_empty == 'false') {
+      lreads_only_batch_nf(parse_samplesheet.out[1])
+    }
 
   } else {
 

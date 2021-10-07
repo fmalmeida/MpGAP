@@ -5,11 +5,11 @@ process pilon_polish {
   tag "Polishing a longreads-only assembly with shortreads (through Pilon)"
 
   input:
-  tuple file(draft), val(id), val(assembler), file(reads), val(prefix)
+  tuple val(id), file(draft), val(assembler), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), val(wtdbg2_technology), val(genomeSize), val(corrected_lreads), val(medaka_model), file(fast5), file(bams), val(prefix)
 
   output:
   file("pilon_polished_${assembler}/*") // Get everything
-  tuple file("pilon_polished_${assembler}/${assembler}_final_pilon_polish.fasta"), val(id), val("${assembler}_pilon_polished")
+  tuple val(id), file("pilon_polished_${assembler}/${assembler}_final_pilon_polish.fasta"), val("${assembler}_pilon_polished")
 
   script:
   if(params.shortreads_paired != '' && params.shortreads_single == '')
