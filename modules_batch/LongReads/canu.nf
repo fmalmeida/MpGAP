@@ -5,11 +5,14 @@ process canu {
   tag "${id}: canu assembly"
 
   input:
-  tuple val(id), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), val(wtdbg2_technology), val(genomeSize), val(corrected_lreads), val(medaka_model),file(fast5), val(fast5_dir), file(bams), val(nBams), val(prefix)
+  tuple val(id), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), val(wtdbg2_technology), val(genomeSize), val(corrected_lreads), val(medaka_model), file(fast5), file(bams), val(prefix)
 
   output:
   file "canu/" // Saves all files
   tuple val(id), file("canu/canu_assembly.fasta"), val('canu') // Gets contigs file
+
+  when:
+  (entrypoint == 'lr-only' || entrypoint == 'hybrid-strategy-2')
 
   script:
   lr        = (lr_type == 'nanopore') ? '-nanopore' : '-pacbio'

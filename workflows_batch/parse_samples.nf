@@ -1,100 +1,44 @@
+include { write_csv } from '../nf_functions/writeCSV.nf'
 workflow parse_samplesheet {
 
   take:
     data
+    
   main:
 
-    // Parse input to check for missing entries
-    parsed = []
+    // iterate over input list
+    custom_csv = write_csv(Channel.fromList(data))
+  
+    // now we parse the csv created
+    parsed_csv = custom_csv.splitCsv(header: ['name', 'entrypoint', 'fwd', 'rev', 'single', 'lreads', 'lr_type', 'wtdbg2_technology','genomeSize', 'corrected_lreads', 'medaka_model','fast5', 'pacbio_bams']).map{ row ->
 
-    data.each {
-
-      /*
-       * Check for illumina reads
-       */
-      if (it.illumina) {
-        if (it.illumina.size() == 1) {
-          it['paired'] = "missing_paired"
-          it['single'] = it.illumina[0]
-        } else if (it.illumina.size() == 2) {
-          it['paired'] = [it.illumina[0], it.illumina[1]]
-          it['single'] = "missing_single"
-        } else if (it.illumina.size() == 3) {
-          it['paired'] = [it.illumina[0], it.illumina[1]]
-          it['single'] = it.illumina[2]
-        }
-      } else {
-        it['paired'] = "missing_paired"
-        it['single'] = "missing_single"
-      }
-
-      /*
-       * Check for long reads
-       */
-      if (it.nanopore) {
-        it['lr_type'] = "nanopore"
-        it['lreads']  = it.nanopore
-      } else if (it.pacbio) {
-        it['lr_type'] = "pacbio"
-        it['lreads']  = it.pacbio
-      } else {
-        it['lr_type'] = "missing_lr_type"
-        it['lreads']  = "missing_lreads"
-      }
-
-      /*
-       * Check if long reads are corrected
-       */
-      if (params.corrected_lreads || it.corrected_lreads) {
-        it['corrected_lreads'] = 'true'
-      } else {
-        it['corrected_lreads'] = 'false'
-      }
-
-      /*
-       * Check for fast5 directory
-       */
-      it['fast5'] = (it.fast5)   ? it.fast5  : "missing_fast5"
-
-      /*
-       * Check for medaka model
-       */
-      if (it.medaka_model) {
-        it['medaka_model'] = it.medaka_model
-      } else {
-        it['medaka_model'] = params.medaka_sequencing_model
-      }
-
-      /*
-       * Check for sample genomeSize
-       */
-      if (params.genomeSize) {
-        it['genomeSize'] = params.genomeSize
-      } else if (!params.genomeSize && it.genomeSize) {
-        it['genomeSize'] = it.genomeSize
-      } else {
-        it['genomeSize'] = 'missing_genomeSize'
-      }
-
-      /*
-       * Check for pacbio bams
-       */
-      it['pacbio_bams'] = (it.pacbio_bams) ? it.pacbio_bams : "missing_pacbio_bams"
-
-      /*
-       * Check for wtdbg2 technology
-       */
-      if (it.wtdbg2_technology) {
-        it['wtdbg2_technology'] = it.wtdbg2_technology
-      } else {
-        it['wtdbg2_technology'] = params.wtdbg2_technology
-      }
-
-      // Save
-      parsed.add(it)
+    if (row.entrypoint == 'sr-only') { prefix = "${row.name}/shortreads_only" }
+    if (row.entrypoint == 'hybrid-strategy-1') { prefix = "${row.name}/hybrid_strategy_1" }
+    if (row.entrypoint == 'hybrid-strategy-2') { prefix = "${row.name}/hybrid_strategy_2" }
+    if (row.entrypoint == 'lr-only') { prefix = "${row.name}/longreads_only" }
+    
+    tuple(
+        row.name, // sample name
+        row.entrypoint, // assembly type
+        (row.fwd == "missing_pairFWD") ? row.fwd : file(row.fwd), // short reads pair 1
+        (row.rev == "missing_pairREV") ? row.rev : file(row.rev), // short reads pair 2
+        (row.single == "missing_single") ? row.single : file(row.single), // short reads unpaired
+        (row.lreads == "missing_lreads") ? row.lreads : file(row.lreads), // long reads
+        row.lr_type, // long reads type
+        row.wtdbg2_technology, // which wtdbg2 tech to use?
+        row.genomeSize, // expected genome size
+        row.corrected_lreads.toLowerCase(), // are reads corrected?
+        row.medaka_model, // change medaka model?
+        (row.fast5 == "missing_fast5") ? row.fast5 : file(row.fast5), // nanopolish fast5 as file
+        (row.pacbio_bams == "missing_pacbio_bams") ? row.pacbio_bams : file(row.pacbio_bams).collect(),
+        prefix, // ouput prefix
+      )
     }
 
-    emit:
-      Channel.from(parsed)
+    // now we create the filtered channels
+    parsed_csv
+
+  emit:
+  parsed_csv
 
 }

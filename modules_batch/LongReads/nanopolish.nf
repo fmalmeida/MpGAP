@@ -5,16 +5,17 @@ process nanopolish {
   tag "${id}: nanopolish consensus"
 
   input:
-  tuple val(id), file(draft), val(assembler), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), val(wtdbg2_technology), val(genomeSize), val(corrected_lreads), val(medaka_model), file(fast5), val(fast5_dir), file(bams), val(nBams), val(prefix)
+  tuple val(id), file(draft), val(assembler), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), val(wtdbg2_technology), val(genomeSize), val(corrected_lreads), val(medaka_model), file(fast5), file(bams), val(prefix)
 
   output:
   tuple val(id), file("${assembler}_nanopolished.fa"), val("${assembler}_nanopolish") // Save nanopolished contigs
   file "${assembler}_nanopolished.complete.vcf" // Save VCF
 
   when:
-  !(fast5 =~ /input.*/)
+  !(fast5 =~ /input.*/) && (lr_type == 'nanopore') && (entrypoint == 'lr-only' || entrypoint == 'hybrid-strategy-2')
 
   script:
+  fast5_dir = fast5.toString()
   """
   source activate NANOPOLISH ;
   seqtk seq -A ${lreads} > reads.fa ;

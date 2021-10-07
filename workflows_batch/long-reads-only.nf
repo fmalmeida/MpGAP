@@ -43,7 +43,7 @@ include { gcpp } from '../modules_batch/LongReads/gcpp.nf'
 include { quast   } from '../modules_batch/QualityAssessment/quast.nf'
 include { multiqc } from '../modules_batch/QualityAssessment/multiqc.nf'
 
-workflow lreadsonly_nf {
+workflow lreads_only_batch_nf {
   take:
       input_tuple
 
@@ -118,22 +118,25 @@ workflow lreadsonly_nf {
       // gather assemblies
       assemblies_ch = canu_ch.mix(unicycler_ch, flye_ch, raven_ch, wtdbg2_ch, shasta_ch)
 
+      // combine again with metadata
+      combined_ch = assemblies_ch.combine(input_tuple, by: 0)
+
       /*
        * Run medaka?
        */
-      medaka(assemblies_ch.combine(input_tuple, by: 0))
+      medaka(combined_ch)
       medaka_ch = medaka.out[1]
 
       /*
        * Run nanopolish?
        */
-      nanopolish(assemblies_ch.combine(input_tuple, by: 0))
+      nanopolish(combined_ch)
       nanopolish_ch = nanopolish.out[0]
 
       /*
        * gcpp?
        */
-      gcpp(assemblies_ch.combine(input_tuple, by: 0))
+      gcpp(combined_ch)
       gcpp_ch = gcpp.out[1]
 
       // Gather polishings
@@ -147,5 +150,5 @@ workflow lreadsonly_nf {
       /*
        * Run multiqc
        */
-      multiqc(quast.out[0].collect(), prefix_ch, Channel.value("$workflow.runName"))
+      multiqc(quast.out[0].groupTuple(), quast.out[1], Channel.value("$workflow.runName"))
 }

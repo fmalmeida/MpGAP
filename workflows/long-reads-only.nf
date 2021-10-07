@@ -44,7 +44,7 @@ include { gcpp } from '../modules/LongReads/gcpp.nf'
 include { quast   } from '../modules/QualityAssessment/quast.nf'
 include { multiqc } from '../modules/QualityAssessment/multiqc.nf'
 
-workflow lreadsonly_nf {
+workflow lreads_only_nf {
   take:
       reads
       fast5

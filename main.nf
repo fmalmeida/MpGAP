@@ -14,9 +14,6 @@ include { helpMessageAdvanced    } from './nf_functions/help.nf'
 include { exampleMessage } from './nf_functions/examples.nf'
 include { paramsCheck    } from './nf_functions/paramsCheck.nf'
 include { logMessage     } from './nf_functions/logMessages.nf'
-include { write_csv } from './nf_functions/writeCSV.nf'
-include { parse_csv } from './nf_functions/parseCSV.nf'
-include { filter_ch } from './nf_functions/parseCSV.nf'
 
 /*
  * Check parameters
@@ -144,7 +141,8 @@ include { sreads_only_nf } from './workflows/short-reads-only.nf'
 include { sreads_only_batch_nf } from './workflows_batch/short-reads-only.nf'
 
 // Long reads only
-include { lreadsonly_nf } from './workflows/long-reads-only.nf'
+include { lreads_only_nf } from './workflows/long-reads-only.nf'
+include { lreads_only_batch_nf } from './workflows_batch/long-reads-only.nf'
 
 // Hybrid
 include { hybrid_nf } from './workflows/hybrid.nf'
@@ -164,11 +162,19 @@ workflow {
     // Read YAML file
     parse_samplesheet(params.samplesheet)
 
-    // Convert it to CSV for usability
-    samples_ch = write_csv(parse_samplesheet.out)
+    // Message to user
+    println("""
+      Launching defined workflows!
+      By default, all workflows will appear in the console "log" message.
+      However, the processes of each workflow will be launched based on the inputs received.
+      You can see that processes that were not launched have an empty [-       ].
+    """)
 
     // short reads only samples
-    sreads_only_batch_nf(filter_ch(samples_ch, "sr-only"))
+    sreads_only_batch_nf(parse_samplesheet.out)
+
+    // long reads only samples
+    lreads_only_batch_nf(parse_samplesheet.out)
 
   } else {
 
@@ -179,7 +185,7 @@ workflow {
     if (!params.shortreads_paired && !params.shortreads_single && params.longreads && params.lr_type) {
 
       // Giving inputs
-      lreadsonly_nf(
+      lreads_only_nf(
         // Longreads - required
         Channel.fromPath(params.longreads),
 
