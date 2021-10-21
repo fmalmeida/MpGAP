@@ -2,23 +2,24 @@ process wtdbg2 {
   publishDir "${params.outdir}/${prefix}/wtdbg2", mode: 'copy'
   label 'main'
   cpus params.threads
-  tag "Performing a longreads only assembly with wtdbg2"
+  tag "${id}: wtdgb2 assembly"
 
   input:
-  tuple file(lreads), val(prefix)
+  tuple val(id), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), val(wtdbg2_technology), val(genomeSize), val(corrected_lreads), val(medaka_model), file(fast5), file(bams), val(prefix)
 
   output:
   file "*" // Saves all files
-  tuple file("wtdbg2_assembly.fasta"), val(lrID), val('wtdbg2') // Gets contigs file
+  tuple val(id), file("wtdbg2_assembly.fasta"), val('wtdbg2') // Gets contigs file
+
+  when:
+  (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2')
 
   script:
-  lr                = (params.lr_type == 'nanopore') ? 'ont' : params.wtdbg2_technology
-  lrID              = (lreads.getName() - ".gz").toString().substring(0, (lreads.getName() - ".gz").toString().lastIndexOf("."))
-
+  lr = (lr_type == 'nanopore') ? 'ont' : wtdbg2_technology
   """
-  wtdbg2.pl -t ${params.threads} -x $lr -g ${params.genomeSize} -o ${lrID} ${params.wtdbg2_additional_parameters} $lreads
+  wtdbg2.pl -t ${params.threads} -x $lr -g ${genomeSize} -o ${id} ${params.wtdbg2_additional_parameters} $lreads
 
   # Rename contigs
-  cp ${lrID}.cns.fa wtdbg2_assembly.fasta
+  cp ${id}.cns.fa wtdbg2_assembly.fasta
   """
 }

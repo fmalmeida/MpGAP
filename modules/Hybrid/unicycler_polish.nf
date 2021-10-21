@@ -5,35 +5,35 @@ process pilon_polish {
   tag "Polishing a longreads-only assembly with shortreads (through Pilon)"
 
   input:
-  tuple file(draft), val(id), val(assembler), file(reads), val(prefix)
+  tuple val(id), file(draft), val(assembler), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), val(wtdbg2_technology), val(genomeSize), val(corrected_lreads), val(medaka_model), file(fast5), file(bams), val(prefix)
 
   output:
   file("pilon_polished_${assembler}/*") // Get everything
-  tuple file("pilon_polished_${assembler}/${assembler}_final_pilon_polish.fasta"), val(id), val("${assembler}_pilon_polished")
+  tuple val(id), file("pilon_polished_${assembler}/${assembler}_final_pilon_polish.fasta"), val("${assembler}_pilon_polished")
 
   script:
-  if(params.shortreads_paired != '' && params.shortreads_single == '')
+  if(!(sread1 =~ /input.*/) && (single =~ /input.*/))
       """
       # Create the results dir
       mkdir pilon_polished_${assembler};
 
       # Execute Unicycler polishing pilon wrapper
       unicycler_polish --minimap /miniconda/bin/miniasm --pilon /miniconda/share/pilon*/pilon*jar \
-      -a $draft -1 ${reads[1]} -2 ${reads[2]} --threads ${params.threads} &> polish.log ;
+      -a $draft -1 ${sread1} -2 ${sread2} --threads ${params.threads} &> polish.log ;
 
       # Save files in the desired directory
       mv 0* polish.log pilon_polished_${assembler};
       mv pilon_polished_${assembler}/*_final_polish.fasta pilon_polished_${assembler}/${assembler}_final_pilon_polish.fasta ;
       """
 
-  else if(params.shortreads_paired == '' && params.shortreads_single != '')
+  else if(!(sread1 =~ /input.*/) && !(single =~ /input.*/))
       """
       # Create the results dir
       mkdir pilon_polished_${assembler};
 
       # Index and align reads with bwa
       bwa index ${draft} ;
-      bwa mem -M -t ${params.threads} ${draft} ${reads[3]} > ${id}_${assembler}_aln.sam ;
+      bwa mem -M -t ${params.threads} ${draft} ${single} > ${id}_${assembler}_aln.sam ;
       samtools view -bS ${id}_${assembler}_aln.sam | samtools sort > ${id}_${assembler}_aln.bam ;
       samtools index ${id}_${assembler}_aln.bam ;
 
@@ -52,7 +52,7 @@ process pilon_polish {
 
       # Index and align reads with bwa
       bwa index ${draft} ;
-      bwa mem -M -t ${params.threads} ${draft} ${reads[3]} > ${id}_${assembler}_aln.sam ;
+      bwa mem -M -t ${params.threads} ${draft} ${single} > ${id}_${assembler}_aln.sam ;
       samtools view -bS ${id}_${assembler}_aln.sam | samtools sort > ${id}_${assembler}_aln.bam ;
       samtools index ${id}_${assembler}_aln.bam ;
 
@@ -63,7 +63,7 @@ process pilon_polish {
 
       # Execute Unicycler polishing pilon wrapper (for paired reads)
       unicycler_polish --minimap /miniconda/bin/miniasm --pilon /miniconda/share/pilon*/pilon*jar \
-      -a first_polish.fasta -1 ${reads[1]} -2 ${reads[2]} --threads ${params.threads} &> polish.log ;
+      -a first_polish.fasta -1 ${sread1} -2 ${sread2} --threads ${params.threads} &> polish.log ;
 
       # Save files in the desired directory
       mv 0* polish.log pilon_polished_${assembler};

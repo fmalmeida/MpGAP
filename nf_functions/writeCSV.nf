@@ -80,22 +80,45 @@ def write_csv(in_list) {
       /*
        * Create entrypoints
        */
+
+       // has only short reads
        if ((it.paired != "missing_paired" || it.single != "missing_single") && it.lreads == "missing_lreads") {
-         entrypoint = 'sr-only'
-       } else if (((it.paired != "missing_paired" || it.single != "missing_single") && it.lreads != "missing_lreads")) {
-         if (it.strategy == '2') {
-           entrypoint = 'hybrid-strategy-2'
+         entrypoint = 'shortreads_only'
+       } 
+       
+       // has both short reads and long reads
+       else if (((it.paired != "missing_paired" || it.single != "missing_single") && it.lreads != "missing_lreads")) {
+         if (it.hybrid_strategy) {
+           entrypoint = 'hybrid_strategy_' + it.hybrid_strategy.toString().toLowerCase()
+         } else if (params.strategy_2) {
+           entrypoint = 'hybrid_strategy_2'
          } else {
-           entrypoint = 'hybrid-strategy-1'
+           entrypoint = 'hybrid_strategy_1'
          }
-       } else if (((it.paired == "missing_paired" || it.single == "missing_single") && it.lreads != "missing_lreads")) {
-         entrypoint = 'lr-only'
-       } else {
+         if (entrypoint != 'hybrid_strategy_1' && entrypoint != 'hybrid_strategy_2' && entrypoint != 'hybrid_strategy_both') {
+           println "ERROR: In the YAML, the 'strategy:' key must be either 1, 2 or both"
+           exit 1
+         }
+       }
+       
+       // has only long reads
+       else if (((it.paired == "missing_paired" || it.single == "missing_single") && it.lreads != "missing_lreads")) {
+         entrypoint = 'longreads_only'
+       } 
+       
+       // has nothing
+       else {
          println "ERROR: At least one read type must be set: illumina, nanopore or pacbio!"
          exit 1
        }
       
       // output csv
-      "${it.id},${entrypoint},${it.fwd_pair},${it.rev_pair},${it.single},${it.lreads},${it.lr_type},${it.wtdbg2_technology},${it.genomeSize},${it.corrected_lreads},${it.medaka_model},${it.fast5},${it.pacbio_bams}"
+      if (entrypoint == 'hybrid_strategy_both') {
+        // hybrid strategy 1 and 2
+        // separated with \n
+        "${it.id},hybrid_strategy_1,${it.fwd_pair},${it.rev_pair},${it.single},${it.lreads},${it.lr_type},${it.wtdbg2_technology},${it.genomeSize},${it.corrected_lreads},${it.medaka_model},${it.fast5},${it.pacbio_bams}\n${it.id},hybrid_strategy_2,${it.fwd_pair},${it.rev_pair},${it.single},${it.lreads},${it.lr_type},${it.wtdbg2_technology},${it.genomeSize},${it.corrected_lreads},${it.medaka_model},${it.fast5},${it.pacbio_bams}"
+      } else {
+        "${it.id},${entrypoint},${it.fwd_pair},${it.rev_pair},${it.single},${it.lreads},${it.lr_type},${it.wtdbg2_technology},${it.genomeSize},${it.corrected_lreads},${it.medaka_model},${it.fast5},${it.pacbio_bams}"
+      }
   }
 }

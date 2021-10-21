@@ -1,7 +1,6 @@
 /*
- * Module for prefix evaluation
+ * DEFINITION OF MULTI-SAMPLE (BATCH) MODE
  */
-include { define_prefix } from '../modules/misc/define_prefix.nf'
 
 /*
  * Modules for assembling long reads
@@ -44,20 +43,11 @@ include { gcpp } from '../modules/LongReads/gcpp.nf'
 include { quast   } from '../modules/QualityAssessment/quast.nf'
 include { multiqc } from '../modules/QualityAssessment/multiqc.nf'
 
-workflow lreads_only_nf {
+workflow LONGREADS_ONLY {
   take:
-      reads
-      fast5
-      fast5_dir
-      bamFile
-      nBams
-  main:
+      input_tuple
 
-      /*
-       * Check input reads in order to evaluate better prefix
-       */
-      define_prefix(reads, Channel.value(['', '', '']), Channel.value(''))
-      prefix_ch = define_prefix.out[0]
+  main:
 
       /*
        * Channels for placing the assemblies
@@ -81,7 +71,7 @@ workflow lreads_only_nf {
        * Canu
        */
       if (!params.skip_canu) {
-        canu(reads.combine(prefix_ch))
+        canu(input_tuple)
         canu_ch = canu.out[1]
       }
 
@@ -89,7 +79,7 @@ workflow lreads_only_nf {
        * Flye
        */
       if (!params.skip_flye) {
-        flye(reads.combine(prefix_ch))
+        flye(input_tuple)
         flye_ch = flye.out[1]
       }
 
@@ -97,7 +87,7 @@ workflow lreads_only_nf {
        * Unicycler
        */
       if (!params.skip_unicycler) {
-        unicycler(reads.combine(prefix_ch))
+        unicycler(input_tuple)
         unicycler_ch = unicycler.out[1]
       }
 
@@ -105,15 +95,15 @@ workflow lreads_only_nf {
        * Raven
        */
       if (!params.skip_raven) {
-        raven(reads.combine(prefix_ch))
+        raven(input_tuple)
         raven_ch = raven.out[1]
       }
 
       /*
        * Shasta
        */
-      if (!params.skip_shasta && params.lr_type == 'nanopore') {
-        shasta(reads.combine(prefix_ch))
+      if (!params.skip_shasta) {
+        shasta(input_tuple)
         shasta_ch = shasta.out[1]
       }
 
@@ -121,36 +111,33 @@ workflow lreads_only_nf {
        * wtdbg2
        */
       if (!params.skip_wtdbg2) {
-        wtdbg2(reads.combine(prefix_ch))
+        wtdbg2(input_tuple)
         wtdbg2_ch = wtdbg2.out[1]
       }
 
       // gather assemblies
       assemblies_ch = canu_ch.mix(unicycler_ch, flye_ch, raven_ch, wtdbg2_ch, shasta_ch)
 
+      // combine again with metadata
+      combined_ch = assemblies_ch.combine(input_tuple, by: 0)
+
       /*
        * Run medaka?
        */
-      if (params.medaka_sequencing_model && params.lr_type == 'nanopore') {
-        medaka(assemblies_ch.combine(reads).combine(prefix_ch))
-        medaka_ch = medaka.out[1]
-      }
+      medaka(combined_ch)
+      medaka_ch = medaka.out[1]
 
       /*
        * Run nanopolish?
        */
-      if (params.nanopolish_fast5Path && params.lr_type == 'nanopore') {
-        nanopolish(assemblies_ch.combine(reads).combine(fast5).combine(fast5_dir).combine(prefix_ch))
-        nanopolish_ch = nanopolish.out[0]
-      }
+      nanopolish(combined_ch)
+      nanopolish_ch = nanopolish.out[0]
 
       /*
        * gcpp?
        */
-      if (params.pacbio_bams && params.lr_type == 'pacbio') {
-        gcpp(assemblies_ch.combine(bamFile.collect().toList()).combine(nBams).combine(prefix_ch))
-        gcpp_ch = gcpp.out[1]
-      }
+      gcpp(combined_ch)
+      gcpp_ch = gcpp.out[1]
 
       // Gather polishings
       polished_ch = medaka_ch.mix(nanopolish_ch, gcpp_ch)
@@ -158,12 +145,10 @@ workflow lreads_only_nf {
       /*
        * Run quast
        */
-      quast(
-        assemblies_ch.mix(polished_ch).combine(reads).combine(prefix_ch)
-      )
+      quast(assemblies_ch.mix(polished_ch).combine(input_tuple, by: 0))
 
       /*
        * Run multiqc
        */
-      multiqc(quast.out[0].collect(), prefix_ch, Channel.value("$workflow.runName"))
+      multiqc(quast.out[0].groupTuple(), quast.out[1], Channel.value("$workflow.runName"))
 }

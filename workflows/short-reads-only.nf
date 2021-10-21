@@ -1,16 +1,10 @@
 /*
- * DEFINITION OF SINGLE SAMPLE MODE
+ * DEFINITION OF MULTI-SAMPLE (BATCH) MODE
  */
-
 
 /*
  * Include modules
  */
-
-/*
- * Module for prefix evaluation
- */
-include { define_prefix } from '../modules/misc/define_prefix.nf'
 
 // SPAdes sreads
 include { spades } from '../modules/ShortReads/spades_sreads.nf'
@@ -27,17 +21,12 @@ include { shovill } from '../modules/ShortReads/shovill_sreads.nf'
 include { quast } from '../modules/QualityAssessment/quast.nf'
 include { multiqc } from '../modules/QualityAssessment/multiqc.nf'
 
-workflow sreads_only_nf {
-  take:
-      preads
-      sreads
-  main:
+workflow SHORTREADS_ONLY {
 
-  /*
-   * Check input reads in order to evaluate better prefix
-   */
-  define_prefix(Channel.value(''), preads, sreads)
-  prefix_ch = define_prefix.out[0]
+  take:
+      input_tuple
+  
+  main:
 
   // Channels for quast
   spades_ch    = Channel.empty()
@@ -46,19 +35,17 @@ workflow sreads_only_nf {
 
   // SPAdes
   if (!params.skip_spades) {
-    spades(preads.combine(sreads).combine(prefix_ch))
+    spades(input_tuple)
     spades_ch = spades.out[1]
   }
   // Unicycler
   if (!params.skip_unicycler) {
-    unicycler(preads.combine(sreads).combine(prefix_ch))
+    unicycler(input_tuple)
     unicycler_ch = unicycler.out[1]
   }
   // Shovill
-  if (!params.skip_shovill && !params.shortreads_single && params.shortreads_paired) {
-    shovill(
-      preads.combine(prefix_ch).combine(Channel.from('spades', 'skesa', 'megahit'))
-    )
+  if (!params.skip_shovill) {
+    shovill(input_tuple.combine(Channel.from('spades', 'skesa', 'megahit')))
     shovill_ch = shovill.out[1]
   }
 
@@ -66,11 +53,9 @@ workflow sreads_only_nf {
   assemblies_ch = spades_ch.mix(unicycler_ch, shovill_ch)
 
   // Run quast
-  quast(
-    assemblies_ch.combine(preads.combine(sreads).collect().toList()).combine(prefix_ch)
-  )
+  quast(assemblies_ch.combine(input_tuple, by: 0))
 
   // Run multiqc
-  multiqc(quast.out[0].collect(), prefix_ch, Channel.value("$workflow.runName"))
+  multiqc(quast.out[0].groupTuple(), quast.out[1], Channel.value("$workflow.runName"))
 
 }

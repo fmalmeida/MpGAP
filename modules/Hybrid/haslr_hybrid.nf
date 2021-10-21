@@ -1,36 +1,26 @@
 process haslr_hybrid {
   publishDir "${params.outdir}/${prefix}", mode: 'copy'
   label 'main'
-  tag { x }
+  tag "${id}: haslr assembly"
   cpus params.threads
 
   input:
-  file(lreads)
-  tuple val(id), file(sread1), file(sread2)
-  file(sreads)
-  val(prefix)
+  tuple val(id), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), val(wtdbg2_technology), val(genomeSize), val(corrected_lreads), val(medaka_model), file(fast5), file(bams), val(prefix)
 
   output:
   file "*" // Save everything
-  tuple file("haslr/haslr_assembly.fa"), val(lrID), val('haslr') // Gets contigs file
+  tuple val(id), file("haslr/haslr_assembly.fa"), val('haslr') // Gets contigs file
+
+  when:
+  ((!(sread1 =~ /input.*/) && !(sread2 =~ /input.*/)) || !(single =~ /input.*/)) && !(lreads =~ /input.*/)
 
   script:
   // Check reads
-  lrID = (lreads.getName() - ".gz").toString().substring(0, (lreads.getName() - ".gz").toString().lastIndexOf("."))
-  if ((params.shortreads_single) && (params.shortreads_paired)) {
-    parameter = "-s $sread1 $sread2 $sreads"
-    x = "Performing a hybrid assembly with haslr, using paired and single end reads"
-  } else if ((params.shortreads_single) && (!params.shortreads_paired)) {
-    parameter = "-s $sreads"
-    x = "Performing a hybrid assembly with haslr, using single end reads"
-  } else if ((params.shortreads_paired) && (!params.shortreads_single)) {
-    parameter = "-s $sread1 $sread2"
-    x = "Performing a hybrid assembly with haslr, using paired end reads"
-  }
-
+  paired_reads = (!(sread1 =~ /input.*/) && !(sread2 =~ /input.*/)) ? "$sread1 $sread2" : ""
+  single_reads = !(single =~ /input.*/) ? "$single" : ""
   """
-  haslr.py -t ${params.threads} -o haslr -g ${params.genomeSize} \
-  -l $lreads -x ${params.lr_type} ${parameter} \
+  haslr.py -t ${params.threads} -o haslr -g ${genomeSize} \
+  -l $lreads -x ${lr_type} -s ${paired_reads} ${single_reads} \
   ${params.haslr_additional_parameters}
 
   # Rename

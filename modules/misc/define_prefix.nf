@@ -1,5 +1,4 @@
 process define_prefix {
-
   tag "parsing inputs and generating prefix"
 
   input:
@@ -8,7 +7,8 @@ process define_prefix {
     file(sreads)
 
   output:
-    env PREFIX
+    env SAMPLE, emit: sample_name
+    env PREFIX, emit: prefix_dir
 
   script:
   
@@ -85,8 +85,9 @@ process define_prefix {
       out_dir = (params.prefix) ? "${params.prefix}/${type}" : "${lrID}_and_${prID}_and_${srID}/${type}"
     }
   }
-
+  sample="${out_dir}" - "/${type}"
   """
   PREFIX=${out_dir}
+  SAMPLE=${sample}
   """
 }

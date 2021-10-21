@@ -1,35 +1,25 @@
 process unicycler_hybrid {
   publishDir "${params.outdir}/${prefix}", mode: 'copy'
   label 'main'
-  tag { x }
+  tag "${id}: unicycler assembly"
   cpus params.threads
 
   input:
-  file(lreads)
-  tuple val(id), file(sread1), file(sread2)
-  file(sreads)
-  val(prefix)
+  tuple val(id), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), val(wtdbg2_technology), val(genomeSize), val(corrected_lreads), val(medaka_model), file(fast5), file(bams), val(prefix)
 
   output:
   file "*" // Save everything
-  tuple file("unicycler/unicycler_assembly.fasta"), val(lrID), val('unicycler') // Gets contigs file
+  tuple val(id), file("unicycler/unicycler_assembly.fasta"), val('unicycler') // Gets contigs file
+
+  when:
+  ((!(sread1 =~ /input.*/) && !(sread2 =~ /input.*/)) || !(single =~ /input.*/)) && !(lreads =~ /input.*/)
 
   script:
   // Check reads
-  lrID = (lreads.getName() - ".gz").toString().substring(0, (lreads.getName() - ".gz").toString().lastIndexOf("."))
-  if ((params.shortreads_single) && (params.shortreads_paired)) {
-    parameter = "-1 $sread1 -2 $sread2 -s $sreads -l $lreads"
-    x = "Performing a hybrid assembly with Unicycler, using paired and single end reads"
-  } else if ((params.shortreads_single) && (!params.shortreads_paired)) {
-    parameter = "-s $sreads -l $lreads"
-    x = "Performing a hybrid assembly with Unicycler, using single end reads"
-  } else if ((params.shortreads_paired) && (!params.shortreads_single)) {
-    parameter = "-1 $sread1 -2 $sread2 -l $lreads"
-    x = "Performing a hybrid assembly with Unicycler, using paired end reads"
-  }
-
+  paired_reads = (!(sread1 =~ /input.*/) && !(sread2 =~ /input.*/)) ? "-1 $sread1 -2 $sread2" : ""
+  single_reads = !(single =~ /input.*/) ? "-s $single" : ""
   """
-  unicycler ${parameter} \\
+  unicycler ${paired_reads} ${single_reads} -l ${lreads} \\
   -o unicycler -t ${params.threads} \\
   ${params.unicycler_additional_parameters}
 

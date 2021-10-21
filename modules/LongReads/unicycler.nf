@@ -2,18 +2,19 @@ process unicycler {
   publishDir "${params.outdir}/${prefix}", mode: 'copy'
   label 'main'
   cpus params.threads
-  tag "Performing a longreads only assembly with Unicycler"
+  tag "${id}: unicycler assembly"
 
   input:
-  tuple file(lreads), val(prefix)
+  tuple val(id), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), val(wtdbg2_technology), val(genomeSize), val(corrected_lreads), val(medaka_model), file(fast5), file(bams), val(prefix)
 
   output:
   file "unicycler/*" // Save all files
-  tuple file("unicycler/unicycler_assembly.fasta"), val(lrID), val('unicycler') // Gets contigs file
+  tuple val(id), file("unicycler/unicycler_assembly.fasta"), val('unicycler') // Gets contigs file
+
+  when:
+  (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2')
 
   script:
-  lrID = (lreads.getName() - ".gz").toString().substring(0, (lreads.getName() - ".gz").toString().lastIndexOf("."))
-
   """
   unicycler -l $lreads \
   -o unicycler -t ${params.threads} \
