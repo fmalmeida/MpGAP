@@ -1,5 +1,6 @@
 #!/usr/bin/env nextflow
 nextflow.enable.dsl=2
+import org.yaml.snakeyaml.Yaml
 
 /*
  * Generic multiplatform genome assembly pipeline (MpGAP)
@@ -80,6 +81,7 @@ params.outdir  = 'output'
 params.prefix  = ''
 params.threads = 4
 params.cpus    = 2
+params.in_yaml = ''
 
 // Assemblers?
 params.skip_flye      = false
@@ -113,8 +115,8 @@ params.shortreads_single = ''
 // Long reads
 params.corrected_lreads = false
 params.longreads = ''
-params.lr_type = ''
-params.medaka_sequencing_model = ''
+params.lr_type = 'nanopore'
+params.medaka_sequencing_model = 'r941_min_high_g360'
 params.nanopolish_fast5Path = ''
 params.nanopolish_max_haplotypes = 1000
 params.pacbio_bams = ''
@@ -132,14 +134,18 @@ logMessage()
  * Define custom workflows
  */
 
+// misc
+include { parse_samplesheet } from './workflows/parse_samples.nf'
+include { define_prefix } from './modules/misc/define_prefix.nf'
+
 // Short reads only
-include { sreads_only_nf } from './workflows/short-reads-only.nf'
+include { SHORTREADS_ONLY } from './workflows/short-reads-only.nf'
 
 // Long reads only
-include { lreadsonly_nf } from './workflows/long-reads-only.nf'
+include { LONGREADS_ONLY } from './workflows/long-reads-only.nf'
 
 // Hybrid
-include { hybrid_nf } from './workflows/hybrid.nf'
+include { HYBRID } from './workflows/hybrid.nf'
 
                                   /*
                                    * DEFINE (RUN) MAIN WORKFLOW
@@ -147,73 +153,105 @@ include { hybrid_nf } from './workflows/hybrid.nf'
 
 workflow {
 
-  /*
-   * Long reads only assembly
-   */
+  // Message to user
+  println("""
+    Launching defined workflows!
+    By default, all workflows will appear in the console "log" message.
+    However, the processes of each workflow will be launched based on the inputs received.
+    You can see that processes that were not launched have an empty [-       ].
+  """)
 
-  if (!params.shortreads_paired && !params.shortreads_single &&
-      params.longreads && params.lr_type) {
+  // with samplesheet?
+  if (params.in_yaml) {
 
-    // Giving inputs
-    lreadsonly_nf(
-      // Longreads - required
-      Channel.fromPath(params.longreads),
+     // MULTI SAMPLE ANALYSIS --- WITH SAMPLESHEET
 
-      // Will run Nanopolish?
-      (params.nanopolish_fast5Path && params.lr_type == 'nanopore') ? Channel.fromPath(params.nanopolish_fast5Path) : Channel.value(''),
-      (params.nanopolish_fast5Path && params.lr_type == 'nanopore') ? Channel.fromPath(params.nanopolish_fast5Path, type: 'dir') : Channel.value(''),
+    parameter_yaml = new FileInputStream(new File(params.in_yaml))
+    new Yaml().load(parameter_yaml).each { k, v -> params[k] = v }
 
-      // Will run gcpp?
-      (params.pacbio_bams && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_bams).collect() : Channel.value(''),
-      (params.pacbio_bams && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_bams).count().subscribe { println it } : Channel.value('')
-    )
-  }
+    // Read YAML file
+    parse_samplesheet(params.samplesheet)
 
+    // short reads only samples
+    SHORTREADS_ONLY(parse_samplesheet.out[0])
+    
+    // long reads only samples
+    LONGREADS_ONLY(parse_samplesheet.out[1])
 
-  /*
-   * Short reads only assembly
-   */
+    // hybrid samples
+    HYBRID(parse_samplesheet.out[2])
 
-   if (!params.longreads &&
-       (params.shortreads_paired || params.shortreads_single)) {
+  } else {
 
-     // Giving inputs
-     sreads_only_nf(
-       // Have paired end reads?
-       (params.shortreads_paired) ? Channel.fromFilePairs( params.shortreads_paired, flat: true, size: 2 ) : Channel.value(['', '', '']),
-
-       // Have unpaired reads?
-       (params.shortreads_single) ? Channel.fromPath(params.shortreads_single, hidden: true) : Channel.value('')
-     )
-   }
+    // SINGLE SAMPLE ANALYSIS --- WITHOUT SAMPLESHEET
 
   /*
-   * Hybrid assembly
+   * Parse inputs
    */
+    // load long reads
+    lreads = (params.longreads) ? Channel.fromPath(params.longreads) : Channel.value('missing')
 
-   if (params.longreads && params.lr_type &&
-       (params.shortreads_paired || params.shortreads_single)) {
+    // load short reads paired
+    sreads_paired = (params.shortreads_paired) ? Channel.fromFilePairs( params.shortreads_paired, flat: true, size: 2 ) : Channel.value(['missing', 'missing', 'missing'])
 
-     // Giving inputs
-     hybrid_nf(
-      // Have paired end reads?
-      (params.shortreads_paired) ? Channel.fromFilePairs( params.shortreads_paired, flat: true, size: 2 ) : Channel.value(['', '', '']),
+    // separate paired end reads to create input_tuple
+    sreads_paired.multiMap {
+      id:  it[0]
+      fwd: it[1]
+      rev: it[2]
+    }.set { parsed_paired }
 
-      // Have unpaired reads?
-      (params.shortreads_single) ? Channel.fromPath(params.shortreads_single, hidden: true) : Channel.value(''),
+    // load short reads unpaired
+    sreads_single = (params.shortreads_single) ? Channel.fromPath(params.shortreads_single, hidden: true) : Channel.value('missing')
 
-      // Long reads - required
-      Channel.fromPath(params.longreads),
+    // define prefixes
+    define_prefix(lreads, sreads_paired, sreads_single)
 
-      // Will run Nanopolish?
-      (params.nanopolish_fast5Path && params.lr_type == 'nanopore') ? Channel.fromPath(params.nanopolish_fast5Path) : Channel.value(''),
-      (params.nanopolish_fast5Path && params.lr_type == 'nanopore') ? Channel.fromPath(params.nanopolish_fast5Path, type: 'dir') : Channel.value(''),
+    // check desired workflow
+    if (!params.shortreads_paired && !params.shortreads_single && params.longreads && params.lr_type) {
+      desired_workflow = "longreads_only"
+    } else if (!params.longreads && (params.shortreads_paired || params.shortreads_single)) {
+      desired_workflow = "shortreads_only"
+    } else if (params.longreads && params.lr_type && (params.shortreads_paired || params.shortreads_single)) {
+      desired_workflow = (params.strategy_2) ? "hybrid_strategy_2" : "hybrid_strategy_1"
+    }
 
-      // Will run Arrow?
-      (params.pacbio_bams && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_bams).collect() : Channel.value(''),
-      (params.pacbio_bams && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_bams).count().subscribe { println it } : Channel.value('')
-     )
-   }
+    // create input tuple
+    // for concat, every "entry" must be a channel
+    input_tuple = define_prefix.out.sample_name.concat(
+      Channel.from(desired_workflow),
+      (params.shortreads_paired) ? parsed_paired.fwd : Channel.from("missing_pairFWD"),
+      (params.shortreads_paired) ? parsed_paired.rev : Channel.from("missing_pairREV"),
+      (params.shortreads_single) ? sreads_single : Channel.from("missing_single"),
+      (params.longreads) ? lreads : Channel.from("missing_lreads"),
+      Channel.from(
+        params.lr_type,
+        params.wtdbg2_technology,
+        params.genomeSize,
+        (params.corrected_lreads) ? 'true' : 'false',
+        params.medaka_sequencing_model
+      ),
+      (params.nanopolish_fast5Path && params.lr_type == 'nanopore') ? Channel.fromPath(params.nanopolish_fast5Path) : Channel.from("missing_fast5"),
+      (params.pacbio_bams && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_bams).toList() : Channel.from("missing_pacbio_bams"),
+      define_prefix.out.prefix_dir
+    ).toList()
+
+    // long reads only workflow
+    if (desired_workflow == "longreads_only") {
+      LONGREADS_ONLY(input_tuple)
+    }
+
+    // short reads only workflow
+    if (desired_workflow == "shortreads_only") {
+      SHORTREADS_ONLY(input_tuple)
+    }
+
+    // hybrid workflow
+    if (desired_workflow =~ /hybrid/) {
+      HYBRID(input_tuple)
+    }
+
+  } // end of else statement -- single genome workflow
 
 }
 

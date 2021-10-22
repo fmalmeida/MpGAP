@@ -78,7 +78,7 @@ Main config file
 
       // This parameter is used to specify the long read sequencing technology used.
       // It might be set as one of both: nanopore ; pacbio
-            lr_type = ""
+            lr_type = "nanopore"
 
       // When assembling pacbio long reads with wtdbg2, it is necessary to tell the pipeline
       // whether reads are "rs" for PacBio RSII, "sq" for PacBio Sequel, "ccs" for PacBio CCS reads.

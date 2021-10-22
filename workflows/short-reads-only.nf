@@ -1,20 +1,19 @@
 /*
- * Include modules
+ * DEFINITION OF MULTI-SAMPLE (BATCH) MODE
  */
 
 /*
- * Module for prefix evaluation
+ * Include modules
  */
-include { define_prefix } from '../modules/misc/define_prefix.nf'
 
 // SPAdes sreads
-include { spades_sreads_assembly } from '../modules/ShortReads/spades_sreads.nf'
+include { spades } from '../modules/ShortReads/spades_sreads.nf'
 
 // Unicycler sreads
-include { unicycler_sreads_assembly } from '../modules/ShortReads/unicycler_sreads.nf'
+include { unicycler } from '../modules/ShortReads/unicycler_sreads.nf'
 
 // Shovill sreads
-include { shovill_sreads_assembly } from '../modules/ShortReads/shovill_sreads.nf'
+include { shovill } from '../modules/ShortReads/shovill_sreads.nf'
 
 /*
  * Module for assessing assembly qualities
@@ -22,17 +21,12 @@ include { shovill_sreads_assembly } from '../modules/ShortReads/shovill_sreads.n
 include { quast } from '../modules/QualityAssessment/quast.nf'
 include { multiqc } from '../modules/QualityAssessment/multiqc.nf'
 
-workflow sreads_only_nf {
-  take:
-      preads
-      sreads
-  main:
+workflow SHORTREADS_ONLY {
 
-  /*
-   * Check input reads in order to evaluate better prefix
-   */
-  define_prefix(Channel.value(''), preads, sreads)
-  prefix_ch = define_prefix.out[0]
+  take:
+      input_tuple
+  
+  main:
 
   // Channels for quast
   spades_ch    = Channel.empty()
@@ -41,31 +35,27 @@ workflow sreads_only_nf {
 
   // SPAdes
   if (!params.skip_spades) {
-    spades_sreads_assembly(preads.combine(sreads).combine(prefix_ch))
-    spades_ch = spades_sreads_assembly.out[1]
+    spades(input_tuple)
+    spades_ch = spades.out[1]
   }
   // Unicycler
   if (!params.skip_unicycler) {
-    unicycler_sreads_assembly(preads.combine(sreads).combine(prefix_ch))
-    unicycler_ch = unicycler_sreads_assembly.out[1]
+    unicycler(input_tuple)
+    unicycler_ch = unicycler.out[1]
   }
   // Shovill
-  if (!params.skip_shovill && !params.shortreads_single && params.shortreads_paired) {
-    shovill_sreads_assembly(
-      preads.combine(prefix_ch).combine(Channel.from('spades', 'skesa', 'megahit'))
-    )
-    shovill_ch = shovill_sreads_assembly.out[1]
+  if (!params.skip_shovill) {
+    shovill(input_tuple.combine(Channel.from('spades', 'skesa', 'megahit')))
+    shovill_ch = shovill.out[1]
   }
 
   // Get assemblies
   assemblies_ch = spades_ch.mix(unicycler_ch, shovill_ch)
 
   // Run quast
-  quast(
-    assemblies_ch.combine(preads.combine(sreads).collect().toList()).combine(prefix_ch)
-  )
+  quast(assemblies_ch.combine(input_tuple, by: 0))
 
   // Run multiqc
-  multiqc(quast.out[0].collect(), prefix_ch, Channel.value("$workflow.runName"))
+  multiqc(quast.out[0].groupTuple(), quast.out[1], Channel.value("$workflow.runName"))
 
 }

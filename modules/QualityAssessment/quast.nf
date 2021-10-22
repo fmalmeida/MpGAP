@@ -4,26 +4,22 @@ process quast {
   tag "Assessing ${assembler} assembly quality for multiqc"
 
   input:
-  tuple file(contigs), val(id), val(assembler), file(reads), val(prefix)
+  tuple val(id), file(contigs), val(assembler), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), val(wtdbg2_technology), val(genomeSize), val(corrected_lreads), val(medaka_model), file(fast5), file(bams), val(prefix)
 
   output:
-  file("${assembler}")
+  tuple val(id), file("${assembler}")
+  val(prefix)
 
   script:
   // Alignment parameters
-  if (params.shortreads_paired && !params.shortreads_single) {
-    quast_parameter = "--pe1 ${reads[1]} --pe2 ${reads[2]}"
-  } else if (!params.shortreads_paired && params.shortreads_single) {
-    quast_parameter = "--single ${reads[3]}"
-  } else if (params.shortreads_paired && params.shortreads_single) {
-    quast_parameter = "--single ${reads[3]} --pe1 ${reads[1]} --pe2 ${reads[2]}"
-  } else {
-    ltype           = (params.lr_type == 'nanopore') ? "ont2d" : "pacbio"
-    quast_parameter = "--${params.lr_type} ${reads}"
-  }
+  paired_param = !(sread1 =~ /input.*/ || sread2 =~ /input.*/) ? "--pe1 ${sread1} --pe2 ${sread2}" : ""
+  single_param = !(single =~ /input.?/) ? "--single ${single}" : ""
+  ltype        = (params.lr_type == 'nanopore') ? "ont2d" : "pacbio"
+  lreads_param = !(lreads =~ /input.?/) ? "--${params.lr_type} ${lreads}" : ""
 
   """
-  quast.py -o ${assembler} -t ${params.threads} ${quast_parameter} \\
+  quast.py -o ${assembler} -t ${params.threads} \\
+  ${lreads_param} ${paired_param} ${single_param} \\
   --conserved-genes-finding --rna-finding --min-contig 100 \\
   ${params.quast_additional_parameters} \\
   ${contigs}

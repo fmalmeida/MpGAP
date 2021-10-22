@@ -1,18 +1,19 @@
-process shovill_sreads_assembly {
+// batch mode
+process shovill {
   publishDir "${params.outdir}/${prefix}/shovill", mode: 'copy'
   label 'main'
-  tag "Shovill paired end assembly with ${assembler}"
+  tag "${id}: shovill with ${assembler}"
   cpus params.threads
 
   input:
-  tuple val(id), file(sread1), file(sread2), val(prefix), val(assembler)
+  tuple val(id), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), val(wtdbg2_technology), val(genomeSize), val(corrected_lreads), val(medaka_model), file(fast5), file(bams), val(prefix), val(assembler)
 
   output:
   file "${assembler}" // Save all output
-  tuple file("${assembler}/shovill_${assembler}_final.fasta"), val(id), val("shovill_${assembler}") // Gets contigs file
+  tuple val(id), file("${assembler}/shovill_${assembler}_final.fasta"), val("shovill_${assembler}")
 
   when:
-  ((params.shortreads_paired) && (!params.shortreads_single))
+  !(sread1 =~ /input.*/ || sread2 =~ /input.*/) && (single =~ /input.*/) && (entrypoint == 'shortreads_only')
 
   script:
   """
