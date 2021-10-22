@@ -9,11 +9,11 @@ import org.yaml.snakeyaml.Yaml
 /*
  * Include functions
  */
-include { helpMessage    } from './nf_functions/help.nf'
-include { helpMessageAdvanced    } from './nf_functions/help.nf'
-include { exampleMessage } from './nf_functions/examples.nf'
-include { paramsCheck    } from './nf_functions/paramsCheck.nf'
-include { logMessage     } from './nf_functions/logMessages.nf'
+include { helpMessage         } from './nf_functions/help.nf'
+include { helpMessageAdvanced } from './nf_functions/help.nf'
+include { exampleMessage      } from './nf_functions/examples.nf'
+include { paramsCheck         } from './nf_functions/paramsCheck.nf'
+include { logMessage          } from './nf_functions/logMessages.nf'
 
 /*
  * Check parameters
