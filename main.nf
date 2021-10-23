@@ -119,7 +119,7 @@ params.lr_type = 'nanopore'
 params.medaka_sequencing_model = 'r941_min_high_g360'
 params.nanopolish_fast5Path = ''
 params.nanopolish_max_haplotypes = 1000
-params.pacbio_bams = ''
+params.pacbio_bam = ''
 
 // Hybrid strategy 2
 params.strategy_2 = false
@@ -232,7 +232,7 @@ workflow {
         params.medaka_sequencing_model
       ),
       (params.nanopolish_fast5Path && params.lr_type == 'nanopore') ? Channel.fromPath(params.nanopolish_fast5Path) : Channel.from("missing_fast5"),
-      (params.pacbio_bams && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_bams).toList() : Channel.from("missing_pacbio_bams"),
+      (params.pacbio_bam && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_bam).toList() : Channel.from("missing_pacbio_bam"),
       define_prefix.out.prefix_dir
     ).toList()
 

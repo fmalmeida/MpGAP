@@ -22,7 +22,7 @@ def exampleMessage() {
 
     ## Long reads only - Pacbio (Using gcpp):
 
-\$ nextflow run fmalmeida/mpgap --outdir output --threads 5 --genomeSize 2m --lr_type "pacbio" --longreads "path-to/pacbio.subreads.fastq" --pacbio_bams "path-to/pacbio.*.subreads.bam"
+\$ nextflow run fmalmeida/mpgap --outdir output --threads 5 --genomeSize 2m --lr_type "pacbio" --longreads "path-to/pacbio.subreads.fastq" --pacbio_bam "path-to/pacbio.subreads.bam"
 
     ## Hybrid assembly - Using both paired and single end short reads:
 

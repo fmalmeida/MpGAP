@@ -266,10 +266,10 @@
                     "help_text": "Useful when polishing the genome with Nanopolish (--nanopolish_fast5Path).\nIt sets the max number of haplotypes to be considered by Nanopolish. Sometimes the pipeline may crash because to much variation was found exceeding the limit.",
                     "default": 1000
                 },
-                "pacbio_bams": {
+                "pacbio_bam": {
                     "type": "string",
-                    "description": "Loads all the subreads *.bam pacbio raw files for polishing with gcpp",
-                    "help_text": "This parameter loads all the subreads *.bam pacbio raw files for polishing with gcpp.\nIn order to nextflow properly use it, one needs to store all the data, from all the cells in one single directory and set the filepath as \"some/data/*bam\"."
+                    "description": "Loads the pacbio subreads bam file (one single file) for polishing with gcpp",
+                    "help_text": "This parameter loads the pacbio subreads bam file (one single file) for polishing with gcpp. \nIf user has more than one bam, he/she must first merge these files in to a single one with samtools. \nWhenever set, the pipeline will execute a polishing step with gcpp. E.g. 'some/data/my_input.subreads.bam'."
                 }
             }
         }

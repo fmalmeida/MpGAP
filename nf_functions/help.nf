@@ -76,7 +76,7 @@
                                                                                 It is also possible to polish the longreads-only assemblies with Nanopolish,
                                                                                 Medaka or gcpp (depending on the sequencing technology) before polishing
                                                                                 it with shortreads. For that, users must check the longreads parameters:
-                                                                                --medaka_sequencing_model, --nanopolish_fast5Path and --pacbio_bams
+                                                                                --medaka_sequencing_model, --nanopolish_fast5Path and --pacbio_bam
 
             # Assembly polishing using long reads raw data
             # Parameters useful for polishing longreads-only assemblies
@@ -99,9 +99,9 @@
                                                                                 Sometimes the pipeline may crash because to much variation was found 
                                                                                 exceeding the limit. Try augmenting this value (Default: 1000)
 
-     --pacbio_bams <string>                                                     Path to all subreads bam files for given reads. Whenever set, the pipeline
-                                                                                will execute a polishing step with gcpp. All bams for the read must be in 
-                                                                                one single directory. E.g. "some/data/*bam".
+     --pacbio_bam <string>                                                      Path to the pacbio bam (one single file) file for the input subreads.
+                                                                                If user has more than one bam, he/she must first merge these files in to a single one with samtools.
+                                                                                Whenever set, the pipeline will execute a polishing step with gcpp. E.g. "some/data/my_input.subreads.bam".
 
             # Advanced parameters
             # Controlling the execution of assemblers (on/off)

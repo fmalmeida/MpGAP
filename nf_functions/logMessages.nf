@@ -29,8 +29,8 @@ def logMessage() {
   if (params.medaka_sequencing_model && params.lr_type =='nanopore') {
   summary['Medaka model          '] = params.medaka_sequencing_model
   }
-  if (params.pacbio_bams && params.lr_type =='pacbio') {
-  summary['Pacbio subreads BAM   '] = params.pacbio_bams
+  if (params.pacbio_bam && params.lr_type =='pacbio') {
+  summary['Pacbio subreads BAM   '] = params.pacbio_bam
   }
   // Short reads?
   if (params.shortreads_single) {

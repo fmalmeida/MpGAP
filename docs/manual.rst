@@ -223,7 +223,7 @@ Long reads only assemblies can also be polished with Nanopolish or Racon+Medaka 
      - 1000
      - It sets the max number of haplotypes to be considered by Nanopolish. Sometimes the pipeline may crash because to much variation was found exceeding the limit.
 
-   * - ``--pacbio_bams``
+   * - ``--pacbio_bam``
      - N
      - NA
      - | Path to all subreads.bam files for the given reads (can be '\*.bam')

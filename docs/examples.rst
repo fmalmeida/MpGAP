@@ -87,7 +87,7 @@ Long reads only with pacbio reads
 
 In this example, we also polish the resulting assembly with gcpp polisher. Gcpp is the machine-code successor of the venerable GenomicConsensus suite which has reached EOL, with the exception of not supporting Quiver/RSII anymore.
 
-This will perform a long reads only assembly using pacbio data with Canu, Raven, wtdbg2, shasta and Flye assemblers (skipping unicycler). When executing wtdbg2 with pacbio reads it is required to tell with reads are RSII, Sequel, or CCS (check ``--wtdbg2_technology`` parameter. Also, this specific command will also execute a polishing step with gcpp (see ``--pacbio_bams``).
+This will perform a long reads only assembly using pacbio data with Canu, Raven, wtdbg2, shasta and Flye assemblers (skipping unicycler). When executing wtdbg2 with pacbio reads it is required to tell with reads are RSII, Sequel, or CCS (check ``--wtdbg2_technology`` parameter. Also, this specific command will also execute a polishing step with gcpp (see ``--pacbio_bam``).
 
 .. code-block:: bash
 
@@ -99,11 +99,11 @@ This will perform a long reads only assembly using pacbio data with Canu, Raven,
      --lr_type "pacbio" \
      --wtdbg2_technology "rs" \
      --longreads "path-to/pacbio.subreads.fastq" \
-     --pacbio_bams "path-to/pacbio.*.subreads.bam"
+     --pacbio_bam "path-to/pacbio.*.subreads.bam"
 
 .. tip::
 
-  If ``--pacbio_bams`` is not set, the pipeline will not try to polish the assemblies using gcpp.
+  If ``--pacbio_bam`` is not set, the pipeline will not try to polish the assemblies using gcpp.
 
 Assembly in Hybrid strategy 1
 =============================

@@ -103,7 +103,7 @@ Main config file
       //
       // Whenever using this parameter, it is also possible to polish the longreads-only assemblies with Nanopolish,
       // Medaka or VarianCaller (Arrow) before the polishing with shortreads (using Pilon). For that it is necessary to set
-      // the right parameters: pacbio_bams, nanopolish_fast5Path or medaka_sequencing_model.
+      // the right parameters: pacbio_bam, nanopolish_fast5Path or medaka_sequencing_model.
             strategy_2 = false
 
       // Whenever polishing long reads only assemblies with unpaired short reads (single end), the pipeline
@@ -145,7 +145,7 @@ Main config file
       // This parameter loads all the subreads *.bam pacbio raw files for polishing with gcpp.
       // In order to nextflow properly use it, one needs to store all the data, from all the cells
       // in one single directory and set the filepath as "some/data/*bam".
-            pacbio_bams = ""
+            pacbio_bam = ""
 
                   /*
                   * Advanced parameters
