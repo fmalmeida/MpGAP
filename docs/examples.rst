@@ -99,7 +99,7 @@ This will perform a long reads only assembly using pacbio data with Canu, Raven,
      --lr_type "pacbio" \
      --wtdbg2_technology "rs" \
      --longreads "path-to/pacbio.subreads.fastq" \
-     --pacbio_bam "path-to/pacbio.*.subreads.bam"
+     --pacbio_bam "path-to/pacbio.subreads.bam"
 
 .. tip::
 

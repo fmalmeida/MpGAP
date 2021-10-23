@@ -223,13 +223,12 @@ Long reads only assemblies can also be polished with Nanopolish or Racon+Medaka 
      - 1000
      - It sets the max number of haplotypes to be considered by Nanopolish. Sometimes the pipeline may crash because to much variation was found exceeding the limit.
 
-   * - ``--pacbio_bam``
+   * - ``--pacbio_bam`d`
      - N
      - NA
-     - | Path to all subreads.bam files for the given reads (can be '\*.bam')
-       | In order to nextflow properly use it, one needs to store all the data, from all the cells in one single directory and set the filepath as "some/data/\*bam".
-       |
-       | Whenever set, the pipeline will execute a polishing step with gcpp. GCpp is the machine-code successor of the venerable GenomicConsensus suite which has reached EOL, with the exception of not supporting Quiver/RSII anymore.
+     - | This parameter loads the pacbio subreads bam file (one single file) for polishing with gcpp.
+       | If user has more than one bam, he/she must first merge these files in to a single one with samtools.
+       | Whenever set, the pipeline will execute a polishing step with gcpp. E.g. "some/data/my_input.subreads.bam".
 
 Advanced assembler customization options
 ----------------------------------------
