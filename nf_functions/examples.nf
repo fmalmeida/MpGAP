@@ -17,7 +17,7 @@ def exampleMessage() {
 
     ## Long reads only - ONT (Using both Nanopolish and Medaka):
 
-\$ nextflow run fmalmeida/mpgap --outdir output --threads 5 --medaka_sequencing_model r941_min_fast_g303 --nanopolish_fast5Path "path-to/fast5_pass" \
+\$ nextflow run fmalmeida/mpgap --outdir output --threads 5 --medaka_sequencing_model r941_min_fast_g303 --nanopolish_fast5 "path-to/fast5_pass" \
 --nanopolish_max_haplotypes 2000 --genomeSize 2m --lr_type nanopore --longreads "path-to/ont_reads.fastq"
 
     ## Long reads only - Pacbio (Using gcpp):

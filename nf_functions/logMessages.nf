@@ -23,8 +23,8 @@ def logMessage() {
   if (params.longreads) {
   summary['Longread technology   '] = params.lr_type
   }
-  if (params.nanopolish_fast5Path && params.lr_type =='nanopore') {
-  summary['Fast5 files dir       '] = params.nanopolish_fast5Path
+  if (params.nanopolish_fast5 && params.lr_type =='nanopore') {
+  summary['Fast5 files dir       '] = params.nanopolish_fast5
   }
   if (params.medaka_sequencing_model && params.lr_type =='nanopore') {
   summary['Medaka model          '] = params.medaka_sequencing_model

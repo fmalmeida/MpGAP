@@ -2,7 +2,7 @@
 process spades {
   publishDir "${params.outdir}/${prefix}", mode: 'copy'
   label 'main'
-  tag "${id}: spades assembly"
+  tag "${id}"
   cpus params.threads
 
   input:

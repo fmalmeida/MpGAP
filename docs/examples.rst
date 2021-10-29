@@ -64,7 +64,7 @@ This command will perform an illumina-only assembly using both paired and unpair
 Long reads only with ONT reads
 ==============================
 
-Take note that in this example, we also polish the resulting assembly with both Nanopolish and Medaka polishers. This will perform a long reads only assembly using nanopore data with Canu, Raven, Flye, wtdbg2, shasta and Unicycler assemblers. This specific command will also execute a polishing step with nanopolish (see ``--nanopolish_fast5Path``) and medaka (see ``--medaka_sequencing_model``).
+Take note that in this example, we also polish the resulting assembly with both Nanopolish and Medaka polishers. This will perform a long reads only assembly using nanopore data with Canu, Raven, Flye, wtdbg2, shasta and Unicycler assemblers. This specific command will also execute a polishing step with nanopolish (see ``--nanopolish_fast5``) and medaka (see ``--medaka_sequencing_model``).
 
 .. code-block:: bash
 
@@ -76,11 +76,11 @@ Take note that in this example, we also polish the resulting assembly with both 
      --longreads "path-to/ont_reads.fastq" \
      --medaka_sequencing_model r941_min_fast_g303 \
      --nanopolish_max_haplotypes 2000 \
-     --nanopolish_fast5Path "path-to/fast5_pass"
+     --nanopolish_fast5 "path-to/fast5_pass"
 
 .. tip::
 
-  If neither ``--nanopolish_fast5Path`` nor ``--medaka_sequencing_model`` is set, the pipeline will not try to polish the assemblies using Nanopolish or Medaka, respectively.
+  If neither ``--nanopolish_fast5`` nor ``--medaka_sequencing_model`` is set, the pipeline will not try to polish the assemblies using Nanopolish or Medaka, respectively.
 
 Long reads only with pacbio reads
 =================================
@@ -136,7 +136,7 @@ This command will first create longreads-only assemblies with canu, raven, unicy
      --lr_type nanopore \
      --longreads "path-to/ont_reads.fastq" \
      --medaka_sequencing_model r941_min_fast_g303 \
-     --nanopolish_fast5Path "path-to/fast5_pass"
+     --nanopolish_fast5 "path-to/fast5_pass"
 
 Running with a configuration file
 =================================

@@ -1,7 +1,7 @@
 process haslr_hybrid {
   publishDir "${params.outdir}/${prefix}", mode: 'copy'
   label 'main'
-  tag "${id}: haslr assembly"
+  tag "${id}"
   cpus params.threads
 
   input:

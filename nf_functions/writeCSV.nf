@@ -116,7 +116,7 @@ def write_csv(in_list) {
       if (entrypoint == 'hybrid_strategy_both') {
         // hybrid strategy 1 and 2
         // separated with \n
-        "${it.id},hybrid_strategy_1,${it.fwd_pair},${it.rev_pair},${it.single},${it.lreads},${it.lr_type},${it.wtdbg2_technology},${it.genomeSize},${it.corrected_lreads},${it.medaka_model},${it.fast5},${it.pacbio_bam}\n${it.id},hybrid_strategy_2,${it.fwd_pair},${it.rev_pair},${it.single},${it.lreads},${it.lr_type},${it.wtdbg2_technology},${it.genomeSize},${it.corrected_lreads},${it.medaka_model},${it.fast5},${it.pacbio_bam}"
+        "${it.id}:strategy_1,hybrid_strategy_1,${it.fwd_pair},${it.rev_pair},${it.single},${it.lreads},${it.lr_type},${it.wtdbg2_technology},${it.genomeSize},${it.corrected_lreads},${it.medaka_model},${it.fast5},${it.pacbio_bam}\n${it.id}:strategy_2,hybrid_strategy_2,${it.fwd_pair},${it.rev_pair},${it.single},${it.lreads},${it.lr_type},${it.wtdbg2_technology},${it.genomeSize},${it.corrected_lreads},${it.medaka_model},${it.fast5},${it.pacbio_bam}"
       } else {
         "${it.id},${entrypoint},${it.fwd_pair},${it.rev_pair},${it.single},${it.lreads},${it.lr_type},${it.wtdbg2_technology},${it.genomeSize},${it.corrected_lreads},${it.medaka_model},${it.fast5},${it.pacbio_bam}"
       }

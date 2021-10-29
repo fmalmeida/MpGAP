@@ -2,7 +2,7 @@ process wtdbg2 {
   publishDir "${params.outdir}/${prefix}/wtdbg2", mode: 'copy'
   label 'main'
   cpus params.threads
-  tag "${id}: wtdgb2 assembly"
+  tag "${id}"
 
   input:
   tuple val(id), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), val(wtdbg2_technology), val(genomeSize), val(corrected_lreads), val(medaka_model), file(fast5), file(bams), val(prefix)

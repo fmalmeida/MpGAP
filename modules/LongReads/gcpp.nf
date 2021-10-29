@@ -1,7 +1,7 @@
 process gcpp {
   publishDir "${params.outdir}/${prefix}/gcpp_polished_contigs", mode: 'copy'
   label 'main'
-  tag "${id}: gcpp consensus"
+  tag "${id}"
   cpus params.threads
 
   input:

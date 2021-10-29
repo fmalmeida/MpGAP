@@ -95,7 +95,7 @@ The execution is actually the same as for the strategy 1, however users must use
 
 .. tip::
 
-	Additionally, users can also execute a long reads polishing step in their assemblies prior to the polishing with short reads.  The long reads polishers available are: ONT ==> Medaka and Nanopolish; Pacbio ==> gcpp. For that, users must check the longreads parameters: ``--medaka_sequencing_model``, ``--nanopolish_fast5Path`` and ``--pacbio_bam``. This will make de pipeline work as: ``long reads assembly -> polishing with long reads models -> polishing with short reads with Pilon``
+	Additionally, users can also execute a long reads polishing step in their assemblies prior to the polishing with short reads.  The long reads polishers available are: ONT ==> Medaka and Nanopolish; Pacbio ==> gcpp. For that, users must check the longreads parameters: ``--medaka_sequencing_model``, ``--nanopolish_fast5`` and ``--pacbio_bam``. This will make de pipeline work as: ``long reads assembly -> polishing with long reads models -> polishing with short reads with Pilon``
 
 Afterwards
 ==========

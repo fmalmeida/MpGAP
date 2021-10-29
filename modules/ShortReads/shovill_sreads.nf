@@ -2,7 +2,7 @@
 process shovill {
   publishDir "${params.outdir}/${prefix}/shovill", mode: 'copy'
   label 'main'
-  tag "${id}: shovill with ${assembler}"
+  tag "${id}"
   cpus params.threads
 
   input:

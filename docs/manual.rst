@@ -94,8 +94,8 @@ General parameters
 
    * - ``--parallel_jobs``
      - N
-     - 1
-     - Number of jobs to run in parallel. Each job can consume up to N threads (``--threads``)
+     - NA
+     - Number of processes to run in parallel. Each job can consume up to N threads (``--threads``). If not given, let's nextflow automatically handle it.
 
 Input files
 -----------
@@ -212,7 +212,7 @@ Long reads only assemblies can also be polished with Nanopolish or Racon+Medaka 
      - | Used to polish a longreads-only assembly with Medaka. It selects a Medaka ONT sequencing model for polishing.
        | Please read `medaka manual <https://github.com/nanoporetech/medaka#models>`_ for more instructions.
 
-   * - ``--nanopolish_fast5Path``
+   * - ``--nanopolish_fast5``
      - N
      - NA
      - | Used to polish a longreads-only assembly with Nanopolish.

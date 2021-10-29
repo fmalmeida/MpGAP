@@ -37,12 +37,6 @@ include { medaka } from '../modules/LongReads/medaka.nf'
 // gcpp Pacbio
 include { gcpp } from '../modules/LongReads/gcpp.nf'
 
-/*
- * Module for assessing assembly qualities
- */
-include { quast   } from '../modules/QualityAssessment/quast.nf'
-include { multiqc } from '../modules/QualityAssessment/multiqc.nf'
-
 workflow LONGREADS_ONLY {
   take:
       input_tuple
@@ -142,13 +136,9 @@ workflow LONGREADS_ONLY {
       // Gather polishings
       polished_ch = medaka_ch.mix(nanopolish_ch, gcpp_ch)
 
-      /*
-       * Run quast
-       */
-      quast(assemblies_ch.mix(polished_ch).combine(input_tuple, by: 0))
-
-      /*
-       * Run multiqc
-       */
-      multiqc(quast.out[0].groupTuple(), quast.out[1], Channel.value("$workflow.runName"))
+      // Gather assemblies for qc
+      final_assemblies = assemblies_ch.mix(polished_ch).combine(input_tuple, by: 0)
+  
+  emit:
+    final_assemblies
 }

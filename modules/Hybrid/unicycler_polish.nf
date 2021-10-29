@@ -2,7 +2,7 @@ process pilon_polish {
   publishDir "${params.outdir}/${prefix}", mode: 'copy'
   label 'main'
   cpus params.threads
-  tag "Polishing a longreads-only assembly with shortreads (through Pilon)"
+  tag "${id}"
 
   input:
   tuple val(id), file(draft), val(assembler), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), val(wtdbg2_technology), val(genomeSize), val(corrected_lreads), val(medaka_model), file(fast5), file(bams), val(prefix)

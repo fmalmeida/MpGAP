@@ -18,6 +18,9 @@
                     "fa_icon": "fas fa-folder-open",
                     "help_text": "All the outputs will be stored under this directory. Sub-folders for each dataset will be written in this folder using reads basenames. Short reads basenames for short reads only assemblies and long reads basenames for hybrid and long reads only assemblies."
                 },
+                "in_yaml": {
+                    "type": "string"
+                },
                 "prefix": {
                     "type": "string",
                     "description": "Gives a custom prefix for sample results.",
@@ -84,15 +87,8 @@
                 },
                 "parallel_jobs": {
                     "type": "integer",
-                    "default": 1,
-                    "description": "Number of jobs to run in parallel. Each job can consume up to N threads (--threads)",
+                    "description": "Number of jobs to run in parallel. Each job can consume up to N threads (--threads).\nIf not given, let's nextflow automatically handle it.",
                     "fa_icon": "fas fa-cogs"
-                },
-                "cpus": {
-                    "type": "integer",
-                    "description": "Number of cores to run nanopolish in parallel",
-                    "default": 2,
-                    "fa_icon": "fas fa-microchip"
                 }
             }
         },
@@ -111,7 +107,7 @@
                 "pilon_memory_limit": {
                     "type": "number",
                     "description": "Max amount of memory allocated by Pilon (in gigabase)",
-                    "default": 50,
+                    "default": 50.0,
                     "help_text": "Whenever polishing long reads only assemblies with unpaired short reads (single end), the pipeline will directly execute one round of pilon polishing instead of using Unicycler's polish pipeline. Therefore we need to allocate the amount of memory allocated by Pilon. Default 50G. This step is crucial because with not enough memory will crash and not correct your assembly. When that happens you will not have the pilon output nor the QUAST assessment.",
                     "fa_icon": "fas fa-database"
                 }
@@ -255,7 +251,7 @@
                     "description": "Polish with Medaka? Which model?",
                     "default": "r941_min_high_g360"
                 },
-                "nanopolish_fast5Path": {
+                "nanopolish_fast5": {
                     "type": "string",
                     "description": "Polish with Nanopolish? Set path to dir with fast5 data.",
                     "help_text": "Useful for longreads-only or hybrid assemblies using strategy 2.\nUsed to polish a longreads-only assembly with Nanopolish. It sets path to the directory containing all the FAST5 files containing the raw data."
@@ -263,8 +259,8 @@
                 "nanopolish_max_haplotypes": {
                     "type": "number",
                     "description": "Max. number of haplotypes to be considered by Nanopolish",
-                    "help_text": "Useful when polishing the genome with Nanopolish (--nanopolish_fast5Path).\nIt sets the max number of haplotypes to be considered by Nanopolish. Sometimes the pipeline may crash because to much variation was found exceeding the limit.",
-                    "default": 1000
+                    "help_text": "Useful when polishing the genome with Nanopolish (--nanopolish_fast5).\nIt sets the max number of haplotypes to be considered by Nanopolish. Sometimes the pipeline may crash because to much variation was found exceeding the limit.",
+                    "default": 1000.0
                 },
                 "pacbio_bam": {
                     "type": "string",

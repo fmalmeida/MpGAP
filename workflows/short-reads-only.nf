@@ -15,12 +15,6 @@ include { unicycler } from '../modules/ShortReads/unicycler_sreads.nf'
 // Shovill sreads
 include { shovill } from '../modules/ShortReads/shovill_sreads.nf'
 
-/*
- * Module for assessing assembly qualities
- */
-include { quast } from '../modules/QualityAssessment/quast.nf'
-include { multiqc } from '../modules/QualityAssessment/multiqc.nf'
-
 workflow SHORTREADS_ONLY {
 
   take:
@@ -52,10 +46,10 @@ workflow SHORTREADS_ONLY {
   // Get assemblies
   assemblies_ch = spades_ch.mix(unicycler_ch, shovill_ch)
 
-  // Run quast
-  quast(assemblies_ch.combine(input_tuple, by: 0))
+  // Gather assemblies for qc
+  final_assemblies = assemblies_ch.combine(input_tuple, by: 0)
 
-  // Run multiqc
-  multiqc(quast.out[0].groupTuple(), quast.out[1], Channel.value("$workflow.runName"))
+  emit:
+  final_assemblies
 
 }

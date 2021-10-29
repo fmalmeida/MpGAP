@@ -53,12 +53,6 @@ include { spades_hybrid as strategy_1_spades } from '../modules/Hybrid/spades_hy
 // Pilon polish paired
 include { pilon_polish as strategy_2_pilon } from '../modules/Hybrid/unicycler_polish.nf'
 
-/*
- * Module for assessing assembly qualities
- */
-include { quast }   from '../modules/QualityAssessment/quast.nf'
-include { multiqc } from '../modules/QualityAssessment/multiqc.nf'
-
 workflow HYBRID {
   take:
       input_tuple
@@ -205,10 +199,10 @@ workflow HYBRID {
       strategy_2_pilon(pilon_combined_ch.combine(input_tuple, by: 0))
       pilon_ch = strategy_2_pilon.out[1]
 
-      // Run quast (with all)
-      quast(hybrid_assemblies_ch.mix(pilon_combined_ch).mix(pilon_ch).combine(input_tuple, by: 0))
-
-      // Run multiqc
-      multiqc(quast.out[0].groupTuple(), quast.out[1], Channel.value("$workflow.runName"))
+      // Gather assemblies for qc
+      final_assemblies = hybrid_assemblies_ch.mix(pilon_combined_ch).mix(pilon_ch).combine(input_tuple, by: 0)
+  
+  emit:
+    final_assemblies
 
 }

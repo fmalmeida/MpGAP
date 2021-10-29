@@ -80,7 +80,6 @@ if (params.examples){
 params.outdir  = 'output'
 params.prefix  = ''
 params.threads = 4
-params.cpus    = 2
 params.in_yaml = ''
 
 // Assemblers?
@@ -117,7 +116,7 @@ params.corrected_lreads = false
 params.longreads = ''
 params.lr_type = 'nanopore'
 params.medaka_sequencing_model = 'r941_min_high_g360'
-params.nanopolish_fast5Path = ''
+params.nanopolish_fast5 = ''
 params.nanopolish_max_haplotypes = 1000
 params.pacbio_bam = ''
 
@@ -137,6 +136,7 @@ logMessage()
 // misc
 include { parse_samplesheet } from './workflows/parse_samples.nf'
 include { define_prefix } from './modules/misc/define_prefix.nf'
+include { ASSEMBLY_QC } from './workflows/assembly_qc.nf'
 
 // Short reads only
 include { SHORTREADS_ONLY } from './workflows/short-reads-only.nf'
@@ -180,6 +180,9 @@ workflow {
 
     // hybrid samples
     HYBRID(parse_samplesheet.out[2])
+
+    // QC
+    ASSEMBLY_QC(SHORTREADS_ONLY.out.mix(LONGREADS_ONLY.out, HYBRID.out))
 
   } else {
 
@@ -231,25 +234,37 @@ workflow {
         (params.corrected_lreads) ? 'true' : 'false',
         params.medaka_sequencing_model
       ),
-      (params.nanopolish_fast5Path && params.lr_type == 'nanopore') ? Channel.fromPath(params.nanopolish_fast5Path) : Channel.from("missing_fast5"),
-      (params.pacbio_bam && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_bam).toList() : Channel.from("missing_pacbio_bam"),
+      (params.nanopolish_fast5 && params.lr_type == 'nanopore') ? Channel.fromPath(params.nanopolish_fast5) : Channel.from("missing_fast5"),
+      (params.pacbio_bam && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_bam) : Channel.from("missing_pacbio_bam"),
       define_prefix.out.prefix_dir
     ).toList()
 
     // long reads only workflow
     if (desired_workflow == "longreads_only") {
       LONGREADS_ONLY(input_tuple)
+      longreads_single_sample = LONGREADS_ONLY.out
+    } else {
+      longreads_single_sample = Channel.empty()
     }
 
     // short reads only workflow
     if (desired_workflow == "shortreads_only") {
       SHORTREADS_ONLY(input_tuple)
+      shortreads_single_sample = SHORTREADS_ONLY.out
+    } else {
+      shortreads_single_sample = Channel.empty()
     }
 
     // hybrid workflow
     if (desired_workflow =~ /hybrid/) {
       HYBRID(input_tuple)
+      hybrid_single_sample = HYBRID.out
+    } else {
+      hybrid_single_sample = Channel.empty()
     }
+
+    // QC
+    ASSEMBLY_QC(shortreads_single_sample.mix(longreads_single_sample, hybrid_single_sample))
 
   } // end of else statement -- single genome workflow
 

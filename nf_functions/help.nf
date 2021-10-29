@@ -35,7 +35,8 @@
      --threads <int>                                                            Number of threads to use.
 
      --parallel_jobs <int>                                                      Number of jobs to run in parallel. Each job can consume up
-                                                                                to N threads (--threads). Default: 1.
+                                                                                to N threads (--threads). If not given, let's nextflow automatically
+                                                                                handle it. Default: NA.
 
      --genomeSize <string>                                                      Canu, wtdbg2 and Haslr require an estimative of genome size in order
                                                                                 to be executed. It is optional for Flye. Examples: 5.6m; 1.2g
@@ -76,7 +77,7 @@
                                                                                 It is also possible to polish the longreads-only assemblies with Nanopolish,
                                                                                 Medaka or gcpp (depending on the sequencing technology) before polishing
                                                                                 it with shortreads. For that, users must check the longreads parameters:
-                                                                                --medaka_sequencing_model, --nanopolish_fast5Path and --pacbio_bam
+                                                                                --medaka_sequencing_model, --nanopolish_fast5 and --pacbio_bam
 
             # Assembly polishing using long reads raw data
             # Parameters useful for polishing longreads-only assemblies
@@ -88,12 +89,9 @@
                                                                                 [ Default: r941_min_high_g360 ].
 
 
-     --nanopolish_fast5Path <string>                                            Path to directory containing FAST5 files for given reads.
+     --nanopolish_fast5 <string>                                            Path to directory containing FAST5 files for given reads.
                                                                                 Whenever set, the pipeline will execute a polishing step
                                                                                 with Nanopolish. This makes the pipeline extremely SLOW!!
-
-     --cpus <int>                                                               Number of cores to run nanopolish in parallel.
-                                                                                Beware of your system limits. Default: 2.
 
      --nanopolish_max_haplotypes <int>                                          This parameter sets to nanopolish the max number of haplotypes to be considered.
                                                                                 Sometimes the pipeline may crash because to much variation was found 
