@@ -88,6 +88,10 @@ By polishing a long reads only assembly with Illumina reads. For that, users wil
         nextflow run fmalmeida/mpgap --outdir output --threads 5 --shortreads_paired "path-to/illumina_r{1,2}.fastq" \
         --shortreads_single "path-to/illumina_unpaired.fastq" --lr_type 'nanopore' --longreads "path-to/ont_reads.fastq" --strategy_2
 
+#### Tip
+
+User can perform both strategy 1 and strategy 2 hybrid assemblies for a sample if using the YAML samplesheet and, inside the samplesheet, configuring the sample with the key: `hybrid_strategy: both`. For more information please read: PUT LINK
+
 ### Usage
 
 <a href="https://mpgap.readthedocs.io/en/latest/index.html"><strong>Users are advised to read the complete documentation »</strong></a>
@@ -104,8 +108,8 @@ Command line executions are exemplified [in the manual](https://mpgap.readthedoc
 #### Warnings
 
 * Remember to **always** write input paths inside double quotes.
-* When using paired end reads it is **required** that input reads are set with the “{1,2}” pattern. For example: “SRR6307304_{1,2}.fastq”. This will properly load reads “SRR6307304_1.fastq” and “SRR6307304_2.fastq”
-* When running hybrid assemblies or mixing short read types it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. So that the pipeline does not load any different read that also matches the REGEX and avoid confusions with the inputs.
+* When using paired end reads it is **required** that input reads are set with the "{1,2}" pattern. For example: "SRR6307304_{1,2}.fastq". This will properly load reads "SRR6307304_1.fastq" and "SRR6307304_2.fastq"
+* When running hybrid assemblies, mixing short read types or performing multiple assemblies it is advised to use the YAML samplesheet for multi-samples workflows.
 
 ### Using the configuration file
 
@@ -164,16 +168,7 @@ It will result in the following:
 1. Whenever using unicycler with unpaired reads, an odd platform-specific SPAdes-related crash seems do randomly happen as it can be seen in the issue discussed at https://github.com/rrwick/Unicycler/issues/188.
   + As a workaround, Ryan says to use the `--no_correct` parameter which solves the issue and does not have a negative impact on assembly quality.
   + Therefore, if you run into this error when using unpaired data you can activate this workaroud with `--unicycler_additional_parameters "--no_correct"`.
-2. Whenever running the pipeline for multiple samples at once using glob patterns such as '*' and '?', users are advised to do not perform hybrid assemblies, nor combining both paired and unpaired short reads in short reads only assemblies. Because the pipeline is not yet trained to properly search for the correct pairs, and since nextflow channels are random, we cannot ensure that the combination of data used in these to assembly types will be right. The pipeline treats each input file as a unique sample, and it will execute it individually.
-  + To date, the use of glob patterns only works properly with long reads only assembly, or short reads only assemblies using either paired or unpaired reads, not both at the same time. For example:
-    + `nextflow run [...] --longreads 'my_data/*.fastq' --lr_type 'nanopore' --outdir my_results`
-    + The pipeline will load and assembly each fastq in the `my_data` folder and assemble it, writing the results for each read in a sub-folder with the reads basename in the `my_results` output folder.
-    + `nextflow run [...] --shortreads_single 'my_data/*.fastq' --outdir my_results`
-    + The pipeline will load and assembly each fastq in the `my_data` folder and assemble it, writing the results for each read in a sub-folder with the reads basename in the `my_results` output folder.
-
-> However, we are currently working in a proper way to execute the hybrid and combination of short reads in assemblies for multiple samples at once so that users can properly execute it without confusion.
-
-3. Sometimes, shovill assembler can fail and cause the pipeline to fail due to problems in estimating the genome size. This, is actually super simple to solve! Instead of letting the shovill assembler estimate the genome size, you can pass the information to it and prevent its fail:
+2. Sometimes, shovill assembler can fail and cause the pipeline to fail due to problems in estimating the genome size. This, is actually super simple to solve! Instead of letting the shovill assembler estimate the genome size, you can pass the information to it and prevent its fail:
     + `--shovill_additional_parameters '--gsize 3m'`
 
 ## Citation
