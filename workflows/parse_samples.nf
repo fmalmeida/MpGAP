@@ -12,10 +12,20 @@ workflow parse_samplesheet {
     // now we parse the csv created
     parsed_csv = custom_csv.splitCsv(header: ['name', 'entrypoint', 'fwd', 'rev', 'single', 'lreads', 'lr_type', 'wtdbg2_technology','genomeSize', 'corrected_lreads', 'medaka_model','fast5', 'pacbio_bam']).map{ row ->
 
-    if (row.entrypoint == 'shortreads_only') { prefix = "${row.name}/shortreads_only" }
-    if (row.entrypoint == 'hybrid_strategy_1') { prefix = "${row.name}/hybrid_strategy_1" }
-    if (row.entrypoint == 'hybrid_strategy_2') { prefix = "${row.name}/hybrid_strategy_2" }
-    if (row.entrypoint == 'longreads_only') { prefix = "${row.name}/longreads_only" }
+    if (row.entrypoint == 'shortreads_only') { 
+      prefix = "${row.name}/shortreads_only" 
+    }
+    if (row.entrypoint == 'hybrid_strategy_1') {
+      fixed_name = row.name - ":strategy_1"
+      prefix = "${fixed_name}/hybrid_strategy_1" 
+    }
+    if (row.entrypoint == 'hybrid_strategy_2') { 
+      fixed_name = row.name - ":strategy_2"
+      prefix = "${fixed_name}/hybrid_strategy_2" 
+    }
+    if (row.entrypoint == 'longreads_only') { 
+      prefix = "${row.name}/longreads_only" 
+    }
 
     // create input tuple   
     tuple(
