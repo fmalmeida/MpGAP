@@ -122,12 +122,11 @@ workflow {
   // with samplesheet?
   if (params.in_yaml) {
 
-     // MULTI SAMPLE ANALYSIS --- WITH SAMPLESHEET
-
+    // Load YAML
     parameter_yaml = new FileInputStream(new File(params.in_yaml))
     new Yaml().load(parameter_yaml).each { k, v -> params[k] = v }
 
-    // Read YAML file
+    // Parse YAML file
     parse_samplesheet(params.samplesheet)
 
     // short reads only samples
