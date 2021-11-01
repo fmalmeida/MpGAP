@@ -44,7 +44,13 @@ def write_csv(in_list) {
       /*
        * Check if long reads are corrected
        */
-      it.corrected_lreads = (params.corrected_lreads || it.corrected_lreads) ? 'true' : 'false'
+      if (it.corrected_lreads) {
+        it.corrected_lreads = it.corrected_lreads
+      } else if (params.corrected_lreads) {
+        it.corrected_lreads = params.corrected_lreads
+      } else {
+        it.corrected_lreads = 'false'
+      }
 
       /*
        * Check for fast5 directory
