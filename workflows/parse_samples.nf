@@ -26,6 +26,11 @@ workflow parse_samplesheet {
     if (row.entrypoint == 'longreads_only') { 
       prefix = "${row.name}/longreads_only" 
     }
+    if (row.corrected_lreads && row.corrected_lreads.toLowerCase() != 'false') {
+      corrected_lreads = 'true'
+    } else {
+      corrected_lreads = 'false'
+    }
 
     // create input tuple   
     tuple(
