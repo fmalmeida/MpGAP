@@ -19,7 +19,9 @@
     OPTIONS:
 
     The command line help message is not supported anymore because it has become too big and, therefore, very clumsy and confusing to read.
-    Please, use the nextflow.config configuration file that has comments and help messages inside it or refer to the online manual: https://mpgap.readthedocs.io/en/latest/manual.html
+    Please, use the nextflow.config configuration file that has comments and help messages inside it or refer to the online manual:
+    
+              https://mpgap.readthedocs.io/en/latest/manual.html
 
     """.stripIndent()
  }
