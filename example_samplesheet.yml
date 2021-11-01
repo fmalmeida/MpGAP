@@ -1,0 +1,43 @@
+# This is an exemplification of the accepted YAML syntax accepted by the MpGAP pipeline
+#
+# The file must contain a header-line with the key "samplesheet:". All the
+# input samples must be given nested to this key. Obs: The header-line and
+# the nest indentation are REQUIRED.
+#
+# Each sample must initiate with the key "id:" listed with a "-". This value
+# is what will be used as prefix for outputs. The input keys must be given 
+# right after this id key, with the same indent without the "-".
+#
+# Please read the https://mpgap.readthedocs.io/en/latest/samplesheet.html documentation page
+# in order to understand how to properly set up and which are the available input keys
+# for the samplesheet
+#
+# A template (with the correct fields, syntax and indentation) is given below:
+
+samplesheet:
+  - id: sample_1
+    illumina: 
+      - dataset/reads_1.fastq.gz
+      - dataset/reads_2.fastq.gz
+  - id: sample_2
+    illumina:
+      - dataset/reads_unpaired.fastq.gz
+  - id: sample_3
+    illumina:
+      - dataset/reads_1.fastq.gz
+      - dataset/reads_2.fastq.gz
+      - dataset/pairs_merged.fastq.gz
+  - id: sample_4
+    nanopore: dataset/ont_reads.fastq.gz
+    fast5: dataset/kleb/fast5_pass
+    genomeSize: 5.5m
+  - id: sample_5
+    pacbio: dataset/pacbio_reads.fastq.gz
+    pacbio_bam: dataset/pacbio_reads.subreads.bam
+    wtdbg2_technology: rs  
+  - id: sample_6
+    illumina:
+      - dataset/reads_1.fastq.gz
+      - dataset/reads_2.fastq.gz
+    nanopore: dataset/ont_reads.fastq.gz
+    hybrid_strategy: both

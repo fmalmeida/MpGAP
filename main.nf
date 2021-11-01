@@ -32,7 +32,7 @@ include { logMessage          } from './nf_functions/logMessages.nf'
  */
  params.get_samplesheet = false
  if (params.get_samplesheet) {
-   new File("MPGAP_samplesheet.yml").write(new URL ("https://github.com/fmalmeida/mpgap/raw/master/samplesheet.yml").getText())
+   new File("MPGAP_samplesheet.yml").write(new URL ("https://github.com/fmalmeida/mpgap/raw/master/example_samplesheet.yml").getText())
    println ""
    println "Samplesheet (MPGAP_samplesheet.yml) file saved in working directory"
    println "Nice code!\n"
