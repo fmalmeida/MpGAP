@@ -10,11 +10,8 @@
     This pipeline contains a massive amount of configuration variables and its usage as CLI parameters would cause the command to be huge.
     Therefore, it is extremely recommended to use the nextflow.config configuration file in order to make parameterization easier and more readable.
 
-    Creating a configuration file:
-    nextflow run fmalmeida/mpgap [--get_hybrid_config] [--get_lreads_config] [--get_sreads_config]
-
-    Show command line examples:
-    nextflow run fmalmeida/mpgap --examples
+    Creating a configuration/samplesheet file:
+    nextflow run fmalmeida/mpgap [--get_config] [--get_samplesheet]
 
     OPTIONS:
 

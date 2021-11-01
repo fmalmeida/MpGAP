@@ -10,57 +10,31 @@ import org.yaml.snakeyaml.Yaml
  * Include functions
  */
 include { helpMessage         } from './nf_functions/help.nf'
-include { exampleMessage      } from './nf_functions/examples.nf'
-include { paramsCheck         } from './nf_functions/paramsCheck.nf'
 include { logMessage          } from './nf_functions/logMessages.nf'
-
-/*
- * Check parameters
- */
-paramsCheck()
-params.help = false
-if (params.help){
-  helpMessage()
-  exit 0
-}
-params.examples = false
-if (params.examples){
-  exampleMessage()
-  exit 0
-}
 
  /*
            Download configuration file, if necessary.
  */
- params.get_hybrid_config = false
- if (params.get_hybrid_config) {
-   new File("hybrid.config").write(new URL ("https://github.com/fmalmeida/mpgap/raw/master/configuration_example/hybrid.config").getText())
+ params.get_config = false
+ if (params.get_config) {
+   new File("MPGAP.config").write(new URL ("https://github.com/fmalmeida/mpgap/raw/master/nextflow.config").getText())
    println ""
-   println "hybrid.config file saved in working directory"
+   println "MPGAP.config file saved in working directory"
    println "After configuration, run:"
-   println "nextflow run fmalmeida/mpgap -c ./hybrid.config"
+   println "nextflow run fmalmeida/mpgap -c ./MPGAP.config"
    println "Nice code!\n"
 
    exit 0
  }
- params.get_lreads_config = false
- if (params.get_lreads_config) {
-   new File("lreads-only.config").write(new URL ("https://github.com/fmalmeida/mpgap/raw/master/configuration_example/lreads.config").getText())
-   println ""
-   println "lreads.config file saved in working directory"
-   println "After configuration, run:"
-   println "nextflow run fmalmeida/mpgap -c ./lreads.config"
-   println "Nice code!\n"
 
-   exit 0
- }
- params.get_sreads_config = false
- if (params.get_sreads_config) {
-   new File("sreads-only.config").write(new URL ("https://github.com/fmalmeida/mpgap/raw/master/configuration_example/sreads.config").getText())
+ /*
+           Download samplesheet, if necessary.
+ */
+ params.get_samplesheet = false
+ if (params.get_samplesheet) {
+   new File("MPGAP_samplesheet.yml").write(new URL ("https://github.com/fmalmeida/mpgap/raw/master/samplesheet.yml").getText())
    println ""
-   println "sreads.config file saved in working directory"
-   println "After configuration, run:"
-   println "nextflow run fmalmeida/mpgap -c ./sreads.config"
+   println "Samplesheet (MPGAP_samplesheet.yml) file saved in working directory"
    println "Nice code!\n"
 
    exit 0
@@ -72,7 +46,6 @@ if (params.examples){
 
 // General
 params.outdir  = 'output'
-params.prefix  = ''
 params.threads = 4
 params.in_yaml = ''
 
@@ -101,18 +74,10 @@ params.wtdbg2_additional_parameters    = ''
 params.wtdbg2_technology               = 'ont'
 params.shasta_additional_parameters    = ''
 
-// Short reads
-params.shortreads_paired = ''
-params.shortreads_single = ''
-
 // Long reads
 params.corrected_lreads = false
-params.longreads = ''
-params.lr_type = 'nanopore'
 params.medaka_sequencing_model = 'r941_min_high_g360'
-params.nanopolish_fast5 = ''
 params.nanopolish_max_haplotypes = 1000
-params.pacbio_bam = ''
 
 // Hybrid strategy 2
 params.strategy_2 = false
@@ -129,7 +94,6 @@ logMessage()
 
 // misc
 include { parse_samplesheet } from './workflows/parse_samples.nf'
-include { define_prefix } from './modules/misc/define_prefix.nf'
 include { ASSEMBLY_QC } from './workflows/assembly_qc.nf'
 
 // Short reads only
@@ -180,88 +144,14 @@ workflow {
 
   } else {
 
-    // SINGLE SAMPLE ANALYSIS --- WITHOUT SAMPLESHEET
-
-  /*
-   * Parse inputs
-   */
-    // load long reads
-    lreads = (params.longreads) ? Channel.fromPath(params.longreads) : Channel.value('missing')
-
-    // load short reads paired
-    sreads_paired = (params.shortreads_paired) ? Channel.fromFilePairs( params.shortreads_paired, flat: true, size: 2 ) : Channel.value(['missing', 'missing', 'missing'])
-
-    // separate paired end reads to create input_tuple
-    sreads_paired.multiMap {
-      id:  it[0]
-      fwd: it[1]
-      rev: it[2]
-    }.set { parsed_paired }
-
-    // load short reads unpaired
-    sreads_single = (params.shortreads_single) ? Channel.fromPath(params.shortreads_single, hidden: true) : Channel.value('missing')
-
-    // define prefixes
-    define_prefix(lreads, sreads_paired, sreads_single)
-
-    // check desired workflow
-    if (!params.shortreads_paired && !params.shortreads_single && params.longreads && params.lr_type) {
-      desired_workflow = "longreads_only"
-    } else if (!params.longreads && (params.shortreads_paired || params.shortreads_single)) {
-      desired_workflow = "shortreads_only"
-    } else if (params.longreads && params.lr_type && (params.shortreads_paired || params.shortreads_single)) {
-      desired_workflow = (params.strategy_2) ? "hybrid_strategy_2" : "hybrid_strategy_1"
-    }
-
-    // create input tuple
-    // for concat, every "entry" must be a channel
-    input_tuple = define_prefix.out.sample_name.concat(
-      Channel.from(desired_workflow),
-      (params.shortreads_paired) ? parsed_paired.fwd : Channel.from("missing_pairFWD"),
-      (params.shortreads_paired) ? parsed_paired.rev : Channel.from("missing_pairREV"),
-      (params.shortreads_single) ? sreads_single : Channel.from("missing_single"),
-      (params.longreads) ? lreads : Channel.from("missing_lreads"),
-      Channel.from(
-        params.lr_type,
-        params.wtdbg2_technology,
-        params.genomeSize,
-        (params.corrected_lreads) ? 'true' : 'false',
-        params.medaka_sequencing_model
-      ),
-      (params.nanopolish_fast5 && params.lr_type == 'nanopore') ? Channel.fromPath(params.nanopolish_fast5) : Channel.from("missing_fast5"),
-      (params.pacbio_bam && params.lr_type == 'pacbio') ? Channel.fromPath(params.pacbio_bam) : Channel.from("missing_pacbio_bam"),
-      define_prefix.out.prefix_dir
-    ).toList()
-
-    // long reads only workflow
-    if (desired_workflow == "longreads_only") {
-      LONGREADS_ONLY(input_tuple)
-      longreads_single_sample = LONGREADS_ONLY.out
-    } else {
-      longreads_single_sample = Channel.empty()
-    }
-
-    // short reads only workflow
-    if (desired_workflow == "shortreads_only") {
-      SHORTREADS_ONLY(input_tuple)
-      shortreads_single_sample = SHORTREADS_ONLY.out
-    } else {
-      shortreads_single_sample = Channel.empty()
-    }
-
-    // hybrid workflow
-    if (desired_workflow =~ /hybrid/) {
-      HYBRID(input_tuple)
-      hybrid_single_sample = HYBRID.out
-    } else {
-      hybrid_single_sample = Channel.empty()
-    }
-
-    // QC
-    ASSEMBLY_QC(shortreads_single_sample.mix(longreads_single_sample, hybrid_single_sample))
-
-  } // end of else statement -- single genome workflow
-
+    // Message to user
+    println("""
+      A samplesheet has not been provided. Please, provide a samplesheet to run the analysis.
+      Online documentation at: https://mpgap.readthedocs.io/en/latest/
+    """)
+  
+  }
+    
 }
 
 /*

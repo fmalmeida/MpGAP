@@ -47,7 +47,7 @@ workflow parse_samplesheet {
         row.medaka_model, // change medaka model?
         (row.fast5 == "missing_fast5") ? row.fast5 : file(row.fast5), // nanopolish fast5 as file
         (row.pacbio_bam == "missing_pacbio_bam") ? row.pacbio_bam : file(row.pacbio_bam),
-        prefix, // ouput prefix
+        prefix, // output prefix
       )
     }
 
