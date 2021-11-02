@@ -87,7 +87,7 @@ It uses the hybrid assembly modes from Unicycler, Haslr and/or SPAdes.
 
 #### Strategy 2
 
-It produces a long reads only assembly and polishes (correct errors) it with short reads using Pilon (for unpaired reads) or with [Unicycler-polish program](https://github.com/rrwick/Unicycler/blob/master/docs/unicycler-polish.md) (for paired end reads).
+It produces a long reads only assembly and polishes (correct errors) it with short reads using Pilon (for unpaired reads) or with [Unicycler-polish program](https://github.com/rrwick/Unicycler/blob/main/docs/unicycler-polish.md) (for paired end reads).
 
 #### Example:
 
@@ -100,7 +100,7 @@ nextflow run fmalmeida/mpgap \
   --hybrid_strategy "both"
 ```
 
-:fire: This will perform, for **all** samples, both both strategy 1 and strategy 2 hybrid assemblies. Please read more about it in the [manual reference page(https://mpgap.readthedocs.io/en/latest/manual.html) and [samplesheet reference page(https://mpgap.readthedocs.io/en/latest/samplesheet.html).
+:fire: This will perform, for **all** samples, both both strategy 1 and strategy 2 hybrid assemblies. Please read more about it in the [manual reference page](https://mpgap.readthedocs.io/en/latest/manual.html) and [samplesheet reference page](https://mpgap.readthedocs.io/en/latest/samplesheet.html).
 
 ### Usage
 
