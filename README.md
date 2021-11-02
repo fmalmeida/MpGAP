@@ -106,12 +106,6 @@ nextflow run fmalmeida/mpgap \
 
 For understading pipeline usage and configuration, users must read the <a href="https://mpgap.readthedocs.io/en/latest/index.html"><strong>complete online documentation »</strong></a>
 
-#### Warnings
-
-* Remember to **always** write input paths inside double quotes.
-* When using paired end reads it is **required** that input reads are set with the "{1,2}" pattern. For example: "SRR6307304_{1,2}.fastq". This will properly load reads "SRR6307304_1.fastq" and "SRR6307304_2.fastq"
-* When running hybrid assemblies, mixing short read types or performing multiple assemblies it is advised to use the YAML samplesheet for multi-samples workflows.
-
 ### Using the configuration file
 
 All parameters showed above can be, and are advised to be, set through the configuration file. When a configuration file is used the pipeline is executed as `nextflow run fmalmeida/mpgap -c ./configuration-file`. Your configuration file is what will tell the pipeline which type of data you have, and which processes to execute. Therefore, it needs to be correctly configured.
