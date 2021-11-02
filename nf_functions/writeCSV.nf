@@ -93,7 +93,19 @@ def write_csv(in_list) {
     /*
      * Check for wtdbg2 technology
      */
-    wtdbg2_technology = (it.wtdbg2_technology) ? it.wtdbg2_technology : params.wtdbg2_technology
+    // defaults
+    if (lr_type == "nanopore") {
+      wtdbg2_technology = "ont"
+    } else if (lr_type == "pacbio") {
+      wtdbg2_technology = "sq"
+    } else {
+      wtdbg2_technology = "not_used"
+    }
+
+    // wtdbg2_technology input is used for the sample?
+    if (it.wtdbg2_technology) {
+      wtdbg2_technology = it.wtdbg2_technology
+    }
 
     /*
      * Check for desired hybrid strategy model
@@ -173,18 +185,6 @@ def write_csv(in_list) {
       A minor error has occurred
         ==> The pipeline will try to run wtdbg2 assembler on sample ${it.id}, but user forgot to tell the expected genome size.
       Please either set it with --genomeSize or inside the YAML (genomeSize:) for that sample, or turn off the haslr assembly with --skip_wtdbg2
-      Cheers.
-      """.stripIndent()
-      exit 1
-    }
-
-    // wtdgb2 is used with pacbio, and the technology is not properly set?
-    if (!params.skip_wtdbg2 && lr_type == 'pacbio' && wtdbg2_technology == "ont") {
-      println """
-      ERROR!
-      A minor error has occurred
-        ==> The pipeline will try to assemble pacbio reads from sample ${it.id} with wtdbg2, but user forgot to tell the correct techonology. Options: "rs" for PacBio RSII, "sq" for PacBio Sequel, "ccs" for PacBio CCS reads.
-      Please either set it with --wtdbg2_technology or inside the YAML (wtdbg2_technology:) for that sample, or turn off the wtdbg2 assembly with --skip_wtdbg2.
       Cheers.
       """.stripIndent()
       exit 1
