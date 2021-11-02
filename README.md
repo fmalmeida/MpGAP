@@ -79,7 +79,7 @@ This pipeline has only two dependencies: [Docker](https://www.docker.com) and [N
 
 Hybrid assemblies can be produced with two available strategies. Please read more about the strategies and how to set them up in the [online documentation](https://mpgap.readthedocs.io/en/latest/manual.html#hybrid-assembly-strategies).
 
-:target: they are chosen with the parameter `--hybrid_strategy`.
+:arrow_right: they are chosen with the parameter `--hybrid_strategy`.
 
 #### Strategy 1
 
