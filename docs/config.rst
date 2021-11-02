@@ -14,5 +14,5 @@ Configuration File
 Main config file
 ----------------
 
-.. include:: ../nextflow.config
-   :code: groovy
+.. literalinclude:: ../nextflow.config
+   :language: groovy
