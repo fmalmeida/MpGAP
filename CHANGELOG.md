@@ -4,6 +4,30 @@ The tracking for changes started in v2.
 
 ## v3.0
 
+* Fixed a problem with the if statements in the pilon polish module. The module was not properly checking the statements when users had only unpaired reads or both paired and unpaired. The only conditional statement that was correct was when users had only paired end reads. This is now fixed and properly set.
+* A YAML samplesheet file has been implemented in order to properly use the pipeline, in all workflow types, for multiple samples at once.
+    + Because of that, we had to remove the possibility to pass the input reads via the command line and now, the files with input data, must always be set inside the YAML samplesheet, even if analysing only one sample.
+    + Read more at: https://mpgap.readthedocs.io/en/latest/samplesheet.html
+    + Check the template samplesheet at: https://github.com/fmalmeida/mpgap/blob/master/example_samplesheet.yaml
+* Because of the implementation above, the folowing parameters are now deprecated, because they are now set inside the YAML file:
+    + `--longreads`
+    + `--lr_type`
+    + `--pacbio_bam`
+    + `--nanopolish_fast5Path`
+    + `--shortreads_paired`
+    + `--shortreads_single`
+* In order to make it simple and natural, two changes ocurred in input/output parameters
+    + The `--outdir` parameter is now `--output`
+    + The samplesheet is given with the parameter `--input`
+* A major change has also ocurred with the wtdbg2 techonology parameter
+    + Now, by default, the pipeline will check wheter long reads input are nanopore or pacbio
+    + If they are nanopore, the wtdbg2 techonology parameter is automatically set to `ont`
+    + If they are pacbio, the wtdbg2 techonology parameter is automaically set to `sq`
+    + This wtdbg2 paramter has the following options: "rs" for PacBio RSII, "sq" for PacBio Sequel, "ccs" for PacBio CCS reads. If, the user's input pacbio reads are not PacBio Sequel, user's can change it with the `wtdbg2_technology` parameter that can be set outside the YAML file to change the default for all samples or inside the YAML file to change its value for a single sample.
+    + Please read more about it in the online documentation: [Samplesheet configuration](https://mpgap.readthedocs.io/en/latest/samplesheet.html) and [Parameters manual](https://mpgap.readthedocs.io/en/latest/manual.html)
+* Since this changes are major changes, the pipeline main version has changed and it is now in v3.0
+    + The docker image is `fmalmeida/mpgap:v3.0`.
+
 ## v2.3.1
 
 This patch release is related to the issue [#19](https://github.com/fmalmeida/MpGAP/issues/19) which raises attention that shovill was not being used to its fully extent. Shovill was just being used with spades as its core.
