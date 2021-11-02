@@ -63,10 +63,6 @@ This pipeline has only two dependencies: [Docker](https://www.docker.com) and [N
 
           docker pull fmalmeida/mpgap:v3.0
 
-> Each release is accompanied by a Dockerfile in the docker folder. When using releases older releases, users can create the correct image using
-the Dockerfile that goes alongside with the release (Remember to give the image the correct name, as it is in dockerhub and the nextflow script).
-The latest release will always have its docker image in dockerhub.
-
 2. Install Nextflow (version 20.01 or higher):
 
        curl -s https://get.nextflow.io | bash
@@ -75,7 +71,7 @@ The latest release will always have its docker image in dockerhub.
 
        nextflow run fmalmeida/mpgap --help
 
-> Users can let the pipeline always updated with: `nextflow pull fmalmeida/mpgap`
+:fire: Users can let the pipeline always updated with: `nextflow pull fmalmeida/mpgap`
 
 ## Documentation
 
