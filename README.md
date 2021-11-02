@@ -28,7 +28,16 @@ MpGAP is an easy to use nextflow docker-based pipeline that adopts well known so
 | **Polishers** | [Nanopolish](https://github.com/jts/nanopolish), [Medaka](https://github.com/nanoporetech/medaka), [gcpp](https://github.com/PacificBiosciences/gcpp), [Pilon](https://github.com/broadinstitute/pilon) |
 | **Quality check** | [QUAST](https://github.com/ablab/quast), [MultiQC](https://multiqc.info/) |
 
-## Further reading
+### Release notes
+
+Are you curious about changes between releases? See the [changelog](markdown/CHANGELOG.md).
+
+* I **strongly**, **vividly**, **mightily** recommend the usage of the latest versions hosted in master branch, which is nextflow's default.
+    + The latest will always have support, bug fixes and generally maitain the same processes (I mainly add things instead of removing) that also were in previous versions.
+    + But, if you **really** want to execute an earlier release, please [see the instructions for that](markdown/earlier_releases_instructions.md).
+* Versions below 2.0 are no longer supported.
+
+### Further reading
 
 This pipeline has two complementary pipelines (also written in nextflow) for [NGS preprocessing](https://github.com/fmalmeida/ngs-preprocess) and [prokaryotic genome annotation](https://github.com/fmalmeida/bacannot) that can give the user a complete workflow for bacterial genomics analyses.
 
@@ -155,3 +164,5 @@ It will result in the following:
 ## Citation
 
 To cite this pipeline users can use our Zenodo tag or directly via the github url. Users are encouraged to cite the programs used in this pipeline whenever they are used.
+
+Please, do not forget to cite the software that were used whenever you use its outputs. See [the list of tools](markdown/list_of_tools.md).
