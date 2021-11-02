@@ -155,7 +155,7 @@ workflow HYBRID {
       /*
        * Shasta
        */
-      if (!params.skip_shasta && params.lr_type == 'nanopore') {
+      if (!params.skip_shasta) {
         strategy_2_shasta(input_branches.secondary)
         shasta_ch = strategy_2_shasta.out[1]
       }

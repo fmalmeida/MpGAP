@@ -109,7 +109,7 @@ def write_csv(in_list) {
     has_short_reads = (paired != "missing_paired" || single != "missing_single") ? true : false
 
     // any long reads are given?
-    has_long_reads = (lr_type != "missing_lr_type" || lreads != "missing_lreads") ? true : false
+    has_long_reads = (lr_type != "missing_lr_type" && lreads != "missing_lreads") ? true : false
 
     // has only short reads
     if (has_short_reads && !has_long_reads) { entrypoint = 'shortreads_only' }

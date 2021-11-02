@@ -13,8 +13,7 @@ process quast {
   // Alignment parameters
   paired_param = !(sread1 =~ /input.*/ || sread2 =~ /input.*/) ? "--pe1 ${sread1} --pe2 ${sread2}" : ""
   single_param = !(single =~ /input.?/) ? "--single ${single}" : ""
-  ltype        = (params.lr_type == 'nanopore') ? "ont2d" : "pacbio"
-  lreads_param = !(lreads =~ /input.?/) ? "--${params.lr_type} ${lreads}" : ""
+  lreads_param = !(lreads =~ /input.?/) ? "--${lr_type} ${lreads}" : ""
 
   """
   quast.py -o ${assembler} -t ${params.threads} \\
