@@ -12,7 +12,10 @@ process pilon_polish {
   tuple val(id), file("pilon_polished_${assembler}/${assembler}_final_pilon_polish.fasta"), val("${assembler}_pilon_polished")
 
   script:
-  if(!(sread1 =~ /input.*/) && (single =~ /input.*/))
+  has_paired = (sread1 =~ /input.*/) ? false : true
+  has_single = (single =~ /input.*/) ? false : true
+  // has paired reads but doesn't have unpaired reads
+  if(has_paired && !has_single)
       """
       # Create the results dir
       mkdir pilon_polished_${assembler};
@@ -25,8 +28,8 @@ process pilon_polish {
       mv 0* polish.log pilon_polished_${assembler};
       mv pilon_polished_${assembler}/*_final_polish.fasta pilon_polished_${assembler}/${assembler}_final_pilon_polish.fasta ;
       """
-
-  else if(!(sread1 =~ /input.*/) && !(single =~ /input.*/))
+  // doesn't have paired reads but has unpaired reads
+  else if(!has_paired && has_single)
       """
       # Create the results dir
       mkdir pilon_polished_${assembler};
@@ -45,7 +48,8 @@ process pilon_polish {
       # save bam file in the desired directory
       mv ${id}_${assembler}_aln.bam pilon.log pilon_polished_${assembler};
       """
-  else if(params.shortreads_paired != '' && params.shortreads_single != '')
+  // has paired reads and has unpaired reads
+  else if(has_paired && has_single)
       """
       # Create the results dir
       mkdir pilon_polished_${assembler};
