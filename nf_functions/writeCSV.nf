@@ -12,15 +12,19 @@ def write_csv(in_list) {
     single   = "missing_single"
 
     // illumina key is used for this sample?
-    if (it.illumina.size() == 1) {           // only unpaired reads
-      single   = it.illumina[0]
-    } else if (it.illumina.size() == 2) {    // only paired reads
-      fwd_pair = it.illumina[0]
-      rev_pair = it.illumina[1]
-    } else if (it.illumina.size() == 3) {    // both paired and unpaired reads
-      fwd_pair = it.illumina[0]
-      rev_pair = it.illumina[1]
-      single   = it.illumina[2]
+    if (it.illumina) {
+      if (it.illumina.size() == 1) {           // only unpaired reads
+        single   = it.illumina[0]
+      } else if (it.illumina.size() == 2) {    // only paired reads
+        fwd_pair = it.illumina[0]
+        rev_pair = it.illumina[1]
+        paired   = 'has_paired'
+      } else if (it.illumina.size() == 3) {    // both paired and unpaired reads
+        fwd_pair = it.illumina[0]
+        rev_pair = it.illumina[1]
+        paired   = 'has_paired'
+        single   = it.illumina[2]
+      }
     }
 
     /*
@@ -116,11 +120,11 @@ def write_csv(in_list) {
 
     // has both short reads and long reads -- hybrid
     else if (has_short_reads && has_long_reads) {
-      entrypoint = 'hybrid_strategy_' + it.hybrid_strategy.toString().toLowerCase()
+      entrypoint = 'hybrid_strategy_' + hybrid_strategy.toString().toLowerCase()
 
       // check if the hybrid strategy is valid
       if (entrypoint != 'hybrid_strategy_1' && entrypoint != 'hybrid_strategy_2' && entrypoint != 'hybrid_strategy_both') {
-        println "ERROR: In the YAML, the 'strategy:' key must be either 1, 2 or both"
+        println "ERROR: In the YAML, the 'hybrid_strategy:' key must be either 1, 2 or both. Re-check sample: ${it.id}."
         exit 1
       }
     }
@@ -130,7 +134,7 @@ def write_csv(in_list) {
        
     // has nothing
     else {
-      println "ERROR: At least one read type must be set: illumina, nanopore or pacbio!"
+      println "ERROR: At least one read type must be set: illumina, nanopore or pacbio! Re-check sample: ${it.id}."
       exit 1
     }
 
@@ -140,7 +144,7 @@ def write_csv(in_list) {
      */
 
     // genome size is given if using canu?
-    if (!params.skip_canu && (!it.genomeSize || !params.genomeSize) && (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2' || entrypoint == 'hybrid_strategy_both' )) {
+    if (!params.skip_canu && (genomeSize == "missing_genomeSize") && (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2' || entrypoint == 'hybrid_strategy_both' )) {
       println """
       ERROR!
       A minor error has occurred
