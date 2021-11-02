@@ -2,7 +2,7 @@
 #
 # The file must contain a header-line with the key "samplesheet:". All the
 # input samples must be given nested to this key. Obs: The header-line and
-# the nest indentation are REQUIRED.
+# the nest indentation (two white spaces) are REQUIRED.
 #
 # Each sample must initiate with the key "id:" listed with a "-". This value
 # is what will be used as prefix for outputs. The input keys must be given 

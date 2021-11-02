@@ -120,29 +120,5 @@ The available tags are:
 Complete samplesheet example
 """"""""""""""""""""""""""""
 
-.. code-block:: yaml
-
-  samplesheet:
-    - id: sample_1
-      illumina:
-        - sample_1/1.fastq
-        - sample_1/2.fastq
-      nanopore: sample_1/ont.fastq
-      resfinder: Escherichia coli
-    - id: sample_2
-      assembly: sample_2/assembly.fasta
-      nanopore: sample_2/ont.fastq
-      fast5: sample_2/fast5_pass
-      resfinder: Klebsiella
-    - id: sample_3
-      nanopore: sample_3/ont.fastq
-      fast5: sample_3/fast5_pass
-    - id: sample_4
-      pacbio: sample_4/pacbio.fastq
-      illumina:
-        - sample_4/merged_unpaired.fastq
-    - id: sample_5
-      illumina:
-        - sample_5/1.fastq
-        - sample_5/2.fastq
-        - sample_5/merged.fastq
+.. literalinclude:: ../example_samplesheet.yml
+   :language: yaml
