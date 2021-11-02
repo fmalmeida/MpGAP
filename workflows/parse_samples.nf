@@ -10,7 +10,7 @@ workflow parse_samplesheet {
     custom_csv = write_csv(Channel.fromList(data))
   
     // now we parse the csv created
-    parsed_csv = custom_csv.splitCsv(header: ['name', 'entrypoint', 'fwd', 'rev', 'single', 'lreads', 'lr_type', 'wtdbg2_technology','genomeSize', 'corrected_lreads', 'medaka_model','fast5', 'pacbio_bam']).map{ row ->
+    parsed_csv = custom_csv.splitCsv(header: ['name', 'entrypoint', 'fwd', 'rev', 'single', 'lreads', 'lr_type', 'wtdbg2_technology','genomeSize', 'corrected_lreads', 'medaka_model','fast5', 'shasta_config','pacbio_bam']).map{ row ->
 
     if (row.entrypoint == 'shortreads_only') { 
       prefix = "${row.name}/shortreads_only" 
@@ -46,6 +46,7 @@ workflow parse_samplesheet {
         row.corrected_lreads.toLowerCase(), // are reads corrected?
         row.medaka_model, // change medaka model?
         (row.fast5 == "missing_fast5") ? row.fast5 : file(row.fast5), // nanopolish fast5 as file
+        row.shasta_config, // shasta config
         (row.pacbio_bam == "missing_pacbio_bam") ? row.pacbio_bam : file(row.pacbio_bam),
         prefix, // output prefix
       )

@@ -75,6 +75,11 @@ def write_csv(in_list) {
     medaka_model = (it.medaka_model) ? it.medaka_model : params.medaka_sequencing_model
 
     /*
+     * Check for shasta config
+     */
+    shasta_config = (it.shasta_config) ? it.shasta_config : params.shasta_config
+
+    /*
      * Check for sample genomeSize
      */
     // defaults
@@ -209,9 +214,9 @@ def write_csv(in_list) {
      * Output samplesheet as CSV
      */
     if (entrypoint == 'hybrid_strategy_both') { // creates two lines for the sample, for both hybrid strategies
-      "${it.id}:strategy_1,hybrid_strategy_1,${fwd_pair},${rev_pair},${single},${lreads},${lr_type},${wtdbg2_technology},${genomeSize},${corrected_lreads},${medaka_model},${fast5},${pacbio_bam}\n${it.id}:strategy_2,hybrid_strategy_2,${fwd_pair},${rev_pair},${single},${lreads},${lr_type},${wtdbg2_technology},${genomeSize},${corrected_lreads},${medaka_model},${fast5},${pacbio_bam}"
+      "${it.id}:strategy_1,hybrid_strategy_1,${fwd_pair},${rev_pair},${single},${lreads},${lr_type},${wtdbg2_technology},${genomeSize},${corrected_lreads},${medaka_model},${fast5},${shasta_config},${pacbio_bam}\n${it.id}:strategy_2,hybrid_strategy_2,${fwd_pair},${rev_pair},${single},${lreads},${lr_type},${wtdbg2_technology},${genomeSize},${corrected_lreads},${medaka_model},${fast5},${shasta_config},${pacbio_bam}"
     } else {
-      "${it.id},${entrypoint},${fwd_pair},${rev_pair},${single},${lreads},${lr_type},${wtdbg2_technology},${genomeSize},${corrected_lreads},${medaka_model},${fast5},${pacbio_bam}"
+      "${it.id},${entrypoint},${fwd_pair},${rev_pair},${single},${lreads},${lr_type},${wtdbg2_technology},${genomeSize},${corrected_lreads},${medaka_model},${fast5},${shasta_config},${pacbio_bam}"
     }
   
   } // end of collectFile function

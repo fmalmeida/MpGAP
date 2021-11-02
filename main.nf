@@ -60,6 +60,9 @@ params.skip_raven     = false
 params.skip_wtdbg2    = false
 params.skip_shasta    = false
 
+// shasta default configuration
+params.shasta_config = 'Nanopore-Oct2021'
+
 // Additional parameters for assemblers and quast
 params.genomeSize = ''
 params.quast_additional_parameters     = ''
