@@ -12,6 +12,10 @@ Input files
 
 The input data must be provided via a samplesheet in YAML format given via the ``--input`` parameter. Please read the :ref:`samplesheet` reference page to understand how to properly create one.
 
+.. tip::
+
+  A samplesheet template can be downloaded with: ``nextflow run fmalmeida/mpgap --get_samplesheet``
+
 Assembly possibilities
 ----------------------
 

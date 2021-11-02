@@ -3,7 +3,13 @@
 Samplesheet
 ===========
 
-The samplesheet is a YAML document that is used to describe the input samples and its basic configuration. It is required. The input samplesheet is given using the ``--input`` parameter. A guide on how to proper configure it is shown below:
+The samplesheet is a YAML document that is used to describe the input samples and its basic configuration. It is required. The input samplesheet is given using the ``--input`` parameter.
+
+.. tip::
+
+  A samplesheet template can be downloaded with: ``nextflow run fmalmeida/mpgap --get_samplesheet``
+    
+A guide on how to proper configure it is shown below:
 
 Samplesheet header
 """"""""""""""""""
