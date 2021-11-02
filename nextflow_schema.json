@@ -11,7 +11,7 @@
             "description": "Samplesheet in YAML",
             "default": "",
             "properties": {
-                "in_yaml": {
+                "input": {
                     "type": "string",
                     "help_text": "Set path to the YAML samplesheet. Mutually exclusive with the parameters for single sample analysis.",
                     "description": "Samplesheet YAML"
@@ -25,7 +25,7 @@
                 }
             },
             "required": [
-                "in_yaml",
+                "input",
                 "outdir"
             ]
         },

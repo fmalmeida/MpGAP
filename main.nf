@@ -47,7 +47,7 @@ include { logMessage          } from './nf_functions/logMessages.nf'
 // General
 params.outdir  = 'output'
 params.threads = 4
-params.in_yaml = ''
+params.input = ''
 
 // Assemblers?
 params.skip_flye      = false
@@ -120,10 +120,10 @@ workflow {
   """)
 
   // with samplesheet?
-  if (params.in_yaml) {
+  if (params.input) {
 
     // Load YAML
-    parameter_yaml = new FileInputStream(new File(params.in_yaml))
+    parameter_yaml = new FileInputStream(new File(params.input))
     new Yaml().load(parameter_yaml).each { k, v -> params[k] = v }
 
     // Parse YAML file
