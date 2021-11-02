@@ -152,7 +152,8 @@ It will result in the following:
 
 1. Whenever using unicycler with unpaired reads, an odd platform-specific SPAdes-related crash seems do randomly happen as it can be seen in the issue discussed at https://github.com/rrwick/Unicycler/issues/188.
   + As a workaround, Ryan says to use the `--no_correct` parameter which solves the issue and does not have a negative impact on assembly quality.
-  + Therefore, if you run into this error when using unpaired data you can activate this workaroud with `--unicycler_additional_parameters " --no_correct "`.
+  + Therefore, if you run into this error when using unpaired data you can activate this workaroud with:
+    + `--unicycler_additional_parameters " --no_correct "`.
 2. Sometimes, shovill assembler can fail and cause the pipeline to fail due to problems in estimating the genome size. This, is actually super simple to solve! Instead of letting the shovill assembler estimate the genome size, you can pass the information to it and prevent its fail:
     + `--shovill_additional_parameters " --gsize 3m "`
 
