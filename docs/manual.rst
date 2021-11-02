@@ -158,6 +158,10 @@ Long reads characteristics
    * - ``--wtdbg2_technology``
      - NA
      - It tells the pipeline which technology the long reads are, which is required for wtdbg2. It will set a value for **all** samples. Options are: ``ont`` for Nanopore reads, ``rs`` for PacBio RSII, ``sq`` for PacBio Sequel, ``ccs`` for PacBio CCS reads. With not wanted, consider using ``--skip_wtdbg2``.
+   
+   * - ``--shasta_config``
+     - NA
+     - It tells the pipeline which shasta pre-set configuration to use. It will set a value for **all** samples. Please read the `shasta configuration manual page <https://chanzuckerberg.github.io/shasta/Configurations.html>`_ to know the available models. 
 
    * - ``--corrected_long_reads``
      - false
