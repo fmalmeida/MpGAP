@@ -52,7 +52,7 @@ By default, when assembling long and short reads together (hybrid assemblies) th
 
   # Run the pipeline
   nextflow run fmalmeida/mpgap \
-    --outdir _ASSEMBLY \
+    --output _ASSEMBLY \
     --threads 5 \
     --skip_spades \
     --shortreads_paired "SRR8482585_30X_{1,2}.fastq.gz" \
@@ -80,7 +80,7 @@ The execution is actually the same as for the strategy 1, however users must use
 
   # Run the pipeline
   nextflow run fmalmeida/mpgap \
-    --outdir _ASSEMBLY \
+    --output _ASSEMBLY \
     --threads 5 \
     --skip_canu \
     --shortreads_paired "SRR8482585_30X_{1,2}.fastq.gz" \

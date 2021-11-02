@@ -71,7 +71,7 @@ General parameters
      - Default value
      - Description
 
-   * - ``--outdir``
+   * - ``--output``
      - Y
      - output
      - Name of directory to store output values. Input reads basenames will be used to create sub-folder under this directory.

@@ -16,7 +16,7 @@
                     "help_text": "Set path to the YAML samplesheet. Mutually exclusive with the parameters for single sample analysis.",
                     "description": "Samplesheet YAML"
                 },
-                "outdir": {
+                "output": {
                     "type": "string",
                     "description": "The output directory where the results will be saved.",
                     "default": "./results",
@@ -26,7 +26,7 @@
             },
             "required": [
                 "input",
-                "outdir"
+                "output"
             ]
         },
         "max_job_request_options": {

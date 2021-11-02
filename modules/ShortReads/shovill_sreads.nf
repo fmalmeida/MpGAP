@@ -1,6 +1,6 @@
 // batch mode
 process shovill {
-  publishDir "${params.outdir}/${prefix}/shovill", mode: 'copy'
+  publishDir "${params.output}/${prefix}/shovill", mode: 'copy'
   label 'main'
   tag "${id}"
   cpus params.threads

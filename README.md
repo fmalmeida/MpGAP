@@ -86,7 +86,7 @@ By polishing a long reads only assembly with Illumina reads. For that, users wil
 
 #### Example:
 
-        nextflow run fmalmeida/mpgap --outdir output --threads 5 --input "samplesheet.yml" --strategy_2
+        nextflow run fmalmeida/mpgap --output output --threads 5 --input "samplesheet.yml" --strategy_2
 
 #### Tip
 

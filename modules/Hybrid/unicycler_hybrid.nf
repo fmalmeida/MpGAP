@@ -1,5 +1,5 @@
 process unicycler_hybrid {
-  publishDir "${params.outdir}/${prefix}", mode: 'copy'
+  publishDir "${params.output}/${prefix}", mode: 'copy'
   label 'main'
   tag "${id}"
   cpus params.threads

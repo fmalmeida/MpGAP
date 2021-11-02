@@ -7,7 +7,7 @@ def logMessage() {
   log.info "===================================================================="
   def summary = [:]
   // Generic parameters
-  summary['Output directory      '] = params.outdir
+  summary['Output directory      '] = params.output
   summary['Number of threads     '] = params.threads
   // Workflow information
   if(workflow.revision) summary['Pipeline Release'] = workflow.revision

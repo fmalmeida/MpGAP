@@ -1,5 +1,5 @@
 process raven {
-  publishDir "${params.outdir}/${prefix}/raven", mode: 'copy'
+  publishDir "${params.output}/${prefix}/raven", mode: 'copy'
   label 'main'
   cpus params.threads
   tag "${id}"

@@ -1,5 +1,5 @@
 process multiqc {
-  publishDir "${params.outdir}/${prefix}/00_quality_assessment", mode: 'copy'
+  publishDir "${params.output}/${prefix}/00_quality_assessment", mode: 'copy'
   label 'main'
   tag "Collecting Quast quality reports"
 

@@ -1,5 +1,5 @@
 process medaka {
-  publishDir "${params.outdir}/${prefix}/medaka_polished_contigs", mode: 'copy'
+  publishDir "${params.output}/${prefix}/medaka_polished_contigs", mode: 'copy'
   label 'main'
   tag "${id}"
 

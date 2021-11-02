@@ -1,6 +1,6 @@
 // batch mode
 process unicycler {
-  publishDir "${params.outdir}/${prefix}", mode: 'copy'
+  publishDir "${params.output}/${prefix}", mode: 'copy'
   label 'main'
   tag "${id}"
   cpus params.threads

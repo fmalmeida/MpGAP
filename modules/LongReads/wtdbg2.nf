@@ -1,5 +1,5 @@
 process wtdbg2 {
-  publishDir "${params.outdir}/${prefix}/wtdbg2", mode: 'copy'
+  publishDir "${params.output}/${prefix}/wtdbg2", mode: 'copy'
   label 'main'
   cpus params.threads
   tag "${id}"

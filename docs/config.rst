@@ -31,7 +31,7 @@ Main config file
                   */
 
       // Output folder name
-            outdir = "output"
+            output = "output"
 
       // Gives a custom prefix for sample results
       // If is not given, the pipeline will use the reads names to create a custom prefix
@@ -192,20 +192,20 @@ Main config file
       //Trace Report
       trace {
       enabled = false
-      file = "${params.outdir}" + "/mpgap_trace.txt"
+      file = "${params.output}" + "/mpgap_trace.txt"
       fields = 'task_id,name,status,exit,realtime,cpus,%cpu,memory,%mem,rss'
       }
 
       //Timeline Report
       timeline {
       enabled = false
-      file = "${params.outdir}" + "/mpgap_timeline.html"
+      file = "${params.output}" + "/mpgap_timeline.html"
       }
 
       //Complete Report
       report {
       enabled = true
-      file = "${params.outdir}" + "/mpgap_nextflow_report.html"
+      file = "${params.output}" + "/mpgap_nextflow_report.html"
       }
 
       /*

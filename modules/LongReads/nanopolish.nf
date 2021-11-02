@@ -1,5 +1,5 @@
 process nanopolish {
-  publishDir "${params.outdir}/${prefix}/nanopolished_contigs/${assembler}", mode: 'copy'
+  publishDir "${params.output}/${prefix}/nanopolished_contigs/${assembler}", mode: 'copy'
   label 'main'
   cpus params.threads
   tag "${id}"

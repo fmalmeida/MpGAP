@@ -1,5 +1,5 @@
 process flye {
-  publishDir "${params.outdir}/${prefix}", mode: 'copy'
+  publishDir "${params.output}/${prefix}", mode: 'copy'
   label 'main'
   cpus params.threads
   tag "${id}"

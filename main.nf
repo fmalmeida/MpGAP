@@ -45,7 +45,7 @@ include { logMessage          } from './nf_functions/logMessages.nf'
   */
 
 // General
-params.outdir  = 'output'
+params.output  = 'output'
 params.threads = 4
 params.input = ''
 
