@@ -104,7 +104,7 @@ nextflow run fmalmeida/mpgap \
 
 ### Usage
 
-<a href="https://mpgap.readthedocs.io/en/latest/index.html"><strong>For understading pipeline usage and configuration, users must read the complete online documentation »</strong></a>
+For understading pipeline usage and configuration, users must read the <a href="https://mpgap.readthedocs.io/en/latest/index.html"><strong>complete online documentation »</strong></a>
 
 #### Warnings
 
