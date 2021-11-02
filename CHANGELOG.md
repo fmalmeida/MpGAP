@@ -2,6 +2,8 @@
 
 The tracking for changes started in v2.
 
+## v3.0
+
 ## v2.3.1
 
 This patch release is related to the issue [#19](https://github.com/fmalmeida/MpGAP/issues/19) which raises attention that shovill was not being used to its fully extent. Shovill was just being used with spades as its core.

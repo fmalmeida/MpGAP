@@ -29,6 +29,7 @@ samplesheet:
       - dataset/pairs_merged.fastq.gz
   - id: sample_4
     nanopore: dataset/ont_reads.fastq.gz
+    corrected_lreads: true
     fast5: dataset/kleb/fast5_pass
     genomeSize: 5.5m
   - id: sample_5
