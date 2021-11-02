@@ -77,25 +77,30 @@ This pipeline has only two dependencies: [Docker](https://www.docker.com) and [N
 
 ### Explanation of hybrid strategies
 
-Hybrid assemblies can be produced using one of two available strategies:
+Hybrid assemblies can be produced with two available strategies. Please read more about the strategies and how to set them up in the [online documentation](https://mpgap.readthedocs.io/en/latest/manual.html#hybrid-assembly-strategies).
+
+:target: they are chosen with the parameter `--hybrid_strategy`.
 
 #### Strategy 1
 
-By using Unicycler, Haslr and/or SPAdes hybrid assembly modes. For instance, it can use the Unicycler hybrid mode which will first assemble a high quality assembly graph with Illumina data and then it will use long reads to bridge the gaps. More information about Unicycler Hybrid mode can be found [here](https://github.com/rrwick/Unicycler#method-hybrid-assembly).
+It uses the hybrid assembly modes from Unicycler, Haslr and/or SPAdes.
 
 #### Strategy 2
 
-By polishing a long reads only assembly with Illumina reads. For that, users will have to set `--strategy_2` to true. This will tell the pipeline to produce a long reads only assembly (with canu, flye, raven or unicycler) and polish it with Pilon (for unpaired reads) or with [Unicycler-polish program](https://github.com/rrwick/Unicycler/blob/master/docs/unicycler-polish.md) (for paired end reads).
-
-> Note that, `--strategy_2` parameter is an alternative workflow, when used, it will execute ONLY strategy 2 and not both strategies. When false, only strategy 1 will be executed.
+It produces a long reads only assembly and polishes (correct errors) it with short reads using Pilon (for unpaired reads) or with [Unicycler-polish program](https://github.com/rrwick/Unicycler/blob/master/docs/unicycler-polish.md) (for paired end reads).
 
 #### Example:
 
-        nextflow run fmalmeida/mpgap --output output --threads 5 --input "samplesheet.yml" --strategy_2
+```bash
+# run the pipeline setting the desired hybrid strategy globally (for all samples)
+nextflow run fmalmeida/mpgap \
+  --output output \
+  --threads 5 \
+  --input "samplesheet.yml" \
+  --hybrid_strategy "both"
+```
 
-#### Tip
-
-Users can perform both strategy 1 and strategy 2 hybrid assemblies, at the same time, for a sample by configuring the sample, in the samplesheet, with the key: `hybrid_strategy: both`. For more information please read: https://mpgap.readthedocs.io/en/latest/examples.html
+:fire: This will perform, for **all** samples, both both strategy 1 and strategy 2 hybrid assemblies. Please read more about it in the [manual reference page(https://mpgap.readthedocs.io/en/latest/manual.html) and [samplesheet reference page(https://mpgap.readthedocs.io/en/latest/samplesheet.html).
 
 ### Usage
 
