@@ -20,7 +20,7 @@
 
 ## About
 
-MpGAP is an easy to use nextflow docker-based pipeline that adopts well known software for genome assembly of Illumina, Pacbio and Oxford Nanopore sequencing data through illumina only, long reads only or hybrid modes. This pipeline wraps up the following software:
+MpGAP is an easy to use nextflow docker-based pipeline that adopts well known software for _de novo_ genome assembly of Illumina, Pacbio and Oxford Nanopore sequencing data through illumina only, long reads only or hybrid modes. This pipeline wraps up the following software:
 
 || **Source** |
 |:- | :- |
@@ -38,20 +38,21 @@ This pipeline has only two dependencies: [Docker](https://www.docker.com) and [N
 
 * Unix-like operating system (Linux, macOS, etc)
   + Windows users maybe can execute it using the linux subsystem for windows as shown in:
+    + https://nextflow.io/blog/2021/setup-nextflow-on-windows.html
     + https://docs.microsoft.com/pt-br/windows/wsl/install-win10
     + https://www.nextflow.io/docs/latest/getstarted.html
     + https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux
 * Java 8 (or higher)
 * Nextflow (version 20.01 or higher)
 * Docker
-  * Image: `fmalmeida/mpgap:v2.3`
+  * Image: `fmalmeida/mpgap:v3.0`
 
 ## Installation
 
 1. If you don't have it already install [Docker](https://docs.docker.com/) in your computer.
     * After installed, you need to download the required Docker images
 
-          docker pull fmalmeida/mpgap:v2.3
+          docker pull fmalmeida/mpgap:v3.0
 
 > Each release is accompanied by a Dockerfile in the docker folder. When using releases older releases, users can create the correct image using
 the Dockerfile that goes alongside with the release (Remember to give the image the correct name, as it is in dockerhub and the nextflow script).
@@ -85,25 +86,15 @@ By polishing a long reads only assembly with Illumina reads. For that, users wil
 
 #### Example:
 
-        nextflow run fmalmeida/mpgap --outdir output --threads 5 --shortreads_paired "path-to/illumina_r{1,2}.fastq" \
-        --shortreads_single "path-to/illumina_unpaired.fastq" --lr_type 'nanopore' --longreads "path-to/ont_reads.fastq" --strategy_2
+        nextflow run fmalmeida/mpgap --outdir output --threads 5 --input "samplesheet.yml" --strategy_2
 
 #### Tip
 
-User can perform both strategy 1 and strategy 2 hybrid assemblies for a sample if using the YAML samplesheet and, inside the samplesheet, configuring the sample with the key: `hybrid_strategy: both`. For more information please read: PUT LINK
+Users can perform both strategy 1 and strategy 2 hybrid assemblies, at the same time, for a sample by configuring the sample, in the samplesheet, with the key: `hybrid_strategy: both`. For more information please read: https://mpgap.readthedocs.io/en/latest/examples.html
 
 ### Usage
 
-<a href="https://mpgap.readthedocs.io/en/latest/index.html"><strong>Users are advised to read the complete documentation »</strong></a>
-
-* Complete command line explanation of parameters:
-    + `nextflow run fmalmeida/mpgap --help`
-* See usage examples in the command line:
-    + `nextflow run fmalmeida/mpgap --examples`
-
-### Command line usage examples
-
-Command line executions are exemplified [in the manual](https://mpgap.readthedocs.io/en/latest/examples.html).
+<a href="https://mpgap.readthedocs.io/en/latest/index.html"><strong>For understading pipeline usage and configuration, users must read the complete online documentation »</strong></a>
 
 #### Warnings
 
@@ -115,19 +106,9 @@ Command line executions are exemplified [in the manual](https://mpgap.readthedoc
 
 All parameters showed above can be, and are advised to be, set through the configuration file. When a configuration file is used the pipeline is executed as `nextflow run fmalmeida/mpgap -c ./configuration-file`. Your configuration file is what will tell the pipeline which type of data you have, and which processes to execute. Therefore, it needs to be correctly configured.
 
-To create a configuration file in your working directory:
-
-* For Hybrid assemblies:
-
-      nextflow run fmalmeida/mpgap --get_hybrid_config
-
-* For Long reads only assemblies:
-
-      nextflow run fmalmeida/mpgap --get_lreads_config
-
-* For illumina only assemblies:
-
-      nextflow run fmalmeida/mpgap --get_sreads_config
+* To create a configuration file in your working directory:
+  
+      nextflow run fmalmeida/mpgap --get_config
 
 ### Interactive graphical configuration and execution
 
