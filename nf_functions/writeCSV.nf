@@ -1,3 +1,4 @@
+include 'paramsCheck' from './paramsCheck.nf'
 def write_csv(in_list) {
 
   return in_list.collectFile( name:"samples.txt", sort: { it[0] }, newLine: true ) {
@@ -142,19 +143,8 @@ def write_csv(in_list) {
      * Paramaters check
      * check whether the input parameters for a sample are enough for analysis
      */
+    paramsCheck()
 
-    // genome size is given if using canu?
-    if (!params.skip_canu && (genomeSize == "missing_genomeSize") && (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2' || entrypoint == 'hybrid_strategy_both' )) {
-      println """
-      ERROR!
-      A minor error has occurred
-        ==> The pipeline will try to run canu assembler on sample ${it.id}, but user forgot to tell the expected genome size.
-      Please either set the expected genome size, or turn off the canu assembly with --skip_canu.
-      Cheers.
-      """.stripIndent()
-      exit 1
-    }  
-    
     /*
      * Output samplesheet as CSV
      */
