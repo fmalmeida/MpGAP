@@ -10,7 +10,7 @@ workflow parse_samplesheet {
     custom_csv = write_csv(Channel.fromList(data))
   
     // now we parse the csv created
-    parsed_csv = custom_csv.splitCsv(header: ['name', 'entrypoint', 'fwd', 'rev', 'single', 'lreads', 'lr_type', 'wtdbg2_technology','genomeSize', 'corrected_lreads', 'medaka_model','fast5', 'shasta_config','pacbio_bam']).map{ row ->
+    parsed_csv = custom_csv.splitCsv(header: ['name', 'entrypoint', 'fwd', 'rev', 'single', 'lreads', 'lr_type', 'wtdbg2_technology','genome_size', 'corrected_long_reads', 'medaka_model', 'nanopolish_fast5', 'nanopolish_max_haplotypes', 'shasta_config','pacbio_bam']).map{ row ->
 
     if (row.entrypoint == 'shortreads_only') { 
       prefix = "${row.name}/shortreads_only" 
@@ -26,10 +26,10 @@ workflow parse_samplesheet {
     if (row.entrypoint == 'longreads_only') { 
       prefix = "${row.name}/longreads_only" 
     }
-    if (row.corrected_lreads && row.corrected_lreads.toLowerCase() != 'false') {
-      corrected_lreads = 'true'
+    if (row.corrected_long_reads && row.corrected_long_reads.toLowerCase() != 'false') {
+      corrected_long_reads = 'true'
     } else {
-      corrected_lreads = 'false'
+      corrected_long_reads = 'false'
     }
 
     // create input tuple   
@@ -42,10 +42,11 @@ workflow parse_samplesheet {
         (row.lreads == "missing_lreads") ? row.lreads : file(row.lreads), // long reads
         row.lr_type, // long reads type
         row.wtdbg2_technology, // which wtdbg2 tech to use?
-        row.genomeSize, // expected genome size
-        row.corrected_lreads.toLowerCase(), // are reads corrected?
+        row.genome_size, // expected genome size
+        row.corrected_long_reads.toLowerCase(), // are reads corrected?
         row.medaka_model, // change medaka model?
-        (row.fast5 == "missing_fast5") ? row.fast5 : file(row.fast5), // nanopolish fast5 as file
+        (row.nanopolish_fast5 == "missing_nanopolish_fast5") ? row.nanopolish_fast5 : file(row.nanopolish_fast5), // nanopolish nanopolish_fast5 as file
+        row.nanopolish_max_haplotypes, // nanopolish max_haplotypes
         row.shasta_config, // shasta config
         (row.pacbio_bam == "missing_pacbio_bam") ? row.pacbio_bam : file(row.pacbio_bam),
         prefix, // output prefix

@@ -47,7 +47,7 @@ include { logMessage          } from './nf_functions/logMessages.nf'
 // General
 params.output  = 'output'
 params.threads = 4
-params.input = ''
+params.input   = ''
 
 // Assemblers?
 params.skip_flye      = false
@@ -61,10 +61,12 @@ params.skip_wtdbg2    = false
 params.skip_shasta    = false
 
 // shasta default configuration
-params.shasta_config = 'Nanopore-Oct2021'
+params.shasta_config = ''
+
+// genome size for canu and haslr
+params.genome_size = ''
 
 // Additional parameters for assemblers and quast
-params.genomeSize = ''
 params.quast_additional_parameters     = ''
 params.canu_additional_parameters      = ''
 params.unicycler_additional_parameters = ''
@@ -77,12 +79,12 @@ params.wtdbg2_additional_parameters    = ''
 params.shasta_additional_parameters    = ''
 
 // Long reads
-params.corrected_lreads = false
-params.medaka_sequencing_model = 'r941_min_high_g360'
-params.nanopolish_max_haplotypes = 1000
+params.corrected_long_reads = false
+params.medaka_model = ''
+params.nanopolish_max_haplotypes = ''
 
 // Hybrid strategy 2
-params.strategy_2 = false
+params.hybrid_strategy = ''
 params.pilon_memory_limit = 50
 
 /*
@@ -147,8 +149,11 @@ workflow {
 
     // Message to user
     println("""
-      A samplesheet has not been provided. Please, provide a samplesheet to run the analysis.
-      Online documentation at: https://mpgap.readthedocs.io/en/latest/
+    ERROR!
+    A major error has occurred!
+      ==> A samplesheet has not been provided. Please, provide a samplesheet to run the analysis. Online documentation is available at: https://mpgap.readthedocs.io/en/latest/
+    Please, read the docs.
+    Cheers.
     """)
   
   }

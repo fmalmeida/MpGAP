@@ -5,7 +5,7 @@ process nanopolish {
   tag "${id}"
 
   input:
-  tuple val(id), file(draft), val(assembler), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), val(wtdbg2_technology), val(genomeSize), val(corrected_lreads), val(medaka_model), file(fast5), val(shasta_config), file(bams), val(prefix)
+  tuple val(id), file(draft), val(assembler), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), val(wtdbg2_technology), val(genome_size), val(corrected_long_reads), val(medaka_model), file(fast5), val(nanopolish_max_haplotypes), val(shasta_config), file(bams), val(prefix)
 
   output:
   tuple val(id), file("${assembler}_nanopolished.fa"), val("${assembler}_nanopolish") // Save nanopolished contigs
@@ -44,7 +44,7 @@ process nanopolish {
     -b reads.sorted.bam \
     -g ${draft} \
     -t ${params.threads} \
-    --max-haplotypes ${params.nanopolish_max_haplotypes} ;
+    --max-haplotypes ${nanopolish_max_haplotypes} ;
   nanopolish vcf2fasta --skip-checks -g ${draft} polished.*.vcf > ${assembler}_nanopolished.fa ;
   cat polished.*.vcf >> ${assembler}_nanopolished.complete.vcf
   """

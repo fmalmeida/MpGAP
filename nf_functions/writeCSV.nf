@@ -57,43 +57,74 @@ def write_csv(in_list) {
      * Checking if long reads are corrected
      */
     // defaults
-    corrected_lreads = (params.corrected_lreads) ? params.corrected_lreads : false
+    corrected_long_reads = (params.corrected_long_reads) ? params.corrected_long_reads : false
 
-    // corrected_lreads input key is used for the sample?
-    if (it.corrected_lreads) {
-      corrected_lreads = it.corrected_lreads
+    // corrected_long_reads input key is used for the sample?
+    if (it.corrected_long_reads) {
+      corrected_long_reads = it.corrected_long_reads
     }
 
     /*
-     * Checking for fast5 directory
+     * Checking for nanopolish_fast5 directory
      */
-    fast5 = (it.fast5) ? it.fast5 : "missing_fast5"
+    nanopolish_fast5 = (it.nanopolish_fast5) ? it.nanopolish_fast5 : "missing_nanopolish_fast5"
+
+    /*
+     * Checking for nanopolish max haplotypes
+     */
+    // defaults
+    nanopolish_max_haplotypes = 1000
+
+    // nanopolish_max_haplotypes input key is used for the sample?
+    if (it.nanopolish_max_haplotypes) { nanopolish_max_haplotypes = it.nanopolish_max_haplotypes }
+
+    // the command line parameter is given? -- it overwrites the input key
+    if (params.nanopolish_max_haplotypes) { nanopolish_max_haplotypes = params.nanopolish_max_haplotypes }
 
     /*
      * Check for medaka model
      */
-    medaka_model = (it.medaka_model) ? it.medaka_model : params.medaka_sequencing_model
+    // defaults
+    medaka_model = "r941_min_high_g360"
+
+    // medaka_model input key is used for the sample?
+    if (it.medaka_model) { medaka_model = it.medaka_model }
+
+    // the command-line parameter is given? -- it overwrites the input key
+    if (params.medaka_model) { medaka_model = params.medaka_model }
 
     /*
      * Check for shasta config
      */
-    shasta_config = (it.shasta_config) ? it.shasta_config : params.shasta_config
+    // defaults
+    shasta_config = "Nanopore-Oct2021"
+
+    // shasta_config input key is used for the sample?
+    if (it.shasta_config) { shasta_config = it.shasta_config }
+
+    // the command-line parameter is given? -- it overwrites the input key
+    if (params.shasta_config) { shasta_config = params.shasta_config }
 
     /*
-     * Check for sample genomeSize
+     * Check for sample genome_size
      */
     // defaults
-    genomeSize = (params.genomeSize) ? params.genomeSize : 'missing_genomeSize'
+    genome_size = 'missing_genome_size'
 
-    // genomeSize input key is used for the sample?
-    if (it.genomeSize) {
-      genomeSize = it.genomeSize
-    }
+    // genome_size input key is used for the sample?
+    if (it.genome_size) { genome_size = it.genome_size }
+
+    // the command-line parameter is given? -- it overwrites the input key
+    if (params.genome_size) { genome_size = params.genome_size }
 
     /*
      * Check for pacbio bams
      */
-    pacbio_bam = (it.pacbio_bam) ? it.pacbio_bam : "missing_pacbio_bam"
+    // defaults
+    pacbio_bam = "missing_pacbio_bam"
+
+    // pacbio_bam input key is used for the sample?
+    if (it.pacbio_bam) { pacbio_bam = it.pacbio_bam }
 
     /*
      * Check for wtdbg2 technology
@@ -107,21 +138,20 @@ def write_csv(in_list) {
       wtdbg2_technology = "not_used"
     }
 
-    // wtdbg2_technology input is used for the sample?
-    if (it.wtdbg2_technology) {
-      wtdbg2_technology = it.wtdbg2_technology
-    }
+    // wtdbg2_technology input key is used for the sample?
+    if (it.wtdbg2_technology) { wtdbg2_technology = it.wtdbg2_technology }
 
     /*
      * Check for desired hybrid strategy model
      */
     // defaults
-    hybrid_strategy = (params.strategy_2) ? '2' : '1'
+    hybrid_strategy = '1'
 
     // hybrid_strategy input key is used for the sample?
-    if (it.hybrid_strategy) {
-      hybrid_strategy = it.hybrid_strategy.toString().toLowerCase()
-    }
+    if (it.hybrid_strategy) { hybrid_strategy = it.hybrid_strategy.toString().toLowerCase() }
+
+    // the command-line parameter is given? -- it overwrites the input key
+    if (params.hybrid_strategy) { hybrid_strategy = params.hybrid_strategy }
 
     /*
      * Create entrypoints
@@ -141,7 +171,13 @@ def write_csv(in_list) {
 
       // check if the hybrid strategy is valid
       if (entrypoint != 'hybrid_strategy_1' && entrypoint != 'hybrid_strategy_2' && entrypoint != 'hybrid_strategy_both') {
-        println "ERROR: In the YAML, the 'hybrid_strategy:' key must be either 1, 2 or both. Re-check sample: ${it.id}."
+        println """
+        ERROR!
+        A major error has occurred!
+          ==> In the YAML, the 'hybrid_strategy:' key, or the --hybrid_strategy command line, must be either 1, 2 or both.
+        Please the re-check the parameters. Problem in sample: ${it.id}.
+        Cheers.
+        """.stripIndent()
         exit 1
       }
     }
@@ -151,7 +187,13 @@ def write_csv(in_list) {
        
     // has nothing
     else {
-      println "ERROR: At least one read type must be set: illumina, nanopore or pacbio! Re-check sample: ${it.id}."
+      println """
+      ERROR!
+      A major error has occurred!
+        ==> At least one read type must be set: illumina, nanopore or pacbio!
+      Please, re-check sample: ${it.id}.
+      Cheers.
+      """.stripIndent()
       exit 1
     }
 
@@ -160,36 +202,36 @@ def write_csv(in_list) {
      * check whether the input parameters for a sample are enough for analysis
      */
     // genome size is given if using canu?
-    if (!params.skip_canu && (genomeSize == "missing_genomeSize") && (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2' || entrypoint == 'hybrid_strategy_both')) {
+    if (!params.skip_canu && (genome_size == "missing_genome_size") && (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2' || entrypoint == 'hybrid_strategy_both')) {
       println """
       ERROR!
       A minor error has occurred
         ==> The pipeline will try to run canu assembler on sample ${it.id}, but user forgot to tell the expected genome size.
-      Please either set it with --genomeSize or inside the YAML (genomeSize:) for that sample, or turn off the canu assembly with --skip_canu.
+      Please either set it with --genome_size or inside the YAML (genome_size:) for that sample, or turn off the canu assembly with --skip_canu.
       Cheers.
       """.stripIndent()
       exit 1
     }
 
     // genome size is given if using haslr?
-    if (!params.skip_haslr && genomeSize == "missing_genomeSize" && (entrypoint == 'hybrid_strategy_1' || entrypoint == 'hybrid_strategy_both')) {
+    if (!params.skip_haslr && genome_size == "missing_genome_size" && (entrypoint == 'hybrid_strategy_1' || entrypoint == 'hybrid_strategy_both')) {
       println """
       ERROR!
       A minor error has occurred
         ==> The pipeline will try to run haslr assembler on sample ${it.id}, but user forgot to tell the expected genome size.
-      Please either set it with --genomeSize or inside the YAML (genomeSize:) for that sample, or turn off the haslr assembly with --skip_haslr
+      Please either set it with --genome_size or inside the YAML (genome_size:) for that sample, or turn off the haslr assembly with --skip_haslr
       Cheers.
       """.stripIndent()
       exit 1
     }
 
     // genome size is given if using wtdbg2?
-    if (!params.skip_wtdbg2 && genomeSize == "missing_genomeSize" && (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2' || entrypoint == 'hybrid_strategy_both')) {
+    if (!params.skip_wtdbg2 && genome_size == "missing_genome_size" && (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2' || entrypoint == 'hybrid_strategy_both')) {
       println """
       ERROR!
       A minor error has occurred
         ==> The pipeline will try to run wtdbg2 assembler on sample ${it.id}, but user forgot to tell the expected genome size.
-      Please either set it with --genomeSize or inside the YAML (genomeSize:) for that sample, or turn off the haslr assembly with --skip_wtdbg2
+      Please either set it with --genome_size or inside the YAML (genome_size:) for that sample, or turn off the haslr assembly with --skip_wtdbg2
       Cheers.
       """.stripIndent()
       exit 1
@@ -214,9 +256,9 @@ def write_csv(in_list) {
      * Output samplesheet as CSV
      */
     if (entrypoint == 'hybrid_strategy_both') { // creates two lines for the sample, for both hybrid strategies
-      "${it.id}:strategy_1,hybrid_strategy_1,${fwd_pair},${rev_pair},${single},${lreads},${lr_type},${wtdbg2_technology},${genomeSize},${corrected_lreads},${medaka_model},${fast5},${shasta_config},${pacbio_bam}\n${it.id}:strategy_2,hybrid_strategy_2,${fwd_pair},${rev_pair},${single},${lreads},${lr_type},${wtdbg2_technology},${genomeSize},${corrected_lreads},${medaka_model},${fast5},${shasta_config},${pacbio_bam}"
+      "${it.id}:strategy_1,hybrid_strategy_1,${fwd_pair},${rev_pair},${single},${lreads},${lr_type},${wtdbg2_technology},${genome_size},${corrected_long_reads},${medaka_model},${nanopolish_fast5},${nanopolish_max_haplotypes},${shasta_config},${pacbio_bam}\n${it.id}:strategy_2,hybrid_strategy_2,${fwd_pair},${rev_pair},${single},${lreads},${lr_type},${wtdbg2_technology},${genome_size},${corrected_long_reads},${medaka_model},${nanopolish_fast5},${nanopolish_max_haplotypes},${shasta_config},${pacbio_bam}"
     } else {
-      "${it.id},${entrypoint},${fwd_pair},${rev_pair},${single},${lreads},${lr_type},${wtdbg2_technology},${genomeSize},${corrected_lreads},${medaka_model},${fast5},${shasta_config},${pacbio_bam}"
+      "${it.id},${entrypoint},${fwd_pair},${rev_pair},${single},${lreads},${lr_type},${wtdbg2_technology},${genome_size},${corrected_long_reads},${medaka_model},${nanopolish_fast5},${nanopolish_max_haplotypes},${shasta_config},${pacbio_bam}"
     }
   
   } // end of collectFile function
