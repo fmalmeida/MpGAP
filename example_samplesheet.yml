@@ -29,9 +29,9 @@ samplesheet:
       - dataset/pairs_merged.fastq.gz
   - id: sample_4
     nanopore: dataset/ont_reads.fastq.gz
-    corrected_lreads: true
-    fast5: dataset/kleb/fast5_pass
-    genomeSize: 5.5m
+    corrected_long_reads: true
+    nanopolish_fast5: dataset/kleb/fast5_pass
+    genome_size: 5.5m
   - id: sample_5
     pacbio: dataset/pacbio_reads.fastq.gz
     pacbio_bam: dataset/pacbio_reads.subreads.bam
