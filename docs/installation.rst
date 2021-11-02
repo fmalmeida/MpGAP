@@ -1,11 +1,10 @@
 .. _installation:
 
-************
 Installation
-************
+============
 
 Dependencies
-============
+------------
 
 This pipeline requires only `Docker <https://www.docker.com/>`_ (and its Docker images) and `Nextflow <https://www.nextflow.io/docs/latest/index.html>`_ to run.
 
@@ -27,7 +26,7 @@ This pipeline requires only `Docker <https://www.docker.com/>`_ (and its Docker 
 
 5. Download required Docker images
 
-   ``docker pull fmalmeida/mpgap:v2.3``
+   ``docker pull fmalmeida/mpgap:v3.0``
 
 6. (Optional) Install nf-core
 
@@ -39,4 +38,4 @@ This pipeline requires only `Docker <https://www.docker.com/>`_ (and its Docker 
 
 .. note::
 
-	The pipeline requires a UNIX system, therefore, Windows users may successfully use this pipeline via the `Linux subsystem for windows <https://docs.microsoft.com/pt-br/windows/wsl/install-win10>`_.
+	The pipeline requires a UNIX system, therefore, Windows users may successfully use this pipeline via the `Linux subsystem for windows <https://www.nextflow.io/blog/2021/setup-nextflow-on-windows.html>`_.

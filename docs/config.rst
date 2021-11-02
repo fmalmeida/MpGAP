@@ -50,7 +50,7 @@ Main config file
 
       // This parameter only needs to be set if the software chosen is Canu, wtdbg2 or Haslr. Is optional for Flye.
       // It is an estimate of the size of the genome. Common suffices are allowed, for example, 3.7m or 2.8g
-            genomeSize = ""
+            genome_size = ""
 
                   /*
                   * Input reads
@@ -91,21 +91,21 @@ Main config file
       // assemblers: -corrected (in canu), --pacbio-corr|--nano-corr (in flye), etc.
       // Be cautious when using this parameter. If your reads are not corrected, and
       // you use this parameter, you will probably do not generate any contig.
-            corrected_lreads = false
+            corrected_long_reads = false
 
                   /*
                   * Activation of alternative hybrid assembly mode
                   * Only useful when giving both short and long reads
                   */
 
-      // This parameter below (strategy_2) is to define whether one wants or not to execute the alternative hybrid assembly method.
+      // This parameter below (hybrid_strategy) is to define whether one wants or not to execute the alternative hybrid assembly method.
       // It first creates a long reads only assembly with canu, flye, raven or unicycler and then polishes it using the provided
       // shortreads. It executes an alternative workflow and DOES NOT RUN unicycler/spades/haslr default hybrid modes.
       //
       // Whenever using this parameter, it is also possible to polish the longreads-only assemblies with Nanopolish,
       // Medaka or VarianCaller (Arrow) before the polishing with shortreads (using Pilon). For that it is necessary to set
-      // the right parameters: pacbio_bam, nanopolish_fast5 or medaka_sequencing_model.
-            strategy_2 = false
+      // the right parameters: pacbio_bam, nanopolish_fast5 or medaka_model.
+            hybrid_strategy = false
 
       // Whenever polishing long reads only assemblies with unpaired short reads (single end), the pipeline
       // will directly execute one round of pilon polishing instead of using Unicycler"s polish pipeline.
@@ -128,7 +128,7 @@ Main config file
       //  https://github.com/nanoporetech/medaka#models.
       //
       // If left in blank, medaka will not be executed.
-            medaka_sequencing_model = "r941_min_high_g360"
+            medaka_model = "r941_min_high_g360"
 
       // This parameter loads the directory where all the nanopore FAST5 files are stored.
       // If this parameter is set, the pipeline is able to also execute the polishing step with nanopolish.

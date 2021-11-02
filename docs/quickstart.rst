@@ -1,21 +1,24 @@
 .. _quickstart:
 
-**********
 Quickstart
-**********
+==========
 
 .. tip::
 
   Remember: the pipeline can always be executed with a config file. In fact, it is the best and easier way to execute the pipeline.
 
+.. tip::
+
+  Remember: the pipeline will choose the assembly workflow (hybrid, short reads only or long reads only) automatically, based on the input reads given.
+
 Overview
-========
+--------
 
 As an use case, we will use 30X of one of the *Escherichia coli* sequencing data (Biosample: `SAMN10819847 <https://www.ncbi.nlm.nih.gov/biosample/10819847>`_)
 that is available from a recent study that compared the use of different long read technologies in hybrid assembly of 137 bacterial genomes [`4 <https://doi.org/10.1099/mgen.0.000294>`_].
 
 Get the data
-------------
+""""""""""""
 
 We have made this subsampled dataset available in `Figshare <https://figshare.com/articles/dataset/Illumina_pacbio_and_ont_sequencing_reads/14036585>`_.
 
@@ -33,20 +36,37 @@ Now we have the necessary data to perform the quickstart.
 
   Users must **never** use hard or symbolic links. This will probably make nextflow fail. Remember to **always** write input paths inside double quotes.
 
+Preparing the input samplesheet
+-------------------------------
+
+The pipeline reads the input files from a samplesheet in YAML format. A list of available YAML keys to be used in the samplesheet and how to properly create it is available in the :ref:`samplesheet` reference page.
+
+Here, taking advantage of the ``hybrid_strategy`` YAML key, we will create a samplesheet entry for the input reads that performs a hybrid assembly in both strategies 1 and 2.
+
 .. note::
 
-  When using paired end reads it is **required** that input reads are set with the “{1,2}” pattern. For example: “SRR6307304_{1,2}.fastq”. This will properly load reads "SRR6307304_1.fastq" and "SRR6307304_2.fastq".
+  If this key is not used, the pipeline will run the default strategy, which can be changed with the parameter ``--hybrid_strategy``. For more information on the hybrid assembly strategies please see the :ref:`manual` reference page.
 
-.. warning::
+A proper samplesheet for the data will look like this:
 
-  When running hybrid assemblies or mixing short read types it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. Since nextflow randomly loads inputs, this is said to avoid unwanted combination of inputs while loading all reads that match the REGEX.
+.. code-block:: bash
 
-  We are currently working in provinding a way to run multiple samples at once avoinding unwanted combination.
+  # samplesheet file of e. coli 30X reads
+  # this is a YAML file
+  # input entry will perform both hybrid strategies
+  samplesheet:
+    - id: ecoli_30X
+      illumina:
+        - SRR8482585_30X_1.fastq.gz
+        - SRR8482585_30X_2.fastq.gz
+      nanopore: SRX5299443_30X.fastq.gz
+      hybrid_strategy: both
+      genome_size: 4m
 
-Hybrid assembly (strategy 1)
-============================
+Copy it's content and save it in a file called ``samplesheet.yml``. Now we are able to run the pipeline (check it below).
 
-By default, when assembling long and short reads together (hybrid assemblies) the pipeline executes the SPAdes, Unicycler and Haslr software since they have assembly modules specialized for hybrid assemblies.
+Running the pipeline
+--------------------
 
 .. code-block:: bash
 
@@ -55,49 +75,32 @@ By default, when assembling long and short reads together (hybrid assemblies) th
     --output _ASSEMBLY \
     --threads 5 \
     --skip_spades \
-    --shortreads_paired "SRR8482585_30X_{1,2}.fastq.gz" \
-    --longreads "SRX5299443_30X.fastq.gz" \
-    --lr_type nanopore \
-    --unicycler_additional_parameters '--mode conservative' \
-    --genomeSize 4m
+    --input "samplesheet.yml" \
+    --unicycler_additional_parameters '--mode conservative'
 
 .. tip::
 
-	Additional paramaters can be passed to the assemblers using the ``--{assembler}_additional_parameters`` parameter.
+	Additional parameters can be passed to the assemblers using the ``--{assembler}_additional_parameters`` parameter. Moreover, specific software can be turned off with the parameters ``--skip_{assembler}``
 
-.. tip::
+About hybrid strategy 2 and long reads polishing
+------------------------------------------------
 
-	Specific software can be turned off with the parameters ``--skip_{assembler}``
+Additionally, for hybrid strategy 2, users can also execute a long reads polishing step in their assemblies prior to the polishing with short reads.
 
-Hybrid assembly (strategy 2)
-============================
+The long reads polishers available are:
 
-Additionally to the conventional hybrid assembly method (strategy 1), users can also hybrid assemble their genomes using an alternative method called, in this pipeline, **strategy 2**. In this method, long reads are first assembled with specialized long reads assemblers, such as Canu, Flye, Raven, Shasta, wtdbg2 and Unicycler. And, after that, this long reads only assembly is polished (error correction step) using the available short reads with the Pilon software.
+* `Medaka <https://github.com/nanoporetech/medaka>`_ and `Nanopolish <https://github.com/jts/nanopolish>`_ for nanopore data;
+* `gcpp <https://github.com/PacificBiosciences/gcpp>`_ for pacbio data.
 
-The execution is actually the same as for the strategy 1, however users must use the ``--strategy_2`` parameter to use this alternative method.
+To use them, users must either select a medaka model or pass to the pipeline  the ONT fast5 directory or the pacbio bam file. This will make de pipeline work in the following order: 
 
-.. code-block:: bash
+1. long reads assembly
+2. polishing with long reads models
+3. polishing with short reads with Pilon
 
-  # Run the pipeline
-  nextflow run fmalmeida/mpgap \
-    --output _ASSEMBLY \
-    --threads 5 \
-    --skip_canu \
-    --shortreads_paired "SRR8482585_30X_{1,2}.fastq.gz" \
-    --longreads "SRX5299443_30X.fastq.gz" \
-    --lr_type nanopore \
-    --unicycler_additional_parameters '--mode conservative' \
-    --strategy_2
-
-.. note::
-
-	Remember that in this method, the assemblers used are the long reads assemblers, not the hybrid ones used in strategy 1.
-
-.. tip::
-
-	Additionally, users can also execute a long reads polishing step in their assemblies prior to the polishing with short reads.  The long reads polishers available are: ONT ==> Medaka and Nanopolish; Pacbio ==> gcpp. For that, users must check the longreads parameters: ``--medaka_sequencing_model``, ``--nanopolish_fast5`` and ``--pacbio_bam``. This will make de pipeline work as: ``long reads assembly -> polishing with long reads models -> polishing with short reads with Pilon``
+Please see the :ref:`samplesheet` and :ref:`manual` reference pages for more information.
 
 Afterwards
-==========
+----------
 
-Users can continue to investigate the pipeline capabilities in through the manual. And also, after assembling a prokaryotic genome you can then annotate it. Why not give my other pipeline, `bacannot <https://bacannot.readthedocs.io/en/latest/>`_ a try? It wraps up lots of databases and tools that can give a nice overview of your query genome.
+After assembling a prokaryotic genome one can then annotate it. Why not give my other pipeline, `bacannot <https://bacannot.readthedocs.io/en/latest/>`_ a try? It wraps up lots of databases and tools that can give a nice overview of your query genome.

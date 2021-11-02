@@ -3,19 +3,19 @@
 .. image:: lOGO_3_transparente.png
   :width: 250
   :align: left
+  :alt: laboratory logo
 
 ----
 
-*****
 MpGAP
-*****
+=====
 
-`MpGAP <https://github.com/fmalmeida/mpgap>`_ is a pipeline developed with `Nextflow <https://www.nextflow.io/docs/latest/index.html>`_ and `Docker <https://www.docker.com/>`_. It was designed to provide an easy-to-use framework for genome assembly of Illumina, Pacbio and Oxford Nanopore sequencing data through illumina only, long reads only or hybrid modes.
+`MpGAP <https://github.com/fmalmeida/mpgap>`_ is a pipeline developed with `Nextflow <https://www.nextflow.io/docs/latest/index.html>`_ and `Docker <https://www.docker.com/>`_. It was designed to provide an easy-to-use framework for *de novo* genome assembly of Illumina, Pacbio and Oxford Nanopore sequencing data through illumina only, long reads only or hybrid modes.
 
 It wraps up the following tools:
 
 .. list-table::
-   :widths: 200 200
+   :widths: 40 60
    :header-rows: 1
 
    * - Analysis steps
@@ -41,10 +41,10 @@ It wraps up the following tools:
 
    installation
    quickstart
+   samplesheet
    manual
    config
-   examples
 
 Support Contact
-===============
+---------------
 Whenever a doubt arise feel free to contact me at almeidafmarques@gmail.com
