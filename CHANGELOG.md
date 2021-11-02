@@ -4,27 +4,54 @@ The tracking for changes started in v2.
 
 ## v3.0
 
+### hotfix
+
 * Fixed a problem with the if statements in the pilon polish module. The module was not properly checking the statements when users had only unpaired reads or both paired and unpaired. The only conditional statement that was correct was when users had only paired end reads. This is now fixed and properly set.
+* Since shasta release v0.8 (Oct/2021), shasta now expects users to select a pre-set configuration file.
+    + This has been included as a parameter `--shasta_config` that sets, by default to `Nanopore-Oct2021`
+      + Please read the [shasta configuration manual](https://chanzuckerberg.github.io/shasta/Configurations.html) page to know the available models.
+      + It can be passed from from inside the YAML file in a sample-specific manner or via the command line to set a value for **all** samples.
+      + Please read more about it in the online documentation: [Samplesheet configuration](https://mpgap.readthedocs.io/en/latest/samplesheet.html) and [Parameters manual](https://mpgap.readthedocs.io/en/latest/manual.html)
+
+### input configuration
+
 * A YAML samplesheet file has been implemented in order to properly use the pipeline, in all workflow types, for multiple samples at once.
     + Because of that, we had to remove the possibility to pass the input reads via the command line and now, the files with input data, must always be set inside the YAML samplesheet, even if analysing only one sample.
     + Read more at: https://mpgap.readthedocs.io/en/latest/samplesheet.html
     + Check the template samplesheet at: https://github.com/fmalmeida/mpgap/blob/master/example_samplesheet.yaml
-* Because of the implementation above, the folowing parameters are now deprecated, because they are now set inside the YAML file:
+    + The samplesheet is given with the parameter `--input`
+* Due to the implementation above, the folowing parameters are now deprecated, since they are now set inside the YAML file:
     + `--longreads`
     + `--lr_type`
     + `--pacbio_bam`
     + `--nanopolish_fast5Path`
     + `--shortreads_paired`
     + `--shortreads_single`
-* In order to make it simple and natural, two changes ocurred in input/output parameters
-    + The `--outdir` parameter is now `--output`
-    + The samplesheet is given with the parameter `--input`
-* A major change has also ocurred with the wtdbg2 techonology parameter
+* A major change has also ocurred with the `wtdbg2_techonology` parameter
     + Now, by default, the pipeline will check wheter long reads input are nanopore or pacbio
     + If they are nanopore, the wtdbg2 techonology parameter is automatically set to `ont`
     + If they are pacbio, the wtdbg2 techonology parameter is automaically set to `sq`
-    + This wtdbg2 paramter has the following options: "rs" for PacBio RSII, "sq" for PacBio Sequel, "ccs" for PacBio CCS reads. If, the user's input pacbio reads are not PacBio Sequel, user's can change it with the `wtdbg2_technology` parameter that can be set outside the YAML file to change the default for all samples or inside the YAML file to change its value for a single sample.
+    + This wtdbg2 paramter has the following options: "ont" for Nanopore reads, "rs" for PacBio RSII, "sq" for PacBio Sequel, "ccs" for PacBio CCS reads.
+        + If desired, user's can change it from inside the YAML file in a sample-specific manner or via the command line to set a value for **all** samples.
     + Please read more about it in the online documentation: [Samplesheet configuration](https://mpgap.readthedocs.io/en/latest/samplesheet.html) and [Parameters manual](https://mpgap.readthedocs.io/en/latest/manual.html)
+
+### nomenclature change
+
+* In order to make it simple and natural, two changes ocurred in input/output parameters
+    + The `--outdir` parameter is now `--output`
+    + The `--medaka_sequencing_model` parameter is now `--medaka_model`
+    + The `--corrected_lreads` parameter is now `--corrected_long_reads`.
+      + It can be passed from from inside the YAML file in a sample-specific manner or via the command line to set a value for **all** samples.
+      + Please read more about it in the online documentation: [Samplesheet configuration](https://mpgap.readthedocs.io/en/latest/samplesheet.html) and [Parameters manual](https://mpgap.readthedocs.io/en/latest/manual.html)
+    + The `--genomeSize` parameter is now `--genome_size`.
+      + It can be passed from from inside the YAML file in a sample-specific manner or via the command line to set a value for **all** samples.
+      + Please read more about it in the online documentation: [Samplesheet configuration](https://mpgap.readthedocs.io/en/latest/samplesheet.html) and [Parameters manual](https://mpgap.readthedocs.io/en/latest/manual.html)
+    + The `--strategy_2` parameter is now `--hybrid_strategy` which expects a value indicating the strategies to perform.
+      + It can be passed from from inside the YAML file in a sample-specific manner or via the command line to set a value for **all** samples.
+      + Please read more about it in the online documentation: [Samplesheet configuration](https://mpgap.readthedocs.io/en/latest/samplesheet.html) and [Parameters manual](https://mpgap.readthedocs.io/en/latest/manual.html)
+  
+### comments
+
 * Since this changes are major changes, the pipeline main version has changed and it is now in v3.0
     + The docker image is `fmalmeida/mpgap:v3.0`.
 
