@@ -18,7 +18,6 @@ workflow ASSEMBLY_QC {
     quast(input_tuple)
 
     // Run multiqc
-    quast.out.groupTuple().view()
     multiqc(quast.out.groupTuple(), Channel.value("$workflow.runName"))
 
 }
