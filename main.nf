@@ -61,7 +61,7 @@ params.skip_wtdbg2    = false
 params.skip_shasta    = false
 
 // shasta default configuration
-params.shasta_config = ''
+params.shasta_config = 'Nanopore-Oct2021'
 
 // genome size for canu and haslr
 params.genome_size = ''
@@ -80,11 +80,11 @@ params.shasta_additional_parameters    = ''
 
 // Long reads
 params.corrected_long_reads = false
-params.medaka_model = ''
-params.nanopolish_max_haplotypes = ''
+params.medaka_model = 'r941_min_high_g360'
+params.nanopolish_max_haplotypes = 1000
 
-// Hybrid strategy 2
-params.hybrid_strategy = ''
+// Hybrid strategies default configuration
+params.hybrid_strategy = 1
 params.pilon_memory_limit = 50
 
 /*
