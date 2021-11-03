@@ -36,6 +36,6 @@ This pipeline requires only `Docker <https://www.docker.com/>`_ (and its Docker 
 
   Now, everything is set up and ready to run. Remember to always keep your Docker images up to date (Docker pull will always download the latest).
 
-.. note::
+.. tip::
 
 	The pipeline requires a UNIX system, therefore, Windows users may successfully use this pipeline via the `Linux subsystem for windows <https://www.nextflow.io/blog/2021/setup-nextflow-on-windows.html>`_.
