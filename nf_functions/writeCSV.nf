@@ -79,6 +79,16 @@ def write_csv(in_list) {
     // corrected_long_reads input key is used for the sample?
     if (it.corrected_long_reads) {
       corrected_long_reads = it.corrected_long_reads
+      if (corrected_long_reads.toString().toLowerCase() != "true" && corrected_long_reads.toString().toLowerCase() != "false") {
+        println """
+        ERROR!
+        A minor error has occurred!
+          ==> In the YAML, the 'corrected_long_reads:' must be either true or false.
+        Please the re-check the parameters. Problem in sample: ${it.id}.
+        Cheers.
+        """.stripIndent()
+        exit 1
+      }
     }
 
     /*
