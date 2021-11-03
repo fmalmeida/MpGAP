@@ -6,11 +6,10 @@ The tracking for changes started in v2.
 
 ### hotfix
 
-* Fixed a problem with the if statements in the pilon polish module. The module was not properly checking the statements when users had only unpaired reads or both paired and unpaired. The only conditional statement that was correct was when users had only paired end reads. This is now fixed and properly set.
 * Since shasta release v0.8 (Oct/2021), shasta now expects users to select a pre-set configuration file.
     + This has been included as a parameter `--shasta_config` that sets, by default to `Nanopore-Oct2021`
       + Please read the [shasta configuration manual](https://chanzuckerberg.github.io/shasta/Configurations.html) page to know the available models.
-      + It can be passed from from inside the YAML file in a sample-specific manner or via the command line to set a value for **all** samples.
+      + It can also be passed from inside the YAML file in a sample-specific manner.
       + Please read more about it in the online documentation: [Samplesheet configuration](https://mpgap.readthedocs.io/en/latest/samplesheet.html) and [Parameters manual](https://mpgap.readthedocs.io/en/latest/manual.html)
 
 ### input configuration
@@ -31,8 +30,8 @@ The tracking for changes started in v2.
     + Now, by default, the pipeline will check wheter long reads input are nanopore or pacbio
     + If they are nanopore, the wtdbg2 techonology parameter is automatically set to `ont`
     + If they are pacbio, the wtdbg2 techonology parameter is automaically set to `sq`
-    + This wtdbg2 paramter has the following options: "ont" for Nanopore reads, "rs" for PacBio RSII, "sq" for PacBio Sequel, "ccs" for PacBio CCS reads.
-        + If desired, user's can change it from inside the YAML file in a sample-specific manner or via the command line to set a value for **all** samples.
+    + This wtdbg2 parameter has the following options: "ont" for Nanopore reads, "rs" for PacBio RSII, "sq" for PacBio Sequel, "ccs" for PacBio CCS reads.
+    + It can also be passed from inside the YAML file in a sample-specific manner.
     + Please read more about it in the online documentation: [Samplesheet configuration](https://mpgap.readthedocs.io/en/latest/samplesheet.html) and [Parameters manual](https://mpgap.readthedocs.io/en/latest/manual.html)
 
 ### nomenclature change
@@ -41,13 +40,14 @@ The tracking for changes started in v2.
     + The `--outdir` parameter is now `--output`
     + The `--medaka_sequencing_model` parameter is now `--medaka_model`
     + The `--corrected_lreads` parameter is now `--corrected_long_reads`.
-      + It can be passed from from inside the YAML file in a sample-specific manner or via the command line to set a value for **all** samples.
+      + It can also be passed from inside the YAML file in a sample-specific manner.
       + Please read more about it in the online documentation: [Samplesheet configuration](https://mpgap.readthedocs.io/en/latest/samplesheet.html) and [Parameters manual](https://mpgap.readthedocs.io/en/latest/manual.html)
     + The `--genomeSize` parameter is now `--genome_size`.
-      + It can be passed from from inside the YAML file in a sample-specific manner or via the command line to set a value for **all** samples.
+      + It can also be passed from inside the YAML file in a sample-specific manner.
       + Please read more about it in the online documentation: [Samplesheet configuration](https://mpgap.readthedocs.io/en/latest/samplesheet.html) and [Parameters manual](https://mpgap.readthedocs.io/en/latest/manual.html)
     + The `--strategy_2` parameter is now `--hybrid_strategy` which expects a value indicating the strategies to perform.
-      + It can be passed from from inside the YAML file in a sample-specific manner or via the command line to set a value for **all** samples.
+      + It still defaults to strategy 1
+      + It can also be passed from inside the YAML file in a sample-specific manner.
       + Please read more about it in the online documentation: [Samplesheet configuration](https://mpgap.readthedocs.io/en/latest/samplesheet.html) and [Parameters manual](https://mpgap.readthedocs.io/en/latest/manual.html)
   
 ### comments
