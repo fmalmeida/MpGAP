@@ -15,9 +15,8 @@ process wtdbg2 {
   (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2')
 
   script:
-  lr = (lr_type == 'nanopore') ? 'ont' : wtdbg2_technology
   """
-  wtdbg2.pl -t ${params.threads} -x $lr -g ${genome_size} -o ${id} ${params.wtdbg2_additional_parameters} $lreads
+  wtdbg2.pl -t ${params.threads} -x ${wtdbg2_technology} -g ${genome_size} -o ${id} ${params.wtdbg2_additional_parameters} $lreads
 
   # Rename contigs
   cp ${id}.cns.fa wtdbg2_assembly.fasta
