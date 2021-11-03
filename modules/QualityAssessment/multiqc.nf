@@ -25,7 +25,7 @@ process multiqc {
   echo \"\" >> ASSEMBLY_SUMMARY.txt
   echo \"## Main QUAST statistics\" >> ASSEMBLY_SUMMARY.txt
   echo \"\" >> ASSEMBLY_SUMMARY.txt
-  csvtk cut -t -f 1,14,15,16,17,18,22,25,26,32 multiqc_data/multiqc_quast.txt | csvtk -t pretty >> ASSEMBLY_SUMMARY.txt
+  csvtk cut -t -f 1,14,15,16,17,18,22,27,28,31 multiqc_data/multiqc_quast.txt | csvtk -t pretty >> ASSEMBLY_SUMMARY.txt
   echo \"\" >> ASSEMBLY_SUMMARY.txt
   echo \"## Main BUSCO statistics\" >> ASSEMBLY_SUMMARY.txt
   echo \"\" >> ASSEMBLY_SUMMARY.txt

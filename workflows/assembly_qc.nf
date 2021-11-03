@@ -18,6 +18,6 @@ workflow ASSEMBLY_QC {
     quast(input_tuple)
 
     // Run multiqc
-    multiqc(quast.out.groupTuple(), Channel.value("$workflow.runName"))
+    multiqc(quast.out.groupTuple(by: [0,1,2]), Channel.value("$workflow.runName"))
 
 }
