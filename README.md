@@ -41,6 +41,12 @@ Are you curious about changes between releases? See the [changelog](markdown/CHA
 
 This pipeline has two complementary pipelines (also written in nextflow) for [NGS preprocessing](https://github.com/fmalmeida/ngs-preprocess) and [prokaryotic genome annotation](https://github.com/fmalmeida/bacannot) that can give the user a complete workflow for bacterial genomics analyses.
 
+### Feedback
+
+In the pipeline we always try to create a workflow and a execution dynamics that is the most generic possible and is suited for the most possible use cases.
+
+Therefore, feedbacks are very well welcomed. If you believe that your use case is not encompassed in the pipeline, you have enhancement ideas or found a bug, please do not hesitate to [open an issue](https://github.com/fmalmeida/MpGAP/issues/new/choose) to disscuss about it.
+
 ## Requirements
 
 This pipeline has only two dependencies: [Docker](https://www.docker.com) and [Nextflow](https://github.com/nextflow-io/nextflow).
