@@ -9,7 +9,7 @@ process pilon_polish {
 
   output:
   file("${assembler}/*") // Get everything
-  tuple val(id), file("${assembler}/${assembler}_final_pilon_polish.fasta"), val("${assembler}_pilon_polished")
+  tuple val(id), file("${assembler}/${assembler}_pilon_consensus.fasta"), val("${assembler}_pilon_polished")
 
   script:
   has_paired = (sread1 =~ /input.*/) ? false : true
@@ -26,7 +26,7 @@ process pilon_polish {
 
       # Save files in the desired directory
       mv 0* polish.log ${assembler};
-      mv ${assembler}/*_final_polish.fasta ${assembler}/${assembler}_final_pilon_polish.fasta ;
+      mv ${assembler}/*_final_polish.fasta ${assembler}/${assembler}_pilon_consensus.fasta ;
       """
   // doesn't have paired reads but has unpaired reads
   else if(!has_paired && has_single)
@@ -42,7 +42,7 @@ process pilon_polish {
 
       # Execute pilon a single time (for single end reads)
       java -Xmx${params.pilon_memory_limit}G -jar /miniconda/share/pilon*/pilon*jar \
-      --genome ${draft} --bam ${id}_${assembler}_aln.bam --output ${assembler}_final_pilon_polish \
+      --genome ${draft} --bam ${id}_${assembler}_aln.bam --output ${assembler}_pilon_consensus \
       --outdir ${assembler} &> pilon.log
 
       # save bam file in the desired directory
@@ -71,6 +71,6 @@ process pilon_polish {
 
       # Save files in the desired directory
       mv 0* polish.log ${assembler};
-      mv ${assembler}/*_final_polish.fasta ${assembler}/${assembler}_final_pilon_polish.fasta ;
+      mv ${assembler}/*_final_polish.fasta ${assembler}/${assembler}_pilon_consensus.fasta ;
       """
 }

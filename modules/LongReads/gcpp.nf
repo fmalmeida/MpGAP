@@ -8,8 +8,8 @@ process gcpp {
   tuple val(id), file(draft), val(assembler), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), val(wtdbg2_technology), val(genome_size), val(corrected_long_reads), val(medaka_model), file(fast5), val(nanopolish_max_haplotypes), val(shasta_config), file(bams), val(prefix)
 
   output:
-  file "${assembler}_pbvariants.gff" // Save gff
-  tuple val(id), file("${assembler}_pbconsensus.fasta"), val("${assembler}_gcpp") // Save contigs
+  file "${assembler}_gcpp_variants.gff" // Save gff
+  tuple val(id), file("${assembler}_gcpp_consensus.fasta"), val("${assembler}_gcpp") // Save contigs
 
  when:
  !(bams =~ /input.*/) && (lr_type == 'pacbio') && (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2')
@@ -31,6 +31,6 @@ process gcpp {
   # run polisher
   samtools index final_pbaligned.bam ;
   samtools faidx ${draft} ;
-  gcpp -r ${draft} -o ${assembler}_pbconsensus.fasta,${assembler}_pbvariants.gff -j ${params.threads} final_pbaligned.bam ;
+  gcpp -r ${draft} -o ${assembler}_gcpp_consensus.fasta,${assembler}_gcpp_variants.gff -j ${params.threads} final_pbaligned.bam ;
   """
 }
