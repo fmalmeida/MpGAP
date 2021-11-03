@@ -3,13 +3,7 @@
 Quickstart
 ==========
 
-.. tip::
-
-  Remember: the pipeline can always be executed with a config file. In fact, it is the best and easier way to execute the pipeline.
-
-.. tip::
-
-  Remember: the pipeline will choose the assembly workflow (hybrid, short reads only or long reads only) automatically, based on the input reads given.
+The pipeline can always be executed with a :ref:`config`. In fact, it is the best and easier way to configure the pipeline. **Remember:** the pipeline will choose the assembly workflow (hybrid, short reads only or long reads only) automatically, based on the input reads given.
 
 Overview
 --------
@@ -32,27 +26,27 @@ We have made this subsampled dataset available in `Figshare <https://figshare.co
 
 Now we have the necessary data to perform the quickstart.
 
-.. note::
-
-  Users must **never** use hard or symbolic links. This will probably make nextflow fail. Remember to **always** write input paths inside double quotes.
-
 Preparing the input samplesheet
 -------------------------------
 
-The pipeline reads the input files from a samplesheet in YAML format. A list of available YAML keys to be used in the samplesheet and how to properly create it is available in the :ref:`samplesheet` reference page.
+.. warning::
+
+  Users must **never** use hard or symbolic links. This will probably make nextflow fail.
+
+The pipeline reads the input files from a samplesheet in YAML format. A list of available YAML keys to be used in the samplesheet and how to properly create it is available in the :ref:`samplesheet reference page<samplesheet>`.
 
 Here, taking advantage of the ``hybrid_strategy`` YAML key, we will create a samplesheet entry for the input reads that performs a hybrid assembly in both strategies 1 and 2.
 
 .. note::
 
-  If this key is not used, the pipeline will run the default strategy, which can be changed with the parameter ``--hybrid_strategy``. For more information on the hybrid assembly strategies please see the :ref:`manual` reference page.
+  If this key is not used, the pipeline will run the default strategy (1), which can be changed with the parameter ``--hybrid_strategy``. For more information on the hybrid assembly strategies please see the :ref:`manual reference page<manual>`.
 
-A proper samplesheet for the data will look like this:
+A proper samplesheet for this data will look like this:
 
 .. code-block:: bash
 
-  # samplesheet file of e. coli 30X reads
   # this is a YAML file
+  # samplesheet file of e. coli 30X reads
   # input entry will perform both hybrid strategies
   samplesheet:
     - id: ecoli_30X
@@ -79,8 +73,8 @@ Running the pipeline
     --unicycler_additional_parameters '--mode conservative'
 
 .. tip::
-
-	Additional parameters can be passed to the assemblers using the ``--{assembler}_additional_parameters`` parameter. Moreover, specific software can be turned off with the parameters ``--skip_{assembler}``
+  | Additional parameters to assemblers can be given with ``--{assembler}_additional_parameters``.
+  | Moreover, specific software can be turned off with the parameters ``--skip_{assembler}``.
 
 About hybrid strategy 2 and long reads polishing
 ------------------------------------------------
