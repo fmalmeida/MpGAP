@@ -74,7 +74,7 @@ def write_csv(in_list) {
      * Checking if long reads are corrected
      */
     // defaults
-    corrected_long_reads = (params.corrected_long_reads) ? params.corrected_long_reads : false
+    corrected_long_reads = (params.corrected_long_reads) ? true : false
 
     // corrected_long_reads input key is used for the sample?
     if (it.corrected_long_reads) {

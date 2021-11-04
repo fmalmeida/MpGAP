@@ -26,11 +26,6 @@ workflow parse_samplesheet {
     if (row.entrypoint == 'longreads_only') { 
       prefix = "${row.name}/longreads_only" 
     }
-    if (row.corrected_long_reads && row.corrected_long_reads.toLowerCase() != 'false') {
-      corrected_long_reads = 'true'
-    } else {
-      corrected_long_reads = 'false'
-    }
 
     // create input tuple   
     tuple(
@@ -43,7 +38,7 @@ workflow parse_samplesheet {
         row.lr_type, // long reads type
         row.wtdbg2_technology, // which wtdbg2 tech to use?
         row.genome_size, // expected genome size
-        row.corrected_long_reads.toLowerCase(), // are reads corrected?
+        row.corrected_long_reads.toString().toLowerCase(), // are reads corrected?
         row.medaka_model, // change medaka model?
         (row.nanopolish_fast5 == "missing_nanopolish_fast5") ? row.nanopolish_fast5 : file(row.nanopolish_fast5), // nanopolish nanopolish_fast5 as file
         row.nanopolish_max_haplotypes, // nanopolish max_haplotypes
