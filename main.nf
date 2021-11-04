@@ -46,7 +46,7 @@ include { logMessage          } from './nf_functions/logMessages.nf'
 
 // General
 params.output  = 'output'
-params.threads = 4
+params.threads = 3
 params.input   = ''
 
 // Assemblers?
