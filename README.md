@@ -95,7 +95,7 @@ It uses the hybrid assembly modes from Unicycler, Haslr and/or SPAdes.
 
 It produces a long reads only assembly and polishes (correct errors) it with short reads using Pilon.
 
-> With polishing with Illumina paired end reads pilon will be executed with [Unicycler-polish program](https://github.com/rrwick/Unicycler/blob/main/docs/unicycler-polish.md), taking advantage of its ability to perform multiple rounds of polishing until changes are minimal.
+> If polishing with Illumina paired end reads pilon will be executed with [Unicycler-polish program](https://github.com/rrwick/Unicycler/blob/main/docs/unicycler-polish.md), taking advantage of its ability to perform multiple rounds of polishing until changes are minimal.
 
 #### Example:
 
