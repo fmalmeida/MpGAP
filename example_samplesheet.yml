@@ -9,8 +9,7 @@
 # right after this id key, with the same indent without the "-".
 #
 # Please read the https://mpgap.readthedocs.io/en/latest/samplesheet.html documentation page
-# in order to understand how to properly set up and which are the available input keys
-# for the samplesheet
+# in order to understand how to properly set it up and which are the available/expected keys
 #
 # A template (with the correct fields, syntax and indentation) is given below:
 
