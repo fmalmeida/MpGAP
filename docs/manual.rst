@@ -10,7 +10,7 @@ Input files
 * path to Pacbio subreads.bam file containing raw data (Optional)
 * path to Nanopore FAST5 files containing raw data (Optional)
 
-The input data must be provided via a samplesheet in YAML format given via the ``--input`` parameter. Please read the :ref:`samplesheet` reference page to understand how to properly create one.
+The input data must be provided via a samplesheet in YAML format given via the ``--input`` parameter. Please read the :ref:`samplesheet reference page<samplesheet>` to understand how to properly create one.
 
 .. tip::
 
@@ -47,37 +47,45 @@ The pipeline is capable of assembling Illumina, ONT and Pacbio reads in three ma
    + Haslr
    + Use short reads to correct errors (polish) in long reads assemblies.
 
-.. note::
-  
-  Please read the section below to understand hybrid assembly strategies.
-
 Hybrid assembly strategies
 --------------------------
 
-Hybrid assemblies can be produced with two available strategies that are described below. To choose the strategies adopted, users must set the ``hybrid_strategy`` parameter either from inside the YAML file as described in the :ref:`samplesheet` reference page or from the command line with ``--hybrid-strategy`` (described below in this page) which will overwrite any value set in the samplesheet.
+Hybrid assemblies can be produced with two available strategies that are described below. To choose the strategies adopted, users must set the ``hybrid_strategy`` parameter either from inside the YAML file (which will overwrite, for that sample, any value set) as described in the :ref:`samplesheet reference page <samplesheet>` or with the ``--hybrid-strategy`` parameter to set a new default value for all samples.
 
 Valid options are: ``1``, ``2`` or ``both``.
 
 Strategy 1
-"""""""""""
+""""""""""
 
 By using `Unicycler <https://github.com/rrwick/Unicycler#method-hybrid-assembly>`_, `Haslr <https://github.com/vpc-ccg/haslr>`_ and/or `SPAdes <https://pubmed.ncbi.nlm.nih.gov/26589280/>`_ specialized hybrid assembly modules.
 
 .. note::
 
-  It is achieved when not using the parameter ``--hybrid_strategy``
+  It is achieved when using ``--hybrid_strategy 1`` or ``--hybrid_strategy both``
 
 Strategy 2
 """"""""""
 
-By polishing (correcting errors) a long reads only assembly with Illumina reads. This will tell the pipeline to produce a long reads only assembly (with canu, wtdbg2, shasta, raven, flye or unicycler) and polish it with Pilon (for unpaired reads) or with `Unicycler-polish program <https://github.com/rrwick/Unicycler/blob/master/docs/unicycler-polish.md>`_ (for paired end reads).
+By polishing (correcting errors) a long reads only assembly with Illumina reads. This will tell the pipeline to produce a long reads only assembly (with canu, wtdbg2, shasta, raven, flye or unicycler) and polish it with `Pilon <https://github.com/broadinstitute/pilon>`_.
+
+.. note::
+  
+  When polishing with Illumina paired end reads we run Pilon with the `Unicycler-polish program <https://github.com/rrwick/Unicycler/blob/main/docs/unicycler-polish.md>`_ taking advantage of its ability to perform multiple rounds of polishing until the changes are minimal.
+
+.. note::
+
+  It is achieved when using ``--hybrid_strategy 2`` or ``--hybrid_strategy both``
 
 Additionally, these long reads only assemblies can also be polished with Nanopolish or Racon+Medaka tools for nanopore reads and gcpp for Pacbio reads, before polishing with short reads. For that, users must properly set the parameters (``medaka_model``, ``nanopolish_fast5`` and/or ``pacbio_bam``).
 
 Parameters documentation
 ------------------------
 
-Please note that the parameters that are boolean (true or false) do not expect any value to be given for them. They must be used by itself, for example: ``--skip_spades --skip_flye``.
+Please note that, through the command line, the parameters that are boolean (true or false) do not expect any value to be given for them. They must be used by itself, for example: ``--skip_spades --skip_flye``.
+
+.. tip::
+
+  All parameters described can be configured through a configuration file. We encourage users to use it since it will keep your execution cleaner and more readable. See a :ref:`config` example.
 
 General parameters
 """"""""""""""""""
@@ -121,12 +129,10 @@ Input files
 Assemblies configuration
 """"""""""""""""""""""""
 
+All these parameters below set values in global manner for all the samples. However, if a sample has a value for one of these parameters in the samplesheet, it will overwrite the "global/default" value for that specific sample and use the one provided inside the YAML.
+
 Hybrid assembly strategies
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. note:: 
-
-  This overwrites any related value set inside the YAML samplesheet
 
 .. list-table::
    :widths: 25 15 60
@@ -137,18 +143,14 @@ Hybrid assembly strategies
      - Description
 
    * - ``--hybrid_strategy``
-     - NA
-     - It tells the pipeline which hybrid assembly strategy to adopt for **all** samples. Options are: ``1``, ``2`` or ``both``. Please read the description of the hybrid assembly strategies above to better choose the right strategy.
+     - 1
+     - It tells the pipeline which hybrid assembly strategy to adopt. Options are: ``1``, ``2`` or ``both``. Please read the description of the hybrid assembly strategies above to better choose the right strategy.
 
 Long reads characteristics
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. note:: 
-
-  These overwrite any related value set inside the YAML samplesheet
-
 .. list-table::
-   :widths: 25 15 60
+   :widths: 25 25 50
    :header-rows: 1
 
    * - Arguments
@@ -156,25 +158,21 @@ Long reads characteristics
      - Description
 
    * - ``--wtdbg2_technology``
-     - NA
-     - It tells the pipeline which technology the long reads are, which is required for wtdbg2. It will set a value for **all** samples. Options are: ``ont`` for Nanopore reads, ``rs`` for PacBio RSII, ``sq`` for PacBio Sequel, ``ccs`` for PacBio CCS reads. With not wanted, consider using ``--skip_wtdbg2``.
+     - The pipeline will use ``ont`` for nanopore reads and ``sq`` for pacbio reads
+     - It tells the pipeline which technology the long reads are, which is required for wtdbg2. Options are: ``ont`` for Nanopore reads, ``rs`` for PacBio RSII, ``sq`` for PacBio Sequel, ``ccs`` for PacBio CCS reads. With not wanted, consider using ``--skip_wtdbg2``.
    
    * - ``--shasta_config``
-     - NA
-     - It tells the pipeline which shasta pre-set configuration to use. It will set a value for **all** samples. Please read the `shasta configuration manual page <https://chanzuckerberg.github.io/shasta/Configurations.html>`_ to know the available models. 
+     - Nanopore-Oct2021
+     - It tells the pipeline which shasta pre-set configuration to use when assembling nanopore reads. Please read the `shasta configuration manual page <https://chanzuckerberg.github.io/shasta/Configurations.html>`_ to know the available models. 
 
    * - ``--corrected_long_reads``
      - false
-     - It tells the pipeline to interpret the long reads of **all** samples as "corrected" long reads. This will activate (if available) the options for corrected reads in the assemblers. For example: ``-corrected`` (in canu), ``--pacbio-corr|--nano-corr`` (in flye), etc. Be cautious when using this parameter. If your reads are not corrected, and you use this parameter, you will probably do not generate any contig.
+     - It tells the pipeline to interpret the input long reads as "corrected". This will activate (if available) the options for corrected reads in the assemblers. For example: ``-corrected`` (in canu), ``--pacbio-corr|--nano-corr`` (in flye), etc. Be cautious when using this parameter. If your reads are not corrected, and you use this parameter, you will probably do not generate any contig.
 
 Long reads polishers
 """"""""""""""""""""
 
-They are also useful for strategy 2 hybrid assemblies.
-
-.. note:: 
-
-  These overwrite any related value set inside the YAML samplesheet
+Useful for long reads only and strategy 2 hybrid assemblies.
 
 .. list-table::
    :widths: 30 10 60
@@ -185,12 +183,12 @@ They are also useful for strategy 2 hybrid assemblies.
      - Description
 
    * - ``--medaka_model``
-     - NA
-     - It tells the pipeline which available medaka model to use for **all** samples. Please read `medaka manual <https://github.com/nanoporetech/medaka#models>`_ to see available models.
+     - r941_min_high_g360
+     - It tells the pipeline which available medaka model to use to polish nanopore long reads assemblies. Please read `medaka manual <https://github.com/nanoporetech/medaka#models>`_ to see available models.
 
    * - ``--nanopolish_max_haplotypes``
      - 1000
-     - It sets the maximum number of haplotypes to be considered by Nanopolish for **all** samples. Sometimes the pipeline may crash because to much variation was found exceeding the limit.
+     - It sets the maximum number of haplotypes to be considered by Nanopolish. Sometimes the pipeline may crash because to much variation was found exceeding the limit.
 
 .. note::
 
@@ -201,10 +199,10 @@ Advanced assembler customization options
 
 .. note::
 
-  Additional parameters must be given inside double quotes separated by blank spaces.
+  Additional parameters must be set inside double quotes separated by blank spaces.
 
 .. list-table::
-   :widths: 35 15 50
+   :widths: 30 10 60
    :header-rows: 1
 
    * - Arguments
@@ -287,7 +285,3 @@ Advanced assembler customization options
      - NA
      - | Passes additional parameters for Shovill assembler. E.g. ``" --depth 15 "``. Must be given as shown in Shovill' manual.
        | The pipeline already executes shovill with spades, skesa and megahit, so please, do not use it with shovill's ``--assembler`` parameter.
-
-.. tip::
-
-  All these parameters are configurable through a configuration file. We encourage users to use the configuration file since it will keep your execution cleaner and more readable. See a :ref:`config` example.
