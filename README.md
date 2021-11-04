@@ -20,7 +20,7 @@
 
 ## About
 
-MpGAP is an easy to use nextflow docker-based pipeline that adopts well known software for genome assembly of Illumina, Pacbio and Oxford Nanopore sequencing data through illumina only, long reads only or hybrid modes. This pipeline wraps up the following software:
+MpGAP is an easy to use nextflow docker-based pipeline that adopts well known software for _de novo_ genome assembly of Illumina, Pacbio and Oxford Nanopore sequencing data through illumina only, long reads only or hybrid modes. This pipeline wraps up the following software:
 
 || **Source** |
 |:- | :- |
@@ -28,9 +28,24 @@ MpGAP is an easy to use nextflow docker-based pipeline that adopts well known so
 | **Polishers** | [Nanopolish](https://github.com/jts/nanopolish), [Medaka](https://github.com/nanoporetech/medaka), [gcpp](https://github.com/PacificBiosciences/gcpp), [Pilon](https://github.com/broadinstitute/pilon) |
 | **Quality check** | [QUAST](https://github.com/ablab/quast), [MultiQC](https://multiqc.info/) |
 
-## Further reading
+### Release notes
+
+Are you curious about changes between releases? See the [changelog](markdown/CHANGELOG.md).
+
+* I **strongly**, **vividly**, **mightily** recommend the usage of the latest versions hosted in master branch, which is nextflow's default.
+    + The latest will always have support, bug fixes and generally maitain the same processes (I mainly add things instead of removing) that also were in previous versions.
+    + But, if you **really** want to execute an earlier release, please [see the instructions for that](markdown/earlier_releases_instructions.md).
+* Versions below 2.0 are no longer supported.
+
+### Further reading
 
 This pipeline has two complementary pipelines (also written in nextflow) for [NGS preprocessing](https://github.com/fmalmeida/ngs-preprocess) and [prokaryotic genome annotation](https://github.com/fmalmeida/bacannot) that can give the user a complete workflow for bacterial genomics analyses.
+
+### Feedback
+
+In the pipeline we always try to create a workflow and a execution dynamics that is the most generic possible and is suited for the most possible use cases.
+
+Therefore, feedbacks are very well welcomed. If you believe that your use case is not encompassed in the pipeline, you have enhancement ideas or found a bug, please do not hesitate to [open an issue](https://github.com/fmalmeida/MpGAP/issues/new/choose) to disscuss about it.
 
 ## Requirements
 
@@ -38,24 +53,21 @@ This pipeline has only two dependencies: [Docker](https://www.docker.com) and [N
 
 * Unix-like operating system (Linux, macOS, etc)
   + Windows users maybe can execute it using the linux subsystem for windows as shown in:
+    + https://nextflow.io/blog/2021/setup-nextflow-on-windows.html
     + https://docs.microsoft.com/pt-br/windows/wsl/install-win10
     + https://www.nextflow.io/docs/latest/getstarted.html
     + https://en.wikipedia.org/wiki/Windows_Subsystem_for_Linux
 * Java 8 (or higher)
 * Nextflow (version 20.01 or higher)
 * Docker
-  * Image: `fmalmeida/mpgap:v2.3`
+  * Image: `fmalmeida/mpgap:v3.0`
 
 ## Installation
 
 1. If you don't have it already install [Docker](https://docs.docker.com/) in your computer.
     * After installed, you need to download the required Docker images
 
-          docker pull fmalmeida/mpgap:v2.3
-
-> Each release is accompanied by a Dockerfile in the docker folder. When using releases older releases, users can create the correct image using
-the Dockerfile that goes alongside with the release (Remember to give the image the correct name, as it is in dockerhub and the nextflow script).
-The latest release will always have its docker image in dockerhub.
+          docker pull fmalmeida/mpgap:v3.0
 
 2. Install Nextflow (version 20.01 or higher):
 
@@ -65,65 +77,48 @@ The latest release will always have its docker image in dockerhub.
 
        nextflow run fmalmeida/mpgap --help
 
-> Users can let the pipeline always updated with: `nextflow pull fmalmeida/mpgap`
+:fire: Users can let the pipeline always updated with: `nextflow pull fmalmeida/mpgap`
 
 ## Documentation
 
 ### Explanation of hybrid strategies
 
-Hybrid assemblies can be produced using one of two available strategies:
+Hybrid assemblies can be produced with two available strategies. Please read more about the strategies and how to set them up in the [online documentation](https://mpgap.readthedocs.io/en/latest/manual.html#hybrid-assembly-strategies).
+
+:arrow_right: they are chosen with the parameter `--hybrid_strategy`.
 
 #### Strategy 1
 
-By using Unicycler, Haslr and/or SPAdes hybrid assembly modes. For instance, it can use the Unicycler hybrid mode which will first assemble a high quality assembly graph with Illumina data and then it will use long reads to bridge the gaps. More information about Unicycler Hybrid mode can be found [here](https://github.com/rrwick/Unicycler#method-hybrid-assembly).
+It uses the hybrid assembly modes from Unicycler, Haslr and/or SPAdes.
 
 #### Strategy 2
 
-By polishing a long reads only assembly with Illumina reads. For that, users will have to set `--strategy_2` to true. This will tell the pipeline to produce a long reads only assembly (with canu, flye, raven or unicycler) and polish it with Pilon (for unpaired reads) or with [Unicycler-polish program](https://github.com/rrwick/Unicycler/blob/master/docs/unicycler-polish.md) (for paired end reads).
-
-> Note that, `--strategy_2` parameter is an alternative workflow, when used, it will execute ONLY strategy 2 and not both strategies. When false, only strategy 1 will be executed.
+It produces a long reads only assembly and polishes (correct errors) it with short reads using Pilon (for unpaired reads) or with [Unicycler-polish program](https://github.com/rrwick/Unicycler/blob/main/docs/unicycler-polish.md) (for paired end reads).
 
 #### Example:
 
-        nextflow run fmalmeida/mpgap --outdir output --threads 5 --shortreads_paired "path-to/illumina_r{1,2}.fastq" \
-        --shortreads_single "path-to/illumina_unpaired.fastq" --lr_type 'nanopore' --longreads "path-to/ont_reads.fastq" --strategy_2
+```bash
+# run the pipeline setting the desired hybrid strategy globally (for all samples)
+nextflow run fmalmeida/mpgap \
+  --output output \
+  --threads 5 \
+  --input "samplesheet.yml" \
+  --hybrid_strategy "both"
+```
+
+:fire: This will perform, for **all** samples, both both strategy 1 and strategy 2 hybrid assemblies. Please read more about it in the [manual reference page](https://mpgap.readthedocs.io/en/latest/manual.html) and [samplesheet reference page](https://mpgap.readthedocs.io/en/latest/samplesheet.html).
 
 ### Usage
 
-<a href="https://mpgap.readthedocs.io/en/latest/index.html"><strong>Users are advised to read the complete documentation »</strong></a>
-
-* Complete command line explanation of parameters:
-    + `nextflow run fmalmeida/mpgap --help`
-* See usage examples in the command line:
-    + `nextflow run fmalmeida/mpgap --examples`
-
-### Command line usage examples
-
-Command line executions are exemplified [in the manual](https://mpgap.readthedocs.io/en/latest/examples.html).
-
-#### Warnings
-
-* Remember to **always** write input paths inside double quotes.
-* When using paired end reads it is **required** that input reads are set with the “{1,2}” pattern. For example: “SRR6307304_{1,2}.fastq”. This will properly load reads “SRR6307304_1.fastq” and “SRR6307304_2.fastq”
-* When running hybrid assemblies or mixing short read types it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. So that the pipeline does not load any different read that also matches the REGEX and avoid confusions with the inputs.
+For understading pipeline usage and configuration, users must read the <a href="https://mpgap.readthedocs.io/en/latest/index.html"><strong>complete online documentation »</strong></a>
 
 ### Using the configuration file
 
 All parameters showed above can be, and are advised to be, set through the configuration file. When a configuration file is used the pipeline is executed as `nextflow run fmalmeida/mpgap -c ./configuration-file`. Your configuration file is what will tell the pipeline which type of data you have, and which processes to execute. Therefore, it needs to be correctly configured.
 
-To create a configuration file in your working directory:
-
-* For Hybrid assemblies:
-
-      nextflow run fmalmeida/mpgap --get_hybrid_config
-
-* For Long reads only assemblies:
-
-      nextflow run fmalmeida/mpgap --get_lreads_config
-
-* For illumina only assemblies:
-
-      nextflow run fmalmeida/mpgap --get_sreads_config
+* To create a configuration file in your working directory:
+  
+      nextflow run fmalmeida/mpgap --get_config
 
 ### Interactive graphical configuration and execution
 
@@ -163,19 +158,13 @@ It will result in the following:
 
 1. Whenever using unicycler with unpaired reads, an odd platform-specific SPAdes-related crash seems do randomly happen as it can be seen in the issue discussed at https://github.com/rrwick/Unicycler/issues/188.
   + As a workaround, Ryan says to use the `--no_correct` parameter which solves the issue and does not have a negative impact on assembly quality.
-  + Therefore, if you run into this error when using unpaired data you can activate this workaroud with `--unicycler_additional_parameters "--no_correct"`.
-2. Whenever running the pipeline for multiple samples at once using glob patterns such as '*' and '?', users are advised to do not perform hybrid assemblies, nor combining both paired and unpaired short reads in short reads only assemblies. Because the pipeline is not yet trained to properly search for the correct pairs, and since nextflow channels are random, we cannot ensure that the combination of data used in these to assembly types will be right. The pipeline treats each input file as a unique sample, and it will execute it individually.
-  + To date, the use of glob patterns only works properly with long reads only assembly, or short reads only assemblies using either paired or unpaired reads, not both at the same time. For example:
-    + `nextflow run [...] --longreads 'my_data/*.fastq' --lr_type 'nanopore' --outdir my_results`
-    + The pipeline will load and assembly each fastq in the `my_data` folder and assemble it, writing the results for each read in a sub-folder with the reads basename in the `my_results` output folder.
-    + `nextflow run [...] --shortreads_single 'my_data/*.fastq' --outdir my_results`
-    + The pipeline will load and assembly each fastq in the `my_data` folder and assemble it, writing the results for each read in a sub-folder with the reads basename in the `my_results` output folder.
-
-> However, we are currently working in a proper way to execute the hybrid and combination of short reads in assemblies for multiple samples at once so that users can properly execute it without confusion.
-
-3. Sometimes, shovill assembler can fail and cause the pipeline to fail due to problems in estimating the genome size. This, is actually super simple to solve! Instead of letting the shovill assembler estimate the genome size, you can pass the information to it and prevent its fail:
-    + `--shovill_additional_parameters '--gsize 3m'`
+  + Therefore, if you run into this error when using unpaired data you can activate this workaroud with:
+    + `--unicycler_additional_parameters " --no_correct "`.
+2. Sometimes, shovill assembler can fail and cause the pipeline to fail due to problems in estimating the genome size. This, is actually super simple to solve! Instead of letting the shovill assembler estimate the genome size, you can pass the information to it and prevent its fail:
+    + `--shovill_additional_parameters " --gsize 3m "`
 
 ## Citation
 
 To cite this pipeline users can use our Zenodo tag or directly via the github url. Users are encouraged to cite the programs used in this pipeline whenever they are used.
+
+Please, do not forget to cite the software that were used whenever you use its outputs. See [the list of tools](markdown/list_of_tools.md).

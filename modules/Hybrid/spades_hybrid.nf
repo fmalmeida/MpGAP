@@ -1,36 +1,27 @@
 process spades_hybrid {
-  publishDir "${params.outdir}/${prefix}", mode: 'copy'
+  publishDir "${params.output}/${prefix}", mode: 'copy'
   label 'main'
-  tag { x }
+  tag "${id}"
   cpus params.threads
 
   input:
-  file(lreads)
-  tuple val(id), file(sread1), file(sread2)
-  file(sreads)
-  val(prefix)
+  tuple val(id), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), val(wtdbg2_technology), val(genome_size), val(corrected_long_reads), val(medaka_model), file(fast5), val(nanopolish_max_haplotypes), val(shasta_config), file(bams), val(prefix)
 
   output:
   file "*" // Save everything
-  tuple file("spades/spades_assembly.fasta"), val(lrID), val('spades') // Gets contigs file
+  tuple val(id), file("spades/spades_assembly.fasta"), val('spades') // Gets contigs file
+
+  when:
+  ((!(sread1 =~ /input.*/) && !(sread2 =~ /input.*/)) || !(single =~ /input.*/)) && !(lreads =~ /input.*/) && (entrypoint == 'hybrid_strategy_1')
 
   script:
   // Check reads
-  lr   = (params.lr_type == 'nanopore') ? '--nanopore' : '--pacbio'
-  lrID = (lreads.getName() - ".gz").toString().substring(0, (lreads.getName() - ".gz").toString().lastIndexOf("."))
-  if ((params.shortreads_single) && (params.shortreads_paired)) {
-    parameter = "-1 $sread1 -2 $sread2 -s $sreads $lr $lreads"
-    x = "Performing a hybrid assembly with SPAdes, using paired and single end reads"
-  } else if ((params.shortreads_single) && (!params.shortreads_paired)) {
-    parameter = "-s $sreads $lr $lreads"
-    x = "Performing a hybrid assembly with SPAdes, using single end reads"
-  } else if ((params.shortreads_paired) && (!params.shortreads_single)) {
-    parameter = "-1 $sread1 -2 $sread2 $lr $lreads"
-    x = "Performing a hybrid assembly with SPAdes, using paired end reads"
-  }
+  lr   = (lr_type == 'nanopore') ? '--nanopore' : '--pacbio'
+  paired_reads = (!(sread1 =~ /input.*/) && !(sread2 =~ /input.*/)) ? "-1 $sread1 -2 $sread2" : ""
+  single_reads = !(single =~ /input.*/) ? "-s $single" : ""
   """
   spades.py -o spades -t ${params.threads} \\
-  ${params.spades_additional_parameters} $parameter
+  ${params.spades_additional_parameters} ${paired_reads} ${single_reads} ${lr} ${lreads}
 
   # Rename
   mv spades/contigs.fasta spades/spades_assembly.fasta

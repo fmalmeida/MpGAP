@@ -1,32 +1,23 @@
 .. _manual:
 
-******
 Manual
-******
+======
 
 Input files
-===========
+-----------
 
 * path to fastq files containing sequencing reads (Illumina, Nanopore or Pacbio)
 * path to Pacbio subreads.bam file containing raw data (Optional)
 * path to Nanopore FAST5 files containing raw data (Optional)
 
-.. note::
+The input data must be provided via a samplesheet in YAML format given via the ``--input`` parameter. Please read the :ref:`samplesheet reference page<samplesheet>` to understand how to properly create one.
 
-  Users must **never** use hard or symbolic links. This will probably make nextflow fail. Remember to **always** write input paths inside double quotes.
+.. tip::
 
-.. note::
-
-  When using paired end reads it is **required** that input reads are set with the "{1,2}" pattern. For example: "SRR6307304_{1,2}.fastq". This will properly load reads "SRR6307304_1.fastq" and "SRR6307304_2.fastq".
-
-.. warning::
-
-  When running hybrid assemblies or mixing short read types it is advised to **avoid not required REGEX** and write the full file path, using only the required REGEX for paired end reads when applicable. Since nextflow randomly loads inputs, this is said to avoid unwanted combination of inputs while loading all reads that match the REGEX.
-
-  We are currently working in provinding a way to run multiple samples at once avoinding unwanted combination.
+  A samplesheet template can be downloaded with: ``nextflow run fmalmeida/mpgap --get_samplesheet``
 
 Assembly possibilities
-======================
+----------------------
 
 The pipeline is capable of assembling Illumina, ONT and Pacbio reads in three main ways:
 
@@ -38,7 +29,7 @@ The pipeline is capable of assembling Illumina, ONT and Pacbio reads in three ma
 
 .. note::
 
-  `Shovill <https://github.com/tseemann/shovill>`_ is a software that can work with different assembly as its core. The pipeline executes shovill with both spades, skesa and megahit, so user can compare the results.
+  `Shovill <https://github.com/tseemann/shovill>`_ is a software that can work with different assemblers as its core. The pipeline executes shovill with both ``spades``, ``skesa`` and ``megahit``, so user can compare the results.
 
 2. Long reads only assemblies
 
@@ -49,305 +40,248 @@ The pipeline is capable of assembling Illumina, ONT and Pacbio reads in three ma
    + Shasta
    + wtdbg2
 
-3. Hybrid (both short and long reads)
+3. Hybrid assemblies (using both short and long reads)
 
    + Unicycler
    + SPAdes
    + Haslr
-   + Use short reads to correct errors (polish) in long reads assemblies. See `hybrid assembly strategy 2 <https://mpgap.readthedocs.io/en/latest/manual.html#strategy-2>`_.
+   + Use short reads to correct errors (polish) in long reads assemblies.
 
-Parameters documentation
-========================
+Hybrid assembly strategies
+--------------------------
 
-General parameters
-------------------
+Hybrid assemblies can be produced with two available strategies that are described below. To choose the strategies adopted, users must set the ``hybrid_strategy`` parameter either from inside the YAML file (which will overwrite, for that sample, any value set) as described in the :ref:`samplesheet reference page <samplesheet>` or with the ``--hybrid-strategy`` parameter to set a new default value for all samples.
 
-.. list-table::
-   :widths: 15 15 20 50
-   :header-rows: 1
-
-   * - Arguments
-     - Required
-     - Default value
-     - Description
-
-   * - ``--outdir``
-     - Y
-     - output
-     - Name of directory to store output values. Input reads basenames will be used to create sub-folder under this directory.
-   
-   * - ``--prefix``
-     - N
-     - Input reads names
-     - Gives a custom prefix for sample results. By default the pipeline creates one using the input reads names. Must only be used if running the pipeline for a single sample.
-
-   * - ``--genomeSize``
-     - | Y
-       | (for Canu, wtdbg2 and Haslr assemblers)
-     - NA
-     - Sets expected genome size. E.g. 5.6m; 1.2g.
-
-   * - ``--threads``
-     - N
-     - 3
-     - Number of threads to use
-
-   * - ``--parallel_jobs``
-     - N
-     - 1
-     - Number of jobs to run in parallel. Each job can consume up to N threads (``--threads``)
-
-Input files
------------
-
-.. list-table::
-   :widths: 20 25 10 50
-   :header-rows: 1
-
-   * - Arguments
-     - Required
-     - Default value
-     - Description
-
-   * - ``--shortreads_paired``
-     - | Y
-       | (for hybrid and illumina-only modes)
-     - NA
-     - Path to Illumina paired end reads. E.g. "read_pair\_{1,2}.fastq".
-
-   * - ``--shortreads_single``
-     - | Y
-       | (for hybrid and illumina-only modes)
-     - NA
-     - Path to Illumina single end reads. E.g. "reads\*.fastq".
-
-   * - ``--longreads``
-     - | Y
-       | (for hybrid and longreads-only modes)
-     - NA
-     - Path to longreads in FASTA or FASTQ formats.
-
-   * - ``--lr_type``
-     - | Y
-       | (for hybrid and longreads-only modes)
-     - nanopore
-     - Tells whether input longreads are: pacbio or nanopore.
-   
-   * - ``--wtdbg2_technology``
-     - | Y
-       | (when running wtdbg2 with pacbio)
-     - ont
-     - | When assembling pacbio long reads with wtdbg2, it is necessary to tell the pipeline
-       | whether reads are "rs" for PacBio RSII, "sq" for PacBio Sequel, "ccs" for PacBio CCS reads.
-       | With not wanted it, consider using ``--skip_wtdbg2``.
-
-   * - ``--corrected_lreads``
-     - N
-     - False
-     - | Tells the pipeline to interpret the long reads as "corrected" long reads.
-       |
-       | This will activate (if available) the options for corrected reads in the
-       | assemblers: ``-corrected`` (in canu), ``--pacbio-corr|--nano-corr`` (in flye), etc. Be cautious when using this parameter. If your reads are not corrected, and you use this parameter, you will probably do not generate any contig.
-
-Hybrid assembly strategy
-------------------------
-
-Hybrid assemblies can be produced using one of two available strategies:
+Valid options are: ``1``, ``2`` or ``both``.
 
 Strategy 1
-^^^^^^^^^^
+""""""""""
 
 By using `Unicycler <https://github.com/rrwick/Unicycler#method-hybrid-assembly>`_, `Haslr <https://github.com/vpc-ccg/haslr>`_ and/or `SPAdes <https://pubmed.ncbi.nlm.nih.gov/26589280/>`_ specialized hybrid assembly modules.
 
 .. note::
 
-  It is achieved when not using the parameter ``--strategy_2``
+  It is achieved when using ``--hybrid_strategy 1`` or ``--hybrid_strategy both``
 
 Strategy 2
-^^^^^^^^^^
+""""""""""
 
-By polishing (correcting errors) a long reads only assembly with Illumina reads. For that, users will have to use the parameter ``--strategy_2``. This will tell the pipeline to produce a long reads only assembly (with canu, raven, flye or unicycler) and polish it with Pilon (for unpaired reads) or with `Unicycler-polish program <https://github.com/rrwick/Unicycler/blob/master/docs/unicycler-polish.md>`_ (for paired end reads).
+By polishing (correcting errors) a long reads only assembly with Illumina reads. This will tell the pipeline to produce a long reads only assembly (with canu, wtdbg2, shasta, raven, flye or unicycler) and polish it with `Pilon <https://github.com/broadinstitute/pilon>`_.
+
+.. note::
+  
+  When polishing with Illumina paired end reads we run Pilon with the `Unicycler-polish program <https://github.com/rrwick/Unicycler/blob/main/docs/unicycler-polish.md>`_ taking advantage of its ability to perform multiple rounds of polishing until the changes are minimal.
 
 .. note::
 
-  Note that, ``--strategy_2`` parameter is an alternative workflow, when used, it will execute ONLY strategy 2 and not both strategies. When false, only strategy 1 will be executed.
+  It is achieved when using ``--hybrid_strategy 2`` or ``--hybrid_strategy both``
+
+Additionally, these long reads only assemblies can also be polished with Nanopolish or Racon+Medaka tools for nanopore reads and gcpp for Pacbio reads, before polishing with short reads. For that, users must properly set the parameters (``medaka_model``, ``nanopolish_fast5`` and/or ``pacbio_bam``).
+
+Parameters documentation
+------------------------
+
+Please note that, through the command line, the parameters that are boolean (true or false) do not expect any value to be given for them. They must be used by itself, for example: ``--skip_spades --skip_flye``.
+
+.. tip::
+
+  All parameters described can be configured through a configuration file. We encourage users to use it since it will keep your execution cleaner and more readable. See a :ref:`config` example.
+
+General parameters
+""""""""""""""""""
 
 .. list-table::
-   :widths: 20 30 10 50
+   :widths: 25 15 60
    :header-rows: 1
 
    * - Arguments
-     - Required
      - Default value
      - Description
 
-   * - ``--strategy_2``
-     - N
-     - False
-     - | Tells the pipeline to create a long reads only assembly and polish it with short reads.
-       |
-       | By default, the hybrid modes of Unicycler, Haslr and SPAdes are executed. This parameter tells to excute the hybrid strategy 2 (longreads -> polish) instead of Unicycler/Haslr/SPAdes hybrid modes.
+   * - ``--output``
+     - output
+     - Name of directory to store assemblers results. The sample ids will be used to create sub-folder under this directory.
 
-Long reads assembly polishing parameters (also used for hybrid strategy 2)
---------------------------------------------------------------------------
+   * - ``--threads``
+     - 3
+     - Number of threads to use per process.
 
-Long reads only assemblies can also be polished with Nanopolish or Racon+Medaka tools for nanopore reads and gcpp for Pacbio reads. For that, users must properly set the parameters. given below.
+   * - ``--parallel_jobs``
+     - NA
+     - Number of processes to run in parallel. Each job can consume up to N threads (``--threads``). If not given, let's nextflow automatically handle it.
+
+Input files
+"""""""""""
+
+.. list-table::
+   :widths: 25 15 60
+   :header-rows: 1
+
+   * - Arguments
+     - Default value
+     - Description
+
+   * - ``--input``
+     - NA
+     - Path to input samplesheet in YAML format. It is required. Please read the :ref:`samplesheet` reference page to understand how to properly create one.
+
+
+Assemblies configuration
+""""""""""""""""""""""""
+
+All these parameters below set values in global manner for all the samples. However, if a sample has a value for one of these parameters in the samplesheet, it will overwrite the "global/default" value for that specific sample and use the one provided inside the YAML.
+
+Hybrid assembly strategies
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+   :widths: 25 15 60
+   :header-rows: 1
+
+   * - Arguments
+     - Default value
+     - Description
+
+   * - ``--hybrid_strategy``
+     - 1
+     - It tells the pipeline which hybrid assembly strategy to adopt. Options are: ``1``, ``2`` or ``both``. Please read the description of the hybrid assembly strategies above to better choose the right strategy.
+
+Long reads characteristics
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. list-table::
+   :widths: 25 25 50
+   :header-rows: 1
+
+   * - Arguments
+     - Default value
+     - Description
+
+   * - ``--wtdbg2_technology``
+     - The pipeline will use ``ont`` for nanopore reads and ``sq`` for pacbio reads
+     - It tells the pipeline which technology the long reads are, which is required for wtdbg2. Options are: ``ont`` for Nanopore reads, ``rs`` for PacBio RSII, ``sq`` for PacBio Sequel, ``ccs`` for PacBio CCS reads. With not wanted, consider using ``--skip_wtdbg2``.
+   
+   * - ``--shasta_config``
+     - Nanopore-Oct2021
+     - It tells the pipeline which shasta pre-set configuration to use when assembling nanopore reads. Please read the `shasta configuration manual page <https://chanzuckerberg.github.io/shasta/Configurations.html>`_ to know the available models. 
+
+   * - ``--corrected_long_reads``
+     - false
+     - It tells the pipeline to interpret the input long reads as "corrected". This will activate (if available) the options for corrected reads in the assemblers. For example: ``-corrected`` (in canu), ``--pacbio-corr|--nano-corr`` (in flye), etc. Be cautious when using this parameter. If your reads are not corrected, and you use this parameter, you will probably do not generate any contig.
+
+Long reads polishers
+""""""""""""""""""""
+
+Useful for long reads only and strategy 2 hybrid assemblies.
+
+.. list-table::
+   :widths: 30 10 60
+   :header-rows: 1
+
+   * - Arguments
+     - Default value
+     - Description
+
+   * - ``--medaka_model``
+     - r941_min_high_g360
+     - It tells the pipeline which available medaka model to use to polish nanopore long reads assemblies. Please read `medaka manual <https://github.com/nanoporetech/medaka#models>`_ to see available models.
+
+   * - ``--nanopolish_max_haplotypes``
+     - 1000
+     - It sets the maximum number of haplotypes to be considered by Nanopolish. Sometimes the pipeline may crash because to much variation was found exceeding the limit.
 
 .. note::
 
 	 For assembly polishing with medaka models, the assembly is first polished one time with racon using the ``-m 8 -x -6 -g -8 -w 500`` as this is the dataset in which Medaka has been trained on. Therefore, the medaka polishing in this pipeline mean Racon 1X + Medaka.
 
-.. list-table::
-   :widths: 25 5 20 50
-   :header-rows: 1
-
-   * - Arguments
-     - Required
-     - Default value
-     - Description
-
-   * - ``--medaka_sequencing_model``
-     - N
-     - r941_min_high_g360
-     - | Used to polish a longreads-only assembly with Medaka. It selects a Medaka ONT sequencing model for polishing.
-       | Please read `medaka manual <https://github.com/nanoporetech/medaka#models>`_ for more instructions.
-
-   * - ``--nanopolish_fast5Path``
-     - N
-     - NA
-     - | Used to polish a longreads-only assembly with Nanopolish.
-       | It sets path to the directory containing all the FAST5 files containing the raw data.
-
-   * - ``--nanopolish_max_haplotypes``
-     - N
-     - 1000
-     - It sets the max number of haplotypes to be considered by Nanopolish. Sometimes the pipeline may crash because to much variation was found exceeding the limit.
-
-   * - ``--pacbio_bams``
-     - N
-     - NA
-     - | Path to all subreads.bam files for the given reads (can be '\*.bam')
-       | In order to nextflow properly use it, one needs to store all the data, from all the cells in one single directory and set the filepath as "some/data/\*bam".
-       |
-       | Whenever set, the pipeline will execute a polishing step with gcpp. GCpp is the machine-code successor of the venerable GenomicConsensus suite which has reached EOL, with the exception of not supporting Quiver/RSII anymore.
-
 Advanced assembler customization options
-----------------------------------------
+""""""""""""""""""""""""""""""""""""""""
 
 .. note::
 
-  Additional parameters must be given inside double quotes separated by blank spaces.
+  Additional parameters must be set inside double quotes separated by blank spaces.
 
 .. list-table::
-   :widths: 30 10 10 50
+   :widths: 30 10 60
    :header-rows: 1
 
    * - Arguments
-     - Required
      - Default value
      - Description
 
    * - ``--quast_additional_parameters``
-     - N
      - NA
      - | Give additional parameters to Quast while assessing assembly metrics. Must be given as shown in Quast manual. E.g. ``" --large --eukaryote "``.
 
    * - ``--skip_canu``
-     - N
-     - False
+     - false
      - Skip the execution of Canu
 
    * - ``--canu_additional_parameters``
-     - N
      - NA
      - | Passes additional parameters for Canu assembler. E.g. ``" correctedErrorRate=0.075 corOutCoverage=200 "``. Must be given as shown in Canu's manual.
 
    * - ``--skip_flye``
-     - N
-     - False
+     - false
      - Skip the execution of Flye
 
    * - ``--flye_additional_parameters``
-     - N
      - NA
      - | Passes additional parameters for Flye assembler. E.g. ``" --meta --iterations 4 "``. Must be given as shown in Flye's manual.
 
    * - ``--skip_raven``
-     - N
-     - False
+     - false
      - Skip the execution of Raven
 
    * - ``--raven_additional_parameters``
-     - N
      - NA
      - | Passes additional parameters for Raven assembler. E.g. ``" --polishing-rounds 4 "``. Must be given as shown in Raven's manual.
    
    * - ``--skip_shasta``
-     - N
-     - False
+     - false
      - Skip the execution of Shasta
 
    * - ``--shasta_additional_parameters``
-     - N
      - NA
      - | Passes additional parameters for Raven assembler. E.g. ``" --Assembly.detangleMethod 1 "``. Must be given as shown in Shasta's manual.
    
    * - ``--skip_wtdbg2``
-     - N
-     - False
+     - false
      - Skip the execution of Raven
 
    * - ``--wtdbg2_additional_parameters``
-     - N
      - NA
      - | Passes additional parameters for wtdbg2 assembler. E.g. ``" -k 250 "``. Must be given as shown in wtdbg2's manual. Remember, the script called for wtdbg2 is ``wtdbg2.pl`` thus you must give the parameters used by it.
 
    * - ``--skip_unicycler``
-     - N
-     - False
+     - false
      - Skip the execution of Unicycler
 
    * - ``--unicycler_additional_parameters``
-     - N
      - NA
      - | Passes additional parameters for Unicycler assembler. E.g. ``" --mode conservative --no_correct "``. Must be given as shown in Unicycler's manual.
 
    * - ``--skip_spades``
-     - N
-     - False
+     - false
      - Skip the execution of SPAdes
 
    * - ``--spades_additional_parameters``
-     - N
      - NA
      - | Passes additional parameters for SPAdes assembler. E.g. ``" --meta --plasmids "``. Must be given as shown in Spades' manual.
 
    * - ``--skip_haslr``
-     - N
-     - False
+     - false
      - Skip the execution of Haslr
 
    * - ``--haslr_additional_parameters``
-     - N
      - NA
      - | Passes additional parameters for Haslr assembler. E.g. ``" --cov-lr 30 "``. Must be given as shown in Haslr' manual.
 
    * - ``--skip_shovill``
-     - N
-     - False
+     - false
      - Skip the execution of Shovill
 
    * - ``--shovill_additional_parameters``
-     - N
      - NA
      - | Passes additional parameters for Shovill assembler. E.g. ``" --depth 15 "``. Must be given as shown in Shovill' manual.
        | The pipeline already executes shovill with spades, skesa and megahit, so please, do not use it with shovill's ``--assembler`` parameter.
-
-.. tip::
-
-  All these parameters are configurable through a configuration file. We encourage users to use the configuration file since it will keep your execution cleaner and more readable. See a :ref:`config` example.
-
-Usage examples
-==============
-
-For a better understanding of the usage we provided a feel examples. See :ref:`examples`

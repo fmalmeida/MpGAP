@@ -1,36 +1,26 @@
-process spades_sreads_assembly {
-  publishDir "${params.outdir}/${prefix}", mode: 'copy'
+// batch mode
+process spades {
+  publishDir "${params.output}/${prefix}", mode: 'copy'
   label 'main'
-  tag { x }
+  tag "${id}"
   cpus params.threads
 
   input:
-  tuple val(id), file(sread1), file(sread2), file(sreads), val(prefix)
+  tuple val(id), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), val(wtdbg2_technology), val(genome_size), val(corrected_long_reads), val(medaka_model), file(fast5), val(nanopolish_max_haplotypes), val(shasta_config), file(bams), val(prefix)
 
   output:
   file "spades" // Save all output
-  tuple file("spades/spades_assembly.fasta"), val(out_ids), val('spades') // Gets contigs file
+  tuple val(id), file("spades/spades_assembly.fasta"), val('spades')
+
+  when:
+  (entrypoint == 'shortreads_only')
 
   script:
-  // Check reads
-  if ((params.shortreads_single) && (params.shortreads_paired)) {
-    parameter = "-1 $sread1 -2 $sread2 -s $sreads"
-    x = "Performing a illumina-only assembly with SPAdes, using paired and single end reads"
-    srId = (sreads.getName() - ".gz").toString().substring(0, (sreads.getName() - ".gz").toString().lastIndexOf("."))
-    out_ids = "${id}_and_${srId}"
-  } else if ((params.shortreads_single) && (!params.shortreads_paired)) {
-    parameter = "-s $sreads"
-    id = (sreads.getName() - ".gz").toString().substring(0, (sreads.getName() - ".gz").toString().lastIndexOf("."))
-    x = "Performing a illumina-only assembly with SPAdes, using single end reads"
-    out_ids = "${id}"
-  } else if ((params.shortreads_paired) && (!params.shortreads_single)) {
-    parameter = "-1 $sread1 -2 $sread2"
-    x = "Performing a illumina-only assembly with SPAdes, using paired end reads"
-    out_ids = "${id}"
-  }
-
+  param_paired = !(sread1 =~ /input.*/ || sread2 =~ /input.*/) ? "-1 $sread1 -2 $sread2" : ""
+  param_single = !(single =~ /input.*/) ? "-s $single" : ""
   """
-  spades.py -o spades -t ${params.threads} ${params.spades_additional_parameters} $parameter
+  # run spades
+  spades.py -o spades -t ${params.threads} ${params.spades_additional_parameters} $param_paired $param_single
 
   # Rename assembly
   mv spades/contigs.fasta spades/spades_assembly.fasta

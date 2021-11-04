@@ -1,41 +1,36 @@
 process gcpp {
-  publishDir "${params.outdir}/${prefix}/gcpp_polished_contigs", mode: 'copy'
+  publishDir "${params.output}/${prefix}/gcpp_polished_contigs", mode: 'copy'
   label 'main'
-  tag "Computing pacbio assembly consensus with gcpp"
+  tag "${id}"
   cpus params.threads
 
   input:
-  tuple file(draft), val(lrID), val(assembler), file(bams), val(nBams), val(prefix)
+  tuple val(id), file(draft), val(assembler), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), val(wtdbg2_technology), val(genome_size), val(corrected_long_reads), val(medaka_model), file(fast5), val(nanopolish_max_haplotypes), val(shasta_config), file(bams), val(prefix)
 
   output:
-  file "${assembler}_pbvariants.gff" // Save gff
-  tuple file("${assembler}_pbconsensus.fasta"), val("${lrID}"), val("${assembler}_gcpp") // Save contigs
+  file "${assembler}_gcpp_variants.gff" // Save gff
+  tuple val(id), file("${assembler}_gcpp_consensus.fasta"), val("${assembler}_gcpp") // Save contigs
+
+ when:
+ !(bams =~ /input.*/) && (lr_type == 'pacbio') && (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2')
 
   script:
   """
   # Activate env
   source activate pacbio;
 
+  # count bams
+  nBams=\$(ls *.bam | wc -l) ;
+
   # generate genome index
-  pbmm2 index -j ${params.threads} ${draft} draft.mmi
+  pbmm2 index -j ${params.threads} ${draft} draft.mmi ;
 
-  # Single bam
-  if [ $nBams -eq 1 ];
-  then
-    pbmm2 align -j ${params.threads} --sort draft.mmi ${bams.join(" ")} final_pbaligned.bam ;
-
-  # Multiple bams
-  elif [ $nBams -gt 1 ];
-  then
-    for file in ${bams.join(" ")} ; do pbmm2 align -j ${params.threads} --sort draft.mmi \$file \${file%%.bam}_pbaligned.bam ; done
-    samtools merge --threads ${params.threads} pacbio_merged.bam *_pbaligned.bam ;
-    samtools sort -@ ${params.threads} -o final_pbaligned.bam pacbio_merged.bam ;
-  
-  fi
+  # Align bam
+  pbmm2 align -j ${params.threads} --sort draft.mmi ${bams} final_pbaligned.bam ;
 
   # run polisher
   samtools index final_pbaligned.bam ;
   samtools faidx ${draft} ;
-  gcpp -r ${draft} -o ${assembler}_pbconsensus.fasta,${assembler}_pbvariants.gff -j ${params.threads} final_pbaligned.bam ;
+  gcpp -r ${draft} -o ${assembler}_gcpp_consensus.fasta,${assembler}_gcpp_variants.gff -j ${params.threads} final_pbaligned.bam ;
   """
 }

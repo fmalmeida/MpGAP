@@ -1,23 +1,24 @@
-process flye_assembly {
-  publishDir "${params.outdir}/${prefix}", mode: 'copy'
+process flye {
+  publishDir "${params.output}/${prefix}", mode: 'copy'
   label 'main'
   cpus params.threads
-  tag "Performing a longreads only assembly with Flye"
+  tag "${id}"
 
   input:
-  tuple file(lreads), val(prefix)
+  tuple val(id), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), val(wtdbg2_technology), val(genome_size), val(corrected_long_reads), val(medaka_model), file(fast5), val(nanopolish_max_haplotypes), val(shasta_config), file(bams), val(prefix)
 
   output:
   file "flye" // Saves all files
-  tuple file("flye/flye_assembly.fasta"), val(lrID), val('flye') // Gets contigs file
+  tuple val(id), file("flye/flye_assembly.fasta"), val('flye') // Gets contigs file
+
+  when:
+  (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2')
 
   script:
-  lr        = (params.lr_type == 'nanopore') ? '--nano' : '--pacbio'
-  corrected = (params.corrected_lreads) ? '-corr' : '-raw'
+  lr        = (lr_type == 'nanopore') ? '--nano' : '--pacbio'
+  corrected = (corrected_long_reads == 'true') ? '-corr' : '-raw'
   lrparam   = lr + corrected
-  lrID      = (lreads.getName() - ".gz").toString().substring(0, (lreads.getName() - ".gz").toString().lastIndexOf("."))
-  gsize     = (params.genomeSize) ? "--genome-size ${params.genomeSize}" : ""
-
+  gsize     = (genome_size) ? "--genome-size ${genome_size}" : ""
   """
   source activate flye ;
   flye ${lrparam} $lreads ${gsize} --out-dir flye \
