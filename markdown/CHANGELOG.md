@@ -7,7 +7,7 @@ The tracking for changes started in v2.
 ### hotfix
 
 * Since shasta release v0.8 (Oct/2021), shasta now expects users to select a pre-set configuration file.
-    + This has been included as a parameter `--shasta_config` that sets, by default to `Nanopore-Oct2021`
+    + This has been included as a parameter `--shasta_config` that sets a default to `Nanopore-Oct2021`
       + Please read the [shasta configuration manual](https://chanzuckerberg.github.io/shasta/Configurations.html) page to know the available models.
       + It can also be passed from inside the YAML file in a sample-specific manner.
       + Please read more about it in the online documentation: [Samplesheet configuration](https://mpgap.readthedocs.io/en/latest/samplesheet.html) and [Parameters manual](https://mpgap.readthedocs.io/en/latest/manual.html)
@@ -15,7 +15,7 @@ The tracking for changes started in v2.
 ### input configuration
 
 * A YAML samplesheet file has been implemented in order to properly use the pipeline, in all workflow types, for multiple samples at once.
-    + Because of that, we had to remove the possibility to pass the input reads via the command line and now, the files with input data, must always be set inside the YAML samplesheet, even if analysing only one sample.
+    + Because of that, we had to remove the possibility to pass the input reads via the command line and now, the files input data files, must always be set inside the YAML samplesheet, even if analysing only one sample.
     + Read more at: https://mpgap.readthedocs.io/en/latest/samplesheet.html
     + Check the template samplesheet at: https://github.com/fmalmeida/mpgap/blob/master/example_samplesheet.yaml
     + The samplesheet is given with the parameter `--input`
@@ -27,7 +27,7 @@ The tracking for changes started in v2.
     + `--shortreads_paired`
     + `--shortreads_single`
 * A major change has also ocurred with the `wtdbg2_techonology` parameter
-    + Now, by default, the pipeline will check wheter long reads input are nanopore or pacbio
+    + Now, by default, the pipeline will check wheter long reads inputs (for each sample) are nanopore or pacbio
     + If they are nanopore, the wtdbg2 techonology parameter is automatically set to `ont`
     + If they are pacbio, the wtdbg2 techonology parameter is automaically set to `sq`
     + This wtdbg2 parameter has the following options: "ont" for Nanopore reads, "rs" for PacBio RSII, "sq" for PacBio Sequel, "ccs" for PacBio CCS reads.
