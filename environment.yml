@@ -1,0 +1,53 @@
+# You can use this file to create a conda environment for this pipeline:
+#   conda env create -f environment.yml
+name: mpgap-3.1
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+  - anaconda
+  - r
+dependencies:
+  ## python pip dependencies
+  - pip
+  - pip:
+    - setuptools
+  
+  ## anaconda packages
+  - anaconda::hdf5
+  - anaconda::zlib
+  
+  ## conda-forge packages
+  - conda-forge::gcc
+  - conda-forge::libidn11
+  - conda-forge::tbb=2020.2
+
+  ## bioconda packages
+  - bioconda::pbcopper
+  - bioconda::samtools
+  - bioconda::blast
+  - bioconda::racon
+  - bioconda::medaka
+  - bioconda::pilon
+  - bioconda::canu
+  - bioconda::spades=3.13.0
+  - bioconda::unicycler
+  - bioconda::mummer
+  - bioconda::bowtie2
+  - bioconda::freebayes
+  - bioconda::minimap
+  - bioconda::minimap2
+  - bioconda::nanopolish
+  - bioconda::pbgcpp
+  - bioconda::pbmm2 
+  - bioconda::flye
+  - bioconda::quast
+  - bioconda::miniasm
+  - bioconda::seqtk
+  - bioconda::shovill
+  - bioconda::haslr
+  - bioconda::raven-assembler
+  - bioconda::multiqc
+  - bioconda::wtdbg
+  - bioconda::shasta
+  - bioconda::csvtk
