@@ -1,6 +1,5 @@
 process medaka {
   publishDir "${params.output}/${prefix}/medaka_polished_contigs", mode: 'copy'
-  label 'main'
   tag "${id}"
 
   input:
@@ -20,8 +19,9 @@ process medaka {
   racon -m 8 -x -6 -g -8 -w 500 -t ${params.threads} ${lreads} reads_mapped.paf ${draft} > racon_consensus.fasta ;
 
   # second step medaka polish
-  source activate MEDAKA ;
   medaka_consensus -i ${lreads} -d racon_consensus.fasta -o ${assembler} -t ${params.threads} -m ${medaka_model} ;
+
+  # rename results
   mv ${assembler}/consensus.fasta ${assembler}/${assembler}_medaka_consensus.fa
   """
 }

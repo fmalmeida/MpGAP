@@ -1,6 +1,5 @@
 process canu {
   publishDir "${params.output}/${prefix}", mode: 'copy'
-  label 'main'
   cpus params.threads
   tag "${id}"
   input:
@@ -18,10 +17,10 @@ process canu {
   corrected = (corrected_long_reads == 'true') ? '-corrected' : ''
 
   """
-  canu -p ${id} -d canu maxThreads=${params.threads} genomeSize=${genome_size} \
-  ${params.canu_additional_parameters} $corrected $lr $lreads
+  # run canu
+  canu -p ${id} -d canu maxThreads=${params.threads} genomeSize=${genome_size} ${params.canu_additional_parameters} $corrected $lr $lreads
 
-  # Rename contigs
+  # rename results
   mv canu/${id}.contigs.fasta canu/canu_assembly.fasta
   """
 }

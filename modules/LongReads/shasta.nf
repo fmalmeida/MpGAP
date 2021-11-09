@@ -1,6 +1,5 @@
 process shasta {
   publishDir "${params.output}/${prefix}", mode: 'copy'
-  label 'main'
   cpus params.threads
   tag "${id}"
 
@@ -30,7 +29,7 @@ process shasta {
     --input uncompressed_${in_reads} \
     --config ${shasta_config};
 
-  # Rename contigs
+  # rename contigs
   cp shasta/Assembly.fasta shasta/shasta_assembly.fasta ;
   """
 }

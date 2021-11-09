@@ -1,6 +1,5 @@
 process spades_hybrid {
   publishDir "${params.output}/${prefix}", mode: 'copy'
-  label 'main'
   tag "${id}"
   cpus params.threads
 
@@ -20,10 +19,10 @@ process spades_hybrid {
   paired_reads = (!(sread1 =~ /input.*/) && !(sread2 =~ /input.*/)) ? "-1 $sread1 -2 $sread2" : ""
   single_reads = !(single =~ /input.*/) ? "-s $single" : ""
   """
-  spades.py -o spades -t ${params.threads} \\
-  ${params.spades_additional_parameters} ${paired_reads} ${single_reads} ${lr} ${lreads}
+  # run spades
+  spades.py -o spades -t ${params.threads} ${params.spades_additional_parameters} ${paired_reads} ${single_reads} ${lr} ${lreads}
 
-  # Rename
+  # rename results
   mv spades/contigs.fasta spades/spades_assembly.fasta
   """
 }

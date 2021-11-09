@@ -1,7 +1,6 @@
 // batch mode
 process unicycler {
   publishDir "${params.output}/${prefix}", mode: 'copy'
-  label 'main'
   tag "${id}"
   cpus params.threads
 
@@ -22,7 +21,7 @@ process unicycler {
   # run unicycler
   unicycler $param_paired $param_single -o unicycler -t ${params.threads} ${params.unicycler_additional_parameters}
 
-  # Rename assembly
+  # rename results
   mv unicycler/assembly.fasta unicycler/unicycler_assembly.fasta
   """
 }

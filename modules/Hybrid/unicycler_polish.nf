@@ -1,6 +1,5 @@
 process pilon_polish {
   publishDir "${params.output}/${prefix}/pilon_polished_contigs", mode: 'copy'
-  label 'main'
   cpus params.threads
   tag "${id}"
 
@@ -21,7 +20,7 @@ process pilon_polish {
       mkdir ${assembler};
 
       # Execute Unicycler polishing pilon wrapper
-      unicycler_polish --minimap /miniconda/bin/miniasm --pilon /miniconda/share/pilon*/pilon*jar \
+      unicycler_polish --minimap \$CONDA_PREFIX/envs/mpgap-3.1/bin/miniasm --pilon \$CONDA_PREFIX/envs/mpgap-3.1/share/pilon*/pilon*jar \
       -a $draft -1 ${sread1} -2 ${sread2} --threads ${params.threads} &> polish.log ;
 
       # Save files in the desired directory
@@ -41,7 +40,7 @@ process pilon_polish {
       samtools index ${id}_${assembler}_aln.bam ;
 
       # Execute pilon a single time (for single end reads)
-      java -Xmx${params.pilon_memory_limit}G -jar /miniconda/share/pilon*/pilon*jar \
+      java -Xmx${params.pilon_memory_limit}G -jar \$CONDA_PREFIX/envs/mpgap-3.1/share/pilon*/pilon*jar \
       --genome ${draft} --bam ${id}_${assembler}_aln.bam --output ${assembler}_pilon_consensus \
       --outdir ${assembler} &> pilon.log
 
@@ -61,12 +60,12 @@ process pilon_polish {
       samtools index ${id}_${assembler}_aln.bam ;
 
       # Execute pilon a single time (for single end reads)
-      java -Xmx${params.pilon_memory_limit}G -jar /miniconda/share/pilon*/pilon*jar \
+      java -Xmx${params.pilon_memory_limit}G -jar \$CONDA_PREFIX/envs/mpgap-3.1/share/pilon*/pilon*jar \
       --genome ${draft} --bam ${id}_${assembler}_aln.bam --output first_polish \
       --outdir . &> pilon.log
 
       # Execute Unicycler polishing pilon wrapper (for paired reads)
-      unicycler_polish --minimap /miniconda/bin/miniasm --pilon /miniconda/share/pilon*/pilon*jar \
+      unicycler_polish --minimap \$CONDA_PREFIX/envs/mpgap-3.1/bin/miniasm --pilon \$CONDA_PREFIX/envs/mpgap-3.1/share/pilon*/pilon*jar \
       -a first_polish.fasta -1 ${sread1} -2 ${sread2} --threads ${params.threads} &> polish.log ;
 
       # Save files in the desired directory

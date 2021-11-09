@@ -1,6 +1,5 @@
 process wtdbg2 {
   publishDir "${params.output}/${prefix}/wtdbg2", mode: 'copy'
-  label 'main'
   cpus params.threads
   tag "${id}"
 
@@ -16,9 +15,10 @@ process wtdbg2 {
 
   script:
   """
+  # run wtdbg2
   wtdbg2.pl -t ${params.threads} -x ${wtdbg2_technology} -g ${genome_size} -o ${id} ${params.wtdbg2_additional_parameters} $lreads
 
-  # Rename contigs
+  # rename results
   cp ${id}.cns.fa wtdbg2_assembly.fasta
   """
 }

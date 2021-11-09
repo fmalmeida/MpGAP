@@ -1,6 +1,5 @@
 process gcpp {
   publishDir "${params.output}/${prefix}/gcpp_polished_contigs", mode: 'copy'
-  label 'main'
   tag "${id}"
   cpus params.threads
 
@@ -16,16 +15,13 @@ process gcpp {
 
   script:
   """
-  # Activate env
-  source activate pacbio;
-
   # count bams
   nBams=\$(ls *.bam | wc -l) ;
 
   # generate genome index
   pbmm2 index -j ${params.threads} ${draft} draft.mmi ;
 
-  # Align bam
+  # align bam
   pbmm2 align -j ${params.threads} --sort draft.mmi ${bams} final_pbaligned.bam ;
 
   # run polisher

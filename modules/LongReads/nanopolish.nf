@@ -1,6 +1,5 @@
 process nanopolish {
   publishDir "${params.output}/${prefix}/nanopolished_contigs/${assembler}", mode: 'copy'
-  label 'main'
   cpus params.threads
   tag "${id}"
 
@@ -17,9 +16,6 @@ process nanopolish {
   script:
   fast5_dir = fast5.toString()
   """
-  # activate env
-  source activate NANOPOLISH ;
-
   # save reads as fasta
   seqtk seq -A ${lreads} > reads.fa ;
 
@@ -37,7 +33,7 @@ process nanopolish {
   samtools index reads.sorted.bam ;
 
   # run nanopolish
-  python /miniconda/envs/NANOPOLISH/bin/nanopolish_makerange.py filtered_assembly.fa | parallel --results nanopolish.results -P 1 \
+  python \$(find \$CONDA_PREFIX -name "nanopolish_makerange.py") filtered_assembly.fa | parallel --results nanopolish.results -P 1 \
   nanopolish variants --consensus -o polished.{1}.vcf \
     -w {1} \
     -r reads.fa \

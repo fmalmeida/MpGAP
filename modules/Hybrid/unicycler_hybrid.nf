@@ -1,6 +1,5 @@
 process unicycler_hybrid {
   publishDir "${params.output}/${prefix}", mode: 'copy'
-  label 'main'
   tag "${id}"
   cpus params.threads
 
@@ -19,11 +18,10 @@ process unicycler_hybrid {
   paired_reads = (!(sread1 =~ /input.*/) && !(sread2 =~ /input.*/)) ? "-1 $sread1 -2 $sread2" : ""
   single_reads = !(single =~ /input.*/) ? "-s $single" : ""
   """
-  unicycler ${paired_reads} ${single_reads} -l ${lreads} \\
-  -o unicycler -t ${params.threads} \\
-  ${params.unicycler_additional_parameters}
+  # run unicycler
+  unicycler ${paired_reads} ${single_reads} -l ${lreads} -o unicycler -t ${params.threads} ${params.unicycler_additional_parameters}
 
-  # Rename
+  # rename results
   mv unicycler/assembly.fasta unicycler/unicycler_assembly.fasta
   """
 }

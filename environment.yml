@@ -49,5 +49,4 @@ dependencies:
   - bioconda::raven-assembler
   - bioconda::multiqc
   - bioconda::wtdbg
-  - bioconda::shasta
   - bioconda::csvtk

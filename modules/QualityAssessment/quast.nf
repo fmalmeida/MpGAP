@@ -1,6 +1,5 @@
 process quast {
   publishDir "${params.output}/${prefix}/00_quality_assessment", mode: 'copy'
-  label 'main'
   tag "Assessing ${assembler} assembly quality for multiqc"
 
   input:
@@ -16,10 +15,7 @@ process quast {
   lreads_param = !(lreads =~ /input.?/) ? "--${lr_type} ${lreads}" : ""
 
   """
-  quast.py -o ${assembler} -t ${params.threads} \\
-  ${lreads_param} ${paired_param} ${single_param} \\
-  --conserved-genes-finding --rna-finding --min-contig 100 \\
-  ${params.quast_additional_parameters} \\
-  ${contigs}
+  # run quast
+  quast.py -o ${assembler} -t ${params.threads} ${lreads_param} ${paired_param} ${single_param} --conserved-genes-finding --rna-finding --min-contig 100 ${params.quast_additional_parameters} ${contigs}
   """
 }
