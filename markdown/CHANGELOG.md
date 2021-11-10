@@ -2,6 +2,19 @@
 
 The tracking for changes started in v2.
 
+## v3.0.1
+
+### hotfix
+
+Super small fix to properly load YAML file when using the pipeline with cloud computing environments such as AWS/S3-bucket:
+
+```bash
+# from
+parameter_yaml = new FileInputStream(new File(params.input))
+# to
+parameter_yaml = file(params.input).readLines().join("\n")
+```
+
 ## v3.0
 
 ### hotfix
