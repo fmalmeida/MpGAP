@@ -129,7 +129,7 @@ workflow {
   if (params.input) {
 
     // Load YAML
-    parameter_yaml = new FileInputStream(new File(params.input))
+    parameter_yaml = file(params.input).readLines().join("\n")
     new Yaml().load(parameter_yaml).each { k, v -> params[k] = v }
 
     // Copy YAML samplesheet to output directory so user has a copy of it
