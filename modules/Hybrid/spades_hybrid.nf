@@ -20,7 +20,13 @@ process spades_hybrid {
   single_reads = !(single =~ /input.*/) ? "-s $single" : ""
   """
   # run spades
-  spades.py -o spades -t ${params.threads} ${params.spades_additional_parameters} ${paired_reads} ${single_reads} ${lr} ${lreads}
+  spades.py \\
+      -o spades \\
+      -t ${params.threads} \\
+      ${params.spades_additional_parameters} \\
+      ${paired_reads} \\
+      ${single_reads} \\
+      ${lr} ${lreads}
 
   # rename results
   mv spades/contigs.fasta spades/spades_assembly.fasta

@@ -18,7 +18,14 @@ process canu {
 
   """
   # run canu
-  canu -p ${id} -d canu maxThreads=${params.threads} genomeSize=${genome_size} ${params.canu_additional_parameters} $corrected $lr $lreads
+  canu \\
+      -p ${id} \\
+      -d canu \\
+      maxThreads=${params.threads} \\
+      genomeSize=${genome_size} \\
+      ${params.canu_additional_parameters} \\
+      $corrected \\
+      $lr $lreads
 
   # rename results
   mv canu/${id}.contigs.fasta canu/canu_assembly.fasta

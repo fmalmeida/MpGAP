@@ -19,7 +19,14 @@ process haslr_hybrid {
   single_reads = !(single =~ /input.*/) ? "$single" : ""
   """
   # run haslr
-  haslr.py -t ${params.threads} -o haslr -g ${genome_size} -l $lreads -x ${lr_type} -s ${paired_reads} ${single_reads} ${params.haslr_additional_parameters}
+  haslr.py \\
+      -t ${params.threads} \\
+      -o haslr \\
+      -g ${genome_size} \\
+      -l $lreads \\
+      -x ${lr_type} \\
+      ${params.haslr_additional_parameters} \\
+      -s ${paired_reads} ${single_reads} 
 
   # rename results
   cp haslr/*/asm.final.fa haslr/haslr_assembly.fa

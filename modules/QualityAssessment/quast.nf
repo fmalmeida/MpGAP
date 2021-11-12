@@ -16,6 +16,16 @@ process quast {
 
   """
   # run quast
-  quast.py -o ${assembler} -t ${params.threads} ${lreads_param} ${paired_param} ${single_param} --conserved-genes-finding --rna-finding --min-contig 100 ${params.quast_additional_parameters} ${contigs}
+  quast.py \\
+      -o ${assembler} \\
+      -t ${params.threads} \\
+      ${lreads_param} \\
+      ${paired_param} \\
+      ${single_param} \\
+      --conserved-genes-finding \\
+      --rna-finding \\
+      --min-contig 100 \\
+      ${params.quast_additional_parameters} \\
+      ${contigs}
   """
 }

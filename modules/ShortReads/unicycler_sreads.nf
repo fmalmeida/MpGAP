@@ -19,7 +19,13 @@ process unicycler {
   param_single = !(single =~ /input.*/) ? "-s $single" : ""
   """
   # run unicycler
-  unicycler $param_paired $param_single -o unicycler -t ${params.threads} ${params.unicycler_additional_parameters}
+  unicycler \\
+      ${param_paired} \\
+      ${param_single} \\
+      -o unicycler \\
+      -t ${params.threads} \\
+      ${params.unicycler_additional_parameters} \\
+      --spades_path spades-3.13.0.py
 
   # rename results
   mv unicycler/assembly.fasta unicycler/unicycler_assembly.fasta

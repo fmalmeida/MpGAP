@@ -16,12 +16,21 @@ process pilon_polish {
   // has paired reads but doesn't have unpaired reads
   if(has_paired && !has_single)
       """
+      # get tools path
+      miniasm_path=\$(find \$CONDA_PREFIX -name "miniasm" | grep "mpgap" | head -n 1)
+      pilonjar_path=\$(find \$CONDA_PREFIX -name "pilon.jar" | grep "mpgap" | head -n 1)
+
       # Create the results dir
       mkdir ${assembler};
 
       # Execute Unicycler polishing pilon wrapper
-      unicycler_polish --minimap \$CONDA_PREFIX/envs/mpgap-3.1/bin/miniasm --pilon \$CONDA_PREFIX/envs/mpgap-3.1/share/pilon*/pilon*jar \
-      -a $draft -1 ${sread1} -2 ${sread2} --threads ${params.threads} &> polish.log ;
+      unicycler_polish \\
+          --minimap \$miniasm_path \\
+          --pilon \$pilonjar_path \\
+          -a $draft \\
+          -1 ${sread1} \\
+          -2 ${sread2} \\
+          --threads ${params.threads} &> polish.log ;
 
       # Save files in the desired directory
       mv 0* polish.log ${assembler};
@@ -30,6 +39,10 @@ process pilon_polish {
   // doesn't have paired reads but has unpaired reads
   else if(!has_paired && has_single)
       """
+      # get tools path
+      miniasm_path=\$(find \$CONDA_PREFIX -name "miniasm" | grep "mpgap" | head -n 1)
+      pilonjar_path=\$(find \$CONDA_PREFIX -name "pilon.jar" | grep "mpgap" | head -n 1)
+
       # Create the results dir
       mkdir ${assembler};
 
@@ -40,9 +53,13 @@ process pilon_polish {
       samtools index ${id}_${assembler}_aln.bam ;
 
       # Execute pilon a single time (for single end reads)
-      java -Xmx${params.pilon_memory_limit}G -jar \$CONDA_PREFIX/envs/mpgap-3.1/share/pilon*/pilon*jar \
-      --genome ${draft} --bam ${id}_${assembler}_aln.bam --output ${assembler}_pilon_consensus \
-      --outdir ${assembler} &> pilon.log
+      java \\
+          -Xmx${params.pilon_memory_limit}G \\
+          -jar \$pilonjar_path \\
+          --genome ${draft} \\
+          --bam ${id}_${assembler}_aln.bam \\
+          --output ${assembler}_pilon_consensus \\
+          --outdir ${assembler} &> pilon.log
 
       # save bam file in the desired directory
       mv ${id}_${assembler}_aln.bam pilon.log ${assembler};
@@ -50,6 +67,10 @@ process pilon_polish {
   // has paired reads and has unpaired reads
   else if(has_paired && has_single)
       """
+      # get tools path
+      miniasm_path=\$(find \$CONDA_PREFIX -name "miniasm" | grep "mpgap" | head -n 1)
+      pilonjar_path=\$(find \$CONDA_PREFIX -name "pilon.jar" | grep "mpgap" | head -n 1)
+
       # Create the results dir
       mkdir ${assembler};
 
@@ -60,13 +81,22 @@ process pilon_polish {
       samtools index ${id}_${assembler}_aln.bam ;
 
       # Execute pilon a single time (for single end reads)
-      java -Xmx${params.pilon_memory_limit}G -jar \$CONDA_PREFIX/envs/mpgap-3.1/share/pilon*/pilon*jar \
-      --genome ${draft} --bam ${id}_${assembler}_aln.bam --output first_polish \
-      --outdir . &> pilon.log
+      java \\
+          -Xmx${params.pilon_memory_limit}G \\
+          -jar \$pilonjar_path \\
+          --genome ${draft} \\
+          --bam ${id}_${assembler}_aln.bam \\
+          --output first_polish \\
+          --outdir . &> pilon.log
 
       # Execute Unicycler polishing pilon wrapper (for paired reads)
-      unicycler_polish --minimap \$CONDA_PREFIX/envs/mpgap-3.1/bin/miniasm --pilon \$CONDA_PREFIX/envs/mpgap-3.1/share/pilon*/pilon*jar \
-      -a first_polish.fasta -1 ${sread1} -2 ${sread2} --threads ${params.threads} &> polish.log ;
+      unicycler_polish \\
+          --minimap \$miniasm_path \\
+          --pilon \$pilonjar_path \\
+          -a first_polish.fasta \\
+          -1 ${sread1} \\
+          -2 ${sread2} \\
+          --threads ${params.threads} &> polish.log ;
 
       # Save files in the desired directory
       mv 0* polish.log ${assembler};

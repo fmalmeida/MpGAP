@@ -16,7 +16,13 @@ process wtdbg2 {
   script:
   """
   # run wtdbg2
-  wtdbg2.pl -t ${params.threads} -x ${wtdbg2_technology} -g ${genome_size} -o ${id} ${params.wtdbg2_additional_parameters} $lreads
+  wtdbg2.pl \\
+      -t ${params.threads} \\
+      -x ${wtdbg2_technology} \\
+      -g ${genome_size} \\
+      -o ${id} \\
+      ${params.wtdbg2_additional_parameters} \\
+      $lreads
 
   # rename results
   cp ${id}.cns.fa wtdbg2_assembly.fasta

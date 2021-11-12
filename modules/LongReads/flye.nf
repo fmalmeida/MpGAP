@@ -20,7 +20,12 @@ process flye {
   gsize     = (genome_size) ? "--genome-size ${genome_size}" : ""
   """
   # run flye
-  flye ${lrparam} $lreads ${gsize} --out-dir flye --threads ${params.threads} ${params.flye_additional_parameters} &> flye.log ;
+  flye \\
+      ${lrparam} $lreads \\
+      ${gsize} \\
+      --out-dir flye \\
+      ${params.flye_additional_parameters} \\
+      --threads ${params.threads} &> flye.log ;
 
   # rename results
   mv flye/assembly.fasta flye/flye_assembly.fasta

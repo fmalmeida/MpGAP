@@ -14,12 +14,28 @@ process medaka {
 
   script:
   """
+  # map reads
+  minimap2 \
+      -x map-ont \\
+      ${draft} \\
+      ${lreads} > reads_mapped.paf ;
+
   # first step racon polish
-  minimap ${draft} ${lreads} > reads_mapped.paf ;
-  racon -m 8 -x -6 -g -8 -w 500 -t ${params.threads} ${lreads} reads_mapped.paf ${draft} > racon_consensus.fasta ;
+  # as in medaka manual
+  racon \\
+      -m 8 -x -6 -g -8 -w 500 \\
+      -t ${params.threads} \\
+      ${lreads} \\
+      reads_mapped.paf \\
+      ${draft} > racon_consensus.fasta ;
 
   # second step medaka polish
-  medaka_consensus -i ${lreads} -d racon_consensus.fasta -o ${assembler} -t ${params.threads} -m ${medaka_model} ;
+  medaka_consensus \\
+      -i ${lreads} \\
+      -d racon_consensus.fasta \\
+      -o ${assembler} \\
+      -t ${params.threads} \\
+      -m ${medaka_model} ;
 
   # rename results
   mv ${assembler}/consensus.fasta ${assembler}/${assembler}_medaka_consensus.fa

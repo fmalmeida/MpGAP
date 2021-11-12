@@ -19,7 +19,14 @@ process unicycler_hybrid {
   single_reads = !(single =~ /input.*/) ? "-s $single" : ""
   """
   # run unicycler
-  unicycler ${paired_reads} ${single_reads} -l ${lreads} -o unicycler -t ${params.threads} ${params.unicycler_additional_parameters}
+  unicycler \\
+      ${paired_reads} \\
+      ${single_reads} \\
+      -l ${lreads} \\
+      -o unicycler \\
+      -t ${params.threads} \\
+      ${params.unicycler_additional_parameters} \\
+      --spades_path spades-3.13.0.py
 
   # rename results
   mv unicycler/assembly.fasta unicycler/unicycler_assembly.fasta

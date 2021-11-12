@@ -17,7 +17,14 @@ process shovill {
   script:
   """
   # run shovill
-  shovill --outdir ${assembler} --assembler ${assembler} --R1 $sread1 --R2 $sread2 --cpus ${params.threads} --trim ${params.shovill_additional_parameters} ;
+  shovill \\
+      --outdir ${assembler} \\
+      --assembler ${assembler} \\
+      --R1 $sread1 \\
+      --R2 $sread2 \\
+      --cpus ${params.threads} \\
+      ${params.shovill_additional_parameters} \\
+      --trim ;
 
   # rename results
   mv ${assembler}/contigs.fa ${assembler}/shovill_${assembler}_final.fasta

@@ -17,6 +17,11 @@ process raven {
   corrected = (corrected_long_reads == 'true') ? '--weaken' : ''
   """
   # run raven
-  raven --threads ${params.threads} --graphical-fragment-assembly raven_assembly.gfa ${params.raven_additional_parameters} $corrected $lreads > raven_assembly.fasta ;
+  raven \\
+      --threads ${params.threads} \\
+      --graphical-fragment-assembly raven_assembly.gfa \\
+      ${params.raven_additional_parameters} \\
+      $corrected \\
+      $lreads > raven_assembly.fasta ;
   """
 }
