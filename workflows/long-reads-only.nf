@@ -43,30 +43,26 @@ workflow LONGREADS_ONLY {
 
   main:
 
-      /*
-       * Channels for placing the assemblies
-       */
-      canu_ch       = Channel.empty()
-      unicycler_ch  = Channel.empty()
-      flye_ch       = Channel.empty()
-      raven_ch      = Channel.empty()
-      wtdbg2_ch     = Channel.empty()
-      shasta_ch     = Channel.empty()
-
-      /*
-       * Channels for placing polished assemblies
-       */
-      medaka_ch     = Channel.empty()
-      nanopolish_ch = Channel.empty()
-      gcpp_ch       = Channel.empty()
-
+      // Define default output channes
+      // default must be a empty channel that
+      // will be overwritten if assembler is used
+      def LONGREADS_OUTPUTS = [:]
+      LONGREADS_OUTPUTS['CANU']        = Channel.empty()
+      LONGREADS_OUTPUTS['UNICYCLER']   = Channel.empty()
+      LONGREADS_OUTPUTS['FLYE']        = Channel.empty()
+      LONGREADS_OUTPUTS['RAVEN']       = Channel.empty()
+      LONGREADS_OUTPUTS['WTDBG2']      = Channel.empty()
+      LONGREADS_OUTPUTS['SHASTA']      = Channel.empty()
+      LONGREADS_OUTPUTS['MEDAKA']      = Channel.empty()
+      LONGREADS_OUTPUTS['NANOPOLISH']  = Channel.empty()
+      LONGREADS_OUTPUTS['GCPP']        = Channel.empty()
 
       /*
        * Canu
        */
       if (!params.skip_canu) {
         canu(input_tuple)
-        canu_ch = canu.out[1]
+        LONGREADS_OUTPUTS['CANU']  = canu.out[1]
       }
 
       /*
@@ -74,7 +70,7 @@ workflow LONGREADS_ONLY {
        */
       if (!params.skip_flye) {
         flye(input_tuple)
-        flye_ch = flye.out[1]
+        LONGREADS_OUTPUTS['FLYE']  = flye.out[1]
       }
 
       /*
@@ -82,7 +78,7 @@ workflow LONGREADS_ONLY {
        */
       if (!params.skip_unicycler) {
         unicycler(input_tuple)
-        unicycler_ch = unicycler.out[1]
+        LONGREADS_OUTPUTS['UNICYCLER'] = unicycler.out[1]
       }
 
       /*
@@ -90,7 +86,7 @@ workflow LONGREADS_ONLY {
        */
       if (!params.skip_raven) {
         raven(input_tuple)
-        raven_ch = raven.out[1]
+        LONGREADS_OUTPUTS['RAVEN'] = raven.out[1]
       }
 
       /*
@@ -98,7 +94,7 @@ workflow LONGREADS_ONLY {
        */
       if (!params.skip_shasta) {
         shasta(input_tuple)
-        shasta_ch = shasta.out[1]
+        LONGREADS_OUTPUTS['SHASTA'] = shasta.out[1]
       }
 
       /*
@@ -106,39 +102,46 @@ workflow LONGREADS_ONLY {
        */
       if (!params.skip_wtdbg2) {
         wtdbg2(input_tuple)
-        wtdbg2_ch = wtdbg2.out[1]
+        LONGREADS_OUTPUTS['WTDBG2'] = wtdbg2.out[1]
       }
 
-      // gather assemblies
-      assemblies_ch = canu_ch.mix(unicycler_ch, flye_ch, raven_ch, wtdbg2_ch, shasta_ch)
-
-      // combine again with metadata
-      combined_ch = assemblies_ch.combine(input_tuple, by: 0)
+      // gather assemblies for polishing steps
+      LONGREADS_OUTPUTS['RAW_ASSEMBLIES'] = LONGREADS_OUTPUTS['CANU']
+                                            .mix(LONGREADS_OUTPUTS['UNICYCLER'], 
+                                                 LONGREADS_OUTPUTS['FLYE'] , 
+                                                 LONGREADS_OUTPUTS['RAVEN'], 
+                                                 LONGREADS_OUTPUTS['WTDBG2'], 
+                                                 LONGREADS_OUTPUTS['SHASTA'])
+                                            .combine(input_tuple, by: 0)
 
       /*
        * Run medaka?
        */
-      medaka(combined_ch)
-      medaka_ch = medaka.out[1]
+      medaka(LONGREADS_OUTPUTS['RAW_ASSEMBLIES'])
+      LONGREADS_OUTPUTS['MEDAKA'] = medaka.out[1]
 
       /*
        * Run nanopolish?
        */
-      nanopolish(combined_ch)
-      nanopolish_ch = nanopolish.out[0]
+      nanopolish(LONGREADS_OUTPUTS['RAW_ASSEMBLIES'])
+      LONGREADS_OUTPUTS['NANOPOLISH'] = nanopolish.out[0]
 
       /*
        * gcpp?
        */
-      gcpp(combined_ch)
-      gcpp_ch = gcpp.out[1]
+      gcpp(LONGREADS_OUTPUTS['RAW_ASSEMBLIES'])
+      LONGREADS_OUTPUTS['GCPP'] = gcpp.out[1]
 
-      // Gather polishings
-      polished_ch = medaka_ch.mix(nanopolish_ch, gcpp_ch)
+      // Gather polished assemblies
+      LONGREADS_OUTPUTS['POLISHED_ASSEMBLIES'] = LONGREADS_OUTPUTS['MEDAKA']
+                                                 .mix(LONGREADS_OUTPUTS['NANOPOLISH'], 
+                                                      LONGREADS_OUTPUTS['GCPP'])
+                                                  .combine(input_tuple, by: 0)
 
-      // Gather assemblies for qc
-      final_assemblies = assemblies_ch.mix(polished_ch).combine(input_tuple, by: 0)
+      // Gather all assemblies for qc
+      LONGREADS_OUTPUTS['ALL_RESULTS'] = LONGREADS_OUTPUTS['RAW_ASSEMBLIES']
+                                         .mix(LONGREADS_OUTPUTS['POLISHED_ASSEMBLIES'])
   
   emit:
-    final_assemblies
+    LONGREADS_OUTPUTS['ALL_RESULTS']
 }

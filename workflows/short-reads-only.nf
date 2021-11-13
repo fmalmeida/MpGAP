@@ -22,34 +22,36 @@ workflow SHORTREADS_ONLY {
   
   main:
 
-  // Channels for quast
-  spades_ch    = Channel.empty()
-  unicycler_ch = Channel.empty()
-  shovill_ch   = Channel.empty()
+  // Define default output channes
+  // default must be a empty channel that
+  // will be overwritten if assembler is used
+  def SHORTREADS_OUTPUTS = [:]
+  SHORTREADS_OUTPUTS['SPADES']    = Channel.empty()
+  SHORTREADS_OUTPUTS['UNICYCLER'] = Channel.empty()
+  SHORTREADS_OUTPUTS['SHOVILL']   = Channel.empty()
 
   // SPAdes
   if (!params.skip_spades) {
     spades(input_tuple)
-    spades_ch = spades.out[1]
+    SHORTREADS_OUTPUTS['SPADES'] = spades.out[1]
   }
   // Unicycler
   if (!params.skip_unicycler) {
     unicycler(input_tuple)
-    unicycler_ch = unicycler.out[1]
+    SHORTREADS_OUTPUTS['UNICYCLER'] = unicycler.out[1]
   }
   // Shovill
   if (!params.skip_shovill) {
     shovill(input_tuple.combine(Channel.from('spades', 'skesa', 'megahit')))
-    shovill_ch = shovill.out[1]
+    SHORTREADS_OUTPUTS['SHOVILL'] = shovill.out[1]
   }
 
-  // Get assemblies
-  assemblies_ch = spades_ch.mix(unicycler_ch, shovill_ch)
-
   // Gather assemblies for qc
-  final_assemblies = assemblies_ch.combine(input_tuple, by: 0)
+  SHORTREADS_OUTPUTS['ALL_RESULTS'] = SHORTREADS_OUTPUTS['SPADES']
+                                      .mix(SHORTREADS_OUTPUTS['UNICYCLER'], SHORTREADS_OUTPUTS['SHOVILL'])
+                                      .combine(input_tuple, by: 0)
 
   emit:
-  final_assemblies
+  SHORTREADS_OUTPUTS['ALL_RESULTS']
 
 }
