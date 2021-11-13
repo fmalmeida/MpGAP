@@ -13,15 +13,15 @@
             "properties": {
                 "input": {
                     "type": "string",
-                    "help_text": "Set path to the YAML samplesheet. Mutually exclusive with the parameters for single sample analysis.",
+                    "help_text": "Set path to the YAML samplesheet containing input data for assembly.\n\nPlease read the manual for more information: https://mpgap.readthedocs.io/en/latest/samplesheet.html",
                     "description": "Samplesheet YAML"
                 },
                 "output": {
                     "type": "string",
                     "description": "The output directory where the results will be saved.",
-                    "default": "./results",
+                    "default": "./output",
                     "fa_icon": "fas fa-folder-open",
-                    "help_text": "All the outputs will be stored under this directory. Sub-folders for each dataset will be written in this folder using reads basenames. Short reads basenames for short reads only assemblies and long reads basenames for hybrid and long reads only assemblies."
+                    "help_text": "All the outputs will be stored under this directory. Sub-folders for each dataset will be written in this folder using the \"ids\" provided in the samplesheet."
                 }
             },
             "required": [
@@ -38,7 +38,7 @@
                 "threads": {
                     "type": "integer",
                     "description": "Number of threads to use for each process",
-                    "default": 4,
+                    "default": 3,
                     "fa_icon": "fas fa-cogs"
                 },
                 "parallel_jobs": {
@@ -54,17 +54,23 @@
             "fa_icon": "fas fa-ellipsis-v",
             "description": "Select assembly strategy",
             "properties": {
-                "strategy_2": {
-                    "type": "boolean",
-                    "description": "For hybrid assemblies, use strategy 2",
-                    "help_text": "This paremeter tells the pipeline to first create a longreads-only assembly and then polish it with short reads, instead of executing the hybrid assembly modes implemented by Unicycler, Haslr and SPAdes.",
-                    "fa_icon": "fab fa-confluence"
+                "hybrid_strategy": {
+                    "type": "string",
+                    "description": "Which hybrid strategy to run?",
+                    "help_text": "Selects which hybrid assembly strategy to run. Please read the manual for more information: https://mpgap.readthedocs.io/en/latest/manual.html",
+                    "enum": [
+                        "1",
+                        "2",
+                        "both"
+                    ],
+                    "default": "1",
+                    "fa_icon": "fas fa-align-left"
                 },
                 "pilon_memory_limit": {
                     "type": "number",
                     "description": "Max amount of memory allocated by Pilon (in gigabase)",
                     "default": 50,
-                    "help_text": "Whenever polishing long reads only assemblies with unpaired short reads (single end), the pipeline will directly execute one round of pilon polishing instead of using Unicycler's polish pipeline. Therefore we need to allocate the amount of memory allocated by Pilon. Default 50G. This step is crucial because with not enough memory will crash and not correct your assembly. When that happens you will not have the pilon output nor the QUAST assessment.",
+                    "help_text": "Whenever polishing long reads only assemblies with unpaired short reads (single end), the pipeline will directly execute one round of pilon polishing instead of using Unicycler's polish pipeline. Therefore we need to allocate the amount of memory allocated by Pilon. Default 50G. This step is crucial because with not enough memory will crash and not correct your assembly. Values are in Gb.",
                     "fa_icon": "fas fa-database"
                 }
             }
@@ -83,9 +89,21 @@
                 "wtdbg2_technology": {
                     "type": "string",
                     "description": "Set  correct long reads technology specification for wtdbg2",
-                    "default": "ont",
-                    "help_text": "When assembling pacbio long reads with wtdbg2, it is necessary to tell the pipeline whether reads are \"rs\" for PacBio RSII, \"sq\" for PacBio Sequel, \"ccs\" for PacBio CCS reads. This parameter defaults to ont, such it is required to change when using pacbio reads.",
-                    "fa_icon": "fas fa-question"
+                    "help_text": "It is required by wtdbg2. By default, when not provided, the pipeline will check for each sample whether reads are nanopore or pacbio. If nanopore, it will default to \"ont\". If pacbio it will default to \"sq\". Options are: \"ont\" for Nanopore, \"rs\" for PacBio RSII, \"sq\" for PacBio Sequel, \"ccs\" for PacBio CCS reads.",
+                    "fa_icon": "fas fa-question",
+                    "enum": [
+                        "ont",
+                        "rs",
+                        "sq",
+                        "ccs"
+                    ]
+                },
+                "shasta_config": {
+                    "type": "string",
+                    "description": "Shasta pre-set config",
+                    "fa_icon": "fas fa-question",
+                    "help_text": "Since shasta v0.8 (Oct/2021) it now requires to select a pre-set configuration for assemblies. It defaults to Nanopore-Oct2021. Please read their manual to check for available options: https://chanzuckerberg.github.io/shasta/Configurations.html",
+                    "default": "Nanopore-Oct2021"
                 },
                 "corrected_long_reads": {
                     "type": "boolean",
@@ -95,14 +113,15 @@
                 },
                 "medaka_model": {
                     "type": "string",
-                    "help_text": "Useful for longreads-only or hybrid assemblies using strategy 2. Used to polish a longreads-only assembly with Medaka. It selects a Medaka ONT sequencing model for polishing. Please read the medaka manual https://nanoporetech.github.io/medaka/ for more instructions.\n\nWhen using a YAML samplesheet for multiple sample analysis, this parameter will set the default for all samples. However, if a sample have a definition for this parameter inside the YAML, it will overwrite the parameter for that specific sample.",
+                    "help_text": "Useful for longreads-only or hybrid assemblies using strategy 2. Used to polish a nanopore longreads-only assembly with Medaka. It selects a Medaka ONT sequencing model for polishing. Please read the medaka manual https://nanoporetech.github.io/medaka/ for more instructions.",
                     "description": "Polish with Medaka? Which model?",
-                    "default": "r941_min_high_g360"
+                    "default": "r941_min_high_g360",
+                    "fa_icon": "fas fa-question"
                 },
                 "nanopolish_max_haplotypes": {
                     "type": "number",
                     "description": "Max. number of haplotypes to be considered by Nanopolish",
-                    "help_text": "Useful when polishing the genome with Nanopolish (--nanopolish_fast5).\nIt sets the max number of haplotypes to be considered by Nanopolish. Sometimes the pipeline may crash because to much variation was found exceeding the limit.",
+                    "help_text": "Useful when polishing the genome with Nanopolish. It sets the max number of haplotypes to be considered by Nanopolish. Sometimes the pipeline may crash because to much variation was found exceeding the limit.",
                     "default": 1000
                 }
             }
