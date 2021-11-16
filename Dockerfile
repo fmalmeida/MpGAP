@@ -5,8 +5,7 @@ LABEL authors="Felipe Almeida" \
 # Install the conda environment
 RUN conda install -y -c conda-forge mamba
 COPY environment.yml /
-RUN mamba env create --quiet -f /environment.yml
-RUN mamba clean -a
+RUN mamba env create --quiet -f /environment.yml && mamba clean -a
 
 # Add conda installation dir to PATH (instead of doing 'conda activate')
 ENV PATH /opt/conda/envs/mpgap-3.1/bin:$PATH
@@ -15,7 +14,6 @@ ENV PATH /opt/conda/envs/mpgap-3.1/bin:$PATH
 RUN conda env export --name mpgap-3.1 > mpgap-3.1.yml
 
 # download busco dbs
-RUN quast-download-busco || true
 ENV CONDA_PREFIX=/opt/conda
 RUN mkdir -p $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/
 RUN wget -O $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/bacteria.tar.gz https://busco.ezlab.org/v2/datasets/bacteria_odb9.tar.gz
