@@ -73,32 +73,42 @@ Therefore, feedbacks are very well welcomed. If you believe that your use case i
 
 3. Download required tools
 
-    ```bash
-    # for docker
-    docker pull fmalmeida/mpgap:v3.1
+    * for docker
 
-    # for singularity
-    # remember to properly set NXF_SINGULARITY_LIBRARYDIR
-    # read more at https://www.nextflow.io/docs/latest/singularity.html#singularity-docker-hub
-    export NXF_SINGULARITY_LIBRARYDIR=MY_SINGULARITY_IMAGES
-    singularity pull --dir MY_SINGULARITY_IMAGES docker://fmalmeida/mpgap:v3.1
+        ```bash
+        # for docker
+        docker pull fmalmeida/mpgap:v3.1
+        ```
 
-    # for conda
-    # it is better to create envs with mamba for faster solving
-    wget https://github.com/fmalmeida/mpgap/raw/master/environment.yml
-    conda env create -f environment.yml
+    * for singularity
 
-    ## if using conda you must download the busco dbs for quast to properly run the assembly quality check step
-    ## download busco dbs
-    ## CONDA_PREFIX is the base/root directory of your conda installation
-    mkdir -p $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/
-    ### bacteria db
-    wget -O $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/bacteria.tar.gz https://busco.ezlab.org/v2/datasets/bacteria_odb9.tar.gz
-    ### eukaryota db
-    wget -O $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/eukaryota.tar.gz https://busco.ezlab.org/v2/datasets/eukaryota_odb9.tar.gz
-    ### fungi db
-    wget -O $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/fungi.tar.gz https://busco.ezlab.org/v2/datasets/fungi_odb9.tar.gz
-    ```
+        ```bash
+        # for singularity
+        # remember to properly set NXF_SINGULARITY_LIBRARYDIR
+        # read more at https://www.nextflow.io/docs/latest/singularity.html#singularity-docker-hub
+        export NXF_SINGULARITY_LIBRARYDIR=MY_SINGULARITY_IMAGES
+        singularity pull --dir MY_SINGULARITY_IMAGES docker://fmalmeida/mpgap:v3.1
+        ```
+    
+    * for conda
+    
+        ```bash
+        # for conda
+        # it is better to create envs with mamba for faster solving
+        wget https://github.com/fmalmeida/mpgap/raw/master/environment.yml
+        conda env create -f environment.yml
+
+        ## if using conda you must download the busco dbs for quast to properly run the assembly quality check step
+        ## download busco dbs
+        ## CONDA_PREFIX is the base/root directory of your conda installation
+        mkdir -p $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/
+        ### bacteria db
+        wget -O $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/bacteria.tar.gz https://busco.ezlab.org/v2/datasets/bacteria_odb9.tar.gz
+        ### eukaryota db
+        wget -O $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/eukaryota.tar.gz https://busco.ezlab.org/v2/datasets/eukaryota_odb9.tar.gz
+        ### fungi db
+        wget -O $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/fungi.tar.gz https://busco.ezlab.org/v2/datasets/fungi_odb9.tar.gz
+        ```
     
 4. Start running your analysis
     
