@@ -47,9 +47,9 @@ process nanopolish {
   samtools index reads.sorted.bam ;
 
   # run nanopolish
-  python \\
-      \$(find \$CONDA_PREFIX -name "nanopolish_makerange.py") \\
-      filtered_assembly.fa | parallel --results nanopolish.results -P 1 \\
+  nanopolish_makerange.py \\
+      filtered_assembly.fa | \\
+      parallel --results nanopolish.results -P 1 \\
       nanopolish variants --consensus -o polished.{1}.vcf \\
           -w {1} \\
           -r reads.fa \\
