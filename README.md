@@ -86,7 +86,7 @@ Therefore, feedbacks are very well welcomed. If you believe that your use case i
     wget https://github.com/fmalmeida/mpgap/raw/master/environment.yml
     [mamba|conda] env create -f environment.yml
 
-    ## if using conda you must download the busco images for quast to
+    ## if using conda you must download the busco dbs for quast to
     ## properly run the assembly quality check step
     # download busco dbs
     # CONDA_PREFIX is the base/root directory of your conda installation
@@ -145,6 +145,18 @@ The usage of conda profile will **only** work in linux-64 machine because some o
 Therefore, be aware, `-profile conda` will only work on linu-64 machines. Users in orther systems must use it with docker or singularity.
 
 Finally, the main conda packages in the `environment.yml` file have been "frozen" to specific versions to make env solving faster. If you saw that I tool has a new update and would like to see it updated in the pipeline, please flag an issue.
+
+Also, if using conda you must download the busco dbs for quast to properly run the assembly quality check step.
+
+> `CONDA_PREFIX` is the base/root directory of your conda installation
+
+```bash
+mkdir -p $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/
+wget -O $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/bacteria.tar.gz https://busco.ezlab.org/v2/datasets/bacteria_odb9.tar.gz
+wget -O $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/eukaryota.tar.gz https://busco.ezlab.org/v2/datasets/eukaryota_odb9.tar.gz
+wget -O $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/fungi.tar.gz https://busco.ezlab.org/v2/datasets/fungi_odb9.tar.gz
+chmod -R 777 $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco
+```
 
 ### Explanation of hybrid strategies
 
