@@ -34,7 +34,8 @@ This pipeline requires only `Docker <https://www.docker.com/>`_ or `Singularity 
       # for singularity
       # remember to properly set NXF_SINGULARITY_LIBRARYDIR
       # read more at https://www.nextflow.io/docs/latest/singularity.html#singularity-docker-hub
-      singularity pull docker://fmalmeida/mpgap:v3.1
+      export NXF_SINGULARITY_LIBRARYDIR=MY_SINGULARITY_IMAGES
+      singularity pull --dir MY_SINGULARITY_IMAGES docker://fmalmeida/mpgap:v3.1
    
    * To understand how to change between profiles please refer to https://github.com/fmalmeida/MpGAP/tree/master#selecting-between-profiles
 

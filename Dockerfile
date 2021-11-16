@@ -5,7 +5,8 @@ LABEL authors="Felipe Almeida" \
 # Install the conda environment
 RUN conda install -y -c conda-forge mamba
 COPY environment.yml /
-RUN mamba env create --quiet -f /environment.yml && mamba clean -a
+RUN mamba env create --quiet -f /environment.yml
+RUN mamba clean -a
 
 # Add conda installation dir to PATH (instead of doing 'conda activate')
 ENV PATH /opt/conda/envs/mpgap-3.1/bin:$PATH
