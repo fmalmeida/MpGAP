@@ -14,17 +14,18 @@ process wtdbg2 {
   (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2')
 
   script:
+  fixed_id = id - ":strategy_2"
   """
   # run wtdbg2
   wtdbg2.pl \\
       -t ${params.threads} \\
       -x ${wtdbg2_technology} \\
       -g ${genome_size} \\
-      -o ${id} \\
+      -o ${fixed_id} \\
       ${params.wtdbg2_additional_parameters} \\
       $lreads
 
   # rename results
-  cp ${id}.cns.fa wtdbg2_assembly.fasta
+  cp ${fixed_id}.cns.fa wtdbg2_assembly.fasta
   """
 }
