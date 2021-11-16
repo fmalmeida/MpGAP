@@ -78,6 +78,8 @@ Therefore, feedbacks are very well welcomed. If you believe that your use case i
     docker pull fmalmeida/mpgap:v3.1
 
     # for singularity
+    # remember to properly set NXF_SINGULARITY_LIBRARYDIR
+    # read more at https://www.nextflow.io/docs/latest/singularity.html#singularity-docker-hub
     singularity pull docker://fmalmeida/mpgap:v3.1
 
     # for conda
