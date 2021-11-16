@@ -85,6 +85,16 @@ Therefore, feedbacks are very well welcomed. If you believe that your use case i
     # for conda
     wget https://github.com/fmalmeida/mpgap/raw/master/environment.yml
     [mamba|conda] env create -f environment.yml
+
+    ## if using conda you must download the busco images for quast to
+    ## properly run the assembly quality check step
+    # download busco dbs
+    # CONDA_PREFIX is the base/root directory of your conda installation
+    mkdir -p $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/
+    wget -O $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/bacteria.tar.gz https://busco.ezlab.org/v2/datasets/bacteria_odb9.tar.gz
+    wget -O $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/eukaryota.tar.gz https://busco.ezlab.org/v2/datasets/eukaryota_odb9.tar.gz
+    wget -O $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/fungi.tar.gz https://busco.ezlab.org/v2/datasets/fungi_odb9.tar.gz
+    chmod -R 777 $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco
     ```
     
 4. Start running your analysis

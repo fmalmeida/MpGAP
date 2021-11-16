@@ -70,7 +70,12 @@ Running the pipeline
     --threads 5 \
     --skip_spades \
     --input "samplesheet.yml" \
-    --unicycler_additional_parameters '--mode conservative'
+    --unicycler_additional_parameters '--mode conservative' \
+    -profile <docker/singularity/conda>
+
+.. note::
+
+  You can choose if the pipeline will run with docker, conda or singularity with the ``-profile`` parameter. If nothing is provided, the pipeline will load docker by default. Please read more at https://github.com/fmalmeida/MpGAP/tree/master#selecting-between-profiles
 
 .. tip::
   | Additional parameters to assemblers can be given with ``--{assembler}_additional_parameters``.
