@@ -1,1 +1,1 @@
-wtdbg2/wtdbg2.pl
+wtdbg2_binaries/wtdbg2.pl
