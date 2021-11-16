@@ -13,6 +13,7 @@ process pilon_polish {
   script:
   has_paired = (sread1 =~ /input.*/) ? false : true
   has_single = (single =~ /input.*/) ? false : true
+  fixed_id   = id - ":strategy_2"
   // has paired reads but doesn't have unpaired reads
   if(has_paired && !has_single)
       """
@@ -48,21 +49,21 @@ process pilon_polish {
 
       # Index and align reads with bwa
       bwa index ${draft} ;
-      bwa mem -M -t ${params.threads} ${draft} ${single} > ${id}_${assembler}_aln.sam ;
-      samtools view -bS ${id}_${assembler}_aln.sam | samtools sort > ${id}_${assembler}_aln.bam ;
-      samtools index ${id}_${assembler}_aln.bam ;
+      bwa mem -M -t ${params.threads} ${draft} ${single} > ${fixed_id}_${assembler}_aln.sam ;
+      samtools view -bS ${fixed_id}_${assembler}_aln.sam | samtools sort > ${fixed_id}_${assembler}_aln.bam ;
+      samtools index ${fixed_id}_${assembler}_aln.bam ;
 
       # Execute pilon a single time (for single end reads)
       java \\
           -Xmx${params.pilon_memory_limit}G \\
           -jar \$pilonjar_path \\
           --genome ${draft} \\
-          --bam ${id}_${assembler}_aln.bam \\
+          --bam ${fixed_id}_${assembler}_aln.bam \\
           --output ${assembler}_pilon_consensus \\
           --outdir ${assembler} &> pilon.log
 
       # save bam file in the desired directory
-      mv ${id}_${assembler}_aln.bam pilon.log ${assembler};
+      mv ${fixed_id}_${assembler}_aln.bam pilon.log ${assembler};
       """
   // has paired reads and has unpaired reads
   else if(has_paired && has_single)
@@ -76,16 +77,16 @@ process pilon_polish {
 
       # Index and align reads with bwa
       bwa index ${draft} ;
-      bwa mem -M -t ${params.threads} ${draft} ${single} > ${id}_${assembler}_aln.sam ;
-      samtools view -bS ${id}_${assembler}_aln.sam | samtools sort > ${id}_${assembler}_aln.bam ;
-      samtools index ${id}_${assembler}_aln.bam ;
+      bwa mem -M -t ${params.threads} ${draft} ${single} > ${fixed_id}_${assembler}_aln.sam ;
+      samtools view -bS ${fixed_id}_${assembler}_aln.sam | samtools sort > ${fixed_id}_${assembler}_aln.bam ;
+      samtools index ${fixed_id}_${assembler}_aln.bam ;
 
       # Execute pilon a single time (for single end reads)
       java \\
           -Xmx${params.pilon_memory_limit}G \\
           -jar \$pilonjar_path \\
           --genome ${draft} \\
-          --bam ${id}_${assembler}_aln.bam \\
+          --bam ${fixed_id}_${assembler}_aln.bam \\
           --output first_polish \\
           --outdir . &> pilon.log
 
