@@ -1,6 +1,6 @@
 process multiqc {
   publishDir "${params.output}/${prefix}/00_quality_assessment", mode: 'copy'
-  tag "Collecting Quast quality reports"
+  tag "${id}"
 
   input:
   tuple val(id), val(entrypoint), val(prefix), file(quast_dirs)
