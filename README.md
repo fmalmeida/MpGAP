@@ -97,18 +97,9 @@ Therefore, feedbacks are very well welcomed. If you believe that your use case i
         # it is better to create envs with mamba for faster solving
         wget https://github.com/fmalmeida/mpgap/raw/master/environment.yml
         conda env create -f environment.yml   # advice: use mamba
-
-        ## if using conda you must download the busco dbs for quast to properly run the assembly quality check step
-        ## download busco dbs
-        ## CONDA_PREFIX is the base/root directory of your conda installation
-        mkdir -p $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/
-        ### bacteria db
-        wget -O $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/bacteria.tar.gz https://busco.ezlab.org/v2/datasets/bacteria_odb9.tar.gz
-        ### eukaryota db
-        wget -O $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/eukaryota.tar.gz https://busco.ezlab.org/v2/datasets/eukaryota_odb9.tar.gz
-        ### fungi db
-        wget -O $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/fungi.tar.gz https://busco.ezlab.org/v2/datasets/fungi_odb9.tar.gz
         ```
+
+        :target: Please make sure to also download its busco databases. [See the explanation](#note-on-conda)
     
 4. Start running your analysis
     
@@ -159,14 +150,21 @@ Therefore, be aware, `-profile conda` will only work on linu-64 machines. Users 
 
 Finally, the main conda packages in the `environment.yml` file have been "frozen" to specific versions to make env solving faster. If you saw that I tool has a new update and would like to see it updated in the pipeline, please flag an issue.
 
-Also, if using conda you must download the busco dbs for quast to properly run the assembly quality check step.
+Also, since in quast 5.0.2 the automatic download of its busco databases is broken, if using conda you **must** download the busco dbs for quast to properly run the assembly quality check step.
 
 > `CONDA_PREFIX` is the base/root directory of your conda installation
 
 ```bash
+# create the directory
 mkdir -p $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/
+
+# bacteria db
 wget -O $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/bacteria.tar.gz https://busco.ezlab.org/v2/datasets/bacteria_odb9.tar.gz
+
+# eukaryota db
 wget -O $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/eukaryota.tar.gz https://busco.ezlab.org/v2/datasets/eukaryota_odb9.tar.gz
+
+# fungi db
 wget -O $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/fungi.tar.gz https://busco.ezlab.org/v2/datasets/fungi_odb9.tar.gz
 chmod -R 777 $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco
 ```
