@@ -99,7 +99,7 @@ Therefore, feedbacks are very well welcomed. If you believe that your use case i
         conda env create -f environment.yml   # advice: use mamba
         ```
 
-        :target: Please make sure to also download its busco databases. [See the explanation](#note-on-conda)
+        :dart: Please make sure to also download its busco databases. [See the explanation](#note-on-conda)
     
 4. Start running your analysis
     
