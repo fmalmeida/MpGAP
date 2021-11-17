@@ -148,7 +148,7 @@ Instructions to create required conda environment are found in the [installation
 
 The usage of conda profile will **only** work in linux-64 machine because some of the tools only have its binaries available for this machine, and others had to be put inside the "bin" dir to avoid version compatibility also were compiled for linux-64. A few examples are: wtdbg2, ALE (used as auxiliary tool in pilon polish step), spades v3.13 for unicycler, and others.
 
-Therefore, be aware, `-profile conda` will only work on linu-64 machines. Users in orther systems must use it with docker or singularity.
+Therefore, be aware, `-profile conda` will only work on linux-64 machines. Users in orther systems must use it with docker or singularity.
 
 Finally, the main conda packages in the `environment.yml` file have been "frozen" to specific versions to make env solving faster. If you saw that I tool has a new update and would like to see it updated in the pipeline, please flag an issue.
 
