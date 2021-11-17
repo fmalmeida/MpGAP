@@ -96,7 +96,7 @@ Therefore, feedbacks are very well welcomed. If you believe that your use case i
         # for conda
         # it is better to create envs with mamba for faster solving
         wget https://github.com/fmalmeida/mpgap/raw/master/environment.yml
-        conda env create -f environment.yml
+        conda env create -f environment.yml   # advice: use mamba
 
         ## if using conda you must download the busco dbs for quast to properly run the assembly quality check step
         ## download busco dbs
