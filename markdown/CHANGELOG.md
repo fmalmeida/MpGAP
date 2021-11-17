@@ -2,6 +2,14 @@
 
 The tracking for changes started in v2.
 
+## v3.1
+
+This release addresses the issue https://github.com/fmalmeida/MpGAP/issues/17.
+
+Now the pipeline mainly relies on packages built through conda into a main environment, making it possible to use it with docker, conda or singularity by properly using the `-profile` parameter.
+
+Please read more about it at: https://github.com/fmalmeida/MpGAP#selecting-between-profiles
+
 ## v3.0.1
 
 ### hotfix
