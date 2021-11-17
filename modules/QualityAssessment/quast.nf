@@ -15,6 +15,9 @@ process quast {
   lreads_param = !(lreads =~ /input.?/) ? "--${lr_type} ${lreads}" : ""
 
   """
+  # download busco dbs for quast if they are not available
+  get_quast_dbs.sh ;
+
   # run quast
   quast.py \\
       -o ${assembler} \\
