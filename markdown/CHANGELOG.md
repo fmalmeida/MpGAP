@@ -10,6 +10,10 @@ Now the pipeline mainly relies on packages built through conda into a main envir
 
 Please read more about it at: https://github.com/fmalmeida/MpGAP#selecting-between-profiles
 
+### Compatibility
+
+Because a few tools do not have conda packages, or they are not up-to-date causing incompatibilities when producing the main conda environment ... Pre-compiled binaries for these tools have been made available inside the main/root pipeline `bin` directory. Therefore, the `-profile conda` will only work in linux-64 systems. Users in other operating systems must use docker or singularity.
+
 ## v3.0.1
 
 ### hotfix
