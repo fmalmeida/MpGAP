@@ -59,31 +59,25 @@ workflow HYBRID {
   
   main:
 
-      /*
-       * Channels for placing the assemblies
-       */
-      // lreads
-      lreads_assemblies_ch = Channel.empty()
-      canu_ch              = Channel.empty()
-      unicycler_ch         = Channel.empty()
-      flye_ch              = Channel.empty()
-      raven_ch             = Channel.empty()
-      wtdbg2_ch            = Channel.empty()
-      shasta_ch            = Channel.empty()
+      // Define default output channes
+      // default must be a empty channel that
+      // will be overwritten if assembler is used
+      def LONGREADS_OUTPUTS = [:]
+      LONGREADS_OUTPUTS['CANU']        = Channel.empty()
+      LONGREADS_OUTPUTS['UNICYCLER']   = Channel.empty()
+      LONGREADS_OUTPUTS['FLYE']        = Channel.empty()
+      LONGREADS_OUTPUTS['RAVEN']       = Channel.empty()
+      LONGREADS_OUTPUTS['WTDBG2']      = Channel.empty()
+      LONGREADS_OUTPUTS['SHASTA']      = Channel.empty()
+      LONGREADS_OUTPUTS['MEDAKA']      = Channel.empty()
+      LONGREADS_OUTPUTS['NANOPOLISH']  = Channel.empty()
+      LONGREADS_OUTPUTS['GCPP']        = Channel.empty()
 
-       // hybrid
-      hybrid_assemblies_ch = Channel.empty()
-      spades_ch            = Channel.empty()
-      unicycler_h_ch       = Channel.empty()
-      haslr_ch             = Channel.empty()
-
-      /*
-       * Channels for placing polished assemblies
-       */
-      medaka_ch     = Channel.empty()
-      nanopolish_ch = Channel.empty()
-      gcpp_ch       = Channel.empty()
-      pilon_ch      = Channel.empty()
+      def HYBRID_OUTPUTS = [:]
+      HYBRID_OUTPUTS['UNICYCLER'] = Channel.empty()
+      HYBRID_OUTPUTS['SPADES']    = Channel.empty()
+      HYBRID_OUTPUTS['HASLR']     = Channel.empty()
+      HYBRID_OUTPUTS['PILON']     = Channel.empty()
 
       /*
        * create branches
@@ -100,21 +94,24 @@ workflow HYBRID {
       // SPAdes
       if (!params.skip_spades) {
         strategy_1_spades(input_branches.main)
-        spades_ch =strategy_1_spades.out[1]
+        HYBRID_OUTPUTS['SPADES'] = strategy_1_spades.out[1]
       }
       // Unicycler
       if (!params.skip_unicycler) {
         strategy_1_unicycler(input_branches.main)
-        unicycler_h_ch =strategy_1_unicycler.out[1]
+        HYBRID_OUTPUTS['UNICYCLER'] = strategy_1_unicycler.out[1]
       }
       // Haslr
       if (!params.skip_haslr) {
         strategy_1_haslr(input_branches.main)
-        haslr_ch =strategy_1_haslr.out[1]
+        HYBRID_OUTPUTS['HASLR'] = strategy_1_haslr.out[1]
       }
 
       // Get hybrid assemblies
-      hybrid_assemblies_ch = spades_ch.mix(unicycler_h_ch, haslr_ch)
+      HYBRID_OUTPUTS['ASSEMBLIES'] = HYBRID_OUTPUTS['SPADES']
+                                     .mix(HYBRID_OUTPUTS['UNICYCLER'], 
+                                          HYBRID_OUTPUTS['HASLR'])
+                                     .combine(input_tuple, by: 0)
 
       /*
        * Polish a long reads assembly
@@ -125,7 +122,7 @@ workflow HYBRID {
        */
       if (!params.skip_canu) {
         strategy_2_canu(input_branches.secondary)
-        canu_ch = strategy_2_canu.out[1]
+        LONGREADS_OUTPUTS['CANU'] = strategy_2_canu.out[1]
       }
 
       /*
@@ -133,7 +130,7 @@ workflow HYBRID {
        */
       if (!params.skip_flye) {
         strategy_2_flye(input_branches.secondary)
-        flye_ch = strategy_2_flye.out[1]
+        LONGREADS_OUTPUTS['FLYE'] = strategy_2_flye.out[1]
       }
 
       /*
@@ -141,7 +138,7 @@ workflow HYBRID {
        */
       if (!params.skip_unicycler) {
         strategy_2_unicycler(input_branches.secondary)
-        unicycler_ch = strategy_2_unicycler.out[1]
+        LONGREADS_OUTPUTS['UNICYCLER'] = strategy_2_unicycler.out[1]
       }
 
       /*
@@ -149,7 +146,7 @@ workflow HYBRID {
        */
       if (!params.skip_raven) {
         strategy_2_raven(input_branches.secondary)
-        raven_ch = strategy_2_raven.out[1]
+        LONGREADS_OUTPUTS['RAVEN'] = strategy_2_raven.out[1]
       }
 
       /*
@@ -157,7 +154,7 @@ workflow HYBRID {
        */
       if (!params.skip_shasta) {
         strategy_2_shasta(input_branches.secondary)
-        shasta_ch = strategy_2_shasta.out[1]
+        LONGREADS_OUTPUTS['SHASTA'] = strategy_2_shasta.out[1]
       }
 
       /*
@@ -165,44 +162,55 @@ workflow HYBRID {
        */
       if (!params.skip_wtdbg2) {
         strategy_2_wtdbg2(input_branches.secondary)
-        wtdbg2_ch = strategy_2_wtdbg2.out[1]
+        LONGREADS_OUTPUTS['WTDBG2'] = strategy_2_wtdbg2.out[1]
       }
 
       // Get long reads assemblies
-      lreads_assemblies_ch = canu_ch.mix(flye_ch, unicycler_ch, raven_ch, wtdbg2_ch, shasta_ch)
-
-      // combine again with metadata
-      lreads_combined_ch = lreads_assemblies_ch.combine(input_tuple, by: 0)
+      LONGREADS_OUTPUTS['RAW_ASSEMBLIES'] = LONGREADS_OUTPUTS['CANU']
+                                            .mix(LONGREADS_OUTPUTS['FLYE'], 
+                                                 LONGREADS_OUTPUTS['UNICYCLER'], 
+                                                 LONGREADS_OUTPUTS['RAVEN'], 
+                                                 LONGREADS_OUTPUTS['WTDBG2'], 
+                                                 LONGREADS_OUTPUTS['SHASTA'])
+                                            .combine(input_tuple, by: 0)
 
       /*
        * Run medaka?
        */
-      strategy_2_medaka(lreads_combined_ch)
-      medaka_ch = strategy_2_medaka.out[1]
+      strategy_2_medaka(LONGREADS_OUTPUTS['RAW_ASSEMBLIES'])
+      LONGREADS_OUTPUTS['MEDAKA'] = strategy_2_medaka.out[1]
 
       /*
        * Run nanopolish?
        */
-      strategy_2_nanopolish(lreads_combined_ch)
-      nanopolish_ch = strategy_2_nanopolish.out[0]
+      strategy_2_nanopolish(LONGREADS_OUTPUTS['RAW_ASSEMBLIES'])
+      LONGREADS_OUTPUTS['NANOPOLISH'] = strategy_2_nanopolish.out[0]
 
       /*
        * gcpp?
        */
-      strategy_2_gcpp(lreads_combined_ch)
-      gcpp_ch = strategy_2_gcpp.out[1]
+      strategy_2_gcpp(LONGREADS_OUTPUTS['RAW_ASSEMBLIES'])
+      LONGREADS_OUTPUTS['GCPP'] = strategy_2_gcpp.out[1]
+
+      // Gather long reads assemblies polished
+      LONGREADS_OUTPUTS['POLISHED_ASSEMBLIES'] = LONGREADS_OUTPUTS['MEDAKA']
+                                                 .mix(LONGREADS_OUTPUTS['NANOPOLISH'],
+                                                      LONGREADS_OUTPUTS['GCPP'])
+                                                 .combine(input_tuple, by: 0)
 
       /*
        * Finally, run pilon for all
        */
-      pilon_combined_ch = lreads_assemblies_ch.mix(medaka_ch, nanopolish_ch, gcpp_ch)
-      strategy_2_pilon(pilon_combined_ch.combine(input_tuple, by: 0))
-      pilon_ch = strategy_2_pilon.out[1]
+      strategy_2_pilon(LONGREADS_OUTPUTS['RAW_ASSEMBLIES'].mix(LONGREADS_OUTPUTS['POLISHED_ASSEMBLIES']))
+      HYBRID_OUTPUTS['PILON'] = strategy_2_pilon.out[1].combine(input_tuple, by: 0)
 
       // Gather assemblies for qc
-      final_assemblies = hybrid_assemblies_ch.mix(pilon_combined_ch).mix(pilon_ch).combine(input_tuple, by: 0)
+      HYBRID_OUTPUTS['ALL_RESULTS'] = HYBRID_OUTPUTS['ASSEMBLIES']
+                                      .mix(LONGREADS_OUTPUTS['RAW_ASSEMBLIES'],
+                                           LONGREADS_OUTPUTS['POLISHED_ASSEMBLIES'],
+                                           HYBRID_OUTPUTS['PILON'])
   
   emit:
-    final_assemblies
+    HYBRID_OUTPUTS['ALL_RESULTS']
 
 }

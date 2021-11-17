@@ -1,6 +1,5 @@
 process haslr_hybrid {
   publishDir "${params.output}/${prefix}", mode: 'copy'
-  label 'main'
   tag "${id}"
   cpus params.threads
 
@@ -19,11 +18,17 @@ process haslr_hybrid {
   paired_reads = (!(sread1 =~ /input.*/) && !(sread2 =~ /input.*/)) ? "$sread1 $sread2" : ""
   single_reads = !(single =~ /input.*/) ? "$single" : ""
   """
-  haslr.py -t ${params.threads} -o haslr -g ${genome_size} \
-  -l $lreads -x ${lr_type} -s ${paired_reads} ${single_reads} \
-  ${params.haslr_additional_parameters}
+  # run haslr
+  haslr.py \\
+      -t ${params.threads} \\
+      -o haslr \\
+      -g ${genome_size} \\
+      -l $lreads \\
+      -x ${lr_type} \\
+      ${params.haslr_additional_parameters} \\
+      -s ${paired_reads} ${single_reads} 
 
-  # Rename
+  # rename results
   cp haslr/*/asm.final.fa haslr/haslr_assembly.fa
   """
 }

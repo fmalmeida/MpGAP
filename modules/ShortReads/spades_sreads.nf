@@ -1,7 +1,6 @@
 // batch mode
 process spades {
   publishDir "${params.output}/${prefix}", mode: 'copy'
-  label 'main'
   tag "${id}"
   cpus params.threads
 
@@ -20,9 +19,14 @@ process spades {
   param_single = !(single =~ /input.*/) ? "-s $single" : ""
   """
   # run spades
-  spades.py -o spades -t ${params.threads} ${params.spades_additional_parameters} $param_paired $param_single
+  spades.py \\
+      -o spades \\
+      -t ${params.threads} \\
+      ${params.spades_additional_parameters} \\
+      $param_paired \\
+      $param_single
 
-  # Rename assembly
+  # rename results
   mv spades/contigs.fasta spades/spades_assembly.fasta
   """
 }

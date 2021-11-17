@@ -1,7 +1,6 @@
 // batch mode
 process shovill {
   publishDir "${params.output}/${prefix}/shovill", mode: 'copy'
-  label 'main'
   tag "${id}"
   cpus params.threads
 
@@ -17,19 +16,17 @@ process shovill {
 
   script:
   """
-  # Activate env
-  source activate shovill ;
+  # run shovill
+  shovill \\
+      --outdir ${assembler} \\
+      --assembler ${assembler} \\
+      --R1 $sread1 \\
+      --R2 $sread2 \\
+      --cpus ${params.threads} \\
+      ${params.shovill_additional_parameters} \\
+      --trim ;
 
-  # Run
-  shovill \
-    --outdir ${assembler} \
-    --assembler ${assembler} \
-    --R1 $sread1 --R2 $sread2 \
-    --cpus ${params.threads} \
-    --trim \
-    ${params.shovill_additional_parameters}
-
-  # Rename assembly
+  # rename results
   mv ${assembler}/contigs.fa ${assembler}/shovill_${assembler}_final.fasta
   """
 }

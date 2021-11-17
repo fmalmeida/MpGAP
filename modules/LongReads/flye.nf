@@ -1,6 +1,5 @@
 process flye {
   publishDir "${params.output}/${prefix}", mode: 'copy'
-  label 'main'
   cpus params.threads
   tag "${id}"
 
@@ -20,9 +19,15 @@ process flye {
   lrparam   = lr + corrected
   gsize     = (genome_size) ? "--genome-size ${genome_size}" : ""
   """
-  source activate flye ;
-  flye ${lrparam} $lreads ${gsize} --out-dir flye \
-  --threads ${params.threads} ${params.flye_additional_parameters} &> flye.log ;
+  # run flye
+  flye \\
+      ${lrparam} $lreads \\
+      ${gsize} \\
+      --out-dir flye \\
+      ${params.flye_additional_parameters} \\
+      --threads ${params.threads} &> flye.log ;
+
+  # rename results
   mv flye/assembly.fasta flye/flye_assembly.fasta
   """
 }

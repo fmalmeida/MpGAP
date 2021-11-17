@@ -1,6 +1,5 @@
 process raven {
   publishDir "${params.output}/${prefix}/raven", mode: 'copy'
-  label 'main'
   cpus params.threads
   tag "${id}"
 
@@ -17,11 +16,12 @@ process raven {
   script:
   corrected = (corrected_long_reads == 'true') ? '--weaken' : ''
   """
-  # Activate env
-  source activate RAVEN;
-
-  # Run
-  raven --threads ${params.threads} --graphical-fragment-assembly raven_assembly.gfa \
-  ${params.raven_additional_parameters} $corrected $lreads > raven_assembly.fasta ;
+  # run raven
+  raven \\
+      --threads ${params.threads} \\
+      --graphical-fragment-assembly raven_assembly.gfa \\
+      ${params.raven_additional_parameters} \\
+      $corrected \\
+      $lreads > raven_assembly.fasta ;
   """
 }

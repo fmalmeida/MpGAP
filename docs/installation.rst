@@ -6,11 +6,11 @@ Installation
 Dependencies
 ------------
 
-This pipeline requires only `Docker <https://www.docker.com/>`_ (and its Docker images) and `Nextflow <https://www.nextflow.io/docs/latest/index.html>`_ to run.
+This pipeline requires only `Docker <https://www.docker.com/>`_ or `Singularity <https://sylabs.io/docs/>`_ and `Nextflow <https://www.nextflow.io/docs/latest/index.html>`_ to run.
 
-1. Installing Docker
+1. Installing Docker or Singularity
 
-   + Read more in their `manual <https://docs.docker.com/>`_
+   + Read more in the `docker <https://docs.docker.com/>`_ and `singularity <https://sylabs.io/docs/>`_ manuals
 
 2. Installing Nextflow
 
@@ -26,15 +26,24 @@ This pipeline requires only `Docker <https://www.docker.com/>`_ (and its Docker 
 
 5. Download required Docker images
 
-   ``docker pull fmalmeida/mpgap:v3.0``
+   .. code-block:: bash
+
+      # for docker
+      docker pull fmalmeida/mpgap:v3.1
+
+      # for singularity
+      # remember to properly set NXF_SINGULARITY_LIBRARYDIR
+      # read more at https://www.nextflow.io/docs/latest/singularity.html#singularity-docker-hub
+      export NXF_SINGULARITY_LIBRARYDIR=MY_SINGULARITY_IMAGES
+      singularity pull --dir MY_SINGULARITY_IMAGES docker://fmalmeida/mpgap:v3.1
+   
+   * To understand how to change between profiles please refer to https://github.com/fmalmeida/MpGAP/tree/master#selecting-between-profiles
+
+      * You can also run it with conda
 
 6. (Optional) Install nf-core
 
    ``pip install nf-core>=1.10``
-
-.. note::
-
-  Now, everything is set up and ready to run. Remember to always keep your Docker images up to date (Docker pull will always download the latest).
 
 .. tip::
 

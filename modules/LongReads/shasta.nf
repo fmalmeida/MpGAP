@@ -1,6 +1,5 @@
 process shasta {
   publishDir "${params.output}/${prefix}", mode: 'copy'
-  label 'main'
   cpus params.threads
   tag "${id}"
 
@@ -23,14 +22,14 @@ process shasta {
   gunzip -dcf $lreads > uncompressed_${in_reads} ;
 
   # assemble
-  shasta \
-    --assemblyDirectory shasta \
-    --threads ${params.threads} \
-    ${params.shasta_additional_parameters} \
-    --input uncompressed_${in_reads} \
-    --config ${shasta_config};
+  shasta \\
+      --assemblyDirectory shasta \\
+      --threads ${params.threads} \\
+      ${params.shasta_additional_parameters} \\
+      --input uncompressed_${in_reads} \\
+      --config ${shasta_config} ;
 
-  # Rename contigs
+  # rename contigs
   cp shasta/Assembly.fasta shasta/shasta_assembly.fasta ;
   """
 }

@@ -1,6 +1,5 @@
 process unicycler {
   publishDir "${params.output}/${prefix}", mode: 'copy'
-  label 'main'
   cpus params.threads
   tag "${id}"
 
@@ -16,11 +15,15 @@ process unicycler {
 
   script:
   """
-  unicycler -l $lreads \
-  -o unicycler -t ${params.threads} \
-  ${params.unicycler_additional_parameters}
+  # run unicycler
+  unicycler \\
+      -l ${lreads} \\
+      -o unicycler \\
+      -t ${params.threads} \\
+      ${params.unicycler_additional_parameters} \\
+      --spades_path spades-3.13.0.py
 
-  # Rename assembly
+  # rename results
   mv unicycler/assembly.fasta unicycler/unicycler_assembly.fasta
   """
 }

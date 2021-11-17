@@ -1,6 +1,5 @@
 process canu {
   publishDir "${params.output}/${prefix}", mode: 'copy'
-  label 'main'
   cpus params.threads
   tag "${id}"
   input:
@@ -16,12 +15,19 @@ process canu {
   script:
   lr        = (lr_type == 'nanopore') ? '-nanopore' : '-pacbio'
   corrected = (corrected_long_reads == 'true') ? '-corrected' : ''
-
+  fixed_id = id - ":strategy_2"
   """
-  canu -p ${id} -d canu maxThreads=${params.threads} genomeSize=${genome_size} \
-  ${params.canu_additional_parameters} $corrected $lr $lreads
+  # run canu
+  canu \\
+      -p ${fixed_id} \\
+      -d canu \\
+      maxThreads=${params.threads} \\
+      genomeSize=${genome_size} \\
+      ${params.canu_additional_parameters} \\
+      $corrected \\
+      $lr $lreads
 
-  # Rename contigs
-  mv canu/${id}.contigs.fasta canu/canu_assembly.fasta
+  # rename results
+  mv canu/${fixed_id}.contigs.fasta canu/canu_assembly.fasta
   """
 }
