@@ -87,7 +87,7 @@ Therefore, feedbacks are very well welcomed. If you believe that your use case i
         # remember to properly set NXF_SINGULARITY_LIBRARYDIR
         # read more at https://www.nextflow.io/docs/latest/singularity.html#singularity-docker-hub
         export NXF_SINGULARITY_LIBRARYDIR=MY_SINGULARITY_IMAGES
-        singularity pull --dir MY_SINGULARITY_IMAGES docker://fmalmeida/mpgap:v3.1
+        singularity pull --dir $NXF_SINGULARITY_LIBRARYDIR docker://fmalmeida/mpgap:v3.1
         ```
     
     * for conda
