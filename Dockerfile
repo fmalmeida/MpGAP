@@ -19,9 +19,10 @@ RUN mkdir -p $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs
 RUN wget -O $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/bacteria.tar.gz https://busco.ezlab.org/v2/datasets/bacteria_odb9.tar.gz
 RUN wget -O $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/eukaryota.tar.gz https://busco.ezlab.org/v2/datasets/eukaryota_odb9.tar.gz
 RUN wget -O $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/fungi.tar.gz https://busco.ezlab.org/v2/datasets/fungi_odb9.tar.gz
-RUN quast-download-busco
+RUN mkdir -p $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/augustus3.2.3 && wget -O $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/augustus3.2.3/augustus.tar.gz http://bioinf.uni-greifswald.de/augustus/binaries/old/augustus-3.2.3.tar.gz
 
 # fix permissions
 RUN chmod -R 777 $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco
+RUN chmod -R 777 $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/augustus3.2.3
 RUN chmod -R 777 $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/medaka
 
