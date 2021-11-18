@@ -15,13 +15,19 @@ process unicycler {
 
   script:
   """
+  # copy spades 3.13 to dir
+  src_dir=\$(which shasta | sed 's/shasta//g')
+  spades_path="\${src_dir}/spades-3.13.tar.gz"
+  cp \${spades_path} .
+  tar zxvf spades-3.13.tar.gz && rm spades-3.13.tar.gz
+  
   # run unicycler
   unicycler \\
       -l ${lreads} \\
       -o unicycler \\
       -t ${params.threads} \\
       ${params.unicycler_additional_parameters} \\
-      --spades_path spades-3.13.0.py
+      --spades_path SPAdes-3.13.0-Linux/bin/spades.py
 
   # rename results
   mv unicycler/assembly.fasta unicycler/unicycler_assembly.fasta
