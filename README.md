@@ -169,6 +169,11 @@ wget -O $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busc
 # fungi db
 wget -O $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/fungi.tar.gz https://busco.ezlab.org/v2/datasets/fungi_odb9.tar.gz
 chmod -R 777 $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco
+
+# get augustus database with
+# must be executed in the end because its links for bacteria, fungi and eukaryota are broken
+# it is only working for augustus
+conda activate mpgap-3.1 && quast-download-busco
 ```
 
 ### Explanation of hybrid strategies
