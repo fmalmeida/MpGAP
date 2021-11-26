@@ -15,6 +15,9 @@ process quast {
   lreads_param = !(lreads =~ /input.?/) ? "--${lr_type} ${lreads}" : ""
 
   """
+  # fix busco usage in singularity
+  cp -R $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco ~/.quast
+
   # run quast
   quast.py \\
       -o ${assembler} \\
