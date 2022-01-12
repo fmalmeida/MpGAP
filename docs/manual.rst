@@ -148,7 +148,7 @@ A few assemblers expect you to provide an expected genome size for your assembly
      - Default value
      - Description
 
-   * - ``genome_size``
+   * - ``--genome_size``
      - NA
      - This sets the expected genome sizes for canu, wtdbg2 and haslr assemblers, which require this value. Options are estimatives with common suffices, for example: ``3.7m``, ``2.8g``, etc.
 
