@@ -2,6 +2,13 @@
 
 The tracking for changes started in v2.
 
+## v3.1.1
+
+This is a super small release that is basically a hotfix. It solved the following:
+
+* updated the documentation since a few parameters used in the samplesheet were missing its explanation in the manual. Related to issue https://github.com/fmalmeida/MpGAP/issues/29
+* Updated the quast process to understand when it is being executed in docker/conda/singularity profiles. This was necessary because, for singularity, another line of code was required to prepare the busco images from the docker to be used, which was not required in docker and conda and would raise errors in these profiles.
+
 ## v3.1
 
 This release addresses the issue https://github.com/fmalmeida/MpGAP/issues/17.
