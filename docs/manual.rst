@@ -129,7 +129,25 @@ Input files
 Assemblies configuration
 """"""""""""""""""""""""
 
-All these parameters below set values in global manner for all the samples. However, if a sample has a value for one of these parameters in the samplesheet, it will overwrite the "global/default" value for that specific sample and use the one provided inside the YAML.
+All these parameters listed below (for genome size, assembly strategy, long reads characteristics and for long reads polishers) if used via the command line or from the NF config file, they will set values in a global manner for all the samples.
+
+However, they can also be set in a sample-specific manner. If a sample has a value for one of these parameters in the samplesheet, it will overwrite the "global/default" value **for that specific sample** and use the one provided inside the YAML.
+
+Genome size
+^^^^^^^^^^^
+
+A few assemblers expect you to provide an expected genome size for your assembly.
+
+.. list-table::
+   :widths: 25 15 60
+   :header-rows: 1
+
+   * - Arguments
+     - Default value
+     - Description
+
+   * - ``genome_size``
+     - This sets the expected genome sizes for canu, wtdbg2 and haslr assemblers, which require this value. Options are estimatives with common suffices, for example: ``3.7m``, ``2.8g``, etc.
 
 Hybrid assembly strategies
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -170,7 +188,7 @@ Long reads characteristics
      - It tells the pipeline to interpret the input long reads as "corrected". This will activate (if available) the options for corrected reads in the assemblers. For example: ``-corrected`` (in canu), ``--pacbio-corr|--nano-corr`` (in flye), etc. Be cautious when using this parameter. If your reads are not corrected, and you use this parameter, you will probably do not generate any contig.
 
 Long reads polishers
-""""""""""""""""""""
+^^^^^^^^^^^^^^^^^^^^
 
 Useful for long reads only and strategy 2 hybrid assemblies.
 
