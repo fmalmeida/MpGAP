@@ -17,8 +17,8 @@ include { logMessage          } from './nf_functions/logMessages.nf'
   */
 params.help = false
 if (params.help) {
-  helpMessage
-  exit 1
+  helpMessage()
+  exit 0
 }
 
  /*
