@@ -14,9 +14,27 @@ process quast {
   single_param = !(single =~ /input.?/) ? "--single ${single}" : ""
   lreads_param = !(lreads =~ /input.?/) ? "--${lr_type} ${lreads}" : ""
 
+  if (params.selected_profile == "docker" || params.selected_profile == "conda")
+  """
+  # run quast
+  quast.py \\
+      -o ${assembler} \\
+      -t ${params.threads} \\
+      ${lreads_param} \\
+      ${paired_param} \\
+      ${single_param} \\
+      --conserved-genes-finding \\
+      --rna-finding \\
+      --min-contig 100 \\
+      ${params.quast_additional_parameters} \\
+      ${contigs}
+  """
+
+  else if (params.selected_profile == "singularity")
   """
   # fix busco usage in singularity
-  cp -R $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco ~/.quast
+  mkdir -p ~/.quast/busco
+  cp -R /opt/conda/envs/mpgap-*/lib/python3.6/site-packages/quast_libs/busco ~/.quast
 
   # run quast
   quast.py \\
