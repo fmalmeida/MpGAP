@@ -133,6 +133,8 @@ All these parameters listed below (for genome size, assembly strategy, long read
 
 However, they can also be set in a sample-specific manner. If a sample has a value for one of these parameters in the samplesheet, it will overwrite the "global/default" value **for that specific sample** and use the one provided inside the YAML.
 
+Please, refer to the :ref:`samplesheet reference page<samplesheet>` to better understand how properly set up the samplesheet.
+
 Genome size
 ^^^^^^^^^^^
 
@@ -147,6 +149,7 @@ A few assemblers expect you to provide an expected genome size for your assembly
      - Description
 
    * - ``genome_size``
+     - NA
      - This sets the expected genome sizes for canu, wtdbg2 and haslr assemblers, which require this value. Options are estimatives with common suffices, for example: ``3.7m``, ``2.8g``, etc.
 
 Hybrid assembly strategies
