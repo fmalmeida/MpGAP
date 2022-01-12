@@ -13,6 +13,15 @@ include { helpMessage         } from './nf_functions/help.nf'
 include { logMessage          } from './nf_functions/logMessages.nf'
 
  /*
+  * Help message
+  */
+params.help = false
+if (params.help) {
+  helpMessage
+  exit 1
+}
+
+ /*
            Download configuration file, if necessary.
  */
  params.get_config = false
