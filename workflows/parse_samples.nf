@@ -27,23 +27,22 @@ workflow parse_samplesheet {
       prefix = "${row.name}/longreads_only" 
     }
 
-    // create input tuple   
     tuple(
         row.name, // sample name
         row.entrypoint, // assembly type
-        (row.fwd == "missing_pairFWD")   ? row.fwd : file(row.fwd), // short reads pair 1
-        (row.rev == "missing_pairREV")   ? row.rev : file(row.rev), // short reads pair 2
-        (row.single == "missing_single") ? row.single : file(row.single), // short reads unpaired
-        (row.lreads == "missing_lreads") ? row.lreads : file(row.lreads), // long reads
+        (row.fwd == "missing_pairFWD")   ? row.fwd : load_file(row.fwd), // short reads pair 1
+        (row.rev == "missing_pairREV")   ? row.rev : load_file(row.rev), // short reads pair 2
+        (row.single == "missing_single") ? row.single : load_file(row.single), // short reads unpaired
+        (row.lreads == "missing_lreads") ? row.lreads : load_file(row.lreads), // long reads
         row.lr_type, // long reads type
         row.wtdbg2_technology, // which wtdbg2 tech to use?
         row.genome_size, // expected genome size
         row.corrected_long_reads.toString().toLowerCase(), // are reads corrected?
         row.medaka_model, // change medaka model?
-        (row.nanopolish_fast5 == "missing_nanopolish_fast5") ? row.nanopolish_fast5 : file(row.nanopolish_fast5), // nanopolish nanopolish_fast5 as file
+        (row.nanopolish_fast5 == "missing_nanopolish_fast5") ? row.nanopolish_fast5 : load_file(row.nanopolish_fast5), // nanopolish nanopolish_fast5 as file
         row.nanopolish_max_haplotypes, // nanopolish max_haplotypes
         row.shasta_config, // shasta config
-        (row.pacbio_bam == "missing_pacbio_bam") ? row.pacbio_bam : file(row.pacbio_bam),
+        (row.pacbio_bam == "missing_pacbio_bam") ? row.pacbio_bam : load_file(row.pacbio_bam),
         prefix, // output prefix
       )
     }
@@ -60,4 +59,15 @@ workflow parse_samplesheet {
   results.lronly
   results.hybrid
 
+}
+
+// function to load files
+def load_file(input) {
+  if (!file(input).exists()) {
+    exit 1, "ERROR: Please check input samplesheet -> This file was not found, there may be an error in the path!\n${input}"
+  } else {
+    loaded_file = file(input)
+  }
+
+  return loaded_file
 }
