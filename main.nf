@@ -7,122 +7,29 @@ import org.yaml.snakeyaml.Yaml
  */
 
 /*
- * Include functions
- */
-include { helpMessage         } from './nf_functions/help.nf'
-include { logMessage          } from './nf_functions/logMessages.nf'
-
- /*
-  * Help message
-  */
-params.help = false
-if (params.help) {
-  helpMessage()
-  exit 0
-}
-
- /*
-           Download configuration file, if necessary.
- */
- params.get_config = false
- if (params.get_config) {
-   new File("MPGAP.config").write(new URL ("https://github.com/fmalmeida/mpgap/raw/master/nextflow.config").getText())
-   println ""
-   println "MPGAP.config file saved in working directory"
-   println "After configuration, run:"
-   println "nextflow run fmalmeida/mpgap -c ./MPGAP.config"
-   println "Nice code!\n"
-
-   exit 0
- }
-
- /*
-           Download samplesheet, if necessary.
- */
- params.get_samplesheet = false
- if (params.get_samplesheet) {
-   new File("MPGAP_samplesheet.yml").write(new URL ("https://github.com/fmalmeida/mpgap/raw/master/example_samplesheet.yml").getText())
-   println ""
-   println "Samplesheet (MPGAP_samplesheet.yml) file saved in working directory"
-   println "Nice code!\n"
-
-   exit 0
- }
-
- /*
-  * Load general parameters and establish defaults
-  */
-
-// General
-params.output  = 'output'
-params.threads = 3
-params.input   = ''
-
-// Assemblers?
-params.skip_flye      = false
-params.skip_spades    = false
-params.skip_shovill   = false
-params.skip_canu      = false
-params.skip_unicycler = false
-params.skip_haslr     = false
-params.skip_raven     = false
-params.skip_wtdbg2    = false
-params.skip_shasta    = false
-
-// shasta default configuration
-params.shasta_config = 'Nanopore-Oct2021'
-
-// medaka model default configuration
-params.medaka_model = 'r941_min_high_g360'
-
-// genome size for canu and wtdbg2 and haslr
-params.genome_size = ''
-
-// Additional parameters for assemblers and quast
-params.quast_additional_parameters     = ''
-params.canu_additional_parameters      = ''
-params.unicycler_additional_parameters = ''
-params.flye_additional_parameters      = ''
-params.spades_additional_parameters    = ''
-params.shovill_additional_parameters   = ''
-params.haslr_additional_parameters     = ''
-params.raven_additional_parameters     = ''
-params.wtdbg2_additional_parameters    = ''
-params.shasta_additional_parameters    = ''
-
-// Long reads
-params.corrected_long_reads = false
-params.nanopolish_max_haplotypes = 1000
-
-// Hybrid strategies default configuration
-params.hybrid_strategy = 1
-params.pilon_memory_limit = 50
+========================================================================================
+    VALIDATE & PRINT PARAMETER SUMMARY
+========================================================================================
+*/
+WorkflowMain.initialise(workflow, params, log)
 
 /*
- * Define log message
- */
-logMessage()
+========================================================================================
+    LOAD WORKFLOWS
+========================================================================================
+*/
 
-/*
- * Define custom workflows
- */
-
-// misc
 include { parse_samplesheet } from './workflows/parse_samples.nf'
-include { ASSEMBLY_QC } from './workflows/assembly_qc.nf'
+include { ASSEMBLY_QC       } from './workflows/assembly_qc.nf'
+include { SHORTREADS_ONLY   } from './workflows/short-reads-only.nf'
+include { LONGREADS_ONLY    } from './workflows/long-reads-only.nf'
+include { HYBRID            } from './workflows/hybrid.nf'
 
-// Short reads only
-include { SHORTREADS_ONLY } from './workflows/short-reads-only.nf'
-
-// Long reads only
-include { LONGREADS_ONLY } from './workflows/long-reads-only.nf'
-
-// Hybrid
-include { HYBRID } from './workflows/hybrid.nf'
-
-                                  /*
-                                   * DEFINE (RUN) MAIN WORKFLOW
-                                   */
+/*
+========================================================================================
+    DEFINE MAIN WORKFLOW
+========================================================================================
+*/
 
 workflow {
 
