@@ -16,6 +16,11 @@
                     "help_text": "Set path to the YAML samplesheet containing input data for assembly.\n\nPlease read the manual for more information: https://mpgap.readthedocs.io/en/latest/samplesheet.html",
                     "description": "Samplesheet YAML"
                 },
+                "genome_size": {
+                    "type": "string",
+                    "description": "Set the expected genome size (E.g. 5.6m; 1.2g)",
+                    "help_text": "It sets the expected genome size of the assembly. It is required by Canu and Haslr assemblers. It is optional for Flye, but highly recommended. E.g. 5.6m; 1.2g."
+                },
                 "output": {
                     "type": "string",
                     "description": "The output directory where the results will be saved.",
@@ -74,23 +79,18 @@
                 "pilon_memory_limit": {
                     "type": "number",
                     "description": "Max amount of memory allocated by Pilon (in gigabase)",
-                    "default": 50.0,
+                    "default": 50,
                     "help_text": "Whenever polishing long reads only assemblies with unpaired short reads (single end), the pipeline will directly execute one round of pilon polishing instead of using Unicycler's polish pipeline. Therefore we need to allocate the amount of memory allocated by Pilon. Default 50G. This step is crucial because with not enough memory will crash and not correct your assembly. Values are in Gb.",
                     "fa_icon": "fas fa-database"
                 }
             }
         },
-        "general_parameters": {
-            "title": "General parameters",
+        "long_reads_assemblers_parameters": {
+            "title": "Long reads assemblers parameters",
             "type": "object",
             "description": "These parameters will set the default for all samples. However, they can also be set inside the samplesheet, if that happens, it will overwrite the parameter for that specific sample",
             "default": "",
             "properties": {
-                "genome_size": {
-                    "type": "string",
-                    "description": "Set the expected genome size (E.g. 5.6m; 1.2g)",
-                    "help_text": "It sets the expected genome size of the assembly. It is required by Canu and Haslr assemblers. It is optional for Flye, but highly recommended. E.g. 5.6m; 1.2g."
-                },
                 "wtdbg2_technology": {
                     "type": "string",
                     "description": "Set  correct long reads technology specification for wtdbg2",
@@ -101,33 +101,39 @@
                         "rs",
                         "sq",
                         "ccs"
-                    ]
+                    ],
+                    "hidden": true
                 },
                 "shasta_config": {
                     "type": "string",
                     "description": "Shasta pre-set config",
                     "fa_icon": "fas fa-question",
                     "help_text": "Since shasta v0.8 (Oct/2021) it now requires to select a pre-set configuration for assemblies. It defaults to Nanopore-Oct2021. Please read their manual to check for available options: https://chanzuckerberg.github.io/shasta/Configurations.html",
-                    "default": "Nanopore-Oct2021"
+                    "default": "Nanopore-Oct2021",
+                    "hidden": true
                 },
                 "corrected_long_reads": {
                     "type": "boolean",
                     "description": "By default, long reads are corrected?",
                     "help_text": "This will activate (if available) the options for corrected reads in the assemblers: -corrected (in canu), --pacbio-corr|--nano-corr (in flye), etc. Be cautious when using this parameter. If your reads are not corrected, and you use this parameter, you will probably do not generate any contig.",
-                    "fa_icon": "fas fa-question"
+                    "fa_icon": "fas fa-question",
+                    "hidden": true
                 },
                 "medaka_model": {
                     "type": "string",
                     "help_text": "Useful for longreads-only or hybrid assemblies using strategy 2. Used to polish a nanopore longreads-only assembly with Medaka. It selects a Medaka ONT sequencing model for polishing. Please read the medaka manual https://nanoporetech.github.io/medaka/ for more instructions.",
                     "description": "Polish with Medaka? Which model?",
                     "default": "r941_min_high_g360",
-                    "fa_icon": "fas fa-question"
+                    "fa_icon": "fas fa-question",
+                    "hidden": true
                 },
                 "nanopolish_max_haplotypes": {
                     "type": "number",
                     "description": "Max. number of haplotypes to be considered by Nanopolish",
                     "help_text": "Useful when polishing the genome with Nanopolish. It sets the max number of haplotypes to be considered by Nanopolish. Sometimes the pipeline may crash because to much variation was found exceeding the limit.",
-                    "default": 1000.0
+                    "default": 1000,
+                    "fa_icon": "fas fa-question",
+                    "hidden": true
                 }
             }
         },
@@ -141,47 +147,65 @@
                 "skip_spades": {
                     "type": "boolean",
                     "description": "Skip SPAdes assembler",
-                    "help_text": "SPAdes is a short reads only and hybrid assembler."
+                    "help_text": "SPAdes is a short reads only and hybrid assembler.",
+                    "hidden": true,
+                    "fa_icon": "fas fa-ban"
                 },
                 "skip_shovill": {
                     "type": "boolean",
                     "description": "Skip Shovill assembler",
-                    "help_text": "Shovill is a paired short reads only assembler."
+                    "help_text": "Shovill is a paired short reads only assembler.",
+                    "hidden": true,
+                    "fa_icon": "fas fa-ban"
                 },
                 "skip_unicycler": {
                     "type": "boolean",
                     "description": "Skip Unicycler assembler",
-                    "help_text": "Unicycler is a short reads only, long reads only and hybrid assembler."
+                    "help_text": "Unicycler is a short reads only, long reads only and hybrid assembler.",
+                    "hidden": true,
+                    "fa_icon": "fas fa-ban"
                 },
                 "skip_haslr": {
                     "type": "boolean",
                     "description": "Skip Haslr assembler",
-                    "help_text": "Haslr is a hybrid assembler."
+                    "help_text": "Haslr is a hybrid assembler.",
+                    "hidden": true,
+                    "fa_icon": "fas fa-ban"
                 },
                 "skip_canu": {
                     "type": "boolean",
                     "description": "Skip Canu assembler",
-                    "help_text": "Canu is a long reads only assembler. Can be use for hybrid assemblies in strategy 2."
+                    "help_text": "Canu is a long reads only assembler. Can be use for hybrid assemblies in strategy 2.",
+                    "hidden": true,
+                    "fa_icon": "fas fa-ban"
                 },
                 "skip_flye": {
                     "type": "boolean",
                     "description": "Skip Flye assembler",
-                    "help_text": "Flye is a long reads only assembler. Can be use for hybrid assemblies in strategy 2."
+                    "help_text": "Flye is a long reads only assembler. Can be use for hybrid assemblies in strategy 2.",
+                    "hidden": true,
+                    "fa_icon": "fas fa-ban"
                 },
                 "skip_raven": {
                     "type": "boolean",
                     "description": "Skip Raven assembler",
-                    "help_text": "Raven is a long reads only assembler. Can be use for hybrid assemblies in strategy 2."
+                    "help_text": "Raven is a long reads only assembler. Can be use for hybrid assemblies in strategy 2.",
+                    "hidden": true,
+                    "fa_icon": "fas fa-ban"
                 },
                 "skip_wtdbg2": {
                     "type": "boolean",
                     "description": "Skip wtdbg2 assembler",
-                    "help_text": "wtdbg2 is a long reads only assembler. Can be use for hybrid assemblies in strategy 2."
+                    "help_text": "wtdbg2 is a long reads only assembler. Can be use for hybrid assemblies in strategy 2.",
+                    "hidden": true,
+                    "fa_icon": "fas fa-ban"
                 },
                 "skip_shasta": {
                     "type": "boolean",
                     "description": "Skip Shasta assembler",
-                    "help_text": "Shasta is a long reads only assembler. Can be use for hybrid assemblies in strategy 2."
+                    "help_text": "Shasta is a long reads only assembler. Can be use for hybrid assemblies in strategy 2.",
+                    "hidden": true,
+                    "fa_icon": "fas fa-ban"
                 }
             }
         },
@@ -194,52 +218,72 @@
                 "quast_additional_parameters": {
                     "type": "string",
                     "description": "QUAST additional parameters",
-                    "help_text": "Give additional parameters to Quast while assessing assembly metrics. \nMust be in quotes and separated by spaces.\nMust be given as shown in Quast manual. E.g. \" --large --eukaryote \"."
+                    "help_text": "Give additional parameters to Quast while assessing assembly metrics. \nMust be in quotes and separated by spaces.\nMust be given as shown in Quast manual. E.g. \" --large --eukaryote \".",
+                    "hidden": true,
+                    "fa_icon": "fas fa-quote-left"
                 },
                 "shovill_additional_parameters": {
                     "type": "string",
                     "description": "Shovill additional parameters",
-                    "help_text": "Passes additional parameters for Shovill assembler. E.g. '--depth 15 --assembler skesa'. Must be given as shown in Shovill\u2019 manual."
+                    "help_text": "Passes additional parameters for Shovill assembler. E.g. '--depth 15 --assembler skesa'. Must be given as shown in Shovill\u2019 manual.",
+                    "hidden": true,
+                    "fa_icon": "fas fa-quote-left"
                 },
                 "spades_additional_parameters": {
                     "type": "string",
                     "description": "SPAdes additional parameters",
-                    "help_text": "Passes additional parameters for SPAdes assembler. E.g. '\u2013meta \u2013plasmids'. Must be given as shown in Spades\u2019 manual."
+                    "help_text": "Passes additional parameters for SPAdes assembler. E.g. '\u2013meta \u2013plasmids'. Must be given as shown in Spades\u2019 manual.",
+                    "hidden": true,
+                    "fa_icon": "fas fa-quote-left"
                 },
                 "unicycler_additional_parameters": {
                     "type": "string",
                     "description": "Unicycler additional parameters",
-                    "help_text": "Passes additional parameters for Unicycler assembler. E.g. '\u2013mode conservative \u2013no_correct'. Must be given as shown in Unicycler\u2019s manual."
+                    "help_text": "Passes additional parameters for Unicycler assembler. E.g. '\u2013mode conservative \u2013no_correct'. Must be given as shown in Unicycler\u2019s manual.",
+                    "hidden": true,
+                    "fa_icon": "fas fa-quote-left"
                 },
                 "haslr_additional_parameters": {
                     "type": "string",
                     "description": "Haslr additional parameters",
-                    "help_text": "Passes additional parameters for Haslr assembler. E.g. '--cov-lr 30'. Must be given as shown in Haslr\u2019 manual."
+                    "help_text": "Passes additional parameters for Haslr assembler. E.g. '--cov-lr 30'. Must be given as shown in Haslr\u2019 manual.",
+                    "hidden": true,
+                    "fa_icon": "fas fa-quote-left"
                 },
                 "canu_additional_parameters": {
                     "type": "string",
                     "description": "Canu additional parameters",
-                    "help_text": "Passes additional parameters for Canu assembler. E.g. 'correctedErrorRate=0.075 corOutCoverage=200'. Must be given as shown in Canu\u2019s manual."
+                    "help_text": "Passes additional parameters for Canu assembler. E.g. 'correctedErrorRate=0.075 corOutCoverage=200'. Must be given as shown in Canu\u2019s manual.",
+                    "hidden": true,
+                    "fa_icon": "fas fa-quote-left"
                 },
                 "flye_additional_parameters": {
                     "type": "string",
                     "description": "Flye additional parameters",
-                    "help_text": "Passes additional parameters for Flye assembler. E.g. '\u2013meta \u2013iterations 4'. Must be given as shown in Flye\u2019s manual."
+                    "help_text": "Passes additional parameters for Flye assembler. E.g. '\u2013meta \u2013iterations 4'. Must be given as shown in Flye\u2019s manual.",
+                    "hidden": true,
+                    "fa_icon": "fas fa-quote-left"
                 },
                 "raven_additional_parameters": {
                     "type": "string",
                     "description": "Raven additional parameters",
-                    "help_text": "Passes additional parameters for Raven assembler. E.g. '--polishing-rounds 4'. Must be given as shown in Raven\u2019 manual."
+                    "help_text": "Passes additional parameters for Raven assembler. E.g. '--polishing-rounds 4'. Must be given as shown in Raven\u2019 manual.",
+                    "hidden": true,
+                    "fa_icon": "fas fa-quote-left"
                 },
                 "wtdbg2_additional_parameters": {
                     "type": "string",
                     "description": "wtdbg2 additional parameters",
-                    "help_text": "Must be given as shown in wtdbg2 manual. E.g. \" --tidy-reads 5000 \", inside quotes and separated by spaces."
+                    "help_text": "Must be given as shown in wtdbg2 manual. E.g. \" --tidy-reads 5000 \", inside quotes and separated by spaces.",
+                    "hidden": true,
+                    "fa_icon": "fas fa-quote-left"
                 },
                 "shasta_additional_parameters": {
                     "type": "string",
                     "description": "Shasta additional parameters",
-                    "help_text": "Must be given as shown in shasta manual. E.g. \" --Reads.minReadLength 5000 \", inside quotes and separated by spaces"
+                    "help_text": "Must be given as shown in shasta manual. E.g. \" --Reads.minReadLength 5000 \", inside quotes and separated by spaces",
+                    "hidden": true,
+                    "fa_icon": "fas fa-quote-left"
                 }
             },
             "fa_icon": "fas fa-list-ul"
@@ -260,6 +304,12 @@
                     "type": "boolean",
                     "description": "Download template config for parameters",
                     "fa_icon": "fas fa-question-circle"
+                },
+                "get_samplesheet": {
+                    "type": "string",
+                    "default": "false",
+                    "fa_icon": "fas fa-question-circle",
+                    "description": "Download template samplesheet"
                 },
                 "tracedir": {
                     "type": "string",
@@ -344,7 +394,7 @@
             "$ref": "#/definitions/hybrid_assembly_strategy_parameters"
         },
         {
-            "$ref": "#/definitions/general_parameters"
+            "$ref": "#/definitions/long_reads_assemblers_parameters"
         },
         {
             "$ref": "#/definitions/turn_assemblers_on_off"
@@ -358,11 +408,5 @@
         {
             "$ref": "#/definitions/institutional_config_options"
         }
-    ],
-    "properties": {
-        "get_samplesheet": {
-            "type": "string",
-            "default": "false"
-        }
-    }
+    ]
 }
