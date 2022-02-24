@@ -19,7 +19,7 @@ WorkflowMain.initialise(workflow, params, log)
 ========================================================================================
 */
 
-include { parse_samplesheet } from './workflows/parse_samples.nf'
+include { PARSE_SAMPLESHEET } from './workflows/parse_samples.nf'
 include { ASSEMBLY_QC       } from './workflows/assembly_qc.nf'
 include { SHORTREADS_ONLY   } from './workflows/short-reads-only.nf'
 include { LONGREADS_ONLY    } from './workflows/long-reads-only.nf'
@@ -34,12 +34,12 @@ include { HYBRID            } from './workflows/hybrid.nf'
 workflow {
 
   // Message to user
-  println("""
-    Launching defined workflows!
-    By default, all workflows will appear in the console "log" message.
-    However, the processes of each workflow will be launched based on the inputs received.
-    You can see that processes that were not launched have an empty [-       ].
-  """)
+  // println("""
+  //   Launching defined workflows!
+  //   By default, all workflows will appear in the console "log" message.
+  //   However, the processes of each workflow will be launched based on the inputs received.
+  //   You can see that processes that were not launched have an empty [-       ].
+  // """)
 
   // Load YAML
   samplesheet_yaml = file(params.input)
@@ -51,19 +51,19 @@ workflow {
   samplesheet_yaml.copyTo(params.output + "/" + "${samplesheet_yaml.getName()}")
 
   // Parse YAML file
-  parse_samplesheet(params.samplesheet)
+  PARSE_SAMPLESHEET( params.samplesheet )
 
   // short reads only samples
-  SHORTREADS_ONLY(parse_samplesheet.out[0])
+  SHORTREADS_ONLY( PARSE_SAMPLESHEET.out.shortreads )
     
   // long reads only samples
-  LONGREADS_ONLY(parse_samplesheet.out[1])
+  LONGREADS_ONLY( PARSE_SAMPLESHEET.out.longreads )
 
   // hybrid samples
-  HYBRID(parse_samplesheet.out[2])
+  HYBRID( PARSE_SAMPLESHEET.out.hybrid )
 
   // QC
-  ASSEMBLY_QC(SHORTREADS_ONLY.out.mix(LONGREADS_ONLY.out, HYBRID.out))
+  ASSEMBLY_QC( SHORTREADS_ONLY.out.mix(LONGREADS_ONLY.out, HYBRID.out) )
     
 }
 

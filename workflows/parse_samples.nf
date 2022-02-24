@@ -1,5 +1,5 @@
 include { write_csv } from '../nf_functions/writeCSV.nf'
-workflow parse_samplesheet {
+workflow PARSE_SAMPLESHEET {
 
   take:
     data
@@ -55,9 +55,9 @@ workflow parse_samplesheet {
     }.set { results }
 
   emit:
-  results.sronly
-  results.lronly
-  results.hybrid
+  shortreads = results.sronly
+  longreads  = results.lronly
+  hybrid     = results.hybrid
 
 }
 
