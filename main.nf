@@ -41,45 +41,29 @@ workflow {
     You can see that processes that were not launched have an empty [-       ].
   """)
 
-  // with samplesheet?
-  if (params.input) {
+  // Load YAML
+  samplesheet_yaml = file(params.input)
+  parameter_yaml   = samplesheet_yaml.readLines().join("\n")
+  new Yaml().load(parameter_yaml).each { k, v -> params[k] = v }
 
-    // Load YAML
-    samplesheet_yaml = file(params.input)
-    parameter_yaml   = samplesheet_yaml.readLines().join("\n")
-    new Yaml().load(parameter_yaml).each { k, v -> params[k] = v }
+  // Copy YAML samplesheet to output directory so user has a copy of it
+  file(params.output).mkdir()
+  samplesheet_yaml.copyTo(params.output + "/" + "${samplesheet_yaml.getName()}")
 
-    // Copy YAML samplesheet to output directory so user has a copy of it
-    file(params.output).mkdir()
-    samplesheet_yaml.copyTo(params.output + "/" + "${samplesheet_yaml.getName()}")
+  // Parse YAML file
+  parse_samplesheet(params.samplesheet)
 
-    // Parse YAML file
-    parse_samplesheet(params.samplesheet)
-
-    // short reads only samples
-    SHORTREADS_ONLY(parse_samplesheet.out[0])
+  // short reads only samples
+  SHORTREADS_ONLY(parse_samplesheet.out[0])
     
-    // long reads only samples
-    LONGREADS_ONLY(parse_samplesheet.out[1])
+  // long reads only samples
+  LONGREADS_ONLY(parse_samplesheet.out[1])
 
-    // hybrid samples
-    HYBRID(parse_samplesheet.out[2])
+  // hybrid samples
+  HYBRID(parse_samplesheet.out[2])
 
-    // QC
-    ASSEMBLY_QC(SHORTREADS_ONLY.out.mix(LONGREADS_ONLY.out, HYBRID.out))
-
-  } else {
-
-    // Message to user
-    println("""
-    ERROR!
-    A major error has occurred!
-      ==> A samplesheet has not been provided. Please, provide a samplesheet to run the analysis. Online documentation is available at: https://mpgap.readthedocs.io/en/latest/
-    Please, read the docs.
-    Cheers.
-    """)
-  
-  }
+  // QC
+  ASSEMBLY_QC(SHORTREADS_ONLY.out.mix(LONGREADS_ONLY.out, HYBRID.out))
     
 }
 

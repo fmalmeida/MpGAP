@@ -8,9 +8,10 @@ class WorkflowNGSPreprocess {
     // Check and validate parameters
     //
     public static void initialise(params, log) {
-        if (!params.get_config && !params.help) {
-            if (!params.shortreads && !params.nanopore_fastq && !params.pacbio_bam && !params.pacbio_h5) {
-            log.error "Please provide at least on input file! E.g. --shortreads / --nanopore_fastq / --pacbio_bam / --pacbio_h5. Please check the manual at: https://ngs-preprocess.readthedocs.io/en/latest/manual.html#"
+        params.hybrid_strategy = params.hybrid_strategy.toString()
+        if (!params.get_config && !params.get_samplesheet && !params.help) {
+            if (!params.input) {
+            log.error "ERROR!\nA major error has occurred!\n\t==> A samplesheet has not been provided. Please, provide a samplesheet to run the analysis.\n\t Online documentation is available at: https://mpgap.readthedocs.io/en/latest/\nPlease, read the docs.\nCheers."
             System.exit(1)
             }
         }
