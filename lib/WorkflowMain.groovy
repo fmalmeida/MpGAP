@@ -21,7 +21,7 @@ class WorkflowMain {
     // Print help to screen if required
     //
     public static String help(workflow, params, log) {
-        def command = "nextflow run ${workflow.manifest.name} --max_cpus 3 --output illumina_paired --shortreads \"path-to/SRR*_{1,2}.fastq.gz\" --shortreads_type \"paired\" --fastp_merge_pairs" + "\n  " + "nextflow run ${workflow.manifest.name} --max_cpus 3 --output ONT --nanopore_fastq \"path-to/SRR*.fastq.gz\" --lreads_min_length 1000" + "\n" + "\n  " + "More CLI examples at: https://ngs-preprocess.readthedocs.io/en/latest/examples.html#"
+        def command = "nextflow run ${workflow.manifest.name} nextflow run fmalmeida/mpgap --output _ASSEMBLY --max_cpus 5 --input samplesheet.yml -profile <docker/singularity/conda> [ OPTIONS ]"
         def help_string = ''
         help_string += NfcoreTemplate.logo(workflow, false)
         help_string += NfcoreSchema.paramsHelp(workflow, params, command)
