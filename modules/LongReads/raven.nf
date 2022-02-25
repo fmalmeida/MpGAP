@@ -15,12 +15,13 @@ process raven {
 
   script:
   corrected = (corrected_long_reads == 'true') ? '--weaken' : ''
+  additional_params = (params.raven_additional_parameters) ? params.raven_additional_parameters : ""
   """
   # run raven
   raven \\
       --threads $task.cpus \\
       --graphical-fragment-assembly raven_assembly.gfa \\
-      ${params.raven_additional_parameters} \\
+      $additional_params \\
       $corrected \\
       $lreads > raven_assembly.fasta ;
   """

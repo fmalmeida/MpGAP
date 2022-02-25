@@ -17,6 +17,7 @@ process canu {
   lr        = (lr_type == 'nanopore') ? '-nanopore' : '-pacbio'
   corrected = (corrected_long_reads == 'true') ? '-corrected' : ''
   fixed_id = id - ":strategy_2"
+  additional_params = (params.canu_additional_parameters) ? params.canu_additional_parameters : ""
   """
   # run canu
   canu \\
@@ -24,7 +25,7 @@ process canu {
       -d canu \\
       maxThreads=$task.cpus \\
       genomeSize=${genome_size} \\
-      ${params.canu_additional_parameters} \\
+      $additional_params \\
       $corrected \\
       $lr $lreads
 

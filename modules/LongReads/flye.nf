@@ -18,13 +18,14 @@ process flye {
   corrected = (corrected_long_reads == 'true') ? '-corr' : '-raw'
   lrparam   = lr + corrected
   gsize     = (genome_size) ? "--genome-size ${genome_size}" : ""
+  additional_params = (params.flye_additional_parameters) ? params.flye_additional_parameters : ""
   """
   # run flye
   flye \\
       ${lrparam} $lreads \\
       ${gsize} \\
       --out-dir flye \\
-      ${params.flye_additional_parameters} \\
+      $additional_params \\
       --threads $task.cpus &> flye.log ;
 
   # rename results

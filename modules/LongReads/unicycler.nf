@@ -14,6 +14,7 @@ process unicycler {
   (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2')
 
   script:
+  additional_params = (params.unicycler_additional_parameters) ? params.unicycler_additional_parameters : ""
   """
   # copy spades 3.13 to dir
   src_dir=\$(which shasta | sed 's/shasta//g')
@@ -26,7 +27,7 @@ process unicycler {
       -l ${lreads} \\
       -o unicycler \\
       -t $task.cpus \\
-      ${params.unicycler_additional_parameters} \\
+      $additional_params \\
       --spades_path SPAdes-3.13.0-Linux/bin/spades.py
 
   # rename results

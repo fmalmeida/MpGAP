@@ -18,12 +18,13 @@ process spades_hybrid {
   lr   = (lr_type == 'nanopore') ? '--nanopore' : '--pacbio'
   paired_reads = (!(sread1 =~ /input.*/) && !(sread2 =~ /input.*/)) ? "-1 $sread1 -2 $sread2" : ""
   single_reads = !(single =~ /input.*/) ? "-s $single" : ""
+  additional_params = (params.spades_additional_parameters) ? params.spades_additional_parameters : ""
   """
   # run spades
   spades.py \\
       -o spades \\
       -t $task.cpus \\
-      ${params.spades_additional_parameters} \\
+      $additional_params \\
       ${paired_reads} \\
       ${single_reads} \\
       ${lr} ${lreads}

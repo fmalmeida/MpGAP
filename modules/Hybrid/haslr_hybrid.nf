@@ -17,6 +17,7 @@ process haslr_hybrid {
   // Check reads
   paired_reads = (!(sread1 =~ /input.*/) && !(sread2 =~ /input.*/)) ? "$sread1 $sread2" : ""
   single_reads = !(single =~ /input.*/) ? "$single" : ""
+  additional_params = (params.haslr_additional_parameters) ? params.haslr_additional_parameters : ""
   """
   # run haslr
   haslr.py \\
@@ -25,7 +26,7 @@ process haslr_hybrid {
       -g ${genome_size} \\
       -l $lreads \\
       -x ${lr_type} \\
-      ${params.haslr_additional_parameters} \\
+      $additional_params \\
       -s ${paired_reads} ${single_reads} 
 
   # rename results

@@ -16,7 +16,7 @@ process shasta {
   script:
   lr        = (lr_type == 'nanopore') ? '-nanopore' : '-pacbio'
   in_reads  = (lreads.getName() - ".gz")
-
+  additional_params = (params.shasta_additional_parameters) ? params.shasta_additional_parameters : ""
   """
   # unzip reads
   gunzip -dcf $lreads > uncompressed_${in_reads} ;
@@ -25,7 +25,7 @@ process shasta {
   shasta \\
       --assemblyDirectory shasta \\
       --threads $task.cpus \\
-      ${params.shasta_additional_parameters} \\
+      $additional_params \\
       --input uncompressed_${in_reads} \\
       --config ${shasta_config} ;
 

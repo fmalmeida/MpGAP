@@ -15,6 +15,7 @@ process wtdbg2 {
 
   script:
   fixed_id = id - ":strategy_2"
+  additional_params = (params.wtdbg2_additional_parameters) ? params.wtdbg2_additional_parameters : ""
   """
   # run wtdbg2
   wtdbg2.pl \\
@@ -22,7 +23,7 @@ process wtdbg2 {
       -x ${wtdbg2_technology} \\
       -g ${genome_size} \\
       -o ${fixed_id} \\
-      ${params.wtdbg2_additional_parameters} \\
+      $additional_params \\
       $lreads
 
   # rename results

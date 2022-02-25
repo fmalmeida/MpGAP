@@ -17,6 +17,7 @@ process unicycler_hybrid {
   // Check reads
   paired_reads = (!(sread1 =~ /input.*/) && !(sread2 =~ /input.*/)) ? "-1 $sread1 -2 $sread2" : ""
   single_reads = !(single =~ /input.*/) ? "-s $single" : ""
+  additional_params = (params.unicycler_additional_parameters) ? params.unicycler_additional_parameters : ""
   """
   # copy spades 3.13 to dir
   src_dir=\$(which shasta | sed 's/shasta//g')
@@ -31,7 +32,7 @@ process unicycler_hybrid {
       -l ${lreads} \\
       -o unicycler \\
       -t $task.cpus \\
-      ${params.unicycler_additional_parameters} \\
+      $additional_params \\
       --spades_path SPAdes-3.13.0-Linux/bin/spades.py
 
   # rename results
