@@ -14,6 +14,7 @@ process quast {
   paired_param = !(sread1 =~ /input.*/ || sread2 =~ /input.*/) ? "--pe1 ${sread1} --pe2 ${sread2}" : ""
   single_param = !(single =~ /input.?/) ? "--single ${single}" : ""
   lreads_param = !(lreads =~ /input.?/) ? "--${lr_type} ${lreads}" : ""
+  additional_params = (params.quast_additional_parameters) ? params.quast_additional_parameters : ""
 
   if (params.selected_profile == "docker" || params.selected_profile == "conda")
   """
@@ -27,7 +28,7 @@ process quast {
       --conserved-genes-finding \\
       --rna-finding \\
       --min-contig 100 \\
-      ${params.quast_additional_parameters} \\
+      $additional_params \\
       ${contigs}
   """
 
@@ -47,7 +48,7 @@ process quast {
       --conserved-genes-finding \\
       --rna-finding \\
       --min-contig 100 \\
-      ${params.quast_additional_parameters} \\
+      $additional_params \\
       ${contigs}
   """
 }
