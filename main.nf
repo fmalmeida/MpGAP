@@ -34,12 +34,12 @@ include { HYBRID            } from './workflows/hybrid.nf'
 workflow {
 
   // Message to user
-  // println("""
-  //   Launching defined workflows!
-  //   By default, all workflows will appear in the console "log" message.
-  //   However, the processes of each workflow will be launched based on the inputs received.
-  //   You can see that processes that were not launched have an empty [-       ].
-  // """)
+  println("""
+    Launching defined workflows!
+    By default, all workflows will appear in the console "log" message.
+    However, the processes of each workflow will be launched based on the inputs received.
+    You can see that processes that were not launched have an empty [-       ].
+  """)
 
   // Load YAML
   samplesheet_yaml = file(params.input)
@@ -63,7 +63,7 @@ workflow {
   HYBRID( PARSE_SAMPLESHEET.out.hybrid )
 
   // QC
-  ASSEMBLY_QC( SHORTREADS_ONLY.out.mix(LONGREADS_ONLY.out, HYBRID.out) )
+  ASSEMBLY_QC( SHORTREADS_ONLY.out.mix( LONGREADS_ONLY.out, HYBRID.out ) )
     
 }
 

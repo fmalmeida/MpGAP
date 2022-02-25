@@ -199,7 +199,7 @@ It produces a long reads only assembly and polishes (correct errors) it with sho
 # run the pipeline setting the desired hybrid strategy globally (for all samples)
 nextflow run fmalmeida/mpgap \
   --output output \
-  --threads 5 \
+  --max_cpus 5 \
   --input "samplesheet.yml" \
   --hybrid_strategy "both"
 ```

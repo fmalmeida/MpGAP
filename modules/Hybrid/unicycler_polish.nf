@@ -1,6 +1,5 @@
 process pilon_polish {
   publishDir "${params.output}/${prefix}/pilon_polished_contigs", mode: 'copy'
-  cpus params.threads
   tag "${id}"
 
   input:
@@ -31,7 +30,7 @@ process pilon_polish {
           -a $draft \\
           -1 ${sread1} \\
           -2 ${sread2} \\
-          --threads ${params.threads} &> polish.log ;
+          --threads $task.cpus &> polish.log ;
 
       # Save files in the desired directory
       mv 0* polish.log ${assembler};
@@ -49,7 +48,7 @@ process pilon_polish {
 
       # Index and align reads with bwa
       bwa index ${draft} ;
-      bwa mem -M -t ${params.threads} ${draft} ${single} > ${fixed_id}_${assembler}_aln.sam ;
+      bwa mem -M -t $task.cpus ${draft} ${single} > ${fixed_id}_${assembler}_aln.sam ;
       samtools view -bS ${fixed_id}_${assembler}_aln.sam | samtools sort > ${fixed_id}_${assembler}_aln.bam ;
       samtools index ${fixed_id}_${assembler}_aln.bam ;
 
@@ -77,7 +76,7 @@ process pilon_polish {
 
       # Index and align reads with bwa
       bwa index ${draft} ;
-      bwa mem -M -t ${params.threads} ${draft} ${single} > ${fixed_id}_${assembler}_aln.sam ;
+      bwa mem -M -t $task.cpus ${draft} ${single} > ${fixed_id}_${assembler}_aln.sam ;
       samtools view -bS ${fixed_id}_${assembler}_aln.sam | samtools sort > ${fixed_id}_${assembler}_aln.bam ;
       samtools index ${fixed_id}_${assembler}_aln.bam ;
 
@@ -97,7 +96,7 @@ process pilon_polish {
           -a first_polish.fasta \\
           -1 ${sread1} \\
           -2 ${sread2} \\
-          --threads ${params.threads} &> polish.log ;
+          --threads $task.cpus &> polish.log ;
 
       # Save files in the desired directory
       mv 0* polish.log ${assembler};

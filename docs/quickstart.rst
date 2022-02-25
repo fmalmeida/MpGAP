@@ -67,7 +67,7 @@ Running the pipeline
   # Run the pipeline
   nextflow run fmalmeida/mpgap \
     --output _ASSEMBLY \
-    --threads 5 \
+    --max_cpus 5 \
     --skip_spades \
     --input "samplesheet.yml" \
     --unicycler_additional_parameters '--mode conservative' \

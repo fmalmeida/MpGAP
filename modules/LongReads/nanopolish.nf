@@ -1,6 +1,5 @@
 process nanopolish {
   publishDir "${params.output}/${prefix}/nanopolished_contigs/${assembler}", mode: 'copy'
-  cpus params.threads
   tag "${id}"
 
   input:
@@ -35,7 +34,7 @@ process nanopolish {
   # map reads to assembly
   minimap2 \\
       -ax map-ont \\
-      -t ${params.threads} \\
+      -t $task.cpus \\
       ${draft} \\
       reads.fa | \\
       samtools \\
@@ -55,7 +54,7 @@ process nanopolish {
           -r reads.fa \\
           -b reads.sorted.bam \\
           -g ${draft} \\
-          -t ${params.threads} \\
+          -t $task.cpus \\
           --max-haplotypes ${nanopolish_max_haplotypes} ;
   
   # call polished fasta from vcf

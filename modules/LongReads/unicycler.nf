@@ -1,6 +1,5 @@
 process unicycler {
   publishDir "${params.output}/${prefix}", mode: 'copy'
-  cpus params.threads
   tag "${id}"
 
   input:
@@ -25,7 +24,7 @@ process unicycler {
   unicycler \\
       -l ${lreads} \\
       -o unicycler \\
-      -t ${params.threads} \\
+      -t $task.cpus \\
       ${params.unicycler_additional_parameters} \\
       --spades_path SPAdes-3.13.0-Linux/bin/spades.py
 

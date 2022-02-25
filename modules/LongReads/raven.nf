@@ -1,6 +1,5 @@
 process raven {
   publishDir "${params.output}/${prefix}/raven", mode: 'copy'
-  cpus params.threads
   tag "${id}"
 
   input:
@@ -18,7 +17,7 @@ process raven {
   """
   # run raven
   raven \\
-      --threads ${params.threads} \\
+      --threads $task.cpus \\
       --graphical-fragment-assembly raven_assembly.gfa \\
       ${params.raven_additional_parameters} \\
       $corrected \\

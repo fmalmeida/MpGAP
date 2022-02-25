@@ -87,31 +87,8 @@ Please note that, through the command line, the parameters that are boolean (tru
 
   All parameters described can be configured through a configuration file. We encourage users to use it since it will keep your execution cleaner and more readable. See a :ref:`config` example.
 
-General parameters
-""""""""""""""""""
-
-.. list-table::
-   :widths: 25 15 60
-   :header-rows: 1
-
-   * - Arguments
-     - Default value
-     - Description
-
-   * - ``--output``
-     - output
-     - Name of directory to store assemblers results. The sample ids will be used to create sub-folder under this directory.
-
-   * - ``--threads``
-     - 3
-     - Number of threads to use per process.
-
-   * - ``--parallel_jobs``
-     - NA
-     - Number of processes to run in parallel. Each job can consume up to N threads (``--threads``). If not given, let's nextflow automatically handle it.
-
-Input files
-"""""""""""
+Input/Output parameters
+"""""""""""""""""""""""
 
 .. list-table::
    :widths: 25 15 60
@@ -124,7 +101,37 @@ Input files
    * - ``--input``
      - NA
      - Path to input samplesheet in YAML format. It is required. Please read the :ref:`samplesheet` reference page to understand how to properly create one.
+   
+   * - ``--output``
+     - output
+     - Name of directory to store assemblers results. The sample ids will be used to create sub-folder under this directory.
 
+Max job request
+""""""""""""""""
+
+.. list-table::
+   :widths: 20 10 20 50
+   :header-rows: 1
+
+   * - Arguments
+     - Required
+     - Default value
+     - Description
+
+   * - ``--max_cpus``
+     - N
+     - 4
+     - Max number of threads to use in parallel
+   
+   * - ``--max_memory``
+     - N
+     - 6.GB
+     - Max amount of memory to be used by pipeline
+   
+   * - ``--max_time``
+     - N
+     - 40.h
+     - Max time for a job to run
 
 Assemblies configuration
 """"""""""""""""""""""""

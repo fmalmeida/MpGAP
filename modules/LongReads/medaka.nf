@@ -24,7 +24,7 @@ process medaka {
   # as in medaka manual
   racon \\
       -m 8 -x -6 -g -8 -w 500 \\
-      -t ${params.threads} \\
+      -t $task.cpus \\
       ${lreads} \\
       reads_mapped.paf \\
       ${draft} > racon_consensus.fasta ;
@@ -34,7 +34,7 @@ process medaka {
       -i ${lreads} \\
       -d racon_consensus.fasta \\
       -o ${assembler} \\
-      -t ${params.threads} \\
+      -t $task.cpus \\
       -m ${medaka_model} ;
 
   # rename results

@@ -1,6 +1,5 @@
 process shasta {
   publishDir "${params.output}/${prefix}", mode: 'copy'
-  cpus params.threads
   tag "${id}"
 
   input:
@@ -24,7 +23,7 @@ process shasta {
   # assemble
   shasta \\
       --assemblyDirectory shasta \\
-      --threads ${params.threads} \\
+      --threads $task.cpus \\
       ${params.shasta_additional_parameters} \\
       --input uncompressed_${in_reads} \\
       --config ${shasta_config} ;

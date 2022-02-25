@@ -1,6 +1,5 @@
 process wtdbg2 {
   publishDir "${params.output}/${prefix}/wtdbg2", mode: 'copy'
-  cpus params.threads
   tag "${id}"
 
   input:
@@ -18,7 +17,7 @@ process wtdbg2 {
   """
   # run wtdbg2
   wtdbg2.pl \\
-      -t ${params.threads} \\
+      -t $task.cpus \\
       -x ${wtdbg2_technology} \\
       -g ${genome_size} \\
       -o ${fixed_id} \\

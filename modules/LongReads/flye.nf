@@ -1,6 +1,5 @@
 process flye {
   publishDir "${params.output}/${prefix}", mode: 'copy'
-  cpus params.threads
   tag "${id}"
 
   input:
@@ -25,7 +24,7 @@ process flye {
       ${gsize} \\
       --out-dir flye \\
       ${params.flye_additional_parameters} \\
-      --threads ${params.threads} &> flye.log ;
+      --threads $task.cpus &> flye.log ;
 
   # rename results
   mv flye/assembly.fasta flye/flye_assembly.fasta
