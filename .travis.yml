@@ -11,8 +11,5 @@ install:
 script:
 - curl -fsSL get.nextflow.io | bash
 - ./nextflow run main.nf --help
-- ./nextflow run main.nf --show
-- ./nextflow run main.nf --get_hybrid_config
-- ./nextflow run main.nf --get_lreads_config
-- ./nextflow run main.nf --get_sreads_config
-- ./nextflow run main.nf --get_yaml
+- ./nextflow run main.nf --get_config
+- ./nextflow run main.nf --get_samplesheet
