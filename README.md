@@ -1,4 +1,4 @@
-<img src="images/lOGO_3.png" width="300px">
+<img src="assets/lOGO_3.png" width="300px">
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3997375.svg)](https://doi.org/10.5281/zenodo.3445485)
 [![Releases](https://img.shields.io/github/v/release/fmalmeida/mpgap)](https://github.com/fmalmeida/mpgap/releases)
@@ -78,6 +78,9 @@ Therefore, feedbacks are very well welcomed. If you believe that your use case i
         ```bash
         # for docker
         docker pull fmalmeida/mpgap:v3.1
+
+        # run
+        nextflow run fmalmeida/mpgap -profile docker [options]
         ```
 
     * for singularity
@@ -89,6 +92,9 @@ Therefore, feedbacks are very well welcomed. If you believe that your use case i
         export NXF_SINGULARITY_LIBRARYDIR=MY_SINGULARITY_IMAGES    # your singularity storage dir
         export NXF_SINGULARITY_CACHEDIR=MY_SINGULARITY_CACHE       # your singularity cache dir
         singularity pull --dir $NXF_SINGULARITY_LIBRARYDIR fmalmeida-mpgap-v3.1.img docker://fmalmeida/mpgap:v3.1
+
+        # run
+        nextflow run fmalmeida/mpgap -profile singularity [options]
         ```
     
     * for conda
@@ -98,6 +104,10 @@ Therefore, feedbacks are very well welcomed. If you believe that your use case i
         # it is better to create envs with mamba for faster solving
         wget https://github.com/fmalmeida/mpgap/raw/master/environment.yml
         conda env create -f environment.yml   # advice: use mamba
+
+        # must be executed from the base environment
+        # This tells nextflow to load the available mpgap environment when required
+        nextflow run fmalmeida/mpgap -profile conda [options]
         ```
 
         :dart: Please make sure to also download its busco databases. [See the explanation](#note-on-conda)
@@ -121,11 +131,13 @@ Nextflow profiles are a set of "sensible defaults" for the resource requirements
 
 The pipeline have "standard profiles" set to run the workflows with either conda, docker or singularity using the [local executor](https://www.nextflow.io/docs/latest/executor.html), which is nextflow's default and basically runs the pipeline processes in the computer where Nextflow is launched. If you need to run the pipeline using another executor such as sge, lsf, slurm, etc. you can take a look at [nextflow's manual page](https://www.nextflow.io/docs/latest/executor.html) to proper configure one in a new custom profile set in your personal copy of [MpGAP config file](https://github.com/fmalmeida/mpgap/blob/master/nextflow.config) and take advantage that nextflow allows multiple profiles to be used at once, e.g. `-profile conda,sge`.
 
-By default, if no profile is chosen, the pipeline will "load the docker profile". Available pre-set profiles for this pipeline are: docker, conda, singularity, you can choose between them as follows:
+By default, if no profile is chosen, the pipeline will try to load tools from the local machine $PATH. Available pre-set profiles for this pipeline are: `docker/conda/singularity`, you can choose between them as follows:
 
 * conda
 
     ```bash
+    # must be executed from the base environment
+    # This tells nextflow to load the available mpgap environment when required
     nextflow run fmalmeida/mpgap -profile conda [options]
     ```
 
@@ -199,7 +211,7 @@ It produces a long reads only assembly and polishes (correct errors) it with sho
 # run the pipeline setting the desired hybrid strategy globally (for all samples)
 nextflow run fmalmeida/mpgap \
   --output output \
-  --threads 5 \
+  --max_cpus 5 \
   --input "samplesheet.yml" \
   --hybrid_strategy "both"
 ```
@@ -245,11 +257,11 @@ nf-core launch fmalmeida/mpgap
 It will result in the following:
 
 <p align="center">
-<img src="./images/nf-core-asking.png" width="500px"/>
+<img src="./assets/nf-core-asking.png" width="500px"/>
 </p>
 
 <p align="center">
-<img src="./images/nf-core-gui.png" width="400px"/>
+<img src="./assets/nf-core-gui.png" width="400px"/>
 </p>
 
 ## Known issues
@@ -263,6 +275,14 @@ It will result in the following:
 
 ## Citation
 
-To cite this pipeline users can use our Zenodo tag or directly via the github url. Users are encouraged to cite the programs used in this pipeline whenever they are used.
+To cite this tool please refer to our [Zenodo tag](https://doi.org/10.5281/zenodo.3445485).
 
-Please, do not forget to cite the software that were used whenever you use its outputs. See [the list of tools](markdown/list_of_tools.md).
+This pipeline uses code and infrastructure developed and maintained by the [nf-core](https://nf-co.re) community, reused here under the [GPLv3](https://github.com/fmalmeida/ngs-preprocess/blob/master/LICENSE).
+
+> The nf-core framework for community-curated bioinformatics pipelines.
+>
+> Philip Ewels, Alexander Peltzer, Sven Fillinger, Harshil Patel, Johannes Alneberg, Andreas Wilm, Maxime Ulysse Garcia, Paolo Di Tommaso & Sven Nahnsen.
+>
+> Nat Biotechnol. 2020 Feb 13. doi: 10.1038/s41587-020-0439-x.
+
+In addition, users are encouraged to cite the programs used in this pipeline whenever they are used. Links to resources of tools and data used in this pipeline are in [the list of tools](markdown/list_of_tools.md).

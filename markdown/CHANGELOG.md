@@ -2,6 +2,17 @@
 
 The tracking for changes started in v2.
 
+## v3.1.2 -- [2022-Feb-28]
+
+This version addresses the changes discussed in [issue #33](https://github.com/fmalmeida/MpGAP/issues/33). It has three main changes:
+
+1. Added standard NF allocation resource rules as it is done by nf-core community
+    * It also uses templates of CLI help and logging messages from nf-core community.
+2. Re-organized config files to keep structure cleaner
+3. Changed the standard profile which will not load docker by default anymore. As it is the common practice for NF pipelines, user must explicitily select between docker/conda/singularity profiles.
+
+> Nothing has changed in terms of how tools are called and used, thus the docker image still the same. In fact, patch/fix releases (x.x.x) will always use the docker from breaking/features release (x.x)
+
 ## v3.1.1
 
 This is a super small release that is basically a hotfix. It solved the following:

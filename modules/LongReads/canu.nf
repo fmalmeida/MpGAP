@@ -1,7 +1,8 @@
 process canu {
   publishDir "${params.output}/${prefix}", mode: 'copy'
-  cpus params.threads
   tag "${id}"
+  label 'process_assembly'
+
   input:
   tuple val(id), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), val(wtdbg2_technology), val(genome_size), val(corrected_long_reads), val(medaka_model), file(fast5), val(nanopolish_max_haplotypes), val(shasta_config), file(bams), val(prefix)
 
@@ -16,14 +17,15 @@ process canu {
   lr        = (lr_type == 'nanopore') ? '-nanopore' : '-pacbio'
   corrected = (corrected_long_reads == 'true') ? '-corrected' : ''
   fixed_id = id - ":strategy_2"
+  additional_params = (params.canu_additional_parameters) ? params.canu_additional_parameters : ""
   """
   # run canu
   canu \\
       -p ${fixed_id} \\
       -d canu \\
-      maxThreads=${params.threads} \\
+      maxThreads=$task.cpus \\
       genomeSize=${genome_size} \\
-      ${params.canu_additional_parameters} \\
+      $additional_params \\
       $corrected \\
       $lr $lreads
 

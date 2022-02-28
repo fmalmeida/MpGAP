@@ -175,7 +175,7 @@ def write_csv(in_list) {
         println """
         ERROR!
         A major error has occurred!
-          ==> In the YAML, the 'hybrid_strategy:' key, or the --hybrid_strategy command line, must be either 1, 2 or both.
+          ==> The 'hybrid_strategy:' key in the YAML, or the --hybrid_strategy command line, must be either '1', '2' or 'both'.
         Please the re-check the parameters. Problem in sample: ${it.id}.
         Cheers.
         """.stripIndent()

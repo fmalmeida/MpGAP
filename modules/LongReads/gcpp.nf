@@ -1,7 +1,7 @@
 process gcpp {
   publishDir "${params.output}/${prefix}/gcpp_polished_contigs", mode: 'copy'
   tag "${id}"
-  cpus params.threads
+  label 'process_assembly'
 
   input:
   tuple val(id), file(draft), val(assembler), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), val(wtdbg2_technology), val(genome_size), val(corrected_long_reads), val(medaka_model), file(fast5), val(nanopolish_max_haplotypes), val(shasta_config), file(bams), val(prefix)
@@ -18,14 +18,14 @@ process gcpp {
   # generate genome index
   pbmm2 \\
       index \\
-      -j ${params.threads} \\
+      -j $task.cpus \\
       ${draft} \\
       draft.mmi ;
 
   # align bam
   pbmm2 \\
       align \\
-      -j ${params.threads} \\
+      -j $task.cpus \\
       --sort \\
       draft.mmi \\
       ${bams} \\
@@ -39,7 +39,7 @@ process gcpp {
   gcpp \\
       -r ${draft} \\
       -o ${assembler}_gcpp_consensus.fasta,${assembler}_gcpp_variants.gff \\
-      -j ${params.threads} \\
+      -j $task.cpus \\
       final_pbaligned.bam ;
   """
 }

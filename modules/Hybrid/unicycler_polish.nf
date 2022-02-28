@@ -1,7 +1,7 @@
 process pilon_polish {
   publishDir "${params.output}/${prefix}/pilon_polished_contigs", mode: 'copy'
-  cpus params.threads
   tag "${id}"
+  label 'process_assembly'
 
   input:
   tuple val(id), file(draft), val(assembler), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), val(wtdbg2_technology), val(genome_size), val(corrected_long_reads), val(medaka_model), file(fast5), val(nanopolish_max_haplotypes), val(shasta_config), file(bams), val(prefix)
@@ -31,7 +31,7 @@ process pilon_polish {
           -a $draft \\
           -1 ${sread1} \\
           -2 ${sread2} \\
-          --threads ${params.threads} &> polish.log ;
+          --threads $task.cpus &> polish.log ;
 
       # Save files in the desired directory
       mv 0* polish.log ${assembler};
@@ -49,7 +49,7 @@ process pilon_polish {
 
       # Index and align reads with bwa
       bwa index ${draft} ;
-      bwa mem -M -t ${params.threads} ${draft} ${single} > ${fixed_id}_${assembler}_aln.sam ;
+      bwa mem -M -t $task.cpus ${draft} ${single} > ${fixed_id}_${assembler}_aln.sam ;
       samtools view -bS ${fixed_id}_${assembler}_aln.sam | samtools sort > ${fixed_id}_${assembler}_aln.bam ;
       samtools index ${fixed_id}_${assembler}_aln.bam ;
 
@@ -77,7 +77,7 @@ process pilon_polish {
 
       # Index and align reads with bwa
       bwa index ${draft} ;
-      bwa mem -M -t ${params.threads} ${draft} ${single} > ${fixed_id}_${assembler}_aln.sam ;
+      bwa mem -M -t $task.cpus ${draft} ${single} > ${fixed_id}_${assembler}_aln.sam ;
       samtools view -bS ${fixed_id}_${assembler}_aln.sam | samtools sort > ${fixed_id}_${assembler}_aln.bam ;
       samtools index ${fixed_id}_${assembler}_aln.bam ;
 
@@ -97,7 +97,7 @@ process pilon_polish {
           -a first_polish.fasta \\
           -1 ${sread1} \\
           -2 ${sread2} \\
-          --threads ${params.threads} &> polish.log ;
+          --threads $task.cpus &> polish.log ;
 
       # Save files in the desired directory
       mv 0* polish.log ${assembler};
