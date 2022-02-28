@@ -1,5 +1,4 @@
 * linguist-vendored
 *.nf linguist-vendored=false
 *.config linguist-vendored=false
-*.py linguist-vendored=false
-*.R linguist-vendored=false
+*.config linguist-language=nextflow
