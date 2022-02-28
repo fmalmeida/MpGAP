@@ -306,8 +306,7 @@
                     "fa_icon": "fas fa-question-circle"
                 },
                 "get_samplesheet": {
-                    "type": "string",
-                    "default": "false",
+                    "type": "boolean",
                     "fa_icon": "fas fa-question-circle",
                     "description": "Download template samplesheet"
                 },
