@@ -1,0 +1,5 @@
+samplesheet:
+  - id: illumina_only
+    illumina: 
+      - https://github.com/fmalmeida/test_datasets/raw/main/ecoli_illumina_15X_1.fastq.gz
+      - https://github.com/fmalmeida/test_datasets/raw/main/ecoli_illumina_15X_2.fastq.gz
