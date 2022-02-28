@@ -1,8 +1,8 @@
 //
-// This file holds several functions specific to the workflow/ngs-preprocess.nf in the fmalmeida/ngs-preprocess pipeline
+// This file holds several functions specific to the the fmalmeida/mpgap pipeline
 //
 
-class WorkflowNGSPreprocess {
+class WorkflowMpGAP {
 
     //
     // Check and validate parameters

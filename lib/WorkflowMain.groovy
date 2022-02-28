@@ -1,5 +1,5 @@
 //
-// This file holds several functions specific to the main.nf workflow in the fmalmeida/ngs-preprocess pipeline
+// This file holds several functions specific to the main.nf workflow in the fmalmeida/mpgap pipeline
 //
 
 class WorkflowMain {
@@ -14,7 +14,7 @@ class WorkflowMain {
             "* The nf-core framework\n" +
             "  https://doi.org/10.1038/s41587-020-0439-x\n\n" +
             "* Software dependencies\n" +
-            "  https://github.com/fmalmeida/ngs-preprocess#citation"
+            "  https://github.com/fmalmeida/mpgap#citation"
     }
 
     //
