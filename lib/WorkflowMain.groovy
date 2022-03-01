@@ -68,7 +68,7 @@ class WorkflowMain {
 
         // Download template samplesheet
         if (params.get_samplesheet) {
-            new File("MPGAP.config").write(new URL ("https://github.com/fmalmeida/mpgap/raw/master/example_samplesheet.yml").getText())
+            new File("MPGAP_samplesheet.yml").write(new URL ("https://github.com/fmalmeida/mpgap/raw/master/example_samplesheet.yml").getText())
             log.info """
 
             Samplesheet (MPGAP_samplesheet.yml) file saved in working directory
