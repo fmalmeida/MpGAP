@@ -2,7 +2,7 @@
     "description": "<p>MpGAP is built using Nextflow, a workflow tool to run tasks across multiple compute infrastructures in a very portable manner. It uses Docker/Singularity containers making installation trivial and results highly reproducible. It is an easy to use pipeline that adopts well known software for _de novo_ genome assembly of Illumina, Pacbio and Oxford Nanopore sequencing data through illumina only, long reads only or hybrid modes.</p>",
     "license": "other-open", 
     "title": "fmalmeida/MpGAP: A generic multi-platform genome assembly pipeline", 
-    "version": "v3.1.2", 
+    "version": "v3.1.3", 
     "upload_type": "software",
     "creators": [
         {

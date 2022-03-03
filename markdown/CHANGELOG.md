@@ -2,6 +2,14 @@
 
 The tracking for changes started in v2.
 
+## v3.1.3 -- [2022-Mar-03]
+
+Although Megahit was already present inside the docker image and the core of the pipeline as it was used by [Shovill](https://github.com/tseemann/shovill), Shovill is an assembler focused in bacterias, and, in their manual, they instruct users to run [Megahit](https://github.com/voutcn/megahit) directly when working with non-bacterial samples.
+
+Thus, we've seen the need to incorporate a new module that runs Megahit directly as well instead of only underneath Shovill.
+
+> Nothing has changed in terms of how tools are called and used, thus the docker image still the same. In fact, patch/fix releases (x.x.x) will always use the docker from breaking/features release (x.x)
+
 ## v3.1.2 -- [2022-Feb-28]
 
 This version addresses the changes discussed in [issue #33](https://github.com/fmalmeida/MpGAP/issues/33). It has three main changes:
