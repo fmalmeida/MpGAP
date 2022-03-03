@@ -165,6 +165,13 @@
                     "hidden": true,
                     "fa_icon": "fas fa-ban"
                 },
+                "skip_megahit": {
+                    "type": "boolean",
+                    "description": "Skip Megahit assembler",
+                    "hidden": true,
+                    "help_text": "Megahit is a short reads only assembler.",
+                    "fa_icon": "fas fa-ban"
+                },
                 "skip_haslr": {
                     "type": "boolean",
                     "description": "Skip Haslr assembler",
@@ -242,6 +249,12 @@
                     "help_text": "Passes additional parameters for Unicycler assembler. E.g. '\u2013mode conservative \u2013no_correct'. Must be given as shown in Unicycler\u2019s manual.",
                     "hidden": true,
                     "fa_icon": "fas fa-quote-left"
+                },
+                "megahit_additional_parameters": {
+                    "type": "string",
+                    "fa_icon": "fas fa-quote-left",
+                    "help_text": "Passes additional parameters for Megahit assembler. Must be given as shown in Megahit manual. E.g. \" --presets meta-large \"",
+                    "hidden": true
                 },
                 "haslr_additional_parameters": {
                     "type": "string",
