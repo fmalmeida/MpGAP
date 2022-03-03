@@ -1,4 +1,6 @@
-* linguist-vendored
-*.nf linguist-vendored=false
-*.config linguist-vendored=false
+*.nf linguist-language=nextflow
 *.config linguist-language=nextflow
+modules/** linguist-generated
+workflows/** linguist-generated
+lib/** linguist-vendored
+bin/** linguist-vendored
