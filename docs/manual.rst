@@ -112,11 +112,11 @@ Max job request
 
 Please be aware that, these parameters set the maximum amount of resources a single job can request to avoid surpassing your system limits. These resources are requested dynamically by nextflow https://nf-co.re/usage/configuration#tuning-workflow-resources (we implemented the same principle).
 
-Also, by its nature, nextflow tries to execute as much as he can in parallel. So even you turn these parameters to 4 cpus, for example, if your machine has 12 threads, nextflow may try to run 3 jobs in parallel, each with 4 threads. To limit the number of parallel jobs that nextflow launches at a time, you must configure in a custom config file as shown here: https://www.nextflow.io/docs/latest/config.html#scope-executor.
+Also, by its nature, nextflow tries to execute as much as he can in parallel. So even if you turn these parameters to 4 cpus, for example, if your machine has 12 threads, nextflow may try to run 3 jobs in parallel, each with 4 threads. To limit the number of parallel jobs that nextflow launches at a time, you must configure it in a custom config file as shown here: https://www.nextflow.io/docs/latest/config.html#scope-executor.
 
 .. note::
   
-  The "local" executor is nextflow's default, which will the reality of most users. Limiting parallel jobs in local executor would look like this ``executor.$local.queueSize = 1``. Please, read NF manual about it.
+  The "local" executor is nextflow's default, which will be the reality of most users. Limiting parallel jobs in local executor would look like this ``executor.$local.queueSize = 1``. Please, read NF manual about it.
 
 .. list-table::
    :widths: 20 10 20 50
