@@ -1,0 +1,477 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="lang:clipboard.copy" content="Copy to clipboard">
+  <meta name="lang:clipboard.copied" content="Copied to clipboard">
+  <meta name="lang:search.language" content="en">
+  <meta name="lang:search.pipeline.stopwords" content="True">
+  <meta name="lang:search.pipeline.trimmer" content="True">
+  <meta name="lang:search.result.none" content="No matching documents">
+  <meta name="lang:search.result.one" content="1 matching document">
+  <meta name="lang:search.result.other" content="# matching documents">
+  <meta name="lang:search.tokenizer" content="[\s\-]+">
+
+  
+    <link href="https://fonts.gstatic.com/" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&display=fallback" rel="stylesheet">
+
+    <style>
+      body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+    </style>
+  
+
+  <link rel="stylesheet" href="_static/stylesheets/application.css"/>
+  <link rel="stylesheet" href="_static/stylesheets/application-palette.css"/>
+  <link rel="stylesheet" href="_static/stylesheets/application-fixes.css"/>
+  
+  <link rel="stylesheet" href="_static/fonts/material-icons.css"/>
+  
+  <meta name="theme-color" content="#3f51b5">
+  <script src="_static/javascripts/modernizr.js"></script>
+  
+  
+  
+    <title>Quickstart &#8212; MpGAP: A generic multi-platform genome assembly pipeline  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/material.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/style.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Samplesheet" href="samplesheet.html" />
+    <link rel="prev" title="Installation" href="installation.html" />
+  
+   
+
+  </head>
+  <body dir=ltr
+        data-md-color-primary=cyan data-md-color-accent=orange>
+  
+  <svg class="md-svg">
+    <defs data-children-count="0">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+      
+    </defs>
+  </svg>
+  
+  <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer">
+  <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search">
+  <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+  <a href="#quickstart" tabindex="1" class="md-skip"> Skip to content </a>
+  <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="index.html" title="MpGAP: A generic multi-platform genome assembly pipeline  documentation"
+           class="md-header-nav__button md-logo">
+          
+            <i class="md-icon">book</i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          <span class="md-header-nav__topic">MpGAP: A generic multi-platform genome assembly pipeline  documentation</span>
+          <span class="md-header-nav__topic"> Quickstart </span>
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+        
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" action="search.html" method="get" name="search">
+      <input type="text" class="md-search__input" name="q" placeholder="Search"
+             autocapitalize="off" autocomplete="off" spellcheck="false"
+             data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            <a href="https://github.com/fmalmeida/MpGAP" title="Go to repository" class="md-source" data-md-source="github">
+
+    <div class="md-source__icon">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" width="28" height="28">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    MpGAP
+  </div>
+</a>
+          </div>
+        </div>
+      
+      
+  
+  <script src="_static/javascripts/version_dropdown.js"></script>
+  <script>
+    var json_loc = ""versions.json"",
+        target_loc = "../",
+        text = "Versions";
+    $( document ).ready( add_version_dropdown(json_loc, target_loc, text));
+  </script>
+  
+
+    </div>
+  </nav>
+</header>
+
+  
+  <div class="md-container">
+    
+    
+    
+  <nav class="md-tabs" data-md-component="tabs">
+    <div class="md-tabs__inner md-grid">
+      <ul class="md-tabs__list">
+          <li class="md-tabs__item"><a href="index.html" class="md-tabs__link">MpGAP: A generic multi-platform genome assembly pipeline  documentation</a></li>
+      </ul>
+    </div>
+  </nav>
+    <main class="md-main">
+      <div class="md-main__inner md-grid" data-md-component="container">
+        
+          <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+            <div class="md-sidebar__scrollwrap">
+              <div class="md-sidebar__inner">
+                <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="index.html" title="MpGAP: A generic multi-platform genome assembly pipeline documentation" class="md-nav__button md-logo">
+      
+        <i class="md-icon">book</i>
+      
+    </a>
+    <a href="index.html"
+       title="MpGAP: A generic multi-platform genome assembly pipeline documentation">MpGAP: A generic multi-platform genome assembly pipeline  documentation</a>
+  </label>
+    <div class="md-nav__source">
+      <a href="https://github.com/fmalmeida/MpGAP" title="Go to repository" class="md-source" data-md-source="github">
+
+    <div class="md-source__icon">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24" width="28" height="28">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    MpGAP
+  </div>
+</a>
+    </div>
+  
+  
+
+  
+  <ul class="md-nav__list">
+    <li class="md-nav__item">
+    
+    
+      <a href="installation.html" class="md-nav__link">Installation</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    <label class="md-nav__link md-nav__link--active" for="__toc"> Quickstart </label>
+    
+      <a href="#" class="md-nav__link md-nav__link--active">Quickstart</a>
+      
+        
+<nav class="md-nav md-nav--secondary">
+    <label class="md-nav__title" for="__toc">Contents</label>
+  <ul class="md-nav__list" data-md-scrollfix="">
+        <li class="md-nav__item"><a href="#quickstart--page-root" class="md-nav__link">Quickstart</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#overview" class="md-nav__link">Overview</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#get-the-data" class="md-nav__link">Get the data</a>
+        </li></ul>
+            </nav>
+        </li>
+        <li class="md-nav__item"><a href="#preparing-the-input-samplesheet" class="md-nav__link">Preparing the input samplesheet</a>
+        </li>
+        <li class="md-nav__item"><a href="#running-the-pipeline" class="md-nav__link">Running the pipeline</a>
+        </li>
+        <li class="md-nav__item"><a href="#about-hybrid-strategy-2-and-long-reads-polishing" class="md-nav__link">About hybrid strategy 2 and long reads polishing</a>
+        </li>
+        <li class="md-nav__item"><a href="#afterwards" class="md-nav__link">Afterwards</a>
+        </li></ul>
+            </nav>
+        </li>
+    
+<li class="md-nav__item"><a class="md-nav__extra_link" href="_sources/quickstart.rst.txt">Show Source</a> </li>
+
+  </ul>
+</nav>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="samplesheet.html" class="md-nav__link">Samplesheet</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="manual.html" class="md-nav__link">Manual</a>
+      
+    
+    </li>
+    <li class="md-nav__item">
+    
+    
+      <a href="config.html" class="md-nav__link">Configuration File</a>
+      
+    
+    </li>
+  </ul>
+  
+
+</nav>
+              </div>
+            </div>
+          </div>
+          <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+            <div class="md-sidebar__scrollwrap">
+              <div class="md-sidebar__inner">
+                
+<nav class="md-nav md-nav--secondary">
+    <label class="md-nav__title" for="__toc">Contents</label>
+  <ul class="md-nav__list" data-md-scrollfix="">
+        <li class="md-nav__item"><a href="#quickstart--page-root" class="md-nav__link">Quickstart</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#overview" class="md-nav__link">Overview</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#get-the-data" class="md-nav__link">Get the data</a>
+        </li></ul>
+            </nav>
+        </li>
+        <li class="md-nav__item"><a href="#preparing-the-input-samplesheet" class="md-nav__link">Preparing the input samplesheet</a>
+        </li>
+        <li class="md-nav__item"><a href="#running-the-pipeline" class="md-nav__link">Running the pipeline</a>
+        </li>
+        <li class="md-nav__item"><a href="#about-hybrid-strategy-2-and-long-reads-polishing" class="md-nav__link">About hybrid strategy 2 and long reads polishing</a>
+        </li>
+        <li class="md-nav__item"><a href="#afterwards" class="md-nav__link">Afterwards</a>
+        </li></ul>
+            </nav>
+        </li>
+    
+<li class="md-nav__item"><a class="md-nav__extra_link" href="_sources/quickstart.rst.txt">Show Source</a> </li>
+
+<li id="searchbox" class="md-nav__item"></li>
+
+  </ul>
+</nav>
+              </div>
+            </div>
+          </div>
+        
+        <div class="md-content">
+          <article class="md-content__inner md-typeset" role="main">
+            
+  <section id="quickstart">
+<span id="id1"></span><h1 id="quickstart--page-root">Quickstart<a class="headerlink" href="#quickstart--page-root" title="Permalink to this headline">¶</a></h1>
+<p>The pipeline can always be executed with a <a class="reference internal" href="config.html#config"><span class="std std-ref">Configuration File</span></a>. In fact, it is the best and easier way to configure the pipeline. <strong>Remember:</strong> the pipeline will choose the assembly workflow (hybrid, short reads only or long reads only) automatically, based on the input reads given.</p>
+<section id="overview">
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>As an use case, we will use 30X of one of the <em>Escherichia coli</em> sequencing data (Biosample: <a class="reference external" href="https://www.ncbi.nlm.nih.gov/biosample/10819847">SAMN10819847</a>)
+that is available from a recent study that compared the use of different long read technologies in hybrid assembly of 137 bacterial genomes [<a class="reference external" href="https://doi.org/10.1099/mgen.0.000294">4</a>].</p>
+<section id="get-the-data">
+<h3 id="get-the-data">Get the data<a class="headerlink" href="#get-the-data" title="Permalink to this headline">¶</a></h3>
+<p>We have made this subsampled dataset available in <a class="reference external" href="https://figshare.com/articles/dataset/Illumina_pacbio_and_ont_sequencing_reads/14036585">Figshare</a>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Download data from figshare</span>
+wget -O reads.zip https://ndownloader.figshare.com/articles/14036585/versions/4
+
+<span class="c1"># Unzip</span>
+unzip reads.zip
+</pre></div>
+</div>
+<p>Now we have the necessary data to perform the quickstart.</p>
+</section>
+</section>
+<section id="preparing-the-input-samplesheet">
+<h2 id="preparing-the-input-samplesheet">Preparing the input samplesheet<a class="headerlink" href="#preparing-the-input-samplesheet" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Users must <strong>never</strong> use hard or symbolic links. This will probably make nextflow fail.</p>
+</div>
+<p>The pipeline reads the input files from a samplesheet in YAML format. A list of available YAML keys to be used in the samplesheet and how to properly create it is available in the <a class="reference internal" href="samplesheet.html#samplesheet"><span class="std std-ref">samplesheet reference page</span></a>.</p>
+<p>Here, taking advantage of the <code class="docutils literal notranslate"><span class="pre">hybrid_strategy</span></code> YAML key, we will create a samplesheet entry for the input reads that performs a hybrid assembly in both strategies 1 and 2.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If this key is not used, the pipeline will run the default strategy (1), which can be changed with the parameter <code class="docutils literal notranslate"><span class="pre">--hybrid_strategy</span></code>. For more information on the hybrid assembly strategies please see the <a class="reference internal" href="manual.html#manual"><span class="std std-ref">manual reference page</span></a>.</p>
+</div>
+<p>A proper samplesheet for this data will look like this:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># this is a YAML file</span>
+<span class="c1"># samplesheet file of e. coli 30X reads</span>
+<span class="c1"># input entry will perform both hybrid strategies</span>
+samplesheet:
+  - id: ecoli_30X
+    illumina:
+      - SRR8482585_30X_1.fastq.gz
+      - SRR8482585_30X_2.fastq.gz
+    nanopore: SRX5299443_30X.fastq.gz
+    hybrid_strategy: both
+    genome_size: 4m
+</pre></div>
+</div>
+<p>Copy it’s content and save it in a file called <code class="docutils literal notranslate"><span class="pre">samplesheet.yml</span></code>. Now we are able to run the pipeline (check it below).</p>
+</section>
+<section id="running-the-pipeline">
+<h2 id="running-the-pipeline">Running the pipeline<a class="headerlink" href="#running-the-pipeline" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run the pipeline</span>
+nextflow run fmalmeida/mpgap <span class="se">\</span>
+  --output _ASSEMBLY <span class="se">\</span>
+  --max_cpus <span class="m">5</span> <span class="se">\</span>
+  --skip_spades <span class="se">\</span>
+  --input <span class="s2">"samplesheet.yml"</span> <span class="se">\</span>
+  --unicycler_additional_parameters <span class="s1">'--mode conservative'</span> <span class="se">\</span>
+  -profile &lt;docker/singularity/conda&gt;
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can choose if the pipeline will run with docker, conda or singularity with the <code class="docutils literal notranslate"><span class="pre">-profile</span></code> parameter. If nothing is provided, the pipeline will load docker by default. Please read more at <a class="reference external" href="https://github.com/fmalmeida/MpGAP/tree/master#selecting-between-profiles">https://github.com/fmalmeida/MpGAP/tree/master#selecting-between-profiles</a></p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<div class="line-block">
+<div class="line">Additional parameters to assemblers can be given with <code class="docutils literal notranslate"><span class="pre">--{assembler}_additional_parameters</span></code>.</div>
+<div class="line">Moreover, specific software can be turned off with the parameters <code class="docutils literal notranslate"><span class="pre">--skip_{assembler}</span></code>.</div>
+</div>
+</div>
+</section>
+<section id="about-hybrid-strategy-2-and-long-reads-polishing">
+<h2 id="about-hybrid-strategy-2-and-long-reads-polishing">About hybrid strategy 2 and long reads polishing<a class="headerlink" href="#about-hybrid-strategy-2-and-long-reads-polishing" title="Permalink to this headline">¶</a></h2>
+<p>Additionally, for hybrid strategy 2, users can also execute a long reads polishing step in their assemblies prior to the polishing with short reads.</p>
+<p>The long reads polishers available are:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/nanoporetech/medaka">Medaka</a> and <a class="reference external" href="https://github.com/jts/nanopolish">Nanopolish</a> for nanopore data;</p></li>
+<li><p><a class="reference external" href="https://github.com/PacificBiosciences/gcpp">gcpp</a> for pacbio data.</p></li>
+</ul>
+<p>To use them, users must either select a medaka model or pass to the pipeline  the ONT fast5 directory or the pacbio bam file. This will make de pipeline work in the following order:</p>
+<ol class="arabic simple">
+<li><p>long reads assembly</p></li>
+<li><p>polishing with long reads models</p></li>
+<li><p>polishing with short reads with Pilon</p></li>
+</ol>
+<p>Please see the <a class="reference internal" href="samplesheet.html#samplesheet"><span class="std std-ref">Samplesheet</span></a> and <a class="reference internal" href="manual.html#manual"><span class="std std-ref">Manual</span></a> reference pages for more information.</p>
+</section>
+<section id="afterwards">
+<h2 id="afterwards">Afterwards<a class="headerlink" href="#afterwards" title="Permalink to this headline">¶</a></h2>
+<p>After assembling a prokaryotic genome one can then annotate it. Why not give my other pipeline, <a class="reference external" href="https://bacannot.readthedocs.io/en/latest/">bacannot</a> a try? It wraps up lots of databases and tools that can give a nice overview of your query genome.</p>
+</section>
+</section>
+
+
+          </article>
+        </div>
+      </div>
+    </main>
+  </div>
+  <footer class="md-footer">
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+          
+            <a href="installation.html" title="Installation"
+               class="md-flex md-footer-nav__link md-footer-nav__link--prev"
+               rel="prev">
+              <div class="md-flex__cell md-flex__cell--shrink">
+                <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+              </div>
+              <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+                <span class="md-flex__ellipsis">
+                  <span
+                      class="md-footer-nav__direction"> Previous </span> Installation </span>
+              </div>
+            </a>
+          
+          
+            <a href="samplesheet.html" title="Samplesheet"
+               class="md-flex md-footer-nav__link md-footer-nav__link--next"
+               rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title"><span
+                class="md-flex__ellipsis"> <span
+                class="md-footer-nav__direction"> Next </span> Samplesheet </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink"><i
+                class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          
+        </a>
+        
+      </nav>
+    </div>
+    <div class="md-footer-meta md-typeset">
+      <div class="md-footer-meta__inner md-grid">
+        <div class="md-footer-copyright">
+          <div class="md-footer-copyright__highlight">
+              &#169; Copyright 2019, fmalmeida/mpgap: A genome assembly pipeline for multiple sequencing platforms..
+              
+          </div>
+            Created using
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 4.2.0.
+             and
+            <a href="https://github.com/bashtage/sphinx-material/">Material for
+              Sphinx</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="_static/javascripts/application.js"></script>
+  <script>app.initialize({version: "1.0.4", url: {base: ".."}})</script>
+  </body>
+</html>
