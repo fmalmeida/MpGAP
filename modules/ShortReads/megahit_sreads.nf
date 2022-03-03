@@ -18,6 +18,7 @@ process megahit {
   param_paired = !(sread1 =~ /input.*/ || sread2 =~ /input.*/) ? "-1 $sread1 -2 $sread2" : ""
   param_single = !(single =~ /input.*/) ? "-r $single" : ""
   additional_params = (params.megahit_additional_parameters) ? params.megahit_additional_parameters : ""
+  memory = "$task.memory" - " GB" + "e9"
   """
   # run megahit
   megahit \\
@@ -25,7 +26,7 @@ process megahit {
       ${param_single} \\
       -o megahit \\
       -t $task.cpus \\
-      -m $task.memory \\
+      -m $memory \\
       $additional_params
 
   # rename results
