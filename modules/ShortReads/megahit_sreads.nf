@@ -25,6 +25,7 @@ process megahit {
       ${param_single} \\
       -o megahit \\
       -t $task.cpus \\
+      -m $task.memory \\
       $additional_params
 
   # rename results
