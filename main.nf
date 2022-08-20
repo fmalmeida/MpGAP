@@ -48,8 +48,8 @@ workflow {
   new Yaml().load(parameter_yaml).each { k, v -> params[k] = v }
 
   // Copy YAML samplesheet to output directory so user has a copy of it
-  //file(params.output).mkdir()
-  //samplesheet_yaml.copyTo(params.output + "/" + "${samplesheet_yaml.getName()}")
+  file(params.output).mkdir()
+  samplesheet_yaml.copyTo(params.output + "/" + "${samplesheet_yaml.getName()}")
 
   // Parse YAML file
   PARSE_SAMPLESHEET( params.samplesheet )
