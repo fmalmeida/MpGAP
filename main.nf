@@ -49,7 +49,7 @@ workflow {
 
   // Copy YAML samplesheet to output directory so user has a copy of it
   file(params.output).mkdir()
-  samplesheet_yaml.copyTo(params.output + "/" + "${samplesheet_yaml.getName()}")
+  file(params.output + "/" + "${samplesheet_yaml.getName()}").text = samplesheet_yaml.text
 
   // Parse YAML file
   PARSE_SAMPLESHEET( params.samplesheet )
