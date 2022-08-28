@@ -202,7 +202,7 @@ workflow HYBRID {
        * Finally, run pilon for all
        */
       
-      if (skip_raw_assemblies_polishing) {
+      if (params.skip_raw_assemblies_polishing) {
         ch_pilon = LONGREADS_OUTPUTS['POLISHED_ASSEMBLIES']
       } else {
         ch_pilon = LONGREADS_OUTPUTS['RAW_ASSEMBLIES'].mix(LONGREADS_OUTPUTS['POLISHED_ASSEMBLIES'])
