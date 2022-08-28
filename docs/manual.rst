@@ -249,6 +249,12 @@ Advanced assembler customization options
    * - ``--quast_additional_parameters``
      - NA
      - | Give additional parameters to Quast while assessing assembly metrics. Must be given as shown in Quast manual. E.g. ``" --large --eukaryote "``.
+   
+   * - ``--skip_raw_assemblies_polishing``
+     - false
+     - | This will make the pipeline not polish raw assemblies on hybrid strategy 2.
+       | For example, if a sample is assembled with flye and polished with medaka, by default, both assemblies will be passed to pilon so you can compare them.
+       | If you don't need this comparison and don't want to polish the raw assembly, use this parameter.
 
    * - ``--skip_canu``
      - false
