@@ -2,6 +2,18 @@
 
 The tracking for changes started in v2.
 
+## v3.1.4 -- [2022-Mar-03]
+
+This version addresses the changes discussed in [#36](https://github.com/fmalmeida/MpGAP/issues/36), [#37](https://github.com/fmalmeida/MpGAP/issues/37) and [#38](https://github.com/fmalmeida/MpGAP/issues/38).
+Its main changes are:
+
+* Solving the problem of loading a parameter that accepts either integer or string by removing check-up from JSON schema and creating a customized check-up.
+* Added 'error_retry' label to `haslr` as sometimes it radomnly fails.
+* added a .gitpod.yml
+* Customized labels to ask for a little bit more on first run
+* Added a module config for quast to ask for more memory and cpus on first run, removing it from 'process_low' label
+* Added a simple command in pilon module to ensure it starts with a "fresh" output dir to place results
+
 ## v3.1.3 -- [2022-Mar-03]
 
 Although Megahit was already present inside the docker image and the core of the pipeline as it was used by [Shovill](https://github.com/tseemann/shovill), Shovill is an assembler focused in bacterias, and, in their manual, they instruct users to run [Megahit](https://github.com/voutcn/megahit) directly when working with non-bacterial samples.

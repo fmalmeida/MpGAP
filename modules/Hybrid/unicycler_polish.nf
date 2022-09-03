@@ -22,7 +22,7 @@ process pilon_polish {
       pilonjar_path=\$(find \$CONDA_PREFIX -name "pilon.jar" | grep "mpgap" | head -n 1)
 
       # Create the results dir
-      mkdir ${assembler};
+      rm -rf ${assembler} && mkdir -p ${assembler}; # make sure its fresh
 
       # Execute Unicycler polishing pilon wrapper
       unicycler_polish \\
@@ -45,7 +45,7 @@ process pilon_polish {
       pilonjar_path=\$(find \$CONDA_PREFIX -name "pilon.jar" | grep "mpgap" | head -n 1)
 
       # Create the results dir
-      mkdir ${assembler};
+      rm -rf ${assembler} && mkdir -p ${assembler}; # make sure its fresh
 
       # Index and align reads with bwa
       bwa index ${draft} ;
@@ -73,7 +73,7 @@ process pilon_polish {
       pilonjar_path=\$(find \$CONDA_PREFIX -name "pilon.jar" | grep "mpgap" | head -n 1)
 
       # Create the results dir
-      mkdir ${assembler};
+      rm -rf ${assembler} && mkdir -p ${assembler}; # make sure its fresh
 
       # Index and align reads with bwa
       bwa index ${draft} ;

@@ -11,6 +11,7 @@ import org.yaml.snakeyaml.Yaml
     VALIDATE & PRINT PARAMETER SUMMARY
 ========================================================================================
 */
+WorkflowMpGAP.initialise(params, log)
 WorkflowMain.initialise(workflow, params, log)
 
 /*

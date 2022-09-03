@@ -201,7 +201,13 @@ workflow HYBRID {
       /*
        * Finally, run pilon for all
        */
-      strategy_2_pilon(LONGREADS_OUTPUTS['RAW_ASSEMBLIES'].mix(LONGREADS_OUTPUTS['POLISHED_ASSEMBLIES']))
+      
+      if (params.skip_raw_assemblies_polishing) {
+        ch_pilon = LONGREADS_OUTPUTS['POLISHED_ASSEMBLIES']
+      } else {
+        ch_pilon = LONGREADS_OUTPUTS['RAW_ASSEMBLIES'].mix(LONGREADS_OUTPUTS['POLISHED_ASSEMBLIES'])
+      }
+      strategy_2_pilon(ch_pilon)
       HYBRID_OUTPUTS['PILON'] = strategy_2_pilon.out[1].combine(input_tuple, by: 0)
 
       // Gather assemblies for qc

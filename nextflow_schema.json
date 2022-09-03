@@ -65,14 +65,8 @@
             "description": "Select assembly strategy",
             "properties": {
                 "hybrid_strategy": {
-                    "type": "string",
                     "description": "Which hybrid strategy to run? Options: 1, 2, both.",
                     "help_text": "Selects which hybrid assembly strategy to run. Please read the manual for more information: https://mpgap.readthedocs.io/en/latest/manual.html",
-                    "enum": [
-                        "1",
-                        "2",
-                        "both"
-                    ],
                     "default": "1",
                     "fa_icon": "fas fa-align-left"
                 },
@@ -138,12 +132,19 @@
             }
         },
         "turn_assemblers_on_off": {
-            "title": "Turn assemblers on/off",
+            "title": "Turn assemblers and modules on/off",
             "type": "object",
             "description": "Select which assemblers to skip or not",
             "default": "",
             "fa_icon": "fas fa-tasks",
             "properties": {
+                "skip_raw_assemblies_polishing": {
+                    "type": "boolean",
+                    "description": "Not pilon polish with short reads the raw nanopore assemblies.",
+                    "help_text": "This will make the pipeline not polish raw assemblies on hybrid strategy 2.\nFor example, if a sample is assembled with flye and polished with medaka, by default, both assemblies will be passed to pilon so you can compare them.\nIf you don't need this comparison and don't want to polish the raw assembly, use this parameter.",
+                    "hidden": "true",
+                    "fa_icon": "fas fa-ban"
+                },
                 "skip_spades": {
                     "type": "boolean",
                     "description": "Skip SPAdes assembler",
