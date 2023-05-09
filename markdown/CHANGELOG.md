@@ -2,6 +2,8 @@
 
 The tracking for changes started in v2.
 
+## v3.2 -- TBD
+
 ## v3.1.4 -- [2022-Sep-03]
 
 This version addresses the changes discussed in [#36](https://github.com/fmalmeida/MpGAP/issues/36), [#37](https://github.com/fmalmeida/MpGAP/issues/37) and [#38](https://github.com/fmalmeida/MpGAP/issues/38).
