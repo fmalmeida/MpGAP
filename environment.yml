@@ -20,7 +20,7 @@ dependencies:
   - main::openssl
   
   ## anaconda packages
-  - anaconda::python=3.6
+  - anaconda::python=3.8
   - anaconda::numpy                               # for medaka through pip
   
   ## conda-forge packages
@@ -51,7 +51,7 @@ dependencies:
   - bioconda::shovill=1.1.0
   - bioconda::haslr=0.8a1
   - bioconda::raven-assembler=1.6.1
-  - bioconda::multiqc=1.11
+  - bioconda::multiqc>=1.14
   - bioconda::csvtk=0.23.0
   - bioconda::wtdbg=2.5
 
