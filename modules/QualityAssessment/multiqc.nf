@@ -15,7 +15,7 @@ process multiqc {
   script:
   """
   # Run
-  multiqc */report.tsv */busco_stats/short_summary_* ;
+  multiqc . ;
 
   # Rename to have nf run name
   mv multiqc_report.html multiqc_report_${nfRun}.html ;
