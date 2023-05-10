@@ -1,4 +1,4 @@
-name: Testing illumina / docker from PR
+name: Testing illumina / singularity from PR
 on:
   pull_request:
     branches: [ master, dev ]
@@ -28,7 +28,7 @@ jobs:
 
       - name: Run tests for illumina
         run: |
-          nextflow run main.nf -profile docker,test,sreads
+          nextflow run main.nf -profile singularity,test,sreads
           rm -r work .nextflow*
       
       - name: View results
