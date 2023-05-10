@@ -1,7 +1,0 @@
-samplesheet:
-  - id: ont_only
-    nanopore:  https://github.com/fmalmeida/test_datasets/raw/main/ecoli_ont_15X.fastq.gz
-    genome_size: 0.3m
-  - id: pacbio_only
-    pacbio:  https://github.com/fmalmeida/test_datasets/raw/main/ecoli_pacbio_15X.fastq.gz
-    genome_size: 0.3m

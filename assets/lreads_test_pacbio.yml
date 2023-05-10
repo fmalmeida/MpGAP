@@ -1,0 +1,4 @@
+samplesheet:
+  - id: pacbio_only
+    pacbio:  https://github.com/fmalmeida/test_datasets/raw/main/ecoli_pacbio_15X.fastq.gz
+    genome_size: 1m
