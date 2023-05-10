@@ -1,9 +1,3 @@
-# This workflow set's up an automated execution for testing the code when a new PR is created
-# It uses the head branch name to trigger the execution of the new module or subworkflow ...
-#
-# For example, if I just created a module for roary, I should name the new branch as roary
-# then, this workflow will run: nextflow run fmalmeida/bacannot-compare --roary (the head branch name) [blah blah blah]
-
 name: Testing illumina / docker from PR
 on:
   pull_request:
