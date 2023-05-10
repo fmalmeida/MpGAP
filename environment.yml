@@ -49,6 +49,7 @@ dependencies:
   - bioconda::miniasm=0.3_r179
   - bioconda::seqtk=1.3
   - bioconda::shovill=1.1.0
+  - bioconda::shasta=0.11
   - bioconda::haslr=0.8a1
   - bioconda::raven-assembler=1.6.1
   - bioconda::multiqc>=1.14
