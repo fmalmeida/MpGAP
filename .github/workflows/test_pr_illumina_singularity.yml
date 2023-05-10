@@ -1,0 +1,37 @@
+name: Testing illumina / singularity from PR
+on:
+  pull_request:
+    branches: [ master, dev ]
+    types: [ opened, synchronize, reopened ]
+
+jobs:
+  run_nextflow:
+    name: Run pipeline for the upcoming PR
+    runs-on: ubuntu-latest
+    
+    steps:
+      
+      - name: Check out pipeline code
+        uses: actions/checkout@v2
+      
+      - name: Install Nextflow
+        env:
+          CAPSULE_LOG: none
+        run: |
+          wget -qO- get.nextflow.io | bash
+          sudo mv nextflow /usr/local/bin/
+      
+      - name: Clean environment
+        run: |
+          sudo rm -rf /usr/local/lib/android # will release about 10 GB if you don't need Android
+          sudo rm -rf /usr/share/dotnet # will release about 20GB if you don't need .NET
+
+      - name: Run tests for illumina
+        run: |
+          nextflow run main.nf -profile singularity,test,sreads
+          rm -r work .nextflow*
+      
+      - name: View results
+        run: |
+          sudo apt-get install -y tree
+          tree sreads_test
