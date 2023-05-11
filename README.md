@@ -171,17 +171,17 @@ Also, since in quast 5.0.2 the automatic download of its busco databases is brok
 
 ```bash
 # create the directory
-mkdir -p $CONDA_PREFIX/envs/mpgap-3.2/lib/python3.6/site-packages/quast_libs/busco/
+mkdir -p $CONDA_PREFIX/envs/mpgap-3.2/lib/python3.8/site-packages/quast_libs/busco/
 
 # bacteria db
-wget -O $CONDA_PREFIX/envs/mpgap-3.2/lib/python3.6/site-packages/quast_libs/busco/bacteria.tar.gz https://busco.ezlab.org/v2/datasets/bacteria_odb9.tar.gz
+wget -O $CONDA_PREFIX/envs/mpgap-3.2/lib/python3.8/site-packages/quast_libs/busco/bacteria.tar.gz https://busco.ezlab.org/v2/datasets/bacteria_odb9.tar.gz
 
 # eukaryota db
-wget -O $CONDA_PREFIX/envs/mpgap-3.2/lib/python3.6/site-packages/quast_libs/busco/eukaryota.tar.gz https://busco.ezlab.org/v2/datasets/eukaryota_odb9.tar.gz
+wget -O $CONDA_PREFIX/envs/mpgap-3.2/lib/python3.8/site-packages/quast_libs/busco/eukaryota.tar.gz https://busco.ezlab.org/v2/datasets/eukaryota_odb9.tar.gz
 
 # fungi db
-wget -O $CONDA_PREFIX/envs/mpgap-3.2/lib/python3.6/site-packages/quast_libs/busco/fungi.tar.gz https://busco.ezlab.org/v2/datasets/fungi_odb9.tar.gz
-chmod -R 777 $CONDA_PREFIX/envs/mpgap-3.2/lib/python3.6/site-packages/quast_libs/busco
+wget -O $CONDA_PREFIX/envs/mpgap-3.2/lib/python3.8/site-packages/quast_libs/busco/fungi.tar.gz https://busco.ezlab.org/v2/datasets/fungi_odb9.tar.gz
+chmod -R 777 $CONDA_PREFIX/envs/mpgap-3.2/lib/python3.8/site-packages/quast_libs/busco
 
 # get augustus database with
 # must be executed in the end because its links for bacteria, fungi and eukaryota are broken
