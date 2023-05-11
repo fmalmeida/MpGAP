@@ -1,13 +1,5 @@
 samplesheet:
   
-  - id: ont_hybrid
-    nanopore:  https://github.com/fmalmeida/test_datasets/raw/main/ecoli_ont_15X.fastq.gz
-    genome_size: 1m
-    illumina: 
-      - https://github.com/fmalmeida/test_datasets/raw/main/ecoli_illumina_15X_1.fastq.gz
-      - https://github.com/fmalmeida/test_datasets/raw/main/ecoli_illumina_15X_2.fastq.gz
-    hybrid_strategy: both
-  
   - id: pacbio_hybrid
     pacbio:  https://github.com/fmalmeida/test_datasets/raw/main/ecoli_pacbio_15X.fastq.gz
     genome_size: 1m
