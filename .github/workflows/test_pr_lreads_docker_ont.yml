@@ -1,4 +1,4 @@
-name: Testing long-reads / singularity from PR
+name: Testing long-reads / docker (ONT) from PR
 on:
   pull_request:
     branches: [ master, dev ]
@@ -7,9 +7,16 @@ on:
 jobs:
   run_nextflow:
     name: Run pipeline for the upcoming PR
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     
     steps:
+
+      - name: Maximize build space
+        uses: easimon/maximize-build-space@master
+        with:
+          root-reserve-mb: 512
+          swap-size-mb: 1024
+          remove-dotnet: 'true'
       
       - name: Check out pipeline code
         uses: actions/checkout@v2
@@ -26,12 +33,12 @@ jobs:
           sudo rm -rf /usr/local/lib/android # will release about 10 GB if you don't need Android
           sudo rm -rf /usr/share/dotnet # will release about 20GB if you don't need .NET
 
-      - name: Run tests for long-reads
+      - name: Run tests for long-reads (ont)
         run: |
-          nextflow run main.nf -profile singularity,test,lreads
+          nextflow run main.nf -profile docker,test,lreads,ont
           rm -r work .nextflow*
       
       - name: View results
         run: |
           sudo apt-get install -y tree
-          tree lreads_test
+          tree lreads_test_ont

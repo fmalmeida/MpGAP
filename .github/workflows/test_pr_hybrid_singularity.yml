@@ -14,6 +14,11 @@ jobs:
       - name: Check out pipeline code
         uses: actions/checkout@v2
       
+      - name: Install Singularity
+        uses: eWaterCycle/setup-singularity@v7
+        with:
+          singularity-version: 3.8.3
+      
       - name: Install Nextflow
         env:
           CAPSULE_LOG: none
