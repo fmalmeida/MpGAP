@@ -35,7 +35,7 @@ process quast {
   """
   # fix busco usage in singularity
   mkdir -p ~/.quast/busco
-  cp -R /opt/conda/envs/mpgap-*/lib/python3.6/site-packages/quast_libs/busco ~/.quast
+  cp -R /opt/conda/envs/mpgap-*/lib/python3.8/site-packages/quast_libs/busco ~/.quast
 
   # run quast
   quast.py \\
