@@ -7,15 +7,9 @@ on:
 jobs:
   run_nextflow:
     name: Run pipeline for the upcoming PR
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     
     steps:
-
-      - name: 'Set up latest Oracle JDK 17'
-        uses: oracle-actions/setup-java@v1
-        with:
-          website: oracle.com
-          release: 17
       
       - name: Check out pipeline code
         uses: actions/checkout@v2
