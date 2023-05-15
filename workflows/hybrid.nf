@@ -51,7 +51,7 @@ include { haslr_hybrid as strategy_1_haslr } from '../modules/Hybrid/haslr_hybri
 include { spades_hybrid as strategy_1_spades } from '../modules/Hybrid/spades_hybrid.nf'
 
 // Pilon polish paired
-include { pilon_polish as strategy_2_pilon } from '../modules/Hybrid/unicycler_polish.nf'
+include { pilon_polish as strategy_2_pilon } from '../modules/Hybrid/pilon_polish.nf'
 
 workflow HYBRID {
   take:
