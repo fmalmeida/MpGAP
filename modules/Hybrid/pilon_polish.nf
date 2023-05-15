@@ -62,15 +62,14 @@ process pilon_polish {
     done
 
     # save results
-    
     cp \
-        pilon_consensus_${params.pilon_polish_rounds}/ont_hybrid_shasta_${params.pilon_polish_rounds}_aln.bam \
-        ${assembler}/ont_hybrid_shasta_aln.final.bam
+        pilon_consensus_${params.pilon_polish_rounds}/${fixed_id}_${assembler}_${params.pilon_polish_rounds}_aln.bam \
+        ${assembler}/${fixed_id}_${assembler}_aln.final.bam
     cp \
         pilon_consensus_${params.pilon_polish_rounds}/pilon_round_${params.pilon_polish_rounds}.log \
         ${assembler}/pilon_round.final.log
     cp \
-        pilon_consensus_${params.pilon_polish_rounds}/shasta_pilon_consensus_${params.pilon_polish_rounds}.fasta \
+        pilon_consensus_${params.pilon_polish_rounds}/${assembler}_pilon_consensus_${params.pilon_polish_rounds}.fasta \
         ${assembler}/${assembler}_pilon_consensus.final.fasta
     """
 
