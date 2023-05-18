@@ -1,12 +1,16 @@
 process quast {
-  publishDir "${params.output}/${prefix}/00_quality_assessment", mode: 'copy'
+  publishDir "${params.output}", mode: 'copy', saveAs: { filename ->
+    if ( filename.tokenize('/').contains('input_assembly') ) "final_assemblies/${id}_${filename.tokenize('/')[1]}"
+    else "${prefix}/00_quality_assessment/${filename}"
+  }
   tag "${id}"
 
   input:
   tuple val(id), file(contigs), val(assembler), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), val(wtdbg2_technology), val(genome_size), val(corrected_long_reads), val(medaka_model), file(fast5), val(nanopolish_max_haplotypes), val(shasta_config), file(bams), val(prefix)
 
   output:
-  tuple val(id), val(entrypoint), val(prefix), file("${assembler}")
+  tuple val(id), val(entrypoint), val(prefix), file("${assembler}"), emit: results
+  file("input_assembly/*")
 
   script:
   // Alignment parameters
@@ -29,13 +33,17 @@ process quast {
       --min-contig 100 \\
       $additional_params \\
       ${contigs}
+  
+  # save assembly
+  mkdir -p input_assembly
+  cp ${contigs} input_assembly/${contigs}
   """
 
   else if (params.selected_profile == "singularity")
   """
   # fix busco usage in singularity
   mkdir -p ~/.quast/busco
-  cp -R /opt/conda/envs/mpgap-*/lib/python3.6/site-packages/quast_libs/busco ~/.quast
+  cp -R /opt/conda/envs/mpgap-*/lib/python3.8/site-packages/quast_libs/busco ~/.quast
 
   # run quast
   quast.py \\
@@ -49,5 +57,9 @@ process quast {
       --min-contig 100 \\
       $additional_params \\
       ${contigs}
+  
+  # save assembly
+  mkdir -p input_assembly
+  cp ${contigs} input_assembly/${contigs}
   """
 }

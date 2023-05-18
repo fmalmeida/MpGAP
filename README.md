@@ -77,7 +77,7 @@ Therefore, feedbacks are very well welcomed. If you believe that your use case i
 
         ```bash
         # for docker
-        docker pull fmalmeida/mpgap:v3.1
+        docker pull fmalmeida/mpgap:v3.2
 
         # run
         nextflow run fmalmeida/mpgap -profile docker [options]
@@ -91,7 +91,7 @@ Therefore, feedbacks are very well welcomed. If you believe that your use case i
         # read more at https://www.nextflow.io/docs/latest/singularity.html#singularity-docker-hub
         export NXF_SINGULARITY_LIBRARYDIR=MY_SINGULARITY_IMAGES    # your singularity storage dir
         export NXF_SINGULARITY_CACHEDIR=MY_SINGULARITY_CACHE       # your singularity cache dir
-        singularity pull --dir $NXF_SINGULARITY_LIBRARYDIR fmalmeida-mpgap-v3.1.img docker://fmalmeida/mpgap:v3.1
+        singularity pull --dir $NXF_SINGULARITY_LIBRARYDIR fmalmeida-mpgap-v3.2.img docker://fmalmeida/mpgap:v3.2
 
         # run
         nextflow run fmalmeida/mpgap -profile singularity [options]
@@ -120,7 +120,24 @@ Therefore, feedbacks are very well welcomed. If you believe that your use case i
 
 :fire: Please read the documentation below on [selecting between conda, docker or singularity](https://github.com/fmalmeida/mpgap/tree/master#selecting-between-profiles) profiles, since the tools will be made available differently depending on the profile desired.
 
+## Quickstart
+
+A few testing datasets have been made available so that users can quickly try-out the features available in the pipeline:
+
+```bash
+# short-reads
+nextflow run fmalmeida/mpgap -profile test,sreads,<docker/singularity>
+
+# long-reads
+nextflow run fmalmeida/mpgap -profile test,lreads,<ont/pacbio>,<docker/singularity>
+
+# hybrid
+nextflow run fmalmeida/mpgap -profile test,hybrid,<ont/pacbio>,<docker/singularity>
+```
+
 ## Documentation
+
+<a href="https://mpgap.readthedocs.io/en/latest/index.html"><strong>Complete online documentation. »</strong></a>
 
 ### Selecting between profiles
 
@@ -171,22 +188,22 @@ Also, since in quast 5.0.2 the automatic download of its busco databases is brok
 
 ```bash
 # create the directory
-mkdir -p $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/
+mkdir -p $CONDA_PREFIX/envs/mpgap-3.2/lib/python3.8/site-packages/quast_libs/busco/
 
 # bacteria db
-wget -O $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/bacteria.tar.gz https://busco.ezlab.org/v2/datasets/bacteria_odb9.tar.gz
+wget -O $CONDA_PREFIX/envs/mpgap-3.2/lib/python3.8/site-packages/quast_libs/busco/bacteria.tar.gz https://busco.ezlab.org/v2/datasets/bacteria_odb9.tar.gz
 
 # eukaryota db
-wget -O $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/eukaryota.tar.gz https://busco.ezlab.org/v2/datasets/eukaryota_odb9.tar.gz
+wget -O $CONDA_PREFIX/envs/mpgap-3.2/lib/python3.8/site-packages/quast_libs/busco/eukaryota.tar.gz https://busco.ezlab.org/v2/datasets/eukaryota_odb9.tar.gz
 
 # fungi db
-wget -O $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/fungi.tar.gz https://busco.ezlab.org/v2/datasets/fungi_odb9.tar.gz
-chmod -R 777 $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco
+wget -O $CONDA_PREFIX/envs/mpgap-3.2/lib/python3.8/site-packages/quast_libs/busco/fungi.tar.gz https://busco.ezlab.org/v2/datasets/fungi_odb9.tar.gz
+chmod -R 777 $CONDA_PREFIX/envs/mpgap-3.2/lib/python3.8/site-packages/quast_libs/busco
 
 # get augustus database with
 # must be executed in the end because its links for bacteria, fungi and eukaryota are broken
 # it is only working for augustus
-conda activate mpgap-3.1 && quast-download-busco
+conda activate mpgap-3.2 && quast-download-busco
 ```
 
 ### Explanation of hybrid strategies
@@ -201,9 +218,7 @@ It uses the hybrid assembly modes from Unicycler, Haslr and/or SPAdes.
 
 #### Strategy 2
 
-It produces a long reads only assembly and polishes (correct errors) it with short reads using Pilon.
-
-> If polishing with Illumina paired end reads pilon will be executed with [Unicycler-polish program](https://github.com/rrwick/Unicycler/blob/main/docs/unicycler-polish.md), taking advantage of its ability to perform multiple rounds of polishing until changes are minimal.
+It produces a long reads only assembly and polishes (correct errors) it with short reads using Pilon. By default, it runs 4 rounds of polishing (params.pilon_polish_rounds).
 
 #### Example:
 

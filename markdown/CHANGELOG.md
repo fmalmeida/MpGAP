@@ -2,6 +2,12 @@
 
 The tracking for changes started in v2.
 
+## v3.2 -- TBD
+
+* Update unicyler to v0.5.0
+* Adjust Pilon polishing module to select how many rounds of poloshing to run. Default is 4.
+* Add a directory called `final_assemblies` in the main output directory holding all the assemblies generated in the pipeline execution.
+
 ## v3.1.4 -- [2022-Sep-03]
 
 This version addresses the changes discussed in [#36](https://github.com/fmalmeida/MpGAP/issues/36), [#37](https://github.com/fmalmeida/MpGAP/issues/37) and [#38](https://github.com/fmalmeida/MpGAP/issues/38).
