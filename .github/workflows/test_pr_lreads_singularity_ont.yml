@@ -1,15 +1,21 @@
-name: Testing hybrid / singularity from PR
+name: Testing long-reads / singularity (ONT) from PR
 on:
   pull_request:
-    branches: [ master ]
+    branches: [ master, dev ]
     types: [ opened, synchronize, reopened ]
 
 jobs:
   run_nextflow:
     name: Run pipeline for the upcoming PR
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     
     steps:
+
+      - name: 'Set up latest Oracle JDK 17'
+        uses: oracle-actions/setup-java@v1
+        with:
+          website: oracle.com
+          release: 17
       
       - name: Check out pipeline code
         uses: actions/checkout@v2
@@ -31,12 +37,12 @@ jobs:
           sudo rm -rf /usr/local/lib/android # will release about 10 GB if you don't need Android
           sudo rm -rf /usr/share/dotnet # will release about 20GB if you don't need .NET
 
-      - name: Run tests for hybrid
+      - name: Run tests for long-reads (ont)
         run: |
-          nextflow run main.nf -profile singularity,test,hybrid
+          nextflow run main.nf -profile singularity,test,lreads,ont
           rm -r work .nextflow*
       
       - name: View results
         run: |
           sudo apt-get install -y tree
-          tree hybrid_test
+          tree lreads_test_ont
