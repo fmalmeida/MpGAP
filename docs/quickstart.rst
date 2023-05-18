@@ -99,6 +99,22 @@ To use them, users must either select a medaka model or pass to the pipeline  th
 
 Please see the :ref:`samplesheet` and :ref:`manual` reference pages for more information.
 
+Testing datasets
+----------------
+
+A few testing datasets have been made available so that users can quickly try-out the features available in the pipeline:
+
+.. code-block:: bash
+
+  # short-reads
+  nextflow run fmalmeida/mpgap -profile test,sreads,<docker/singularity>
+
+  # long-reads
+  nextflow run fmalmeida/mpgap -profile test,lreads,<ont/pacbio>,<docker/singularity>
+
+  # hybrid
+  nextflow run fmalmeida/mpgap -profile test,hybrid,<ont/pacbio>,<docker/singularity>
+
 Afterwards
 ----------
 

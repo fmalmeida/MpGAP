@@ -120,7 +120,24 @@ Therefore, feedbacks are very well welcomed. If you believe that your use case i
 
 :fire: Please read the documentation below on [selecting between conda, docker or singularity](https://github.com/fmalmeida/mpgap/tree/master#selecting-between-profiles) profiles, since the tools will be made available differently depending on the profile desired.
 
+## Quickstart
+
+A few testing datasets have been made available so that users can quickly try-out the features available in the pipeline:
+
+```bash
+# short-reads
+nextflow run fmalmeida/mpgap -profile test,sreads,<docker/singularity>
+
+# long-reads
+nextflow run fmalmeida/mpgap -profile test,lreads,<ont/pacbio>,<docker/singularity>
+
+# hybrid
+nextflow run fmalmeida/mpgap -profile test,hybrid,<ont/pacbio>,<docker/singularity>
+```
+
 ## Documentation
+
+<a href="https://mpgap.readthedocs.io/en/latest/index.html"><strong>Complete online documentation. »</strong></a>
 
 ### Selecting between profiles
 
