@@ -67,11 +67,7 @@ By using `Unicycler <https://github.com/rrwick/Unicycler#method-hybrid-assembly>
 Strategy 2
 """"""""""
 
-By polishing (correcting errors) a long reads only assembly with Illumina reads. This will tell the pipeline to produce a long reads only assembly (with canu, wtdbg2, shasta, raven, flye or unicycler) and polish it with `Pilon <https://github.com/broadinstitute/pilon>`_.
-
-.. note::
-  
-  When polishing with Illumina paired end reads we run Pilon with the `Unicycler-polish program <https://github.com/rrwick/Unicycler/blob/main/docs/unicycler-polish.md>`_ taking advantage of its ability to perform multiple rounds of polishing until the changes are minimal.
+By polishing (correcting errors) a long reads only assembly with Illumina reads. This will tell the pipeline to produce a long reads only assembly (with canu, wtdbg2, shasta, raven, flye or unicycler) and polish it with `Pilon <https://github.com/broadinstitute/pilon>`_. By default, it runs 4 rounds of polishing (``params.pilon_polish_rounds``).
 
 .. note::
 
