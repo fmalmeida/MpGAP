@@ -217,13 +217,15 @@ workflow HYBRID {
       HYBRID_OUTPUTS['SREADS_POLISH'] = 
         strategy_2_pilon.out[1].mix(
           strategy_2_polypolish.out[1]
-        ).combine( input_tuple, by: 0 )
+        ).join( input_tuple, by: 0 )
 
       // Gather assemblies for qc
-      HYBRID_OUTPUTS['ALL_RESULTS'] = HYBRID_OUTPUTS['ASSEMBLIES']
-                                      .mix(LONGREADS_OUTPUTS['RAW_ASSEMBLIES'],
-                                           LONGREADS_OUTPUTS['POLISHED_ASSEMBLIES'],
-                                           HYBRID_OUTPUTS['SREADS_POLISH'])
+      HYBRID_OUTPUTS['ALL_RESULTS'] = 
+        HYBRID_OUTPUTS['ASSEMBLIES'].mix(
+          LONGREADS_OUTPUTS['RAW_ASSEMBLIES'],
+          LONGREADS_OUTPUTS['POLISHED_ASSEMBLIES'],
+          HYBRID_OUTPUTS['SREADS_POLISH']
+        )
   
   emit:
     HYBRID_OUTPUTS['ALL_RESULTS']

@@ -5,12 +5,12 @@
 /*
  * Module for assessing assembly qualities
  */
-include { quast }   from '../modules/QualityAssessment/quast.nf'
+include { quast   } from '../modules/QualityAssessment/quast.nf'
 include { multiqc } from '../modules/QualityAssessment/multiqc.nf'
 
 workflow ASSEMBLY_QC {
   take:
-      input_tuple
+    input_tuple
   
   main:
 
@@ -18,6 +18,9 @@ workflow ASSEMBLY_QC {
     quast(input_tuple)
 
     // Run multiqc
-    multiqc(quast.out.groupTuple(by: [0,1,2]), Channel.value("$workflow.runName"))
+    multiqc(
+      quast.out.groupTuple().view(),
+      Channel.value("$workflow.runName")
+    )
 
 }

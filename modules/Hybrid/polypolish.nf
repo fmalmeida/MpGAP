@@ -9,7 +9,7 @@ process polypolish {
 
     output:
     file("${assembler}/*") // Get everything
-    tuple val(id), file("${assembler}/${assembler}_polypolish_consensus.fasta"), val("${assembler}_pilon_polished")
+    tuple val(id), file("${assembler}/${assembler}_polypolish_consensus.fasta"), val("${assembler}_polypolish_consensus")
 
     script:
     paired   = (sread2 =~ /input.*/) ? "false" : "true"
