@@ -1,6 +1,6 @@
 process quast {
   publishDir "${params.output}", mode: 'copy', saveAs: { filename ->
-    if ( filename.tokenize('/').contains('input_assembly') ) "final_output/${prefix}_${filename.tokenize('/')[1]}"
+    if ( filename.tokenize('/').contains('input_assembly') ) "final_assemblies/${prefix}_${filename.tokenize('/')[1]}"
     else "${prefix}/00_quality_assessment/${filename}"
   }
   tag "${id}"
