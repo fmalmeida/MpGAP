@@ -53,6 +53,9 @@ include { spades_hybrid as strategy_1_spades } from '../modules/Hybrid/spades_hy
 // Pilon polish paired
 include { pilon_polish as strategy_2_pilon } from '../modules/Hybrid/pilon_polish.nf'
 
+// Polypolish
+include { polypolish as strategy_2_polypolish } from '../modules/Hybrid/polypolish.nf'
+
 workflow HYBRID {
   take:
       input_tuple
@@ -74,10 +77,10 @@ workflow HYBRID {
       LONGREADS_OUTPUTS['GCPP']        = Channel.empty()
 
       def HYBRID_OUTPUTS = [:]
-      HYBRID_OUTPUTS['UNICYCLER'] = Channel.empty()
-      HYBRID_OUTPUTS['SPADES']    = Channel.empty()
-      HYBRID_OUTPUTS['HASLR']     = Channel.empty()
-      HYBRID_OUTPUTS['PILON']     = Channel.empty()
+      HYBRID_OUTPUTS['UNICYCLER']     = Channel.empty()
+      HYBRID_OUTPUTS['SPADES']        = Channel.empty()
+      HYBRID_OUTPUTS['HASLR']         = Channel.empty()
+      HYBRID_OUTPUTS['SREADS_POLISH'] = Channel.empty()
 
       /*
        * create branches
@@ -199,22 +202,30 @@ workflow HYBRID {
                                                  .combine(input_tuple, by: 0)
 
       /*
-       * Finally, run pilon for all
+       * Finally, run sreads polish for all
        */
       
       if (params.skip_raw_assemblies_polishing) {
-        ch_pilon = LONGREADS_OUTPUTS['POLISHED_ASSEMBLIES']
+        ch_sreads_polish = LONGREADS_OUTPUTS['POLISHED_ASSEMBLIES']
       } else {
-        ch_pilon = LONGREADS_OUTPUTS['RAW_ASSEMBLIES'].mix(LONGREADS_OUTPUTS['POLISHED_ASSEMBLIES'])
+        ch_sreads_polish = LONGREADS_OUTPUTS['RAW_ASSEMBLIES'].mix(LONGREADS_OUTPUTS['POLISHED_ASSEMBLIES'])
       }
-      strategy_2_pilon(ch_pilon)
-      HYBRID_OUTPUTS['PILON'] = strategy_2_pilon.out[1].combine(input_tuple, by: 0)
+      strategy_2_pilon( ch_sreads_polish )
+      strategy_2_polypolish( ch_sreads_polish )
+
+      
+      HYBRID_OUTPUTS['SREADS_POLISH'] = 
+        strategy_2_pilon.out[1].mix(
+          strategy_2_polypolish.out[1]
+        ).combine( input_tuple, by: 0 )
 
       // Gather assemblies for qc
-      HYBRID_OUTPUTS['ALL_RESULTS'] = HYBRID_OUTPUTS['ASSEMBLIES']
-                                      .mix(LONGREADS_OUTPUTS['RAW_ASSEMBLIES'],
-                                           LONGREADS_OUTPUTS['POLISHED_ASSEMBLIES'],
-                                           HYBRID_OUTPUTS['PILON'])
+      HYBRID_OUTPUTS['ALL_RESULTS'] = 
+        HYBRID_OUTPUTS['ASSEMBLIES'].mix(
+          LONGREADS_OUTPUTS['RAW_ASSEMBLIES'],
+          LONGREADS_OUTPUTS['POLISHED_ASSEMBLIES'],
+          HYBRID_OUTPUTS['SREADS_POLISH']
+        )
   
   emit:
     HYBRID_OUTPUTS['ALL_RESULTS']
