@@ -14,8 +14,12 @@ process raven {
   (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2')
 
   script:
-  corrected = (corrected_long_reads == 'true') ? '-k 30 -w 10' : ''
   additional_params = (params.raven_additional_parameters) ? params.raven_additional_parameters : ""
+  corrected = ''
+  if (corrected_long_reads == 'true') {
+    if ( additional_params.tokenize(' ').intersect( ['-k', '--kmer-len'  ] ) == 0 ) { corrected = corrected + '-k 30'}
+    if ( additional_params.tokenize(' ').intersect( ['-w', '--window-len'] ) == 0 ) { corrected = corrected + '-w 10'}
+  }
   """
   # run raven
   raven \\
