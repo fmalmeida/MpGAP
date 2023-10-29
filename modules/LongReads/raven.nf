@@ -14,7 +14,7 @@ process raven {
   (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2')
 
   script:
-  corrected = (corrected_long_reads == 'true') ? '--weaken' : ''
+  corrected = (corrected_long_reads == 'true') ? '-k 30 -w 10' : ''
   additional_params = (params.raven_additional_parameters) ? params.raven_additional_parameters : ""
   """
   # run raven
