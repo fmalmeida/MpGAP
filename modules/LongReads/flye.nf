@@ -15,8 +15,9 @@ process flye {
 
   script:
   lr        = (lr_type == 'nanopore') ? '--nano' : '--pacbio'
-  corrected = (corrected_longreads == 'true') ? '-corr' : '-raw'
-  lrparam   = lr + corrected
+  if (corrected_longreads == true)    { lrparam = lr + '-corr' }
+  else if (high_quality_longreads == true) { lrparam = lr + (lr_type == 'nanopore') ? '-hq' : '-hifi' }
+  else { lrparam = lr + '-raw' }
   gsize     = (genome_size) ? "--genome-size ${genome_size}" : ""
   additional_params = (params.flye_additional_parameters) ? params.flye_additional_parameters : ""
   """

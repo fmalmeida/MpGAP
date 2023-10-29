@@ -15,6 +15,9 @@ process unicycler {
 
   script:
   additional_params = (params.unicycler_additional_parameters) ? params.unicycler_additional_parameters : ""
+  if (high_quality_longreads == 'true' || high_quality_longreads == true) {
+    if ( !additional_params.contains('--mode') ) { additional_params = additional_params + '--mode conservative' }
+  }
   """  
   # run unicycler
   unicycler \\

@@ -20,6 +20,10 @@ process raven {
     if ( additional_params.tokenize(' ').intersect( ['-k', '--kmer-len'  ] ) == 0 ) { corrected = corrected + '-k 30'}
     if ( additional_params.tokenize(' ').intersect( ['-w', '--window-len'] ) == 0 ) { corrected = corrected + '-w 10'}
   }
+  if (high_quality_longreads == 'true') {
+    if ( additional_params.tokenize(' ').intersect( ['-k', '--kmer-len'  ] ) == 0 ) { corrected = corrected + '-k 45'}
+    if ( additional_params.tokenize(' ').intersect( ['-w', '--window-len'] ) == 0 ) { corrected = corrected + '-w 15'}
+  }
   """
   # run raven
   raven \\
