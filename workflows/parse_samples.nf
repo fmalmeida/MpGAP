@@ -10,7 +10,7 @@ workflow PARSE_SAMPLESHEET {
     custom_csv = write_csv(Channel.fromList(data))
   
     // now we parse the csv created
-    parsed_csv = custom_csv.splitCsv(header: ['name', 'entrypoint', 'fwd', 'rev', 'single', 'lreads', 'lr_type', 'wtdbg2_technology','genome_size', 'corrected_long_reads', 'medaka_model', 'nanopolish_fast5', 'nanopolish_max_haplotypes', 'shasta_config','pacbio_bam']).map{ row ->
+    parsed_csv = custom_csv.splitCsv(header: ['name', 'entrypoint', 'fwd', 'rev', 'single', 'lreads', 'lr_type', 'wtdbg2_technology','genome_size', 'corrected_longreads', 'high_quality_longreads', 'medaka_model', 'nanopolish_fast5', 'nanopolish_max_haplotypes', 'shasta_config','pacbio_bam']).map{ row ->
 
     if (row.entrypoint == 'shortreads_only') { 
       prefix = "${row.name}/shortreads_only" 
@@ -37,7 +37,8 @@ workflow PARSE_SAMPLESHEET {
         row.lr_type, // long reads type
         row.wtdbg2_technology, // which wtdbg2 tech to use?
         row.genome_size, // expected genome size
-        row.corrected_long_reads.toString().toLowerCase(), // are reads corrected?
+        row.corrected_longreads.toString().toLowerCase(), // are reads corrected?
+        row.high_quality_longreads.toString().toLowerCase(), // are reads high quality?
         row.medaka_model, // change medaka model?
         (row.nanopolish_fast5 == "missing_nanopolish_fast5") ? row.nanopolish_fast5 : load_file(row.nanopolish_fast5), // nanopolish nanopolish_fast5 as file
         row.nanopolish_max_haplotypes, // nanopolish max_haplotypes

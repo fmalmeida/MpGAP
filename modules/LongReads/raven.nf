@@ -4,7 +4,7 @@ process raven {
   label 'process_assembly'
 
   input:
-  tuple val(id), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), val(wtdbg2_technology), val(genome_size), val(corrected_long_reads), val(medaka_model), file(fast5), val(nanopolish_max_haplotypes), val(shasta_config), file(bams), val(prefix)
+  tuple val(id), val(entrypoint), file(sread1), file(sread2), file(single), file(lreads), val(lr_type), val(wtdbg2_technology), val(genome_size), val(corrected_longreads), val(high_quality_longreads), val(medaka_model), file(fast5), val(nanopolish_max_haplotypes), val(shasta_config), file(bams), val(prefix)
 
   output:
   file "raven_assembly.*" // Saves all files
@@ -16,7 +16,7 @@ process raven {
   script:
   additional_params = (params.raven_additional_parameters) ? params.raven_additional_parameters : ""
   corrected = ''
-  if (corrected_long_reads == 'true') {
+  if (corrected_longreads == 'true') {
     if ( additional_params.tokenize(' ').intersect( ['-k', '--kmer-len'  ] ) == 0 ) { corrected = corrected + '-k 30'}
     if ( additional_params.tokenize(' ').intersect( ['-w', '--window-len'] ) == 0 ) { corrected = corrected + '-w 10'}
   }

@@ -106,7 +106,7 @@
                     "default": "Nanopore-Oct2021",
                     "hidden": true
                 },
-                "corrected_long_reads": {
+                "corrected_longreads": {
                     "type": "boolean",
                     "description": "By default, long reads are corrected?",
                     "help_text": "This will activate (if available) the options for corrected reads in the assemblers: -corrected (in canu), --pacbio-corr|--nano-corr (in flye), etc. Be cautious when using this parameter. If your reads are not corrected, and you use this parameter, you will probably do not generate any contig.",

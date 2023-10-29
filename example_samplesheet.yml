@@ -14,30 +14,30 @@
 # A template (with the correct fields, syntax and indentation) is given below:
 
 samplesheet:
-  - id: sample_1
-    illumina: 
-      - dataset/reads_1.fastq.gz
-      - dataset/reads_2.fastq.gz
-  - id: sample_2
-    illumina:
-      - dataset/reads_unpaired.fastq.gz
-  - id: sample_3
-    illumina:
-      - dataset/reads_1.fastq.gz
-      - dataset/reads_2.fastq.gz
-      - dataset/pairs_merged.fastq.gz
-  - id: sample_4
-    nanopore: dataset/ont_reads.fastq.gz
-    corrected_long_reads: true
-    nanopolish_fast5: dataset/kleb/fast5_pass
-    genome_size: 5.5m
-  - id: sample_5
-    pacbio: dataset/pacbio_reads.fastq.gz
-    pacbio_bam: dataset/pacbio_reads.subreads.bam
-    wtdbg2_technology: rs  
-  - id: sample_6
-    illumina:
-      - dataset/reads_1.fastq.gz
-      - dataset/reads_2.fastq.gz
-    nanopore: dataset/ont_reads.fastq.gz
-    hybrid_strategy: both
+- id: sample_1
+  illumina:
+  - dataset/reads_1.fastq.gz
+  - dataset/reads_2.fastq.gz
+- id: sample_2
+  illumina:
+  - dataset/reads_unpaired.fastq.gz
+- id: sample_3
+  illumina:
+  - dataset/reads_1.fastq.gz
+  - dataset/reads_2.fastq.gz
+  - dataset/pairs_merged.fastq.gz
+- id: sample_4
+  nanopore: dataset/ont_reads.fastq.gz
+  corrected_longreads: true
+  nanopolish_fast5: dataset/kleb/fast5_pass
+  genome_size: 5.5m
+- id: sample_5
+  pacbio: dataset/pacbio_reads.fastq.gz
+  pacbio_bam: dataset/pacbio_reads.subreads.bam
+  wtdbg2_technology: rs
+- id: sample_6
+  illumina:
+  - dataset/reads_1.fastq.gz
+  - dataset/reads_2.fastq.gz
+  nanopore: dataset/ont_reads.fastq.gz
+  hybrid_strategy: both

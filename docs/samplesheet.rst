@@ -103,7 +103,7 @@ The available tags are:
    * - ``hybrid_strategy``
      - This sets which strategy to run when performing hybrid assemblies. Please read the :ref:`manual` reference page to understand the adopted strategies. Options are: ``1``, ``2``, or ``both``.
 
-   * - ``corrected_long_reads``
+   * - ``corrected_longreads``
      - Tells whether the long reads used are corrected or not. Options: ``true``, ``false``.
 
    * - ``nanopolish_max_haplotypes``

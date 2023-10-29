@@ -198,7 +198,7 @@ Long reads characteristics
      - Nanopore-Oct2021
      - It tells the pipeline which shasta pre-set configuration to use when assembling nanopore reads. Please read the `shasta configuration manual page <https://chanzuckerberg.github.io/shasta/Configurations.html>`_ to know the available models. 
 
-   * - ``--corrected_long_reads``
+   * - ``--corrected_longreads``
      - false
      - It tells the pipeline to interpret the input long reads as "corrected". This will activate (if available) the options for corrected reads in the assemblers. For example: ``-corrected`` (in canu), ``--pacbio-corr|--nano-corr`` (in flye), etc. Be cautious when using this parameter. If your reads are not corrected, and you use this parameter, you will probably do not generate any contig.
 
