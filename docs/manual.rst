@@ -200,7 +200,17 @@ Long reads characteristics
 
    * - ``--corrected_longreads``
      - false
-     - It tells the pipeline to interpret the input long reads as "corrected". This will activate (if available) the options for corrected reads in the assemblers. For example: ``-corrected`` (in canu), ``--pacbio-corr|--nano-corr`` (in flye), etc. Be cautious when using this parameter. If your reads are not corrected, and you use this parameter, you will probably do not generate any contig.
+     - It tells the pipeline to interpret the input long reads as "corrected". This will activate (if available) the options for corrected reads in the assemblers. Be cautious when using this parameter. If your reads are not corrected, and you use this parameter, you will probably do not generate any contig.
+
+   * - ``--high_quality_longreads``
+     - false
+     - It tells the pipeline to interpret the input long reads as "corrected". This will activate (if available) the options for high reads in the assemblers. Be cautious when using this parameter. If your reads are not corrected, and you use this parameter, you will probably do not generate any contig.
+
+.. note::
+
+	 By default, long reads assemblers are used with settings for uncorrected reads. A few assemblers allow pre-setting values for corrected (``--corrected_longreads```) or even high quality long reads (``--high_quality_longreads```).
+   High quality long reads are for example reads produced by new SMS algorithms like pacbio hifi and ont R10x which 
+   can yield >20Q reads.
 
 Long reads polishers
 ^^^^^^^^^^^^^^^^^^^^
