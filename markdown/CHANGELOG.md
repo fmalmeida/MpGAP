@@ -7,6 +7,7 @@ The tracking for changes started in v2.
 * Update unicyler to v0.5.0
 * Adjust Pilon polishing module to select how many rounds of polishing to run. Default is 4.
 * Adjust `raven` module to allow pre-set `-k` and `-w` values for corrected/high-quality longreads, while allowinf user modification
+* Increase default `--max_memory` value to 20.GB.
 
 ## v3.1.4 -- [2022-Sep-03]
 

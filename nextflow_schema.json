@@ -48,7 +48,7 @@
                 },
                 "max_memory": {
                     "type": "string",
-                    "default": "14.GB",
+                    "default": "20.GB",
                     "description": "Max amount of memory to use"
                 },
                 "max_time": {

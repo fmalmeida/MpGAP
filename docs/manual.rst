@@ -125,12 +125,12 @@ Also, by its nature, nextflow tries to execute as much as he can in parallel. So
 
    * - ``--max_cpus``
      - N
-     - 4
+     - 6
      - Max number of threads to use in parallel
    
    * - ``--max_memory``
      - N
-     - 6.GB
+     - 20.GB
      - Max amount of memory to be used by pipeline
    
    * - ``--max_time``
