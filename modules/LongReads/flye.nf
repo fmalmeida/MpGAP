@@ -16,7 +16,10 @@ process flye {
   script:
   lr        = (lr_type == 'nanopore') ? '--nano' : '--pacbio'
   if (corrected_longreads.toBoolean())    { lrparam = lr + '-corr' }
-  else if (high_quality_longreads.toBoolean()) { lrparam = lr + (lr_type == 'nanopore') ? '-hq' : '-hifi' }
+  else if (high_quality_longreads.toBoolean()) {
+    lrsuffix = (lr_type == 'nanopore') ? '-hq' : '-hifi'
+    lrparam  = lr + lrsuffix
+  }
   else { lrparam = lr + '-raw' }
   gsize     = (genome_size) ? "--genome-size ${genome_size}" : ""
   additional_params = (params.flye_additional_parameters) ? params.flye_additional_parameters : ""
