@@ -15,7 +15,7 @@ process canu {
 
   script:
   lr        = (lr_type == 'nanopore') ? '-nanopore' : '-pacbio'
-  corrected = (corrected_longreads == 'true' || high_quality_longreads == true) ? '-corrected' : '' // canu does not have a specific config for high-quality, however, --corrected means, skipping canu read correction phase, which is what we want.
+  corrected = (corrected_longreads.toBoolean() || high_quality_longreads.toBoolean()) ? '-corrected' : '' // canu does not have a specific config for high-quality, however, --corrected means, skipping canu read correction phase, which is what we want.
   fixed_id = id - ":strategy_2"
   additional_params = (params.canu_additional_parameters) ? params.canu_additional_parameters : ""
   """

@@ -16,11 +16,11 @@ process raven {
   script:
   additional_params = (params.raven_additional_parameters) ? params.raven_additional_parameters : ""
   corrected = ''
-  if (corrected_longreads == 'true') {
+  if (corrected_longreads.toBoolean()) {
     if ( additional_params.tokenize(' ').intersect( ['-k', '--kmer-len'  ] ) == 0 ) { corrected = corrected + '-k 30'}
     if ( additional_params.tokenize(' ').intersect( ['-w', '--window-len'] ) == 0 ) { corrected = corrected + '-w 10'}
   }
-  if (high_quality_longreads == 'true') {
+  if (high_quality_longreads.toBoolean()) {
     if ( additional_params.tokenize(' ').intersect( ['-k', '--kmer-len'  ] ) == 0 ) { corrected = corrected + '-k 45'}
     if ( additional_params.tokenize(' ').intersect( ['-w', '--window-len'] ) == 0 ) { corrected = corrected + '-w 15'}
   }
