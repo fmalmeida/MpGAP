@@ -5,12 +5,12 @@
 /*
  * Module for assessing assembly qualities
  */
-include { quast }   from '../modules/QualityAssessment/quast.nf'
+include { quast   } from '../modules/QualityAssessment/quast.nf'
 include { multiqc } from '../modules/QualityAssessment/multiqc.nf'
 
 workflow ASSEMBLY_QC {
   take:
-      input_tuple
+    input_tuple
   
   main:
 
