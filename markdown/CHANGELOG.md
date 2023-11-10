@@ -2,13 +2,7 @@
 
 The tracking for changes started in v2.
 
-## v3.2 -- TBD
-
-* Update unicyler to v0.5.0
-* Adjust Pilon polishing module to select how many rounds of poloshing to run. Default is 4.
-* Add a directory called `final_assemblies` in the main output directory holding all the assemblies generated in the pipeline execution.
-
-## v3.1.4 -- [2022-Sep-03]
+## v3.1.4 -- [2022-Mar-03]
 
 This version addresses the changes discussed in [#36](https://github.com/fmalmeida/MpGAP/issues/36), [#37](https://github.com/fmalmeida/MpGAP/issues/37) and [#38](https://github.com/fmalmeida/MpGAP/issues/38).
 Its main changes are:
@@ -19,7 +13,6 @@ Its main changes are:
 * Customized labels to ask for a little bit more on first run
 * Added a module config for quast to ask for more memory and cpus on first run, removing it from 'process_low' label
 * Added a simple command in pilon module to ensure it starts with a "fresh" output dir to place results
-* Added a new option called `--skip_raw_assemblies_polishing` which, when running `hybrid strategy 2` avoids polishing raw long reads assemblies with short reads, instead, it only polishes the assemblies that have been already polished with `medaka`.
 
 ## v3.1.3 -- [2022-Mar-03]
 
