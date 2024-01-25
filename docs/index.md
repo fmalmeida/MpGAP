@@ -1,6 +1,6 @@
 # Welcome to <u>MpGAP</u> pipeline documentation
 
-<img src="./lab_logo.png" width="300px">
+<img src="assets/lab_logo.png" width="300px">
 
 [![F1000 Paper](https://img.shields.io/badge/Citation%20F1000-10.12688/f1000research.139488.1-orange)](https://doi.org/10.12688/f1000research.139488.1)
 [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/fmalmeida/mpgap?include_prereleases&label=Latest%20release)](https://github.com/fmalmeida/mpgap/releases)

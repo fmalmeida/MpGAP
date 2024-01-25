@@ -14,5 +14,5 @@ Default configuration
 ---------------------
 
 ```groovy
-{% include 'defaults.config' %}
+{% include 'assets/defaults.config' %}
 ```
