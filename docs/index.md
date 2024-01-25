@@ -1,4 +1,4 @@
-# Welcome to <u>ngs-preprocess</u> pipeline documentation
+# Welcome to <u>MpGAP</u> pipeline documentation
 
 <img src="./lab_logo.png" width="300px">
 
