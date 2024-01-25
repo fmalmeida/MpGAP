@@ -7,7 +7,7 @@ nav:
 - Home: index.md
 - Installation: installation.md
 - Quickstart: quickstart.md
-- Examples: examples.md
+- Samplesheet: samplesheet.md
 - Non-bacterial example use case: non_bacteria.md
 - Outputs: outputs.md
 - Manual: manual.md

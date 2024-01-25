@@ -162,7 +162,3 @@ However, they can also be set in a sample-specific manner. If a sample has a val
 | `--shovill_additional_parameters`              | :material-close: | False | Passes additional parameters for Shovill assembler. E.g. `" --depth 15 "`. Must be given as shown in Shovill's manual. The pipeline already executes shovill with spades, skesa and megahit, so please, do not use it with shovill's `--assembler` parameter |
 | `--skip_megahit`              | :material-close: | False | Skip the execution of Megahit |
 | `--megahit_additional_parameters`              | :material-close: | False | Passes additional parameters for Megahit assembler. E.g. `" --presets meta-large "`. Must be given as shown in Megahit's manual |
-
-## Examples
-
-For a better understanding of the usage we provided a feel examples. See some [examples](examples.md#).
