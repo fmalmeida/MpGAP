@@ -30,7 +30,7 @@ Here, taking advantage of the `hybrid_strategy` YAML key, we will create a sampl
 
 !!! note "The assembly strategies"
 
-  If this key is not used, the pipeline will run the default strategy (1), which can be changed with the parameter `--hybrid_strategy`. For more information on the hybrid assembly strategies please see the [manual reference page](manual.md#).
+    If this key is not used, the pipeline will run the default strategy (1), which can be changed with the parameter `--hybrid_strategy`. For more information on the hybrid assembly strategies please see the [manual reference page](manual.md#).
 
 A proper samplesheet for this data will look like this:
 
