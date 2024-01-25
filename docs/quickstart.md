@@ -39,10 +39,10 @@ A proper samplesheet for this data will look like this:
 # samplesheet file of e. coli 30X reads
 # input entry will perform both hybrid strategies
 samplesheet:
-- id: ecoli_30X
+  - id: ecoli_30X
     illumina:
-    - SRR8482585_30X_1.fastq.gz
-    - SRR8482585_30X_2.fastq.gz
+      - SRR8482585_30X_1.fastq.gz
+      - SRR8482585_30X_2.fastq.gz
     nanopore: SRX5299443_30X.fastq.gz
     hybrid_strategy: both
     genome_size: 4m
@@ -52,13 +52,13 @@ Copy it's content and save it in a file called `samplesheet.yml`, and now, we ar
 
 ```bash
 # Run the pipeline
-  nextflow run fmalmeida/mpgap \
-    --output _ASSEMBLY \
-    --max_cpus 5 \
-    --skip_spades \
-    --input "samplesheet.yml" \
-    --unicycler_additional_parameters ' --mode conservative ' \
-    -profile <docker/singularity/conda>
+nextflow run fmalmeida/mpgap \
+  --output _ASSEMBLY \
+  --max_cpus 5 \
+  --skip_spades \
+  --input "samplesheet.yml" \
+  --unicycler_additional_parameters ' --mode conservative ' \
+  -profile <docker/singularity/conda>
 ```
 
 !!! tip
