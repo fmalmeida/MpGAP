@@ -16,8 +16,8 @@ nav:
 theme:
   name: material
   palette:
-    primary: red
-    accent: blue grey
+    primary: blue
+    accent: red
   icon:
     repo: fontawesome/brands/github-alt
   features:
