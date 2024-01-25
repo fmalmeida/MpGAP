@@ -14,7 +14,7 @@ You can easily get a copy of the pipeline with:
 
 ```bash
 # nextflow pull
-nextflow pull fmalmeida/ngs-preprocess
+nextflow pull fmalmeida/mpgap
 ```
 
 !!! warning
@@ -28,7 +28,7 @@ nextflow pull fmalmeida/ngs-preprocess
 If you want to download it yourself, you can do it like the following:
 
 ```bash
-docker pull fmalmeida/ngs-preprocess:v2.6
+docker pull fmalmeida/mpgap:v3.2
 ```
 
 !!! info "If using singularity"
@@ -40,10 +40,10 @@ docker pull fmalmeida/ngs-preprocess:v2.6
     ```bash
     # apply this command to each image
     # just change the "/" and ":" for "-".
-    # E.g. Image fmalmeida/ngs-preprocess:v2.6 becomes fmalmeida-ngs-preprocess-v2.6.img
+    # E.g. Image fmalmeida/mpgap:v3.2 becomes fmalmeida-mpgap-v3.2.img
     singularity pull \
         --dir $NXF_SINGULARITY_LIBRARYDIR \
-        fmalmeida-ngs-preprocess-v2.6.img docker://fmalmeida/ngs-preprocess:v2.6
+        fmalmeida-mpgap-v3.2.img docker://fmalmeida/mpgap:v3.2
     ```
 
 !!! info "If using conda"
@@ -51,7 +51,7 @@ docker pull fmalmeida/ngs-preprocess:v2.6
     You would need to first download the environment file and create the pipeline's conda environment. Example:
 
     ```bash
-    wget https://github.com/fmalmeida/ngs-preprocess/raw/master/environment.yml
+    wget https://github.com/fmalmeida/mpgap/raw/master/environment.yml
     conda env create -f environment.yml # advice: use mamba
     ```
 
