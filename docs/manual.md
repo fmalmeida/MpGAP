@@ -2,7 +2,7 @@
 
 ```bash
 # Get help in the command line
-nextflow run fmalmeida/ngs-preprocess --help
+nextflow run fmalmeida/mpgap --help
 ```
 
 !!! tip
@@ -11,69 +11,126 @@ nextflow run fmalmeida/ngs-preprocess --help
 
 ## Input description
 
-* path to fastq files containing sequencing reads
-* path to Pacbio .bam or .h5 files containing raw data
-* path containing list of SRA IDs
+* path to fastq files containing sequencing reads (Illumina, Nanopore or Pacbio)
+* path to Pacbio subreads.bam file containing raw data (Optional)
+* path to Nanopore FAST5 files containing raw data (Optional)
 
-!!! warning "Watch your input"
+The input data must be provided via a samplesheet in YAML format given via the `--input` parameter. Please read the [samplesheet reference page](samplesheet.md#) to understand how to properly create one.
 
-    Users must **never** use hard or symbolic links. This will make nextflow fail.
+!!! tip
+    
+    A samplesheet template can be downloaded with: `nextflow run fmalmeida/mpgap --get_samplesheet`
 
-    Whenever using REGEX for a pattern match, for example "illumina/SRR9847694_{1,2}.fastq.gz" or "illumina/SRR*.fastq.gz", it MUST ALWAYS be inside double quotes.
+## Assembly possibilities
 
-    **Remember:** the pipeline does not concatenate the reads. Whenever you use a pattern such as \* the pipeline will process each read (or pair) that match this pattern separately.
+The pipeline is capable of assembling Illumina, ONT and Pacbio reads in three main ways:
 
-## Output options
+1. Short reads only assemblies
+
+   + Unicycler
+   + SPAdes
+   + Megahit
+   + Shovill (for paired reads only).
+
+!!! note
+    
+    [Shovill](https://github.com/tseemann/shovill) is a software that can work with different assemblers as its core. The pipeline executes shovill with both `spades`, `skesa` and `megahit`, so user can compare the results.
+
+2. Long reads only assemblies
+
+   + Unicycler
+   + Canu
+   + Flye
+   + Raven
+   + Shasta
+   + wtdbg2
+
+3. Hybrid assemblies (using both short and long reads)
+
+   + Unicycler
+   + SPAdes
+   + Haslr
+   + Use short reads to correct errors (polish) in long reads assemblies.
+
+## Hybrid assembly strategies
+
+Hybrid assemblies can be produced with two available strategies that are described below. To choose the strategies adopted, users must set the `hybrid_strategy` parameter either from inside the YAML file (which will overwrite, for that sample, any value set) as described in the [samplesheet reference page](samplesheet.md#) or with the `--hybrid-strategy` parameter to set a new default value for all samples.
+
+Valid options are: `1`, `2` or `both`.
+
+### Strategy 1
+
+By using [Unicycler](https://github.com/rrwick/Unicycler#method-hybrid-assembly), [Haslr](https://github.com/vpc-ccg/haslr) and/or [SPAdes](https://pubmed.ncbi.nlm.nih.gov/26589280/) specialized hybrid assembly modules.
+
+!!! note
+
+    It is achieved when using `--hybrid_strategy 1` or `--hybrid_strategy both`
+
+### Strategy 2
+
+By polishing (correcting errors) a long reads only assembly with Illumina reads. This will tell the pipeline to produce a long reads only assembly (with canu, wtdbg2, shasta, raven, flye or unicycler) and polish it with [Pilon](https://github.com/broadinstitute/pilon). By default, it runs 4 rounds of polishing (`params.pilon_polish_rounds`).
+
+!!! note
+
+    It is achieved when using `--hybrid_strategy 2` or `--hybrid_strategy both`
+
+Additionally, these long reads only assemblies can also be polished with Nanopolish or Racon+Medaka tools for nanopore reads and gcpp for Pacbio reads, before polishing with short reads. For that, users must properly set the **samplesheet** parameters (`medaka_model`, `nanopolish_fast5` and/or `pacbio_bam`).
+
+## Parameters documentation
+
+Please note that, through the command line, the parameters that are boolean (true or false) do not expect any value to be given for them. They must be used by itself, for example: `--skip_spades --skip_flye`.
+
+### Input and Output options
 
 | <div style="width:180px">Parameter</div> | Required | Default | Description |
 | :--------------------------------------- | :------- | :------ | :---------- |
-| `--output`  | :material-check: | NA       | Directory to store output files |
+| `--input`   | :material-check: | NA      | Path to input [samplesheet](samplesheet.md#) in YAML format |
+| `--output`  | :material-check: | NA      | Directory to store output files                             |
 
 ## Max job request
 
 | <div style="width:120px">Parameter</div> | Required | Default | Description |
 | :--------------------------------------- | :------- | :------ | :---------- |
-| `--max_cpus`  | :material-close: | 4  | Max number of threads a job can use across attempts |
-| `--max_memory` | :material-close: | 6.GB | Max amount of memory a job can use across attempts |
-| `--max_time` | :material-close: | 40.h | Max amount of time a job can take to run
+| `--max_cpus`   | :material-close: | 4    | Max number of threads a job can use across attempts |
+| `--max_memory` | :material-close: | 6.GB | Max amount of memory a job can use across attempts  |
+| `--max_time`   | :material-close: | 40.h | Max amount of time a job can take to run            | 
 
-## SRA IDs as input
+## Assemblies configuration
 
-As of version v2.5, users can also select data directly from SRA. One just need to provide a txt file containing SRA run ids, one per line, e.g. [Example](https://github.com/fmalmeida/test_datasets/blob/main/sra_ids.txt).
+All these parameters listed below (for genome size, assembly strategy, long reads characteristics and for long reads polishers) if used via the command line or from the NF config file, they will set values in a global manner for all the samples.
+
+However, they can also be set in a sample-specific manner. If a sample has a value for one of these parameters in the [samplesheet](samplesheet.md#), it will overwrite the "global/default" value **for that specific sample** and use the one provided inside the YAML.
+
+### Genome size
 
 | <div style="width:160px">Parameter</div> | Required | Default | Description |
 | :--------------------------------------- | :------- | :------ | :---------- |
-| `--sra_ids`      | :material-close: | NA | Path to txt file containing list of SRA run IDs |
+| `--genome_size`      | :material-close: | NA | This sets the expected genome sizes for canu, wtdbg2 and haslr assemblers, which require this value. Options are estimatives with common suffices, for example: `3.7m`, `2.8g`, etc. |
 
-## Short reads input
+### Hybrid assembly strategies
+
+| <div style="width:160px">Parameter</div> | Required | Default | Description |
+| :--------------------------------------- | :------- | :------ | :---------- |
+| `--hybrid_strategy` | :material-check: | 1 | It tells the pipeline which hybrid assembly strategy to adopt. Options are: `1`, `2` or `both`. Please read the description of the hybrid assembly strategies to better choose the right strategy. |
+
+### Long reads characteristics
 
 | <div style="width:220px">Parameter</div> | Required | Default | Description |
 | :--------------------------------------- | :------- | :------ | :---------- |
-| `--shortreads` | :material-check: | NA | String Pattern to find short reads. Example: "SRR6307304_{1,2}.fastq" |
-| `--shortreads_type` | :material-check: | NA | (single \| paired). Tells whether input is unpaired or paired end |
-| `--fastp_average_quality` | :material-close: | 20 | Fastp will filter out reads with mean quality less than this |
-| `--fastp_correct_pairs` | :material-close: | false | If set, tells Fastp to try to correct paired end reads. Only works for paired end reads |
-| `--fastp_merge_pairs` | :material-close: | false | If set, tells Fastp to try to merge read pairs |
-| `--fastp_additional_parameters` | :material-close: | false | Pass on any additional parameter to Fastp. The tool's parameters are described in their [manual](https://github.com/OpenGene/fastp) |
+| `--wtdbg2_technology`    | :material-close: | ont/sq           | It tells the pipeline which technology the long reads are, which is required for wtdbg2. Options are: `ont` for Nanopore reads, `rs` for PacBio RSII, `sq` for PacBio Sequel, `ccs` for PacBio CCS reads. With not wanted, consider using `--skip_wtdbg2` |
+| `--shasta_config`        | :material-close: | Nanopore-Oct2021 | It tells the pipeline which shasta pre-set configuration to use when assembling nanopore reads. Please read the [shasta configuration manual page](https://chanzuckerberg.github.io/shasta/Configurations.html) to know the available models |
+| `--corrected_long_reads` | :material-check: | False            | It tells the pipeline to interpret the input long reads as "corrected". This will activate (if available) the options for corrected reads in the assemblers. For example: `-corrected` (in canu), `--pacbio-corr|--nano-corr` (in flye), etc. Be cautious when using this parameter. If your reads are not corrected, and you use this parameter, you will probably do not generate any contig |
 
-## Long reads input
+### Long reads polishers
 
 | <div style="width:220px">Parameter</div> | Required | Default | Description |
 | :--------------------------------------- | :------- | :------ | :---------- |
-| `--lreads_min_length` | :material-close: | 500 | Length min. threshold for filtering long reads (ONT or Pacbio) |
-| `--lreads_min_quality` | :material-close: | 5 | Quality min. threshold for filtering long reads (ONT or Pacbio) |
-| `--nanopore_fastq` | :material-check: | NA | Sets path to nanopore fastq files. Pre-processes basecalled long reads |
-| `--nanopore_is_barcoded` | :material-close: | false | Tells whether your data (Nanopore or Pacbio) is barcoded or not. It will split barcodes into single files. Users with legacy pacbio data need to first produce a new barcoded_subreads.bam file |
-| `--nanopore_sequencing_summary` | :material-close: | NA | Path to nanopore 'sequencing_summary.txt'. Using this will make the pipeline render a sequencing statistics report using pycoQC. pycoQC reports will be saved using the files basename, so please, use meaningful basename, such as: sample1.txt, sample2.txt, etc. Preferentially, using the same basename as the fastq |
-| `--pacbio_bam` | :material-close: | NA | Path to Pacbio subreads.bam. Only used if user wants to basecall subreads.bam to FASTQ. Always keep subreads.bam and its relative subreads.bam.pbi files in the same directory |
-| `--pacbio_h5` | :material-close: | NA | Path to directory containing legacy bas.h5 data file (1 per directory). It will be used to extract reads in FASTQ file. All its related files (e.g. bax.h5 files) must be in the same directory |
-| `--pacbio_barcodes` | :material-close: | NA | Path to xml/fasta file containing barcode information. It will split barcodes into single files. Will be used for all pacbio inputs, h5 or bam |
-| `--pacbio_barcode_design` | :material-close: | same | Select the combination of barcodes for demultiplexing. Options: same, different, any |
-| `--pacbio_get_hifi` | :material-close: | false | Whether or not to try to compute CCS reads. Will be used for all pacbio inputs, h5 or bam |
+| `--medaka_model`              | :material-close: | r941_min_high_g360 | It tells the pipeline which available medaka model to use to polish nanopore long reads assemblies. Please read [medaka manual](https://github.com/nanoporetech/medaka#models) to see available models |
+| `--nanopolish_max_haplotypes` | :material-close: | 1000 | It sets the maximum number of haplotypes to be considered by Nanopolish. Sometimes the pipeline may crash because to much variation was found exceeding the limit |
 
-All this parameters are configurable through a configuration file. We encourage users to use the configuration
-file since it will keep your execution cleaner and more readable. See a [config](config.md#) example.
+!!! note
 
+    For assembly polishing with medaka models, the assembly is first polished one time with racon using the `-m 8 -x -6 -g -8 -w 500` as this is the dataset in which Medaka has been trained on. Therefore, the medaka polishing in this pipeline mean Racon 1X + Medaka.
 
 ## Examples
 
