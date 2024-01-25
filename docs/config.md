@@ -4,10 +4,10 @@ To download a configuration file template users just use `--get_config` paramete
 
 ```bash
 # get config
-nextflow run fmalmeida/ngs-preprocess --get_config
+nextflow run fmalmeida/mpgap --get_config
 
 # run with config
-nextflow run fmalmeida/ngs-preprocess -c [path-to-config]
+nextflow run fmalmeida/mpgap -c [path-to-config]
 ```
 
 Default configuration
