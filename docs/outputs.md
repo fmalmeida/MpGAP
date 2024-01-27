@@ -41,12 +41,12 @@ Here I am going to display just a very few examples of results produced, focusin
 
 **Summary of Assembly Statistics in TXT format**
 
-Open it [here](../assets/NanoPlot-report.html).
+Open it [here](../assets/ASSEMBLY_SUMMARY.txt).
 
 **MultiQC Report - HTML**
 
-Open it [here](../assets/NanoPlot-report.html).
+Open it [here](../assets/multiqc_report_confident_brenner.html).
 
 **Quast Report of Flye assembly - HTML**
 
-Open it [here](../assets/NanoPlot-report.html).
+Open it [here](../assets/flye_medaka/report.html).
