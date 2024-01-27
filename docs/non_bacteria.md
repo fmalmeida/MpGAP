@@ -37,6 +37,7 @@ nextflow run fmalmeida/mpgap \
     --input input.yml \
     --skip_unicycler \
     --flye_additional_parameters ' --keep-haplotypes ' \
+    --quast_additional_parameters ' --eukaryote ' \
     --max_cpus 20 \
     --max_memory '40.GB'
 ```
@@ -44,6 +45,7 @@ nextflow run fmalmeida/mpgap \
 !!! note
 
     Unicycler was skipped since it is known to not work well with long reads alone.
+    Finally, it was passed down an additional parameter to quast so it uses eukaryote tools and databases for gene prediction and completeness QC. Otherwise, it uses bacteria.
 
 ## Afterwards
 
