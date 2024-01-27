@@ -4,7 +4,11 @@ The samplesheet is a required YAML document that is used to describe the input s
 
 !!! tip
 
-    A samplesheet template can be downloaded with: `nextflow run fmalmeida/mpgap --get_samplesheet`
+    A samplesheet template can be downloaded with:
+    
+    ```bash
+    nextflow run fmalmeida/mpgap --get_samplesheet
+    ```
     
 A guide on how to proper configure it is shown below:
 
