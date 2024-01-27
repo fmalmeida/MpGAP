@@ -1,0 +1,25 @@
+[bwa_index] Pack FASTA... 0.31 sec
+[bwa_index] Construct BWT for the packed sequence...
+[BWTIncCreate] textLength=58653868, availableWord=16126668
+[BWTIncConstructFromPacked] 10 iterations done. 26600924 characters processed.
+[BWTIncConstructFromPacked] 20 iterations done. 49141164 characters processed.
+[bwa_index] 12.26 seconds elapse.
+[bwa_index] Update BWT... 0.37 sec
+[bwa_index] Pack forward-only FASTA... 0.20 sec
+[bwa_index] Construct SA from BWT and Occ... 6.25 sec
+[bwt_gen] Finished constructing BWT in 25 iterations.
+[main] Version: 0.7.15-r1140
+[main] CMD: /opt/conda/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/bwa/bwa index -p /array1/falmeida/NF_WORK/b5/b01b746862fb7794f41db3f2d4bab6/flye_medaka/quast_corrected_input/flye_medaka_consensus.fa /array1/falmeida/NF_WORK/b5/b01b746862fb7794f41db3f2d4bab6/flye_medaka/quast_corrected_input/flye_medaka_consensus.fa
+[main] Real time: 19.464 sec; CPU: 19.395 sec
+[M::mm_idx_gen::0.962*1.00] collected minimizers
+[M::mm_idx_gen::1.244*1.23] sorted minimizers
+[M::main::1.245*1.23] loaded/built the index for 75 target sequence(s)
+[M::mm_mapopt_update::1.321*1.22] mid_occ = 12
+[M::mm_idx_stat] kmer size: 15; skip: 10; is_hpc: 0; #seq: 75
+[M::mm_idx_stat::1.374*1.21] distinct minimizers: 5209067 (96.29% are singletons); average occurrences: 1.052; average spacing: 5.349; total length: 29326934
+[M::worker_pipeline::126.977*2.02] mapped 137091 sequences
+[M::worker_pipeline::240.199*2.06] mapped 141675 sequences
+[M::worker_pipeline::342.585*2.03] mapped 131225 sequences
+[M::main] Version: 2.22-r1101
+[M::main] CMD: /opt/conda/envs/mpgap-3.1/bin/minimap2 -t 2 -ax map-ont /array1/falmeida/NF_WORK/b5/b01b746862fb7794f41db3f2d4bab6/flye_medaka/quast_corrected_input/flye_medaka_consensus.fa /array1/falmeida/NF_WORK/b5/b01b746862fb7794f41db3f2d4bab6/SRR23337893.filtered.fq.gz
+[M::main] Real time: 342.612 sec; CPU: 696.407 sec; Peak RSS: 2.728 GB

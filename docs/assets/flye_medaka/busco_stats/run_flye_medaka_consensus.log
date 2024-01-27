@@ -1,0 +1,105 @@
+****************** Start a BUSCO 3.0.2 analysis, current time: 12/29/2023 13:04:52 ******************
+Configuration loaded from /array1/falmeida/NF_WORK/b5/b01b746862fb7794f41db3f2d4bab6/flye_medaka/busco_stats/config.ini
+Init tools...
+Check dependencies...
+Check input file...
+To reproduce this run: python /opt/conda/envs/mpgap-3.1/bin/quast.py -i /array1/falmeida/NF_WORK/b5/b01b746862fb7794f41db3f2d4bab6/flye_medaka/quast_corrected_input/flye_medaka_consensus.fa -o flye_medaka_consensus -l /opt/conda/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/bacteria/ -m genome -c 4 -t /array1/falmeida/NF_WORK/b5/b01b746862fb7794f41db3f2d4bab6/flye_medaka/busco_stats/tmp/ -sp fly --augustus_parameters ''''
+Mode is: genome
+The lineage dataset is: bacteria_odb9 (prokaryota)
+Delete the current result folder and start a new run
+Temp directory is /array1/falmeida/NF_WORK/b5/b01b746862fb7794f41db3f2d4bab6/flye_medaka/busco_stats/tmp/
+****** Phase 1 of 2, initial predictions ******
+****** Step 1/3, current time: 12/29/2023 13:04:52 ******
+Create blast database...
+[makeblastdb]	Building a new DB, current time: 12/29/2023 13:04:53
+[makeblastdb]	New DB name:   /array1/falmeida/NF_WORK/b5/b01b746862fb7794f41db3f2d4bab6/flye_medaka/busco_stats/tmp/flye_medaka_consensus_3275640040
+[makeblastdb]	New DB title:  /array1/falmeida/NF_WORK/b5/b01b746862fb7794f41db3f2d4bab6/flye_medaka/quast_corrected_input/flye_medaka_consensus.fa
+[makeblastdb]	Sequence type: Nucleotide
+[makeblastdb]	Keep MBits: T
+[makeblastdb]	Maximum file size: 1000000000B
+[makeblastdb]	Adding sequences from FASTA; added 75 sequences in 0.382545 seconds.
+[makeblastdb]	1 of 1 task(s) completed at 12/29/2023 13:04:54
+Running tblastn, writing output to /array1/falmeida/NF_WORK/b5/b01b746862fb7794f41db3f2d4bab6/flye_medaka/busco_stats/run_flye_medaka_consensus/blast_output/tblastn_flye_medaka_consensus.tsv...
+[tblastn]	1 of 1 task(s) completed at 12/29/2023 13:05:05
+****** Step 2/3, current time: 12/29/2023 13:05:05 ******
+Maximum number of candidate contig per BUSCO limited to: 3
+Getting coordinates for candidate regions...
+Pre-Augustus scaffold extraction...
+Running Augustus prediction using fly as species:
+Additional parameters for Augustus are '': 
+[augustus]	Please find all logs related to Augustus errors here: /array1/falmeida/NF_WORK/b5/b01b746862fb7794f41db3f2d4bab6/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/augustus.log
+[augustus]	9 of 83 task(s) completed at 12/29/2023 13:05:12
+[augustus]	17 of 83 task(s) completed at 12/29/2023 13:05:17
+[augustus]	25 of 83 task(s) completed at 12/29/2023 13:05:24
+[augustus]	34 of 83 task(s) completed at 12/29/2023 13:05:33
+[augustus]	42 of 83 task(s) completed at 12/29/2023 13:05:39
+[augustus]	50 of 83 task(s) completed at 12/29/2023 13:05:46
+[augustus]	59 of 83 task(s) completed at 12/29/2023 13:05:53
+[augustus]	67 of 83 task(s) completed at 12/29/2023 13:05:59
+[augustus]	75 of 83 task(s) completed at 12/29/2023 13:06:05
+[augustus]	83 of 83 task(s) completed at 12/29/2023 13:06:12
+Extracting predicted proteins...
+****** Step 3/3, current time: 12/29/2023 13:06:13 ******
+Running HMMER to confirm orthology of predicted proteins:
+[hmmsearch]	9 of 83 task(s) completed at 12/29/2023 13:06:13
+[hmmsearch]	17 of 83 task(s) completed at 12/29/2023 13:06:13
+[hmmsearch]	42 of 83 task(s) completed at 12/29/2023 13:06:14
+[hmmsearch]	50 of 83 task(s) completed at 12/29/2023 13:06:14
+[hmmsearch]	59 of 83 task(s) completed at 12/29/2023 13:06:14
+[hmmsearch]	75 of 83 task(s) completed at 12/29/2023 13:06:14
+[hmmsearch]	83 of 83 task(s) completed at 12/29/2023 13:06:14
+Results:
+C:18.3%[S:16.9%,D:1.4%],F:6.1%,M:75.6%,n:148
+27 Complete BUSCOs (C)
+25 Complete and single-copy BUSCOs (S)
+2 Complete and duplicated BUSCOs (D)
+9 Fragmented BUSCOs (F)
+112 Missing BUSCOs (M)
+148 Total BUSCO groups searched
+****** Phase 2 of 2, predictions using species specific training ******
+****** Step 1/3, current time: 12/29/2023 13:06:14 ******
+Extracting missing and fragmented buscos from the ancestral_variants file...
+Running tblastn, writing output to /array1/falmeida/NF_WORK/b5/b01b746862fb7794f41db3f2d4bab6/flye_medaka/busco_stats/run_flye_medaka_consensus/blast_output/tblastn_flye_medaka_consensus_missing_and_frag_rerun.tsv...
+[tblastn]	1 of 1 task(s) completed at 12/29/2023 13:07:23
+Maximum number of candidate contig per BUSCO limited to: 3
+Getting coordinates for candidate regions...
+****** Step 2/3, current time: 12/29/2023 13:07:23 ******
+Training Augustus using Single-Copy Complete BUSCOs:
+Converting predicted genes to short genbank files at 12/29/2023 13:07:23...
+All files converted to short genbank files, now running the training scripts at 12/29/2023 13:07:23...
+Pre-Augustus scaffold extraction...
+Re-running Augustus with the new metaparameters, number of target BUSCOs: 121
+[augustus]	7 of 68 task(s) completed at 12/29/2023 13:07:25
+[augustus]	14 of 68 task(s) completed at 12/29/2023 13:07:26
+[augustus]	21 of 68 task(s) completed at 12/29/2023 13:07:27
+[augustus]	28 of 68 task(s) completed at 12/29/2023 13:07:28
+[augustus]	34 of 68 task(s) completed at 12/29/2023 13:07:29
+[augustus]	41 of 68 task(s) completed at 12/29/2023 13:07:31
+[augustus]	48 of 68 task(s) completed at 12/29/2023 13:07:32
+[augustus]	55 of 68 task(s) completed at 12/29/2023 13:07:33
+[augustus]	62 of 68 task(s) completed at 12/29/2023 13:07:34
+[augustus]	68 of 68 task(s) completed at 12/29/2023 13:07:35
+Extracting predicted proteins...
+****** Step 3/3, current time: 12/29/2023 13:07:35 ******
+Running HMMER to confirm orthology of predicted proteins:
+[hmmsearch]	7 of 68 task(s) completed at 12/29/2023 13:07:36
+[hmmsearch]	14 of 68 task(s) completed at 12/29/2023 13:07:36
+[hmmsearch]	21 of 68 task(s) completed at 12/29/2023 13:07:36
+[hmmsearch]	28 of 68 task(s) completed at 12/29/2023 13:07:36
+[hmmsearch]	34 of 68 task(s) completed at 12/29/2023 13:07:36
+[hmmsearch]	41 of 68 task(s) completed at 12/29/2023 13:07:36
+[hmmsearch]	48 of 68 task(s) completed at 12/29/2023 13:07:36
+[hmmsearch]	55 of 68 task(s) completed at 12/29/2023 13:07:36
+[hmmsearch]	62 of 68 task(s) completed at 12/29/2023 13:07:36
+[hmmsearch]	68 of 68 task(s) completed at 12/29/2023 13:07:36
+Results:
+C:19.6%[S:18.2%,D:1.4%],F:7.4%,M:73.0%,n:148
+29 Complete BUSCOs (C)
+27 Complete and single-copy BUSCOs (S)
+2 Complete and duplicated BUSCOs (D)
+11 Fragmented BUSCOs (F)
+108 Missing BUSCOs (M)
+148 Total BUSCO groups searched
+BUSCO analysis done. Total running time: 164.01707315444946 seconds
+Results written in /array1/falmeida/NF_WORK/b5/b01b746862fb7794f41db3f2d4bab6/flye_medaka/busco_stats/run_flye_medaka_consensus/
+

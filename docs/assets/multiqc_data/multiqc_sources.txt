@@ -1,0 +1,11 @@
+Module	Section	Sample Name	Source
+QUAST	all_sections	canu_assembly	/array1/falmeida/NF_WORK/f2/38d5223caf8d829c081334b6246aa6/canu/report.tsv
+QUAST	all_sections	canu_medaka_consensus	/array1/falmeida/NF_WORK/f2/38d5223caf8d829c081334b6246aa6/canu_medaka/report.tsv
+QUAST	all_sections	flye_assembly	/array1/falmeida/NF_WORK/f2/38d5223caf8d829c081334b6246aa6/flye/report.tsv
+QUAST	all_sections	flye_medaka_consensus	/array1/falmeida/NF_WORK/f2/38d5223caf8d829c081334b6246aa6/flye_medaka/report.tsv
+QUAST	all_sections	raven_assembly	/array1/falmeida/NF_WORK/f2/38d5223caf8d829c081334b6246aa6/raven/report.tsv
+QUAST	all_sections	raven_medaka_consensus	/array1/falmeida/NF_WORK/f2/38d5223caf8d829c081334b6246aa6/raven_medaka/report.tsv
+QUAST	all_sections	shasta_assembly	/array1/falmeida/NF_WORK/f2/38d5223caf8d829c081334b6246aa6/shasta/report.tsv
+QUAST	all_sections	shasta_medaka_consensus	/array1/falmeida/NF_WORK/f2/38d5223caf8d829c081334b6246aa6/shasta_medaka/report.tsv
+QUAST	all_sections	wtdbg2_assembly	/array1/falmeida/NF_WORK/f2/38d5223caf8d829c081334b6246aa6/wtdbg2/report.tsv
+QUAST	all_sections	wtdbg2_medaka_consensus	/array1/falmeida/NF_WORK/f2/38d5223caf8d829c081334b6246aa6/wtdbg2_medaka/report.tsv

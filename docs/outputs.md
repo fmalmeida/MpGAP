@@ -39,6 +39,10 @@ Here I am going to display just a very few examples of results produced, focusin
   <img src="../assets/LengthvsQualityScatterPlot_dot.png" width="85%">
 </center>
 
+**Summary of Assembly Statistics in TXT format**
+
+Open it [here](../assets/NanoPlot-report.html).
+
 **MultiQC Report - HTML**
 
 Open it [here](../assets/NanoPlot-report.html).

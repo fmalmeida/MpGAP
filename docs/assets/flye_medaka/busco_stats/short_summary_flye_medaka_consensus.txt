@@ -1,0 +1,15 @@
+# BUSCO version is: 3.0.2 
+# The lineage dataset is: bacteria_odb9 (Creation date: 2016-11-01, number of species: 3663, number of BUSCOs: 148)
+# To reproduce this run: python /opt/conda/envs/mpgap-3.1/bin/quast.py -i /array1/falmeida/NF_WORK/b5/b01b746862fb7794f41db3f2d4bab6/flye_medaka/quast_corrected_input/flye_medaka_consensus.fa -o flye_medaka_consensus -l /opt/conda/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/bacteria/ -m genome -c 4 -t /array1/falmeida/NF_WORK/b5/b01b746862fb7794f41db3f2d4bab6/flye_medaka/busco_stats/tmp/ -sp fly --augustus_parameters ''''
+#
+# Summarized benchmarking in BUSCO notation for file /array1/falmeida/NF_WORK/b5/b01b746862fb7794f41db3f2d4bab6/flye_medaka/quast_corrected_input/flye_medaka_consensus.fa
+# BUSCO was run in mode: genome
+
+	C:19.6%[S:18.2%,D:1.4%],F:7.4%,M:73.0%,n:148
+
+	29	Complete BUSCOs (C)
+	27	Complete and single-copy BUSCOs (S)
+	2	Complete and duplicated BUSCOs (D)
+	11	Fragmented BUSCOs (F)
+	108	Missing BUSCOs (M)
+	148	Total BUSCO groups searched

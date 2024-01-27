@@ -1,0 +1,31 @@
+# A summary of the main assembly statistics
+
+## Main QUAST statistics
+
+Sample                    # contigs   Largest contig   Total length   GC (%)   N50         # total reads   Avg. coverage depth   Coverage >= 1x (%)   Partial BUSCO (%)
+-----------------------   ---------   --------------   ------------   ------   ---------   -------------   -------------------   ------------------   -----------------
+canu_assembly             36.0        4875381.0        29828639.0     49.36    3713674.0   489033.0        51.0                  100.0                9.46
+canu_medaka_consensus     36.0        4881813.0        29866500.0     49.38    3718495.0   488352.0        51.0                  100.0                8.11
+flye_assembly             78.0        3007265.0        29318777.0     49.49    2284302.0   477217.0        49.0                  100.0                7.43
+flye_medaka_consensus     75.0        3009198.0        29326934.0     49.5     2285740.0   476124.0        49.0                  100.0                7.43
+raven_assembly            18.0        4871805.0        29481737.0     49.38    3783467.0   447357.0        46.0                  100.0                8.11
+raven_medaka_consensus    18.0        4874129.0        29482803.0     49.41    3782302.0   451851.0        46.0                  100.0                6.76
+shasta_assembly           351.0       529275.0         28289936.0     49.47    138236.0    487306.0        50.0                  100.0                10.81
+shasta_medaka_consensus   351.0       528393.0         28216330.0     49.45    137787.0    492164.0        50.0                  100.0                8.78
+wtdbg2_assembly           54.0        3931682.0        28619473.0     49.59    2043817.0   478365.0        48.0                  99.85                9.46
+wtdbg2_medaka_consensus   44.0        3938005.0        28627058.0     49.63    2047666.0   478838.0        48.0                  99.99                8.11
+
+## Main BUSCO statistics
+
+Sample                    lineage_dataset   complete   complete_single_copy   complete_duplicated   fragmented   missing   total
+-----------------------   ---------------   --------   --------------------   -------------------   ----------   -------   -----
+canu_assembly             bacteria_odb9     22.0       22.0                   0.0                   14.0         112.0     148.0
+canu_medaka_consensus     bacteria_odb9     29.0       29.0                   0.0                   12.0         107.0     148.0
+flye_assembly             bacteria_odb9     26.0       25.0                   1.0                   11.0         111.0     148.0
+flye_medaka_consensus     bacteria_odb9     29.0       27.0                   2.0                   11.0         108.0     148.0
+raven_assembly            bacteria_odb9     22.0       22.0                   0.0                   12.0         114.0     148.0
+raven_medaka_consensus    bacteria_odb9     29.0       29.0                   0.0                   10.0         109.0     148.0
+shasta_assembly           bacteria_odb9     11.0       11.0                   0.0                   16.0         121.0     148.0
+shasta_medaka_consensus   bacteria_odb9     29.0       29.0                   0.0                   13.0         106.0     148.0
+wtdbg2_assembly           bacteria_odb9     19.0       19.0                   0.0                   14.0         115.0     148.0
+wtdbg2_medaka_consensus   bacteria_odb9     29.0       28.0                   1.0                   12.0         107.0     148.0

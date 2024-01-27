@@ -1,0 +1,45 @@
+##gff-version 3
+contig_1	barrnap:0.8	rRNA	808516	808630	7.9e-08	-	.	Name=5S_rRNA;product=5S ribosomal RNA
+contig_1	barrnap:0.8	rRNA	1056933	1057048	6.1e-08	-	.	Name=5S_rRNA;product=5S ribosomal RNA
+contig_10	barrnap:0.8	rRNA	320317	320432	6.1e-08	-	.	Name=5S_rRNA;product=5S ribosomal RNA
+contig_10	barrnap:0.8	rRNA	1168382	1168497	6.1e-08	+	.	Name=5S_rRNA;product=5S ribosomal RNA
+contig_10	barrnap:0.8	rRNA	1358644	1358759	6.1e-08	-	.	Name=5S_rRNA;product=5S ribosomal RNA
+contig_10	barrnap:0.8	rRNA	1378325	1378439	6.6e-08	-	.	Name=5S_rRNA;product=5S ribosomal RNA
+contig_103	barrnap:0.8	rRNA	1851	1964	7.1e-19	+	.	Name=5S_rRNA;product=5S ribosomal RNA
+contig_103	barrnap:0.8	rRNA	4609	5554	2.9e-81	+	.	Name=16S_rRNA;product=16S ribosomal RNA (partial);note=aligned only 59 percent of the 16S ribosomal RNA
+contig_103	barrnap:0.8	rRNA	6175	8203	5.8e-101	+	.	Name=23S_rRNA;product=23S ribosomal RNA (partial);note=aligned only 62 percent of the 23S ribosomal RNA
+contig_11	barrnap:0.8	rRNA	4150	5083	3.8e-81	+	.	Name=16S_rRNA;product=16S ribosomal RNA (partial);note=aligned only 58 percent of the 16S ribosomal RNA
+contig_11	barrnap:0.8	rRNA	5281	8704	1.8e-208	+	.	Name=23S_rRNA;product=23S ribosomal RNA
+contig_11	barrnap:0.8	rRNA	11976	12908	4.3e-81	+	.	Name=16S_rRNA;product=16S ribosomal RNA (partial);note=aligned only 58 percent of the 16S ribosomal RNA
+contig_11	barrnap:0.8	rRNA	13106	16529	1.6e-208	+	.	Name=23S_rRNA;product=23S ribosomal RNA
+contig_12	barrnap:0.8	rRNA	1267612	1267727	6.1e-08	+	.	Name=5S_rRNA;product=5S ribosomal RNA
+contig_12	barrnap:0.8	rRNA	1287538	1287653	6.1e-08	-	.	Name=5S_rRNA;product=5S ribosomal RNA
+contig_124	barrnap:0.8	rRNA	16255	17667	2.3e-130	+	.	Name=16S_rRNA;product=16S ribosomal RNA
+contig_124	barrnap:0.8	rRNA	21114	22954	2.2e-144	+	.	Name=23S_rRNA;product=23S ribosomal RNA (partial);note=aligned only 56 percent of the 23S ribosomal RNA
+contig_124	barrnap:0.8	rRNA	39264	41105	2.9e-144	-	.	Name=23S_rRNA;product=23S ribosomal RNA (partial);note=aligned only 56 percent of the 23S ribosomal RNA
+contig_124	barrnap:0.8	rRNA	44552	45963	3.1e-130	-	.	Name=16S_rRNA;product=16S ribosomal RNA
+contig_125	barrnap:0.8	rRNA	2008	4720	0	-	.	Name=23S_rRNA;product=23S ribosomal RNA
+contig_125	barrnap:0.8	rRNA	29529	30880	2e-182	-	.	Name=16S_rRNA;product=16S ribosomal RNA
+contig_13	barrnap:0.8	rRNA	146833	146948	6.1e-08	+	.	Name=5S_rRNA;product=5S ribosomal RNA
+contig_13	barrnap:0.8	rRNA	192785	192900	6.1e-08	+	.	Name=5S_rRNA;product=5S ribosomal RNA
+contig_13	barrnap:0.8	rRNA	204654	204769	5.1e-08	+	.	Name=5S_rRNA;product=5S ribosomal RNA
+contig_13	barrnap:0.8	rRNA	271924	272039	2.2e-08	+	.	Name=5S_rRNA;product=5S ribosomal RNA
+contig_13	barrnap:0.8	rRNA	275508	275622	7.9e-08	+	.	Name=5S_rRNA;product=5S ribosomal RNA
+contig_13	barrnap:0.8	rRNA	607374	607488	7.9e-08	-	.	Name=5S_rRNA;product=5S ribosomal RNA
+contig_35	barrnap:0.8	rRNA	178785	178899	1.1e-07	-	.	Name=5S_rRNA;product=5S ribosomal RNA
+contig_35	barrnap:0.8	rRNA	777757	777869	2e-07	-	.	Name=5S_rRNA;product=5S ribosomal RNA
+contig_35	barrnap:0.8	rRNA	962665	962780	6.1e-08	+	.	Name=5S_rRNA;product=5S ribosomal RNA
+contig_5	barrnap:0.8	rRNA	1438212	1438327	4.1e-08	-	.	Name=5S_rRNA;product=5S ribosomal RNA
+contig_5	barrnap:0.8	rRNA	2489833	2489948	6.2e-07	+	.	Name=5S_rRNA;product=5S ribosomal RNA
+contig_6	barrnap:0.8	rRNA	1531243	1531357	6.1e-08	+	.	Name=5S_rRNA;product=5S ribosomal RNA
+contig_6	barrnap:0.8	rRNA	1538163	1538278	2.2e-08	+	.	Name=5S_rRNA;product=5S ribosomal RNA
+contig_6	barrnap:0.8	rRNA	2344955	2345070	2.4e-08	-	.	Name=5S_rRNA;product=5S ribosomal RNA
+contig_79	barrnap:0.8	rRNA	497372	497487	6.1e-08	+	.	Name=5S_rRNA;product=5S ribosomal RNA
+contig_79	barrnap:0.8	rRNA	1754349	1754463	6.6e-08	+	.	Name=5S_rRNA;product=5S ribosomal RNA
+contig_79	barrnap:0.8	rRNA	2150086	2150201	2.6e-07	-	.	Name=5S_rRNA;product=5S ribosomal RNA
+contig_79	barrnap:0.8	rRNA	2152446	2152561	6.1e-08	-	.	Name=5S_rRNA;product=5S ribosomal RNA
+contig_82	barrnap:0.8	rRNA	2221339	2221454	6.1e-08	-	.	Name=5S_rRNA;product=5S ribosomal RNA
+contig_83	barrnap:0.8	rRNA	896187	896302	6.1e-08	-	.	Name=5S_rRNA;product=5S ribosomal RNA
+contig_85	barrnap:0.8	rRNA	612333	612448	6.1e-08	-	.	Name=5S_rRNA;product=5S ribosomal RNA
+contig_85	barrnap:0.8	rRNA	1052744	1052859	3.8e-08	-	.	Name=5S_rRNA;product=5S ribosomal RNA
+contig_85	barrnap:0.8	rRNA	1153592	1153707	4.9e-08	-	.	Name=5S_rRNA;product=5S ribosomal RNA
