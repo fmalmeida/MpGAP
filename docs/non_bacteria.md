@@ -1,6 +1,6 @@
 # Example use case of a non-bacterial dataset
 
-As part of the reviews received in the [published paper](https://doi.org/10.12688/f1000research.139488.1) of this pipeline, it was requested to provide an example use case of the preprocessing pipeline (([ngs-preprocess](https://github.com/fmalmeida/ngs-preprocess))) and this one using a non-bacterial dataset in order to demonstrate that these two pipelines are **not** specific to bacterial genomes.
+As part of the reviews received in the [published paper](https://doi.org/10.12688/f1000research.139488.1) of this pipeline, it was requested to provide an example use case of the preprocessing pipeline ([ngs-preprocess](https://github.com/fmalmeida/ngs-preprocess)) and this one using a non-bacterial dataset in order to demonstrate that these two pipelines are **not** specific to bacterial genomes.
 
 Thus, this is what we are providing in this page. The dataset used here, is the one that has been shown to be preprocessed in our `ngs-preprocess` pipeline. You can check it out [here](https://ngs-preprocess.readthedocs.io/en/latest/non_bacteria/). The data is used then here to show its connection across pipelines.
 

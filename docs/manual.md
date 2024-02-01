@@ -25,32 +25,29 @@ The input data must be provided via a samplesheet in YAML format given via the `
 
 The pipeline is capable of assembling Illumina, ONT and Pacbio reads in three main ways:
 
-1. Short reads only assemblies
-
-   + Unicycler
-   + SPAdes
-   + Megahit
-   + Shovill (for paired reads only).
+1. **Short reads only assemblies**
+    + Unicycler
+    + SPAdes
+    + Megahit
+    + Shovill (for paired reads only).
 
 !!! note
     
     [Shovill](https://github.com/tseemann/shovill) is a software that can work with different assemblers as its core. The pipeline executes shovill with both `spades`, `skesa` and `megahit`, so user can compare the results.
 
-2. Long reads only assemblies
+2. **Long reads only assemblies**
+    + Unicycler
+    + Canu
+    + Flye
+    + Raven
+    + Shasta
+    + wtdbg2
 
-   + Unicycler
-   + Canu
-   + Flye
-   + Raven
-   + Shasta
-   + wtdbg2
-
-3. Hybrid assemblies (using both short and long reads)
-
-   + Unicycler
-   + SPAdes
-   + Haslr
-   + Use short reads to correct errors (polish) in long reads assemblies.
+3. **Hybrid assemblies (using both short and long reads)**
+    + Unicycler
+    + SPAdes
+    + Haslr
+    + Use short reads to correct errors (polish) in long reads assemblies.
 
 ## Hybrid assembly strategies
 
