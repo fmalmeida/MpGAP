@@ -1,18 +1,18 @@
 All statistics are based on contigs of size >= 100 bp, unless otherwise noted (e.g., "# contigs (>= 0 bp)" and "Total length (>= 0 bp)" include all contigs).
 
 Assembly             flye_medaka_consensus
-# total reads        476124               
+# total reads        409991               
 # left               0                    
 # right              0                    
-# mapped             467279               
-Mapped (%)           98.14                
+# mapped             455148               
+Mapped (%)           111.01               
 # properly paired    0                    
 Properly paired (%)  0.0                  
 # singletons         0                    
 Singletons (%)       0.0                  
 # misjoint mates     0                    
 Misjoint mates (%)   0.0                  
-Avg. coverage depth  49                   
-Coverage >= 1x (%)   100.0                
-Coverage >= 5x (%)   99.96                
-Coverage >= 10x (%)  99.93                
+Avg. coverage depth  48                   
+Coverage >= 1x (%)   99.99                
+Coverage >= 5x (%)   99.94                
+Coverage >= 10x (%)  99.88                

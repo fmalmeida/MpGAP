@@ -1,32 +1,33 @@
 Assembly	flye_medaka_consensus
-# contigs (>= 0 bp)	75
-# contigs (>= 1000 bp)	73
-# contigs (>= 5000 bp)	51
-# contigs (>= 10000 bp)	42
-# contigs (>= 25000 bp)	33
+# contigs (>= 0 bp)	85
+# contigs (>= 1000 bp)	76
+# contigs (>= 5000 bp)	53
+# contigs (>= 10000 bp)	44
+# contigs (>= 25000 bp)	34
 # contigs (>= 50000 bp)	23
-Total length (>= 0 bp)	29326934
-Total length (>= 1000 bp)	29325397
-Total length (>= 5000 bp)	29281571
-Total length (>= 10000 bp)	29211246
-Total length (>= 25000 bp)	29056291
-Total length (>= 50000 bp)	28696355
-# contigs	75
-Largest contig	3009198
-Total length	29326934
+Total length (>= 0 bp)	29335530
+Total length (>= 1000 bp)	29329187
+Total length (>= 5000 bp)	29274769
+Total length (>= 10000 bp)	29205985
+Total length (>= 25000 bp)	29036260
+Total length (>= 50000 bp)	28650057
+# contigs	85
+Largest contig	3009856
+Total length	29335530
 GC (%)	49.50
-N50	2285740
-N75	1156631
+N50	2279797
+N90	666409
+auN	1837446.5
 L50	6
-L75	11
-# total reads	476124
+L90	16
+# total reads	409991
 # left	0
 # right	0
-Mapped (%)	98.14
+Mapped (%)	111.01
 Properly paired (%)	0.0
-Avg. coverage depth	49
-Coverage >= 1x (%)	100.0
+Avg. coverage depth	48
+Coverage >= 1x (%)	99.99
 # N's per 100 kbp	0.00
-Complete BUSCO (%)	19.59
-Partial BUSCO (%)	7.43
-# predicted rRNA genes	38 + 6 part
+Complete BUSCO (%)	0.00
+Partial BUSCO (%)	0.00
+# predicted rRNA genes	38 + 0 part

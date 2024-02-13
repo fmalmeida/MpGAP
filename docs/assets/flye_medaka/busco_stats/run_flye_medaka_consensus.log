@@ -1,105 +1,187 @@
-****************** Start a BUSCO 3.0.2 analysis, current time: 12/29/2023 13:04:52 ******************
-Configuration loaded from /array1/falmeida/NF_WORK/b5/b01b746862fb7794f41db3f2d4bab6/flye_medaka/busco_stats/config.ini
-Init tools...
-Check dependencies...
-Check input file...
-To reproduce this run: python /opt/conda/envs/mpgap-3.1/bin/quast.py -i /array1/falmeida/NF_WORK/b5/b01b746862fb7794f41db3f2d4bab6/flye_medaka/quast_corrected_input/flye_medaka_consensus.fa -o flye_medaka_consensus -l /opt/conda/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/bacteria/ -m genome -c 4 -t /array1/falmeida/NF_WORK/b5/b01b746862fb7794f41db3f2d4bab6/flye_medaka/busco_stats/tmp/ -sp fly --augustus_parameters ''''
-Mode is: genome
-The lineage dataset is: bacteria_odb9 (prokaryota)
-Delete the current result folder and start a new run
-Temp directory is /array1/falmeida/NF_WORK/b5/b01b746862fb7794f41db3f2d4bab6/flye_medaka/busco_stats/tmp/
-****** Phase 1 of 2, initial predictions ******
-****** Step 1/3, current time: 12/29/2023 13:04:52 ******
-Create blast database...
-[makeblastdb]	Building a new DB, current time: 12/29/2023 13:04:53
-[makeblastdb]	New DB name:   /array1/falmeida/NF_WORK/b5/b01b746862fb7794f41db3f2d4bab6/flye_medaka/busco_stats/tmp/flye_medaka_consensus_3275640040
-[makeblastdb]	New DB title:  /array1/falmeida/NF_WORK/b5/b01b746862fb7794f41db3f2d4bab6/flye_medaka/quast_corrected_input/flye_medaka_consensus.fa
-[makeblastdb]	Sequence type: Nucleotide
-[makeblastdb]	Keep MBits: T
-[makeblastdb]	Maximum file size: 1000000000B
-[makeblastdb]	Adding sequences from FASTA; added 75 sequences in 0.382545 seconds.
-[makeblastdb]	1 of 1 task(s) completed at 12/29/2023 13:04:54
-Running tblastn, writing output to /array1/falmeida/NF_WORK/b5/b01b746862fb7794f41db3f2d4bab6/flye_medaka/busco_stats/run_flye_medaka_consensus/blast_output/tblastn_flye_medaka_consensus.tsv...
-[tblastn]	1 of 1 task(s) completed at 12/29/2023 13:05:05
-****** Step 2/3, current time: 12/29/2023 13:05:05 ******
-Maximum number of candidate contig per BUSCO limited to: 3
-Getting coordinates for candidate regions...
-Pre-Augustus scaffold extraction...
-Running Augustus prediction using fly as species:
-Additional parameters for Augustus are '': 
-[augustus]	Please find all logs related to Augustus errors here: /array1/falmeida/NF_WORK/b5/b01b746862fb7794f41db3f2d4bab6/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/augustus.log
-[augustus]	9 of 83 task(s) completed at 12/29/2023 13:05:12
-[augustus]	17 of 83 task(s) completed at 12/29/2023 13:05:17
-[augustus]	25 of 83 task(s) completed at 12/29/2023 13:05:24
-[augustus]	34 of 83 task(s) completed at 12/29/2023 13:05:33
-[augustus]	42 of 83 task(s) completed at 12/29/2023 13:05:39
-[augustus]	50 of 83 task(s) completed at 12/29/2023 13:05:46
-[augustus]	59 of 83 task(s) completed at 12/29/2023 13:05:53
-[augustus]	67 of 83 task(s) completed at 12/29/2023 13:05:59
-[augustus]	75 of 83 task(s) completed at 12/29/2023 13:06:05
-[augustus]	83 of 83 task(s) completed at 12/29/2023 13:06:12
-Extracting predicted proteins...
-****** Step 3/3, current time: 12/29/2023 13:06:13 ******
-Running HMMER to confirm orthology of predicted proteins:
-[hmmsearch]	9 of 83 task(s) completed at 12/29/2023 13:06:13
-[hmmsearch]	17 of 83 task(s) completed at 12/29/2023 13:06:13
-[hmmsearch]	42 of 83 task(s) completed at 12/29/2023 13:06:14
-[hmmsearch]	50 of 83 task(s) completed at 12/29/2023 13:06:14
-[hmmsearch]	59 of 83 task(s) completed at 12/29/2023 13:06:14
-[hmmsearch]	75 of 83 task(s) completed at 12/29/2023 13:06:14
-[hmmsearch]	83 of 83 task(s) completed at 12/29/2023 13:06:14
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370XFG.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370OLY.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093704HC.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370UID.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093708TP.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370T6W.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370UEC.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370UID.faa.3 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093707VQ.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093707VQ.faa.3 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093705Z6.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370RIT.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG0937019B.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093701SQ.faa.2 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370CK6.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370TBD.faa.2 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093713HJ.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093701IQ.faa.2 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370IUA.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370KJ3.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093706RN.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370MZ4.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370U0A.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output[hmmsearch]	35 of 172 task(s) completed at 02/13/2024 00:12:11
+[hmmsearch]	69 of 172 task(s) completed at 02/13/2024 00:12:11
+[hmmsearch]	86 of 172 task(s) completed at 02/13/2024 00:12:11
+[hmmsearch]	104 of 172 task(s) completed at 02/13/2024 00:12:11
+[hmmsearch]	121 of 172 task(s) completed at 02/13/2024 00:12:11
+[hmmsearch]	138 of 172 task(s) completed at 02/13/2024 00:12:11
+[hmmsearch]	155 of 172 task(s) completed at 02/13/2024 00:12:11
+[hmmsearch]	172 of 172 task(s) completed at 02/13/2024 00:12:11
 Results:
-C:18.3%[S:16.9%,D:1.4%],F:6.1%,M:75.6%,n:148
-27 Complete BUSCOs (C)
-25 Complete and single-copy BUSCOs (S)
-2 Complete and duplicated BUSCOs (D)
-9 Fragmented BUSCOs (F)
-112 Missing BUSCOs (M)
-148 Total BUSCO groups searched
-****** Phase 2 of 2, predictions using species specific training ******
-****** Step 1/3, current time: 12/29/2023 13:06:14 ******
-Extracting missing and fragmented buscos from the ancestral_variants file...
-Running tblastn, writing output to /array1/falmeida/NF_WORK/b5/b01b746862fb7794f41db3f2d4bab6/flye_medaka/busco_stats/run_flye_medaka_consensus/blast_output/tblastn_flye_medaka_consensus_missing_and_frag_rerun.tsv...
-[tblastn]	1 of 1 task(s) completed at 12/29/2023 13:07:23
-Maximum number of candidate contig per BUSCO limited to: 3
-Getting coordinates for candidate regions...
-****** Step 2/3, current time: 12/29/2023 13:07:23 ******
-Training Augustus using Single-Copy Complete BUSCOs:
-Converting predicted genes to short genbank files at 12/29/2023 13:07:23...
-All files converted to short genbank files, now running the training scripts at 12/29/2023 13:07:23...
-Pre-Augustus scaffold extraction...
-Re-running Augustus with the new metaparameters, number of target BUSCOs: 121
-[augustus]	7 of 68 task(s) completed at 12/29/2023 13:07:25
-[augustus]	14 of 68 task(s) completed at 12/29/2023 13:07:26
-[augustus]	21 of 68 task(s) completed at 12/29/2023 13:07:27
-[augustus]	28 of 68 task(s) completed at 12/29/2023 13:07:28
-[augustus]	34 of 68 task(s) completed at 12/29/2023 13:07:29
-[augustus]	41 of 68 task(s) completed at 12/29/2023 13:07:31
-[augustus]	48 of 68 task(s) completed at 12/29/2023 13:07:32
-[augustus]	55 of 68 task(s) completed at 12/29/2023 13:07:33
-[augustus]	62 of 68 task(s) completed at 12/29/2023 13:07:34
-[augustus]	68 of 68 task(s) completed at 12/29/2023 13:07:35
-Extracting predicted proteins...
-****** Step 3/3, current time: 12/29/2023 13:07:35 ******
-Running HMMER to confirm orthology of predicted proteins:
-[hmmsearch]	7 of 68 task(s) completed at 12/29/2023 13:07:36
-[hmmsearch]	14 of 68 task(s) completed at 12/29/2023 13:07:36
-[hmmsearch]	21 of 68 task(s) completed at 12/29/2023 13:07:36
-[hmmsearch]	28 of 68 task(s) completed at 12/29/2023 13:07:36
-[hmmsearch]	34 of 68 task(s) completed at 12/29/2023 13:07:36
-[hmmsearch]	41 of 68 task(s) completed at 12/29/2023 13:07:36
-[hmmsearch]	48 of 68 task(s) completed at 12/29/2023 13:07:36
-[hmmsearch]	55 of 68 task(s) completed at 12/29/2023 13:07:36
-[hmmsearch]	62 of 68 task(s) completed at 12/29/2023 13:07:36
-[hmmsearch]	68 of 68 task(s) completed at 12/29/2023 13:07:36
-Results:
-C:19.6%[S:18.2%,D:1.4%],F:7.4%,M:73.0%,n:148
-29 Complete BUSCOs (C)
-27 Complete and single-copy BUSCOs (S)
-2 Complete and duplicated BUSCOs (D)
-11 Fragmented BUSCOs (F)
-108 Missing BUSCOs (M)
-148 Total BUSCO groups searched
-BUSCO analysis done. Total running time: 164.01707315444946 seconds
-Results written in /array1/falmeida/NF_WORK/b5/b01b746862fb7794f41db3f2d4bab6/flye_medaka/busco_stats/run_flye_medaka_consensus/
+C:0.0%[S:0.0%,D:0.0%],F:0.0%,M:100.0%,n:303
+0 Complete BUSCOs (C)
+0 Complete and single-copy BUSCOs (S)
+0 Complete and duplicated BUSCOs (D)
+0 Fragmented BUSCOs (F)
+303 Missing BUSCOs (M)
+303 Total BUSCO groups searched
+BUSCO did not find any match. Do not forget to check the file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/augustus.log to exclude a problem regarding Augustus
+[bash]	rm: cannot remove '/array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/tmp/temp_flye_medaka_consensus_179158841': No such file or directory
+BUSCO analysis done with WARNING(s). Total running time: 314.354327917099 seconds
+Results written in /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/
 
+1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370ADO.faa.3 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370F3T.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370QKS.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370EHZ.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370CAV.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093714Q2.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093703WD.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370S0F.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370HD7.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370CAN.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370KGV.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370NBT.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370QJ1.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370QMM.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG0937018Z.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370T9R.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093711E9.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093704J7.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093704J7.faa.3 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370ARO.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370O06.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370QBK.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370GHM.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093705DM.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093705DM.faa.3 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG0937033T.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370USJ.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG0937033T.faa.3 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370YCN.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370MDU.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370AS9.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093706X0.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG0937066G.faa.2 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370S1Z.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370HVI.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG0937192A.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370QT3.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370A22.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093707RF.faa.2 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370QBR.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093710T1.faa.2 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093711ZO.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370Y63.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370FXE.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370SYK.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370XO6.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG0937112Y.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370USH.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370MMK.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370INZ.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370W6N.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370H68.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370AV1.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370UV4.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093712G8.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093709BZ.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370MGF.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370KM9.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370VTP.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093705KN.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370FWQ.faa.2 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370E4W.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370UR1.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093703YA.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093703YA.faa.3 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370762.faa.2 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370ER5.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370B7D.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370NHX.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370TG6.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370XFJ.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370JW6.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370WT1.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093701S0.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370W86.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093702AT.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370NBW.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370GC2.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370P7I.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093705EY.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370JIK.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370TP2.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370SON.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370KYZ.faa.2 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370OGU.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG0937128O.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370RCD.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370DXT.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093708IM.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093706PM.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093705U4.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370UO4.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG0937029K.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370E4U.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370RCS.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370QCX.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370DP4.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370PBD.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370K1R.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370KOV.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370W44.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370UR3.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093708OP.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370U71.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370CF1.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG0937004M.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370IF5.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370KD4.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370E36.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370YSI.faa.2 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370AL3.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG0937060I.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG0937060I.faa.3 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370LQ2.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370OS5.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370GIK.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370PLC.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370P5Q.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG0937068H.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370R3M.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370LYY.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG0937106Y.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370OHP.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370AWB.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370RRJ.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG0937186Q.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370F1Q.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370O51.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370GEO.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG0937017X.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG0937091Y.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG0937091Y.faa.3 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093702PE.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093704Q0.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370BQO.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370GJ7.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370OFR.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093704GD.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG093718EG.faa.2 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370082.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG09370JZ3.faa.1 for reading
+[hmmsearch]	Error: Failed to open sequence file /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats/run_flye_medaka_consensus/augustus_output/extracted_proteins/EOG0937122Q.faa.1 for reading

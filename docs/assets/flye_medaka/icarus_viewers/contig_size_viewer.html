@@ -2516,91 +2516,101 @@ var assemblies_len = {};
 var assemblies_contigs = {};
 var assemblies_misassemblies = {};
 var assemblies_n50 = {};
-assemblies_len["flye_medaka_consensus"] = 29326934;
-assemblies_contigs["flye_medaka_consensus"] = 75;
-assemblies_n50["flye_medaka_consensus"] = "2285740";
+assemblies_len["flye_medaka_consensus"] = 29335530;
+assemblies_contigs["flye_medaka_consensus"] = 85;
+assemblies_n50["flye_medaka_consensus"] = "2279797";
 var contig_data = {};
 var chromosome;
 contig_data["flye_medaka_consensus"] = [ 
-{name:"contig_82",size:3009198,contig_type: "",structure:[]},
-{name:"contig_5",size:2604371,contig_type: "",structure:[]},
-{name:"contig_79",size:2598203,contig_type: "",structure:[]},
-{name:"contig_10",size:2407116,contig_type: "",structure:[]},
-{name:"contig_6",size:2365027,contig_type: "",structure:[]},
-{name:"contig_78",size:2285740, marks: "N50",contig_type: "",structure:[]},
-{name:"contig_1",size:1782123,contig_type: "",structure:[]},
-{name:"contig_12",size:1665438,contig_type: "",structure:[]},
-{name:"contig_4",size:1253974,contig_type: "",structure:[]},
-{name:"contig_85",size:1159792,contig_type: "",structure:[]},
-{name:"contig_2",size:1156631, marks: "N75",contig_type: "",structure:[]},
-{name:"contig_35",size:1088394,contig_type: "",structure:[]},
-{name:"contig_83",size:986644,contig_type: "",structure:[]},
-{name:"contig_13",size:764068,contig_type: "",structure:[]},
-{name:"contig_62",size:689363,contig_type: "",structure:[]},
-{name:"contig_84",size:666396,contig_type: "",structure:[]},
-{name:"contig_3",size:633755,contig_type: "",structure:[]},
-{name:"contig_11",size:469368,contig_type: "",structure:[]},
-{name:"contig_74",size:427780,contig_type: "",structure:[]},
-{name:"contig_9",size:253371,contig_type: "",structure:[]},
-{name:"contig_80",size:165619,contig_type: "",structure:[]},
-{name:"contig_93",size:142647,contig_type: "",structure:[]},
-{name:"contig_81",size:121337,contig_type: "",structure:[]},
-{name:"contig_94",size:48218,contig_type: "",structure:[]},
-{name:"contig_124",size:47615,contig_type: "",structure:[]},
-{name:"contig_131",size:41801,contig_type: "",structure:[]},
-{name:"contig_91",size:38019,contig_type: "",structure:[]},
-{name:"contig_95",size:35575,contig_type: "",structure:[]},
-{name:"contig_125",size:35204,contig_type: "",structure:[]},
-{name:"contig_43",size:31654,contig_type: "",structure:[]},
-{name:"contig_8",size:30982,contig_type: "",structure:[]},
-{name:"contig_130",size:25636,contig_type: "",structure:[]},
-{name:"contig_92",size:25232,contig_type: "",structure:[]},
-{name:"contig_128",size:24952,contig_type: "",structure:[]},
-{name:"contig_90",size:24030,contig_type: "",structure:[]},
-{name:"contig_115",size:18662,contig_type: "",structure:[]},
-{name:"contig_96",size:17472,contig_type: "",structure:[]},
-{name:"contig_127",size:16972,contig_type: "",structure:[]},
-{name:"contig_120",size:16708,contig_type: "",structure:[]},
-{name:"contig_121",size:14430,contig_type: "",structure:[]},
-{name:"contig_89",size:11354,contig_type: "",structure:[]},
-{name:"contig_100",size:10375,contig_type: "",structure:[]},
-{name:"contig_97",size:9070,contig_type: "",structure:[]},
-{name:"contig_98",size:8558,contig_type: "",structure:[]},
-{name:"contig_106",size:8283,contig_type: "",structure:[]},
-{name:"contig_103",size:8274,contig_type: "",structure:[]},
-{name:"contig_122",size:8153,contig_type: "",structure:[]},
-{name:"contig_109",size:7939,contig_type: "",structure:[]},
-{name:"contig_114",size:7688,contig_type: "",structure:[]},
-{name:"contig_129",size:6636,contig_type: "",structure:[]},
-{name:"contig_110",size:5724,contig_type: "",structure:[]},
-{name:"contig_101",size:4604,contig_type: "",structure:[]},
-{name:"contig_53",size:3430,contig_type: "",structure:[]},
-{name:"contig_72",size:3219,contig_type: "",structure:[]},
-{name:"contig_119",size:3170,contig_type: "",structure:[]},
-{name:"contig_28",size:2367,contig_type: "",structure:[]},
-{name:"contig_126",size:2328,contig_type: "",structure:[]},
-{name:"contig_113",size:1928,contig_type: "",structure:[]},
-{name:"contig_116",size:1905,contig_type: "",structure:[]},
-{name:"contig_44",size:1901,contig_type: "",structure:[]},
-{name:"contig_66",size:1892,contig_type: "",structure:[]},
-{name:"contig_118",size:1860,contig_type: "",structure:[]},
-{name:"contig_45",size:1818,contig_type: "",structure:[]},
-{name:"contig_99",size:1762,contig_type: "",structure:[]},
-{name:"contig_76",size:1546,contig_type: "",structure:[]},
-{name:"contig_60",size:1460,contig_type: "",structure:[]},
-{name:"contig_40",size:1399,contig_type: "",structure:[]},
-{name:"contig_111",size:1374,contig_type: "",structure:[]},
-{name:"contig_67",size:1281,contig_type: "",structure:[]},
-{name:"contig_39",size:1196,contig_type: "",structure:[]},
-{name:"contig_38",size:1171,contig_type: "",structure:[]},
-{name:"contig_112",size:1111,contig_type: "",structure:[]},
-{name:"contig_70",size:1104,contig_type: "",structure:[]},
-{name:"contig_65",size:970,contig_type: "",structure:[]},
-{name:"contig_55",size:567,contig_type: "",structure:[]}];
+{name:"contig_99",size:3009856,contig_type: "",structure:[]},
+{name:"contig_5",size:2608963,contig_type: "",structure:[]},
+{name:"contig_94",size:2598450,contig_type: "",structure:[]},
+{name:"contig_10",size:2407218,contig_type: "",structure:[]},
+{name:"contig_6",size:2364712,contig_type: "",structure:[]},
+{name:"contig_93",size:2279797, marks: "N50",contig_type: "",structure:[]},
+{name:"contig_1",size:1782089,contig_type: "",structure:[]},
+{name:"contig_13",size:1649578,contig_type: "",structure:[]},
+{name:"contig_12",size:1253980,contig_type: "",structure:[]},
+{name:"contig_100",size:1159681,contig_type: "",structure:[]},
+{name:"contig_2",size:1157028,contig_type: "",structure:[]},
+{name:"contig_41",size:1098544,contig_type: "",structure:[]},
+{name:"contig_102",size:941640,contig_type: "",structure:[]},
+{name:"contig_14",size:764634,contig_type: "",structure:[]},
+{name:"contig_77",size:688583,contig_type: "",structure:[]},
+{name:"contig_101",size:666409, marks: "N90",contig_type: "",structure:[]},
+{name:"contig_3",size:633805,contig_type: "",structure:[]},
+{name:"contig_11",size:469228,contig_type: "",structure:[]},
+{name:"contig_89",size:427710,contig_type: "",structure:[]},
+{name:"contig_9",size:253376,contig_type: "",structure:[]},
+{name:"contig_95",size:170385,contig_type: "",structure:[]},
+{name:"contig_112",size:143049,contig_type: "",structure:[]},
+{name:"contig_97",size:121342,contig_type: "",structure:[]},
+{name:"contig_111",size:48218,contig_type: "",structure:[]},
+{name:"contig_145",size:44786,contig_type: "",structure:[]},
+{name:"contig_152",size:42056,contig_type: "",structure:[]},
+{name:"contig_113",size:38065,contig_type: "",structure:[]},
+{name:"contig_103",size:36683,contig_type: "",structure:[]},
+{name:"contig_147",size:35374,contig_type: "",structure:[]},
+{name:"contig_57",size:31676,contig_type: "",structure:[]},
+{name:"contig_104",size:30991,contig_type: "",structure:[]},
+{name:"contig_146",size:27406,contig_type: "",structure:[]},
+{name:"contig_150",size:25636,contig_type: "",structure:[]},
+{name:"contig_114",size:25312,contig_type: "",structure:[]},
+{name:"contig_148",size:24999,contig_type: "",structure:[]},
+{name:"contig_107",size:24043,contig_type: "",structure:[]},
+{name:"contig_134",size:18386,contig_type: "",structure:[]},
+{name:"contig_115",size:17472,contig_type: "",structure:[]},
+{name:"contig_122",size:16958,contig_type: "",structure:[]},
+{name:"contig_138",size:16708,contig_type: "",structure:[]},
+{name:"contig_144",size:15640,contig_type: "",structure:[]},
+{name:"contig_139",size:14429,contig_type: "",structure:[]},
+{name:"contig_7",size:10715,contig_type: "",structure:[]},
+{name:"contig_119",size:10375,contig_type: "",structure:[]},
+{name:"contig_116",size:9070,contig_type: "",structure:[]},
+{name:"contig_117",size:8534,contig_type: "",structure:[]},
+{name:"contig_124",size:8274,contig_type: "",structure:[]},
+{name:"contig_142",size:8207,contig_type: "",structure:[]},
+{name:"contig_128",size:7941,contig_type: "",structure:[]},
+{name:"contig_133",size:7691,contig_type: "",structure:[]},
+{name:"contig_140",size:6699,contig_type: "",structure:[]},
+{name:"contig_149",size:6643,contig_type: "",structure:[]},
+{name:"contig_129",size:5725,contig_type: "",structure:[]},
+{name:"contig_141",size:4882,contig_type: "",structure:[]},
+{name:"contig_120",size:4604,contig_type: "",structure:[]},
+{name:"contig_110",size:4577,contig_type: "",structure:[]},
+{name:"contig_68",size:3430,contig_type: "",structure:[]},
+{name:"contig_48",size:3354,contig_type: "",structure:[]},
+{name:"contig_76",size:3326,contig_type: "",structure:[]},
+{name:"contig_137",size:3172,contig_type: "",structure:[]},
+{name:"contig_121",size:2337,contig_type: "",structure:[]},
+{name:"contig_66",size:2240,contig_type: "",structure:[]},
+{name:"contig_108",size:2013,contig_type: "",structure:[]},
+{name:"contig_132",size:1928,contig_type: "",structure:[]},
+{name:"contig_56",size:1897,contig_type: "",structure:[]},
+{name:"contig_135",size:1896,contig_type: "",structure:[]},
+{name:"contig_81",size:1871,contig_type: "",structure:[]},
+{name:"contig_136",size:1860,contig_type: "",structure:[]},
+{name:"contig_118",size:1761,contig_type: "",structure:[]},
+{name:"contig_91",size:1546,contig_type: "",structure:[]},
+{name:"contig_74",size:1411,contig_type: "",structure:[]},
+{name:"contig_82",size:1406,contig_type: "",structure:[]},
+{name:"contig_32",size:1399,contig_type: "",structure:[]},
+{name:"contig_130",size:1374,contig_type: "",structure:[]},
+{name:"contig_85",size:1112,contig_type: "",structure:[]},
+{name:"contig_131",size:1022,contig_type: "",structure:[]},
+{name:"contig_80",size:970,contig_type: "",structure:[]},
+{name:"contig_87",size:933,contig_type: "",structure:[]},
+{name:"contig_64",size:818,contig_type: "",structure:[]},
+{name:"contig_65",size:716,contig_type: "",structure:[]},
+{name:"contig_47",size:689,contig_type: "",structure:[]},
+{name:"contig_31",size:605,contig_type: "",structure:[]},
+{name:"contig_70",size:571,contig_type: "",structure:[]},
+{name:"contig_84",size:528,contig_type: "",structure:[]},
+{name:"contig_83",size:513,contig_type: "",structure:[]}];
 
 var contigLines = [];
 
-var contigs_total_len = 29326934;
+var contigs_total_len = 29335530;
 var minContigSize = 100;var links_to_chromosomes;
 links_to_chromosomes = {};</script>
     <script type="text/javascript" name="d3.js">
@@ -13143,14 +13153,14 @@ links_to_chromosomes = {};</script>
             else {
                 var classes = ['unknown', '', 'predicted_gene'];
                 var classMarks = ['', 'N50'];
-                var classDescriptions = ['contigs', 'contig of length = Nx statistic (x is 50 or 75)', 'predicted genes'];
+                var classDescriptions = ['contigs', 'contig of length = Nx statistic (e.g. N50)', 'predicted genes'];
                 blockTypes = 'unknown, N50';
                 for (var i = 0; i < items.length; i++) {
                     if (items[i].marks && items[i].marks.search('NG') != -1) {
                         classes = ['unknown', '', '', '', 'predicted_gene'];
                         classMarks = ['', 'N50', 'NG50', 'N50, NG50'];
-                        classDescriptions = ['contigs', 'contig of length = Nx statistic (x is 50 or 75)',
-                            'contig of length = NGx statistic (x is 50 or 75)', 'contig of length = Nx and NGx simultaneously',
+                        classDescriptions = ['contigs', 'contig of length = Nx statistic (e.g. N50)',
+                            'contig of length = NGx statistic (e.g. NG50)', 'contig of length = Nx and NGx simultaneously',
                             'predicted genes'];
                         blockTypes = 'unknown, N50, NG50';
                         break;
@@ -14172,11 +14182,26 @@ links_to_chromosomes = {};</script>
             d3.event.stopPropagation();
         }
         
+        function getContigColorByMark(mark) {
+            if (mark in contigsColors) {
+                return contigsColors[mark];
+            }
+            else if (mark.startsWith('NG') && 'NGx' in contigsColors) {
+                return contigsColors['NGx'];
+            }
+            else if (mark.startsWith('N') && 'Nx' in contigsColors) {
+                return contigsColors['Nx'];
+            }
+            else {
+                return '#000000';
+            }
+        }
+        
         function addGradient(d, marks, gradientExists, smoothGradient) {
             if (!marks) return;
             var gradientId = 'gradient' + d.id;
             marks = marks.split(', ');
-            if (marks.length == 1) return contigsColors[marks[0]];
+            if (marks.length == 1) return getContigColorByMark(marks[0]);
             if (gradientExists) return 'url(#' + gradientId + ')';
             var gradient = chart.append("svg:defs")
                 .append("svg:linearGradient")
@@ -14190,7 +14215,7 @@ links_to_chromosomes = {};</script>
                 for (var m = 0; m < marks.length; m++)
                     gradient.append("svg:stop")
                         .attr("offset", gradientSteps[m])
-                        .attr("stop-color", contigsColors[marks[m]])
+                        .attr("stop-color", getContigColorByMark(marks[m]))
                         .attr("stop-opacity", 1);
             }
             else {
@@ -14200,7 +14225,7 @@ links_to_chromosomes = {};</script>
                         .attr("y2", "100%");
                 var colors = [];
                 for (var m = 0; m < marks.length; m++)
-                    colors.push(contigsColors[marks[m]])
+                    colors.push(getContigColorByMark(marks[m]))
                 var colorScale = d3.scale.linear().range(colors);
                 gradient.selectAll("stop")
                         .data(colorScale.range())
@@ -15186,7 +15211,7 @@ links_to_chromosomes = {};</script>
                     coverageHeight = typeof coverage_data != 'undefined' ? 125 : 0;
                     coverageSpace = typeof coverage_data != 'undefined' ? 50 : 0;
         
-            var contigsColors = {'N50': '#7437BA', 'N75': '#7437BA', 'NG50': '#B53778', 'NG75': '#B53778',
+            var contigsColors = {'Nx': '#7437BA', 'NGx': '#B53778',
                 'correct': '#059B00', 'misassembled': '#DD4343', 'unaligned': '#8e8e8e', 'unknown': '#7DA6B9'};
         
             // legend items

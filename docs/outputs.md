@@ -22,6 +22,12 @@ genome_assembly
 │       ├── raven                   # Raven assembly
 │       ├── shasta                  # Shasta assembly
 │       └── wtdbg2                  # Shasta assembly
+├── final_assemblies                # A folder contatining a copy of all the assemblies generated, raw and polished
+│   ├── aspergillus_fumigatus_canu_assembly.fasta
+│   ├── aspergillus_fumigatus_canu_medaka_consensus.fa
+│   ├── aspergillus_fumigatus_flye_assembly.fasta
+│   ├── aspergillus_fumigatus_flye_medaka_consensus.fa
+│   ├── < ... > etc.
 ├── input.yml                       # Copy of given input samplesheet for data provenance
 └── pipeline_info                   # directory containing the nextflow execution reports
     ├── mpgap_report_2023-12-28_12-25-18.html
@@ -45,7 +51,7 @@ Open it [here](../assets/ASSEMBLY_SUMMARY.txt).
 
 **MultiQC Report - HTML**
 
-Open it [here](../assets/multiqc_report_confident_brenner.html).
+Open it [here](../assets/multiqc_report_nasty_lorenz.html).
 
 **Quast Report of Flye assembly - HTML**
 
