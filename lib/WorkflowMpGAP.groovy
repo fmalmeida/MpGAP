@@ -21,7 +21,7 @@ class WorkflowMpGAP {
         }
 
         if (params.corrected_longreads && params.high_quality_longreads) {
-            log.error "ERROR!\nA major error has occurred!\n\t==>  Parameter --corrected_longreads and --high_quality_longreads was used at the same time. These activate assembler configurations for reads of different quality levels. Cannot be used at the same time ( uncorrected < corrected < high_quality ).\nCheers."
+            log.error "ERROR!\nA major error has occurred!\n\t==>  Parameters --corrected_longreads and --high_quality_longreads were used at the same time. These activate assembler configurations for reads of different quality levels. Cannot be used at the same time ( uncorrected < corrected < high_quality ).\nCheers."
             System.exit(1)
         }
     }
