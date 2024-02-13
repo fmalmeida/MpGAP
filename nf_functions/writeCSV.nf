@@ -273,7 +273,7 @@ def write_csv(in_list) {
      * Output samplesheet as CSV
      */
     if (entrypoint == 'hybrid_strategy_both') { // creates two lines for the sample, for both hybrid strategies
-      "${it.id}:strategy_1,hybrid_strategy_1,${fwd_pair},${rev_pair},${single},${lreads},${lr_type},${wtdbg2_technology},${genome_size},${corrected_longreads},${high_quality_longreads},${medaka_model},${nanopolish_fast5},${nanopolish_max_haplotypes},${shasta_config},${pacbio_bam}\n${it.id}:strategy_2,hybrid_strategy_2,${fwd_pair},${rev_pair},${single},${lreads},${lr_type},${wtdbg2_technology},${genome_size},${corrected_longreads},${medaka_model},${nanopolish_fast5},${nanopolish_max_haplotypes},${shasta_config},${pacbio_bam}"
+      "${it.id}:strategy_1,hybrid_strategy_1,${fwd_pair},${rev_pair},${single},${lreads},${lr_type},${wtdbg2_technology},${genome_size},${corrected_longreads},${high_quality_longreads},${medaka_model},${nanopolish_fast5},${nanopolish_max_haplotypes},${shasta_config},${pacbio_bam}\n${it.id}:strategy_2,hybrid_strategy_2,${fwd_pair},${rev_pair},${single},${lreads},${lr_type},${wtdbg2_technology},${genome_size},${corrected_longreads},${high_quality_longreads},${medaka_model},${nanopolish_fast5},${nanopolish_max_haplotypes},${shasta_config},${pacbio_bam}"
     } else {
       "${it.id},${entrypoint},${fwd_pair},${rev_pair},${single},${lreads},${lr_type},${wtdbg2_technology},${genome_size},${corrected_longreads},${high_quality_longreads},${medaka_model},${nanopolish_fast5},${nanopolish_max_haplotypes},${shasta_config},${pacbio_bam}"
     }
