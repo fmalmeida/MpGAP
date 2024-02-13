@@ -1,6 +1,6 @@
 process quast {
   publishDir "${params.output}", mode: 'copy', saveAs: { filename ->
-    if ( filename.tokenize('/').contains('input_assembly') ) "final_assemblies/${id}_${filename.tokenize('/')[1]}"
+    if ( filename.tokenize('/').contains('input_assembly') ) "final_assemblies/${asm_copy_prefix}_${filename.tokenize('/')[1]}"
     else "${prefix}/00_quality_assessment/${filename}"
   }
   tag "${id}"
@@ -13,11 +13,15 @@ process quast {
   file("input_assembly/*")
 
   script:
+
   // Alignment parameters
   paired_param = !(sread1 =~ /input.*/ || sread2 =~ /input.*/) ? "--pe1 ${sread1} --pe2 ${sread2}" : ""
   single_param = !(single =~ /input.?/) ? "--single ${single}" : ""
   lreads_param = !(lreads =~ /input.?/) ? "--${lr_type} ${lreads}" : ""
   additional_params = (params.quast_additional_parameters) ? params.quast_additional_parameters : ""
+
+  // define prefix for final assemblies
+  asm_copy_prefix = id.replaceAll(':', '_') // fixes hybrid prefixes that has a ':'
 
   if (params.selected_profile == "docker" || params.selected_profile == "conda")
   """
