@@ -1,0 +1,11 @@
+Sample	complete	lineage_dataset	complete_duplicated	total	missing	fragmented	complete_single_copy
+canu_assembly	0.0	eukaryota_odb9	0.0	303.0	303.0	0.0	0.0
+canu_medaka_consensus	0.0	eukaryota_odb9	0.0	303.0	303.0	0.0	0.0
+flye_assembly	0.0	eukaryota_odb9	0.0	303.0	303.0	0.0	0.0
+flye_medaka_consensus	0.0	eukaryota_odb9	0.0	303.0	303.0	0.0	0.0
+raven_assembly	0.0	eukaryota_odb9	0.0	303.0	303.0	0.0	0.0
+raven_medaka_consensus	0.0	eukaryota_odb9	0.0	303.0	303.0	0.0	0.0
+shasta_assembly	0.0	eukaryota_odb9	0.0	303.0	303.0	0.0	0.0
+shasta_medaka_consensus	0.0	eukaryota_odb9	0.0	303.0	303.0	0.0	0.0
+wtdbg2_assembly	0.0	eukaryota_odb9	0.0	303.0	303.0	0.0	0.0
+wtdbg2_medaka_consensus	0.0	eukaryota_odb9	0.0	303.0	303.0	0.0	0.0

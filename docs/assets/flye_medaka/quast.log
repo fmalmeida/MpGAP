@@ -1,0 +1,132 @@
+/opt/conda/envs/mpgap-3.2/bin/quast.py -o flye_medaka -t 4 --nanopore SRR23337893.filtered.fq.gz --conserved-genes-finding --rna-finding --min-contig 100 --eukaryote flye_medaka_consensus.fa
+
+Version: 5.2.0
+
+System information:
+  OS: Linux-5.10.0-26-amd64-x86_64-with-glibc2.17 (linux_64)
+  Python version: 3.8.16
+  CPUs number: 24
+
+Started: 2024-02-12 23:52:40
+
+Logging to /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/quast.log
+
+CWD: /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b
+Main parameters: 
+  MODE: default, threads: 4, eukaryotic: true, min contig length: 100, min alignment length: 65, \
+  min alignment IDY: 95.0, ambiguity: one, min local misassembly length: 200, min extensive misassembly length: 1000
+
+Contigs:
+  Pre-processing...
+  flye_medaka_consensus.fa ==> flye_medaka_consensus
+
+2024-02-12 23:52:41
+Running Reads analyzer...
+WARNING: Version of installed minimap2 differs from its version in the QUAST package (2.24). Please make sure that you use an actual version of software.
+NOTICE: Permission denied accessing /opt/conda/envs/mpgap-3.2/lib/python3.8/site-packages/quast_libs/gridss. GRIDSS will be downloaded to home directory /home/mambauser/.quast
+Downloading gridss (file: gridss-1.4.1.jar)...
+gridss successfully downloaded!
+  Logging to files /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/reads_stats/reads_stats.log and /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/reads_stats/reads_stats.err...
+  Pre-processing reads...
+  Running BWA...
+/opt/conda/envs/mpgap-3.2/bin/bwa index -p /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/quast_corrected_input/flye_medaka_consensus.fa \
+/array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/quast_corrected_input/flye_medaka_consensus.fa \
+>> /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/reads_stats/reads_stats.err \
+2>> /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/reads_stats/reads_stats.err
+WARNING: Version of installed minimap2 differs from its version in the QUAST package (2.24). Please make sure that you use an actual version of software.
+/opt/conda/envs/mpgap-3.2/bin/minimap2 -t 2 -ax map-ont /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/quast_corrected_input/flye_medaka_consensus.fa \
+/array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/SRR23337893.filtered.fq.gz \
+> flye_medaka_consensus.nanopore1.sam 2>> /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/reads_stats/reads_stats.err
+/opt/conda/envs/mpgap-3.2/lib/python3.8/site-packages/quast_libs/sambamba/sambamba_linux \
+view -t 2 -h -S -f bam flye_medaka_consensus.nanopore1.sam > flye_medaka_consensus.nanopore1.bam \
+2>> /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/reads_stats/reads_stats.err
+  Done.
+/opt/conda/envs/mpgap-3.2/lib/python3.8/site-packages/quast_libs/sambamba/sambamba_linux \
+view -H -S flye_medaka/reads_stats/temp_output/flye_medaka_consensus.sam > flye_medaka/reads_stats/flye_medaka_consensus.sam.header \
+2>> flye_medaka/reads_stats/reads_stats.err
+  Sorting SAM-file...
+/opt/conda/envs/mpgap-3.2/lib/python3.8/site-packages/quast_libs/sambamba/sambamba_linux \
+view -t 2 -h -S -f bam flye_medaka/reads_stats/temp_output/flye_medaka_consensus.all.correct.sam \
+> flye_medaka/reads_stats/temp_output/flye_medaka_consensus.bam 2>> flye_medaka/reads_stats/reads_stats.err
+/opt/conda/envs/mpgap-3.2/lib/python3.8/site-packages/quast_libs/sambamba/sambamba_linux \
+flagstat -t 2 flye_medaka/reads_stats/temp_output/flye_medaka_consensus.bam > flye_medaka/reads_stats/flye_medaka_consensus.stat \
+2>> flye_medaka/reads_stats/reads_stats.err
+/opt/conda/envs/mpgap-3.2/bin/bedtools bamtobed -i flye_medaka/reads_stats/temp_output/flye_medaka_consensus.bam \
+> flye_medaka/reads_stats/temp_output/flye_medaka_consensus.bed 2>> flye_medaka/reads_stats/reads_stats.err
+sort -k1,1 -k2,2n flye_medaka/reads_stats/temp_output/flye_medaka_consensus.bed > \
+flye_medaka/reads_stats/temp_output/flye_medaka_consensus.sorted.bed 2>> flye_medaka/reads_stats/reads_stats.err
+/opt/conda/envs/mpgap-3.2/bin/bedtools genomecov -i flye_medaka/reads_stats/temp_output/flye_medaka_consensus.sorted.bed \
+-g flye_medaka/quast_corrected_input/flye_medaka_consensus.fa.fai > flye_medaka/reads_stats/temp_output/flye_medaka_consensus.genomecov \
+2>> flye_medaka/reads_stats/reads_stats.err
+  Analysis is finished.
+  Creating total report...
+    saved to /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/reads_stats/reads_report.txt, reads_report.tsv, and reads_report.tex
+Done.
+
+2024-02-13 00:06:42
+Running Basic statistics processor...
+  Contig files: 
+    flye_medaka_consensus
+  Calculating N50 and L50...
+    flye_medaka_consensus, N50 = 2279797, L50 = 6, auN = 1837446.5, Total length = 29335530, GC % = 49.50, # N's per 100 kbp =  0.00
+  Drawing Nx plot...
+    saved to /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/basic_stats/Nx_plot.pdf
+  Drawing cumulative plot...
+    saved to /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/basic_stats/cumulative_plot.pdf
+  Drawing GC content plot...
+    saved to /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/basic_stats/GC_content_plot.pdf
+  Drawing flye_medaka_consensus GC content plot...
+    saved to /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/basic_stats/flye_medaka_consensus_GC_content_plot.pdf
+Done.
+
+NOTICE: Genes are not predicted by default. Use --gene-finding or --glimmer option to enable it.
+
+2024-02-13 00:06:44
+Running Barrnap...
+Logging to /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/predicted_genes/barrnap.log...
+/opt/conda/envs/mpgap-3.2/lib/python3.8/site-packages/quast_libs/barrnap/bin/barrnap \
+--quiet -k euk --threads 4 flye_medaka/quast_corrected_input/flye_medaka_consensus.fa \
+> flye_medaka/predicted_genes/flye_medaka_consensus.rna.gff 2>> flye_medaka/predicted_genes/barrnap.log
+    Ribosomal RNA genes = 38
+    Predicted genes (GFF): /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/predicted_genes/flye_medaka_consensus.rna.gff
+Done.
+
+2024-02-13 00:06:51
+Running BUSCO...
+  Downloading third-party tools...
+  Done
+  Downloading BUSCO database...
+  Done
+  running BUSCO with augustus from /opt/conda/envs/mpgap-3.2/lib/python3.8/site-packages/quast_libs/augustus3.2.3
+Logs and results will be saved under /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/busco_stats...
+WARNING: BUSCO did not fail explicitly but found nothing for all assemblies! Possible reasons and workarounds:
+  1. Provided assemblies are so small that they do not contain even a single partial BUSCO gene. Not likely but may happen -- nothing to worry then.
+  2. Incorrect lineage database was used. To run with fungi DB use --fungus, to run with eukaryota DB use --eukaryote, otherwise BUSCO uses bacteria DB.
+  3. Problem with BUSCO dependencies, most likely Augustus. Check that the binaries in /opt/conda/envs/mpgap-3.2/lib/python3.8/site-packages/quast_libs/augustus3.2.3/bin/ are working properly.
+     If something is wrong with Augustus, you may try to install it yourself (https://github.com/Gaius-Augustus/Augustus or `conda install -c bioconda augustus`) and make sure "augustus" binary is in PATH.
+     Please install the PROPER VERSION of Augustus, we tested BUSCO with augustus-3.2.3, it may also work with augustus-3.3, the newer/older versions are not supported.
+  4. Some other problem with BUSCO. Check the logs (you may need to rerun QUAST with --debug to see all intermediate files).
+     If you cannot solve the problem yourself, post an issue at https://github.com/ablab/quast/issues or write to quast.support@cab.spbu.ru
+Done.
+
+2024-02-13 00:12:11
+Creating large visual summaries...
+This may take a while: press Ctrl-C to skip this step..
+  1 of 2: Creating PDF with all tables and plots...
+  2 of 2: Creating Icarus viewers...
+Done
+
+2024-02-13 00:12:12
+RESULTS:
+  Text versions of total report are saved to /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/report.txt, report.tsv, and report.tex
+  Text versions of transposed total report are saved to /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/transposed_report.txt, transposed_report.tsv, and transposed_report.tex
+  HTML version (interactive tables and plots) is saved to /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/report.html
+  PDF version (tables and plots) is saved to /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/report.pdf
+  Icarus (contig browser) is saved to /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/icarus.html
+  Log is saved to /array1/falmeida/NF_WORK/e9/277df3a9381451954189ab1955ce5b/flye_medaka/quast.log
+
+Finished: 2024-02-13 00:12:12
+Elapsed time: 0:19:32.527879
+NOTICEs: 2; WARNINGs: 3; non-fatal ERRORs: 0
+
+Thank you for using QUAST!
