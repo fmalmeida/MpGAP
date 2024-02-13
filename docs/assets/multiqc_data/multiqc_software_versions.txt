@@ -1,0 +1,2 @@
+Sample	BUSCO
+BUSCO	3.0.2

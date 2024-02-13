@@ -1,0 +1,18 @@
+# Configuration File
+
+To download a configuration file template users just use `--get_config` parameter. Using a config file your code is lot more clean and concise.
+
+```bash
+# get config
+nextflow run fmalmeida/mpgap --get_config
+
+# run with config
+nextflow run fmalmeida/mpgap -c [path-to-config]
+```
+
+Default configuration
+---------------------
+
+```groovy
+{% include 'assets/defaults.config' %}
+```

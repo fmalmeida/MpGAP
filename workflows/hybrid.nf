@@ -111,10 +111,13 @@ workflow HYBRID {
       }
 
       // Get hybrid assemblies
-      HYBRID_OUTPUTS['ASSEMBLIES'] = HYBRID_OUTPUTS['SPADES']
-                                     .mix(HYBRID_OUTPUTS['UNICYCLER'], 
-                                          HYBRID_OUTPUTS['HASLR'])
-                                     .combine(input_tuple, by: 0)
+      HYBRID_OUTPUTS['ASSEMBLIES'] = 
+        HYBRID_OUTPUTS['SPADES']
+        .mix(
+          HYBRID_OUTPUTS['UNICYCLER'],
+          HYBRID_OUTPUTS['HASLR']
+        )
+        .combine(input_tuple, by: 0)
 
       /*
        * Polish a long reads assembly
@@ -169,13 +172,16 @@ workflow HYBRID {
       }
 
       // Get long reads assemblies
-      LONGREADS_OUTPUTS['RAW_ASSEMBLIES'] = LONGREADS_OUTPUTS['CANU']
-                                            .mix(LONGREADS_OUTPUTS['FLYE'], 
-                                                 LONGREADS_OUTPUTS['UNICYCLER'], 
-                                                 LONGREADS_OUTPUTS['RAVEN'], 
-                                                 LONGREADS_OUTPUTS['WTDBG2'], 
-                                                 LONGREADS_OUTPUTS['SHASTA'])
-                                            .combine(input_tuple, by: 0)
+      LONGREADS_OUTPUTS['RAW_ASSEMBLIES'] = 
+        LONGREADS_OUTPUTS['CANU']
+        .mix(
+          LONGREADS_OUTPUTS['FLYE'],
+          LONGREADS_OUTPUTS['UNICYCLER'],
+          LONGREADS_OUTPUTS['RAVEN'],
+          LONGREADS_OUTPUTS['WTDBG2'],
+          LONGREADS_OUTPUTS['SHASTA']
+        )
+        .combine(input_tuple, by: 0)
 
       /*
        * Run medaka?
@@ -196,10 +202,13 @@ workflow HYBRID {
       LONGREADS_OUTPUTS['GCPP'] = strategy_2_gcpp.out[1]
 
       // Gather long reads assemblies polished
-      LONGREADS_OUTPUTS['POLISHED_ASSEMBLIES'] = LONGREADS_OUTPUTS['MEDAKA']
-                                                 .mix(LONGREADS_OUTPUTS['NANOPOLISH'],
-                                                      LONGREADS_OUTPUTS['GCPP'])
-                                                 .combine(input_tuple, by: 0)
+      LONGREADS_OUTPUTS['POLISHED_ASSEMBLIES'] = 
+        LONGREADS_OUTPUTS['MEDAKA']
+        .mix(
+          LONGREADS_OUTPUTS['NANOPOLISH'],
+          LONGREADS_OUTPUTS['GCPP']
+        )
+        .combine(input_tuple, by: 0)
 
       /*
        * Finally, run sreads polish for all

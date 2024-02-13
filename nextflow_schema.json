@@ -76,6 +76,12 @@
                     "default": 50,
                     "help_text": "Whenever polishing long reads only assemblies with unpaired short reads (single end), the pipeline will directly execute one round of pilon polishing instead of using Unicycler's polish pipeline. Therefore we need to allocate the amount of memory allocated by Pilon. Default 50G. This step is crucial because with not enough memory will crash and not correct your assembly. Values are in Gb.",
                     "fa_icon": "fas fa-database"
+                },
+                "pilon_polish_rounds": {
+                    "type": "number",
+                    "description": "Number of polishing rounds to be performed with Pilon.",
+                    "default": 4,
+                    "help_text": "How many rounds of polishing should be executed with Pilon before saving the consensus?"
                 }
             }
         },

@@ -17,9 +17,9 @@ import sphinx_rtd_theme
 
 # -- Project information -----------------------------------------------------
 
-project = 'MpGAP: A generic multi-platform genome assembly pipeline'
-copyright = '2019, fmalmeida/mpgap: A genome assembly pipeline for multiple sequencing platforms.'
-author = 'Felipe Marques de Almeida'
+project   = 'ngs-preprocess: A pipeline for preprocessing NGS data from multiple sequencing platforms'
+copyright = '2019, fmalmeida/ngs-preprocess: A pipeline for preprocessing NGS data from multiple sequencing platforms'
+author    = 'Felipe Marques de Almeida'
 
 
 # -- General configuration ---------------------------------------------------
@@ -27,7 +27,7 @@ author = 'Felipe Marques de Almeida'
 # You can specify multiple suffix as a list of string:
 #
 # source_suffix = ['.rst', '.md']
-source_suffix = '.rst'
+source_suffix = '.md'
 
 # The master toctree document.
 master_doc = 'index'
@@ -57,7 +57,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-# html_theme = 'sphinx_rtd_theme'
+#html_theme = 'sphinx_rtd_theme'
 # --- material ---
 html_theme = "sphinx_material"
 # Material theme options (see theme.conf for more information)
@@ -65,9 +65,9 @@ html_theme_options = {
 
     # Set the color and the accent color
     # Primary color. Options are red, pink, purple, deep-purple, indigo, blue, light-blue, cyan, teal, green, light-green, lime, yellow, amber, orange, deep-orange, brown, grey, blue-grey, and white.
-    'color_primary': 'cyan',
+    'color_primary': 'red',
     #Accent color. Options are red, pink, purple, deep-purple, indigo, blue, light-blue, cyan, teal, green, light-green, lime, yellow, amber, orange, and deep-orange.
-    'color_accent': 'orange',
+    'color_accent': 'blue',
 
     # Visible levels of the global TOC; -1 means unlimited
     'globaltoc_depth': 1,
@@ -80,8 +80,8 @@ html_theme_options = {
     'logo_icon': "book",
 
     # repo info
-    "repo_url": "https://github.com/fmalmeida/MpGAP",
-    "repo_name": "MpGAP",
+    "repo_url": "https://github.com/fmalmeida/ngs-preprocess",
+    "repo_name": "ngs-preprocess",
     "repo_type": "github",
 
 }
@@ -92,5 +92,6 @@ html_sidebars = {
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
+html_title       = project
 html_static_path = ['_static']
-html_css_files = ['style.css']
+html_css_files   = ['style.css']

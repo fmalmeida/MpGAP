@@ -1,0 +1,21 @@
+Sample	QUAST_mqc-generalstats-quast-N50	QUAST_mqc-generalstats-quast-Total_length	Samtools_mqc-generalstats-samtools-mapped_passed_pct	Samtools_mqc-generalstats-samtools-mapped_passed	Samtools_mqc-generalstats-samtools-flagstat_total
+canu_assembly	3713674.0	29828639.0			
+canu_assembly.stat			98.67	482522	489033
+canu_medaka_consensus	3718495.0	29866502.0			
+canu_medaka_consensus.stat			98.67	481835	488348
+flye_assembly	2278250.0	29325492.0			
+flye_assembly.stat			98.6	455293	461781
+flye_medaka_consensus	2279797.0	29335530.0			
+flye_medaka_consensus.stat			98.59	455148	461643
+raven_assembly	3783467.0	29481737.0			
+raven_assembly.stat			95.86	428845	447357
+raven_medaka_consensus	3782302.0	29482805.0			
+raven_medaka_consensus.stat			96.9	437871	451857
+shasta_assembly	135598.0	28362398.0			
+shasta_assembly.stat			96.82	481852	497654
+shasta_medaka_consensus	136427.0	28287956.0			
+shasta_medaka_consensus.stat			96.86	486976	502753
+wtdbg2_assembly	2043848.0	28619494.0			
+wtdbg2_assembly.stat			97.65	467242	478475
+wtdbg2_medaka_consensus	2047658.0	28626778.0			
+wtdbg2_medaka_consensus.stat			97.82	468328	478759

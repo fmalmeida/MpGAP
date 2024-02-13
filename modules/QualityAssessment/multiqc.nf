@@ -3,7 +3,7 @@ process multiqc {
   label 'process_ultralow'
 
   input:
-  tuple val(prefix), file(quast_dirs)
+  tuple val(id), val(entrypoint), val(prefix), file(quast_dirs)
   val nfRun
 
   output:
