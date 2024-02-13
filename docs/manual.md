@@ -65,7 +65,7 @@ By using [Unicycler](https://github.com/rrwick/Unicycler#method-hybrid-assembly)
 
 ### Strategy 2
 
-By polishing (correcting errors) a long reads only assembly with Illumina reads. This will tell the pipeline to produce a long reads only assembly (with canu, wtdbg2, shasta, raven, flye or unicycler) and polish it with [Pilon](https://github.com/broadinstitute/pilon). By default, it runs 4 rounds of polishing (`params.pilon_polish_rounds`).
+By polishing (correcting errors) a long reads only assembly with Illumina reads. This will tell the pipeline to produce a long reads only assembly (with canu, wtdbg2, shasta, raven, flye or unicycler) and polish it with [Pilon](https://github.com/broadinstitute/pilon) and [Polypolish](https://github.com/rrwick/Polypolish). By default, it runs 4 rounds of polishing for Pilon (`params.pilon_polish_rounds`).
 
 !!! note
 
@@ -138,7 +138,7 @@ However, they can also be set in a sample-specific manner. If a sample has a val
 | <div style="width:240px">Parameter</div> | Required | Default | Description |
 | :--------------------------------------- | :------- | :------ | :---------- |
 | `--quast_additional_parameters`              | :material-close: | NA | Give additional parameters to Quast while assessing assembly metrics. Must be given as shown in Quast manual. E.g. `" --large --eukaryote "` |
-| `--skip_raw_assemblies_polishing`              | :material-close: | False | This will make the pipeline not polish raw assemblies on hybrid strategy 2. For example, if a sample is assembled with flye and polished with medaka, by default, both assemblies will be passed to pilon so you can compare them. If you don't need this comparison and don't want to polish the raw assembly, use this parameter |
+| `--skip_raw_assemblies_polishing`              | :material-close: | False | This will make the pipeline not polish raw assemblies on hybrid strategy 2. For example, if a sample is assembled with flye and polished with medaka, by default, both assemblies will be passed to pilon and polypolish so you can compare them. If you don't need this comparison and don't want to polish the raw assembly, use this parameter |
 | `--skip_canu`              | :material-close: | False | Skip the execution of Canu |
 | `--canu_additional_parameters`              | :material-close: | False | Passes additional parameters for Canu assembler. E.g. `" correctedErrorRate=0.075 corOutCoverage=200 "`. Must be given as shown in Canu's manual |
 | `--skip_flye`              | :material-close: | False | Skip the execution of Flye |

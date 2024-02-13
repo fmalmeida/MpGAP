@@ -79,7 +79,7 @@ To use them, users must either select a medaka model or pass to the pipeline  th
 
 1. long reads assembly
 2. polishing with long reads models
-3. polishing with short reads with Pilon
+3. polishing using short reads with Pilon and Polypolish
 
 Please see the [samplesheet](samplesheet.md#) and [manual](manual.md#) reference pages for more information.
 
