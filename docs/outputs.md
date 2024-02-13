@@ -37,13 +37,7 @@ genome_assembly
 
 ## Example of QC outputs
 
-Here I am going to display just a very few examples of results produced, focusing on the QC, as the main result is a normal assembly, performed by each assembler. Just for reference, I am also displaying the drawing of the assembly graph with Bandage, for the results of the Flye assembler
-
-**Bandage visualization of Flye assembly graph**
-
-<center>
-  <img src="../assets/LengthvsQualityScatterPlot_dot.png" width="85%">
-</center>
+Here I am going to display just a very few examples of results produced, focusing on the QC, as the main result is a normal assembly, performed by each assembler.
 
 **Summary of Assembly Statistics in TXT format**
 
