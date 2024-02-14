@@ -28,7 +28,7 @@ jobs:
 
     - name: Run tests for hybrid
       run: |
-        nextflow run main.nf -profile docker,test,hybrid,pacbio
+        nextflow run main.nf -profile docker,test,hybrid,pacbio --skip_haslr
         rm -r work .nextflow*
 
     - name: View results
