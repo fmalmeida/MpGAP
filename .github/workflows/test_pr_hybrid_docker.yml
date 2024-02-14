@@ -34,4 +34,4 @@ jobs:
     - name: View results
       run: |
         sudo apt-get install -y tree
-        tree hybrid_test
+        tree hybrid_test_pacbio
