@@ -45,7 +45,7 @@ def write_csv(in_list) {
       lr_type = "pacbio"
       lreads  = it.pacbio
     } else if (it.nanopore && it.pacbio) {
-      println """
+      log.error """
       ERROR!
       A major error has occurred with sample: ${it.id}
         ==> The pipeline pipeline is not yet capable of assembling both nanopore and pacbio reads together.
@@ -81,7 +81,7 @@ def write_csv(in_list) {
     if (it.corrected_longreads) {
       corrected_longreads = it.corrected_longreads
       if (corrected_longreads.toString().toLowerCase() != "true" && corrected_longreads.toString().toLowerCase() != "false") {
-        println """
+        log.error """
         ERROR!
         A minor error has occurred!
           ==> In the YAML, the 'corrected_longreads:' must be either true or false.
@@ -96,7 +96,7 @@ def write_csv(in_list) {
     if (it.high_quality_longreads) {
       high_quality_longreads = it.high_quality_longreads
       if (high_quality_longreads.toString().toLowerCase() != "true" && high_quality_longreads.toString().toLowerCase() != "false") {
-        println """
+        log.error """
         ERROR!
         A minor error has occurred!
           ==> In the YAML, the 'high_quality_longreads:' must be either true or false.
@@ -104,6 +104,24 @@ def write_csv(in_list) {
         Cheers.
         """.stripIndent()
         exit 1
+      }
+    }
+
+    // did user set both corrected and high qual flag for the same sample?
+    // corrected_longreads input key is used for the sample?
+    if (it.corrected_longreads && it.high_quality_longreads) {
+      if (
+          it.corrected_longreads.toString().toLowerCase() == "true" && 
+          it.high_quality_longreads.toString().toLowerCase() == "true"
+        ) {
+          log.error """
+          ERROR!
+          A minor error has occurred!
+            ==> In the YAML, you have set for the same sample, 'corrected_longreads' and 'high_quality_longreads' keys as true.
+          Please the re-check the parameters. Problem in sample: ${it.id}.
+          Cheers.
+          """.stripIndent()
+          exit 1
       }
     }
 
@@ -188,7 +206,7 @@ def write_csv(in_list) {
 
       // check if the hybrid strategy is valid
       if (entrypoint != 'hybrid_strategy_1' && entrypoint != 'hybrid_strategy_2' && entrypoint != 'hybrid_strategy_both') {
-        println """
+        log.error """
         ERROR!
         A major error has occurred!
           ==> The 'hybrid_strategy:' key in the YAML, or the --hybrid_strategy command line, must be either '1', '2' or 'both'.
@@ -204,7 +222,7 @@ def write_csv(in_list) {
 
     // has nothing
     else {
-      println """
+      log.error """
       ERROR!
       A major error has occurred!
         ==> At least one read type must be set: illumina, nanopore or pacbio!
@@ -220,7 +238,7 @@ def write_csv(in_list) {
      */
     // genome size is given if using canu?
     if (!params.skip_canu && !genome_size && (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2' || entrypoint == 'hybrid_strategy_both')) {
-      println """
+      log.error """
       ERROR!
       A minor error has occurred
         ==> The pipeline will try to run canu assembler on sample ${it.id}, but user forgot to tell the expected genome size.
@@ -232,7 +250,7 @@ def write_csv(in_list) {
 
     // genome size is given if using haslr?
     if (!params.skip_haslr && !genome_size && (entrypoint == 'hybrid_strategy_1' || entrypoint == 'hybrid_strategy_both')) {
-      println """
+      log.error """
       ERROR!
       A minor error has occurred
         ==> The pipeline will try to run haslr assembler on sample ${it.id}, but user forgot to tell the expected genome size.
@@ -244,7 +262,7 @@ def write_csv(in_list) {
 
     // genome size is given if using wtdbg2?
     if (!params.skip_wtdbg2 && !genome_size && (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2' || entrypoint == 'hybrid_strategy_both')) {
-      println """
+      log.error """
       ERROR!
       A minor error has occurred
         ==> The pipeline will try to run wtdbg2 assembler on sample ${it.id}, but user forgot to tell the expected genome size.
@@ -256,7 +274,7 @@ def write_csv(in_list) {
 
     // Checking if shovill parameter contain "--assembler"
     if (params.shovill_additional_parameters =~ /--assembler/) {
-      println """
+      log.error """
       ERROR!
       A minor error has occurred
         ==> The pipeline already executes shovill with both spades, skesa and megahit. Therefore, you can't pass the 
