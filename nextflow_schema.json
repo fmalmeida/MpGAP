@@ -41,14 +41,24 @@
             "description": "Set the top limit of resources for pipeline",
             "help_text": "If you are running on a smaller system, a pipeline step requesting more resources than are available may cause the Nextflow to stop the run with an error. These options allow you to cap the maximum resources requested by any single job so that the pipeline will run on your system.\n\nNote that you can not _increase_ the resources requested by any job using these options. For that you will need your own configuration file. See [the nf-core website](https://nf-co.re/usage/configuration) for details.",
             "properties": {
-                "max_cpus": {
+                "start_asm_cpus": {
                     "type": "integer",
                     "default": 6,
+                    "description": "Starting (1st try) amount of cpus that assembly jobs should use. Essential for avoiding 1st-try errors due lack of resources for big genomes."
+                },
+                "start_asm_mem": {
+                    "type": "string",
+                    "default": "20.GB",
+                    "description": "Starting (1st try) amount of memory that assembly jobs should use. Essential for avoiding 1st-try errors due lack of resources for big genomes."
+                },
+                "max_cpus": {
+                    "type": "integer",
+                    "default": 10,
                     "description": "Max amount of threads to use"
                 },
                 "max_memory": {
                     "type": "string",
-                    "default": "20.GB",
+                    "default": "40.GB",
                     "description": "Max amount of memory to use"
                 },
                 "max_time": {

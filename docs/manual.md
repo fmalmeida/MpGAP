@@ -84,13 +84,15 @@ Please note that, through the command line, the parameters that are boolean (tru
 | `--input`   | :material-check: | NA      | Path to input [samplesheet](samplesheet.md#) in YAML format |
 | `--output`  | :material-check: | NA      | Directory to store output files                             |
 
-## Max job request
+## Start/Max resources on job request
 
 | <div style="width:120px">Parameter</div> | Required | Default | Description |
 | :--------------------------------------- | :------- | :------ | :---------- |
-| `--max_cpus`   | :material-close: | 4    | Max number of threads a job can use across attempts |
-| `--max_memory` | :material-close: | 6.GB | Max amount of memory a job can use across attempts  |
-| `--max_time`   | :material-close: | 40.h | Max amount of time a job can take to run            | 
+| `--start_asm_cpus` | :material-close: | 6     | How many cpus should an assembly job request in the very first attempt?. This is essential for bigger genomes in order to avoid having to fail the first try due lack of memory and then running again (automatically) using all the max values allowed with the max_cpus parameter. |
+| `--start_asm_mem`  | :material-close: | 20.GB |  How much memory should an assembly job request in the very first attempt?. This is essential for bigger genomes in order to avoid having to fail the first try due lack of memory and then running again (automatically) using all the max values allowed with the max_mem parameter.  |
+| `--max_cpus`   | :material-close: | 10    | Max number of threads a job can use across attempts. After one failed attempt this is maxed out. |
+| `--max_memory` | :material-close: | 40.GB | Max amount of memory a job can use across attempts. After one failed attempt this is maxed out.  |
+| `--max_time`   | :material-close: | 40.h  | Max amount of time a job can take to run | 
 
 ## Assemblies configuration
 
