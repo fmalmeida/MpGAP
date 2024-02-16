@@ -1,6 +1,6 @@
 process multiqc {
   publishDir "${params.output}/${prefix}/00_quality_assessment", mode: 'copy'
-  label 'process_ultralow'
+  label 'process_low'
 
   input:
   tuple val(id), val(entrypoint), val(prefix), file(quast_dirs)
