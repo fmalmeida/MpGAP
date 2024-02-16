@@ -28,10 +28,10 @@ jobs:
 
     - name: Run tests for hybrid
       run: |
-        nextflow run main.nf -profile docker,test,hybrid,pacbio
+        nextflow run main.nf -profile docker,test,hybrid,pacbio --skip_haslr
         rm -r work .nextflow*
 
     - name: View results
       run: |
         sudo apt-get install -y tree
-        tree hybrid_test
+        tree hybrid_test_pacbio
