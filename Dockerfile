@@ -20,6 +20,14 @@ USER root
 RUN mkdir -p $CONDA_PREFIX/envs/mpgap-3.2/lib/python3.8/site-packages/medaka && \
       chmod -R 777 $CONDA_PREFIX/envs/mpgap-3.2/lib/python3.8/site-packages/medaka
 
+# pre-download BUSCO bacteria database
+RUN mkdir -p /opt/busco_db/ && \
+      wget -O /opt/busco_db/bacteria.tar.gz https://busco-data.ezlab.org/v5/data/lineages/bacteria_odb10.2024-01-08.tar.gz && \
+      cd /opt/busco_db/ && \
+      tar zxvf bacteria.tar.gz && \
+      rm bacteria.tar.gz && \
+      chmod -R 777 /opt/busco_db/
+
 # install ps
 RUN apt-get update && apt-get install -y procps && rm -rf /var/lib/apt/lists/*
 
