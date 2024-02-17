@@ -23,6 +23,9 @@ process quast {
   // define prefix for final assemblies
   asm_copy_prefix = id.replaceAll(':', '_') // fixes hybrid prefixes that has a ':'
 
+  // busco lineage
+  def busco_lineage = params.busco_lineage ? "-l ${params.busco_lineage}" : '--auto-lineage'
+
   if (params.selected_profile == "docker" || params.selected_profile == "conda")
   """
   # run quast
@@ -32,11 +35,17 @@ process quast {
       ${lreads_param} \\
       ${paired_param} \\
       ${single_param} \\
-      --conserved-genes-finding \\
       --rna-finding \\
       --min-contig 100 \\
       $additional_params \\
       ${contigs}
+  
+  # run busco
+  busco \\
+    -i ${contigs} \\
+    -m genome \\
+    $busco_lineage \\
+    -o ${assembler}/busco_stats/run_${assembler}
   
   # save assembly
   mkdir -p input_assembly
@@ -56,11 +65,17 @@ process quast {
       ${lreads_param} \\
       ${paired_param} \\
       ${single_param} \\
-      --conserved-genes-finding \\
       --rna-finding \\
       --min-contig 100 \\
       $additional_params \\
       ${contigs}
+  
+  # run busco
+  busco \\
+    -i ${contigs} \\
+    -m genome \\
+    $busco_lineage \\
+    -o ${assembler}/busco_stats/run_${assembler}
   
   # save assembly
   mkdir -p input_assembly
