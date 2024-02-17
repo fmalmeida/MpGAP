@@ -84,6 +84,16 @@ Please note that, through the command line, the parameters that are boolean (tru
 | `--input`   | :material-check: | NA      | Path to input [samplesheet](samplesheet.md#) in YAML format |
 | `--output`  | :material-check: | NA      | Directory to store output files                             |
 
+### BUSCO lineage options
+
+| <div style="width:180px">Parameter</div> | Required | Default | Description |
+| :--------------------------------------- | :------- | :------ | :---------- |
+| `--busco_lineage` | :material-close: | bacteria_odb10 | Select a BUSCO lineage for the pipeline to use. |
+
+!!! note
+
+    If blank, bacteria_odb10 will be used. If unsure you can set the param to `auto` which will tell BUSCO to automatically select the most appropriate one (it takes a little bit more of time and space).
+
 ## Start/Max resources on job request
 
 | <div style="width:120px">Parameter</div> | Required | Default | Description |
