@@ -21,6 +21,11 @@
                     "description": "Set the expected genome size (E.g. 5.6m; 1.2g). Required by Canu and Haslr.",
                     "help_text": "It sets the expected genome size of the assembly. It is required by Canu and Haslr assemblers. It is optional for Flye, but highly recommended. E.g. 5.6m; 1.2g."
                 },
+                "busco_lineage": {
+                    "type": "string",
+                    "description": "Select a BUSCO lineage for the pipeline to use.",
+                    "help_text": "If blank, bacteria_odb10 will be used. If unsure you can set the param to 'auto' which will tell BUSCO to automatically select the most appropriate one (it takes a little bit more of time and space)."
+                },
                 "output": {
                     "type": "string",
                     "description": "The output directory where the results will be saved.",
