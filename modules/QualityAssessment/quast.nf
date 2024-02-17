@@ -24,7 +24,8 @@ process quast {
   asm_copy_prefix = id.replaceAll(':', '_') // fixes hybrid prefixes that has a ':'
 
   // busco lineage
-  def busco_lineage = params.busco_lineage ? "-l ${params.busco_lineage}" : '--auto-lineage'
+  def busco_lineage = params.busco_lineage ?: 'bacteria_odb10'
+  busco_lineage     = (busco_lineage.toString().toLowerCase() == 'auto') ? : '--auto-lineage' "-l ${params.busco_lineage}"
 
   if (params.selected_profile == "docker" || params.selected_profile == "conda")
   """
