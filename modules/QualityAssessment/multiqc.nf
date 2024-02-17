@@ -14,7 +14,7 @@ process multiqc {
   script:
   """
   # Run
-  multiqc . --ignore "*.sam" --ignore "*.bam" --ignore "*.stat" ;
+  multiqc . --ignore "*.sam" --ignore "*.bam" --ignore "*.err" --ignore "*.stat" ;
 
   # Rename to have nf run name
   mv multiqc_report.html multiqc_report_${nfRun}.html ;
