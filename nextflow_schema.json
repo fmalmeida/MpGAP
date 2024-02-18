@@ -242,6 +242,20 @@
                     "help_text": "Shasta is a long reads only assembler. Can be use for hybrid assemblies in strategy 2.",
                     "hidden": true,
                     "fa_icon": "fas fa-ban"
+                },
+                "skip_pilon": {
+                    "type": "boolean",
+                    "description": "Skip pilon polisher",
+                    "help_text": "Skip pilon polisher when performing hybrid assembly strategy 2.",
+                    "hidden": true,
+                    "fa_icon": "fas fa-ban"
+                },
+                "skip_polypolish": {
+                    "type": "boolean",
+                    "description": "Skip polypolisher polisher",
+                    "help_text": "Skip polypolisher polisher when performing hybrid assembly strategy 2.",
+                    "hidden": true,
+                    "fa_icon": "fas fa-ban"
                 }
             }
         },
