@@ -219,14 +219,33 @@ workflow HYBRID {
       } else {
         ch_sreads_polish = LONGREADS_OUTPUTS['RAW_ASSEMBLIES'].mix(LONGREADS_OUTPUTS['POLISHED_ASSEMBLIES'])
       }
-      strategy_2_pilon( ch_sreads_polish )
-      strategy_2_polypolish( ch_sreads_polish )
 
-      
-      HYBRID_OUTPUTS['SREADS_POLISH'] = 
-        strategy_2_pilon.out[1].mix(
-          strategy_2_polypolish.out[1]
-        ).combine( input_tuple, by: 0 )
+      /*
+       * pilon?
+       */
+      if (!params.skip_pilon) { 
+        strategy_2_pilon( ch_sreads_polish )
+        HYBRID_OUTPUTS['SREADS_POLISH'] = HYBRID_OUTPUTS['SREADS_POLISH'].mix( strategy_2_pilon.out[1] )
+      }
+
+      /*
+       * polypolisher?
+       */
+      if (!params.skip_polypolish) { 
+        strategy_2_polypolish( ch_sreads_polish )
+        HYBRID_OUTPUTS['SREADS_POLISH'] = HYBRID_OUTPUTS['SREADS_POLISH'].mix( strategy_2_polypolish.out[1] )
+      }
+
+      /*
+       * Is there anything?
+       */
+      if ( !params.skip_pilon || !params.skip_polypolish) { 
+        HYBRID_OUTPUTS['SREADS_POLISH'] = HYBRID_OUTPUTS['SREADS_POLISH'].combine( input_tuple, by: 0 )
+      }
+
+      /*
+       * Finalize workflow
+       */
 
       // Gather assemblies for qc
       HYBRID_OUTPUTS['ALL_RESULTS'] = 

@@ -215,6 +215,20 @@ def write_csv(in_list) {
         """.stripIndent()
         exit 1
       }
+
+      if (
+          (entrypoint == 'hybrid_strategy_2' || entrypoint == 'hybrid_strategy_both') &&
+          (params.skip_pilon && params.skip_polypolish)
+        ) {
+        log.error """
+        ERROR!
+        A major error has occurred!
+          ==> The 'hybrid_strategy:' key in the YAML, was set to '2' or 'both'. For this, you must allow at least one short reads based polisher to run. Currently you set both to not be executed (--skip_pilon and --skip_polypolish).
+        Please the re-check the parameters. Problem in sample: ${it.id}.
+        Cheers.
+        """.stripIndent()
+        exit 1
+      }
     }
 
     // has only long reads
