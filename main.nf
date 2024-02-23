@@ -71,12 +71,12 @@ workflow {
 /*
  * Completition message
  */
- workflow.onComplete {
-     println "Pipeline completed at: $workflow.complete"
-     println "Execution status: ${ workflow.success ? 'OK' : 'failed' }"
-     println "Execution duration: $workflow.duration"
-     println ""
-     println "${ workflow.success ? 'I wish you nice results!' : 'Do not give up, we can fix it!' }"
-     println "${ workflow.success ? 'Thank you for using fmalmeida/mpgap pipeline!' : '' }"
-     println ""
- }
+workflow.onComplete {
+    println "Pipeline completed at: $workflow.complete"
+    println "Execution status: ${ workflow.success ? 'OK' : 'failed' }"
+    println "Execution duration: $workflow.duration"
+    println ""
+    println "${ workflow.success ? 'I wish you nice results!' : 'Do not give up, we can fix it!' }"
+    println "${ workflow.success ? 'Thank you for using fmalmeida/mpgap pipeline!' : '' }"
+    println ""
+}
