@@ -78,6 +78,16 @@ process quast {
     $busco_lineage \\
     -o ${assembler}/busco_stats/run_${assembler}
   
+  # change names
+  for i in \$( find ${assembler}/busco_stats/run_${assembler} -name 'short*.json' ) ; do
+    path=\$( dirname \$i ) ;
+    mv \$i \${path}/short_summary_${assembler}.json ;
+  done
+  for i in \$( find ${assembler}/busco_stats/run_${assembler} -name 'short*.txt' ) ; do
+    path=\$( dirname \$i ) ;
+    mv \$i \${path}/short_summary_${assembler}.txt ;
+  done
+  
   # save assembly
   mkdir -p input_assembly
   cp ${contigs} input_assembly/${contigs}
