@@ -1,6 +1,7 @@
 process quast {
   publishDir "${params.output}", mode: 'copy', saveAs: { filename ->
     if ( filename.tokenize('/').contains('input_assembly') ) "final_assemblies/${asm_copy_prefix}_${filename.tokenize('/')[1]}"
+    else if ( filename == 'versions.yml' ) null
     else "${prefix}/00_quality_assessment/${filename}"
   }
   tag "${id}"
