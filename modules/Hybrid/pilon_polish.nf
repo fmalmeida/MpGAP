@@ -10,6 +10,7 @@ process pilon_polish {
     output:
     file("${assembler}/*") // Get everything
     tuple val(id), file("${assembler}/${assembler}_pilon_consensus.final.fasta"), val("${assembler}_pilon_polished")
+    path('versions.yml')
 
     script:
     paired_cmd = (sread1 =~ /input.*/) ? "" : "${sread1} ${sread2}"
@@ -71,6 +72,12 @@ process pilon_polish {
     cp \
         pilon_consensus_${params.pilon_polish_rounds}/${assembler}_pilon_consensus_${params.pilon_polish_rounds}.fasta \
         ${assembler}/${assembler}_pilon_consensus.final.fasta
+    
+    # get version
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        pilon: \$( pilon --version | cut -f 3 -d ' ' )
+    END_VERSIONS
     """
 
 }

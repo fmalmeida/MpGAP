@@ -9,6 +9,7 @@ process gcpp {
     output:
     file "${assembler}_gcpp_variants.gff" // Save gff
     tuple val(id), file("${assembler}_gcpp_consensus.fasta"), val("${assembler}_gcpp") // Save contigs
+    path('versions.yml')
 
     when:
     !(bams =~ /input.*/) && (lr_type == 'pacbio') && (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2')
@@ -41,5 +42,12 @@ process gcpp {
         -o ${assembler}_gcpp_consensus.fasta,${assembler}_gcpp_variants.gff \\
         -j $task.cpus \\
         final_pbaligned.bam ;
+
+    # get version
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        gcpp: \$( gcpp --version | cut -f 2 -d ' ' )
+        pbmm2: \$( pbmm2 --version | cut -f 2 -d ' ' )
+    END_VERSIONS
     """
 }

@@ -10,6 +10,7 @@ process megahit {
   output:
   file "megahit" // Save everything
   tuple val(id), file("megahit/megahit_assembly.fasta"), val('megahit')
+  path('versions.yml')
 
   when:
   (entrypoint == 'shortreads_only')
@@ -31,5 +32,11 @@ process megahit {
 
   # rename results
   mv megahit/final.contigs.fa megahit/megahit_assembly.fasta
+
+  # get version
+  cat <<-END_VERSIONS > versions.yml
+  "${task.process}":
+      megahit: \$( megahit --version | cut -f 2 -d ' ' )
+  END_VERSIONS
   """
 }

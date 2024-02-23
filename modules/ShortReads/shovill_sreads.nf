@@ -10,6 +10,7 @@ process shovill {
   output:
   file "${assembler}" // Save all output
   tuple val(id), file("${assembler}/shovill_${assembler}_final.fasta"), val("shovill_${assembler}")
+  path('versions.yml')
 
   when:
   !(sread1 =~ /input.*/ || sread2 =~ /input.*/) && (single =~ /input.*/) && (entrypoint == 'shortreads_only')
@@ -29,5 +30,11 @@ process shovill {
 
   # rename results
   mv ${assembler}/contigs.fa ${assembler}/shovill_${assembler}_final.fasta
+
+  # get version
+  cat <<-END_VERSIONS > versions.yml
+  "${task.process}":
+      shovill: \$( shovill --version | cut -f 2 -d ' ' )
+  END_VERSIONS
   """
 }

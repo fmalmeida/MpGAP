@@ -10,6 +10,7 @@ process spades {
   output:
   file "spades" // Save all output
   tuple val(id), file("spades/spades_assembly.fasta"), val('spades')
+  path('versions.yml')
 
   when:
   (entrypoint == 'shortreads_only')
@@ -29,5 +30,11 @@ process spades {
 
   # rename results
   mv spades/contigs.fasta spades/spades_assembly.fasta
+
+  # get version
+  cat <<-END_VERSIONS > versions.yml
+  "${task.process}":
+      spades: \$( spades.py --version | cut -f 4 -d ' ' )
+  END_VERSIONS
   """
 }

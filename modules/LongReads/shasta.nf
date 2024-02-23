@@ -9,6 +9,7 @@ process shasta {
   output:
   file "shasta/" // Saves all files
   tuple val(id), file("shasta/shasta_assembly.fasta"), val('shasta') // Gets contigs file
+  path('versions.yml')
 
   when:
   (lr_type == 'nanopore') && (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2')
@@ -31,5 +32,11 @@ process shasta {
 
   # rename contigs
   cp shasta/Assembly.fasta shasta/shasta_assembly.fasta ;
+
+  # get version
+  cat <<-END_VERSIONS > versions.yml
+  "${task.process}":
+      shasta: \$( shasta --version | cut -f 3 -d ' ' )
+  END_VERSIONS
   """
 }

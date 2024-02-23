@@ -10,6 +10,7 @@ process unicycler {
   output:
   file "unicycler" // Save everything
   tuple  val(id), file("unicycler/unicycler_assembly.fasta"), val('unicycler')
+  path('versions.yml')
 
   when:
   (entrypoint == 'shortreads_only')
@@ -29,5 +30,12 @@ process unicycler {
 
   # rename results
   mv unicycler/assembly.fasta unicycler/unicycler_assembly.fasta
+
+  # get version
+  cat <<-END_VERSIONS > versions.yml
+  "${task.process}":
+      spades: \$( spades.py --version | cut -f 4 -d ' ' )
+      unicycler: \$( unicycler --version | cut -f 2 -d ' ' )
+  END_VERSIONS
   """
 }

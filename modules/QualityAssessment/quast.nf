@@ -11,6 +11,7 @@ process quast {
   output:
   tuple val(id), val(entrypoint), val(prefix), file("${assembler}"), emit: results
   file("input_assembly/*")
+  path('versions.yml')
 
   script:
 
@@ -51,6 +52,13 @@ process quast {
   # save assembly
   mkdir -p input_assembly
   cp ${contigs} input_assembly/${contigs}
+
+  # get version
+  cat <<-END_VERSIONS > versions.yml
+  "${task.process}":
+      quast: \$( quast.py --version | tail -n+2 | cut -f 2 -d ' ' )
+      busco: \$( busco --version | cut -f 2 -d ' ' )
+  END_VERSIONS
   """
 
   else if (params.selected_profile == "singularity")
@@ -91,5 +99,12 @@ process quast {
   # save assembly
   mkdir -p input_assembly
   cp ${contigs} input_assembly/${contigs}
+
+  # get version
+  cat <<-END_VERSIONS > versions.yml
+  "${task.process}":
+      quast: \$( quast.py --version | tail -n+2 | cut -f 2 -d ' ' )
+      busco: \$( busco --version | cut -f 2 -d ' ' )
+  END_VERSIONS
   """
 }

@@ -9,6 +9,7 @@ process wtdbg2 {
   output:
   file "*" // Saves all files
   tuple val(id), file("wtdbg2_assembly.fasta"), val('wtdbg2') // Gets contigs file
+  path('versions.yml')
 
   when:
   (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2')
@@ -28,5 +29,12 @@ process wtdbg2 {
 
   # rename results
   cp ${fixed_id}.cns.fa wtdbg2_assembly.fasta
+
+  # get version
+  # --version command does not exist
+  cat <<-END_VERSIONS > versions.yml
+  "${task.process}":
+      wtdbg2: 2.5
+  END_VERSIONS
   """
 }

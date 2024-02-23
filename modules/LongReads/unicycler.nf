@@ -9,6 +9,7 @@ process unicycler {
   output:
   file "unicycler/*" // Save all files
   tuple val(id), file("unicycler/unicycler_assembly.fasta"), val('unicycler') // Gets contigs file
+  path('versions.yml')
 
   when:
   (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2')
@@ -28,5 +29,11 @@ process unicycler {
 
   # rename results
   mv unicycler/assembly.fasta unicycler/unicycler_assembly.fasta
+
+  # get version
+  cat <<-END_VERSIONS > versions.yml
+  "${task.process}":
+      unicycler: \$( unicycler --version | cut -f 2 -d ' ' )
+  END_VERSIONS
   """
 }

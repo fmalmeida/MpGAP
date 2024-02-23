@@ -10,6 +10,7 @@ process polypolish {
     output:
     file("${assembler}/*") // Get everything
     tuple val(id), file("${assembler}/${assembler}_polypolish_consensus.fasta"), val("${assembler}_polypolish_consensus")
+    path('versions.yml')
 
     script:
     paired   = (sread2 =~ /input.*/) ? "false" : "true"
@@ -47,6 +48,12 @@ process polypolish {
             --out1 filtered_1.sam ;
     fi
     polypolish ${draft} filtered*.sam > ${assembler}/${assembler}_polypolish_consensus.fasta
+
+    # get version
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        polypolish: \$( polypolish --version | cut -f 2 -d ' ' )
+    END_VERSIONS
     """
 
 }

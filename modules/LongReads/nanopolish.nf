@@ -9,6 +9,7 @@ process nanopolish {
     output:
     tuple val(id), file("${assembler}_nanopolish_consensus.fa"), val("${assembler}_nanopolish") // Save nanopolished contigs
     file "${assembler}_nanopolish_consensus.complete.vcf" // Save VCF
+    path('versions.yml')
 
     when:
     !(fast5 =~ /input.*/) && (lr_type == 'nanopore') && (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2')
@@ -67,5 +68,12 @@ process nanopolish {
     
     # rename contigs
     cat polished.*.vcf >> ${assembler}_nanopolish_consensus.complete.vcf
+
+    # get version
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        minimap2: \$( minimap2 --version )
+        nanopolish: \$( nanopolish --version | head -n 1 | cut -f 3 -d ' ' )
+    END_VERSIONS
     """
 }
