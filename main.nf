@@ -64,19 +64,38 @@ workflow {
   HYBRID( PARSE_SAMPLESHEET.out.hybrid )
 
   // QC
-  ASSEMBLY_QC( SHORTREADS_ONLY.out.mix( LONGREADS_ONLY.out, HYBRID.out ) )
+  ch_all_assemblies = SHORTREADS_ONLY.out.mix( LONGREADS_ONLY.out, HYBRID.out )
+  ASSEMBLY_QC( ch_all_assemblies )
+
+  // generate bacannot samplesheet
+  def final_outdir = file(params.output).toUriString()
+  Channel.value( 'samplesheet:' )
+  .mix( 
+    ch_all_assemblies
+    .map{ 
+      def sample   = it[0].toString()
+      def asm_type = it[2].toString()
+      def assembly = it[1].toString().split('/')[-1]
+      def asm_path = "${final_outdir}/final_assemblies/${sample}_${assembly}"
+
+      def final_string = "\s\s- id: ${sample}_${asm_type}\n\s\s\s\sassembly: ${asm_path}\n"
+    },
+
+    Channel.value("\n")
+  )
+  .collectFile( name: 'bacannot_samplesheet.yml', storeDir: params.output, sort: false, newLine: false )
     
 }
 
 /*
  * Completition message
  */
- workflow.onComplete {
-     println "Pipeline completed at: $workflow.complete"
-     println "Execution status: ${ workflow.success ? 'OK' : 'failed' }"
-     println "Execution duration: $workflow.duration"
-     println ""
-     println "${ workflow.success ? 'I wish you nice results!' : 'Do not give up, we can fix it!' }"
-     println "${ workflow.success ? 'Thank you for using fmalmeida/mpgap pipeline!' : '' }"
-     println ""
- }
+workflow.onComplete {
+    println "Pipeline completed at: $workflow.complete"
+    println "Execution status: ${ workflow.success ? 'OK' : 'failed' }"
+    println "Execution duration: $workflow.duration"
+    println ""
+    println "${ workflow.success ? 'I wish you nice results!' : 'Do not give up, we can fix it!' }"
+    println "${ workflow.success ? 'Thank you for using fmalmeida/mpgap pipeline!' : '' }"
+    println ""
+}
