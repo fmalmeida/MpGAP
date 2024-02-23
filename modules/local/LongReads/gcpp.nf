@@ -9,7 +9,7 @@ process gcpp {
     output:
     file "${assembler}_gcpp_variants.gff" // Save gff
     tuple val(id), file("${assembler}_gcpp_consensus.fasta"), val("${assembler}_gcpp") // Save contigs
-    path('versions.yml')
+    path('versions.yml'), emit: versions
 
     when:
     !(bams =~ /input.*/) && (lr_type == 'pacbio') && (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2')

@@ -9,7 +9,7 @@ process shasta {
   output:
   file "shasta/" // Saves all files
   tuple val(id), file("shasta/shasta_assembly.fasta"), val('shasta') // Gets contigs file
-  path('versions.yml')
+  path('versions.yml'), emit: versions
 
   when:
   (lr_type == 'nanopore') && (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2')

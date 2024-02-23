@@ -11,7 +11,7 @@ process quast {
   output:
   tuple val(id), val(entrypoint), val(prefix), file("${assembler}"), emit: results
   file("input_assembly/*")
-  path('versions.yml')
+  path('versions.yml'), emit: versions
 
   script:
 

@@ -1,4 +1,4 @@
-process haslr_hybrid {
+process spades_hybrid {
   publishDir "${params.output}/${prefix}", mode: 'copy'
   tag "${id}"
   label 'process_assembly'
@@ -8,35 +8,35 @@ process haslr_hybrid {
 
   output:
   file "*" // Save everything
-  tuple val(id), file("haslr/haslr_assembly.fa"), val('haslr') // Gets contigs file
-  path('versions.yml')
+  tuple val(id), file("spades/spades_assembly.fasta"), val('spades') // Gets contigs file
+  path('versions.yml'), emit: versions
 
   when:
   ((!(sread1 =~ /input.*/) && !(sread2 =~ /input.*/)) || !(single =~ /input.*/)) && !(lreads =~ /input.*/) && (entrypoint == 'hybrid_strategy_1')
 
   script:
   // Check reads
-  paired_reads = (!(sread1 =~ /input.*/) && !(sread2 =~ /input.*/)) ? "$sread1 $sread2" : ""
-  single_reads = !(single =~ /input.*/) ? "$single" : ""
-  additional_params = (params.haslr_additional_parameters) ? params.haslr_additional_parameters : ""
+  lr   = (lr_type == 'nanopore') ? '--nanopore' : '--pacbio'
+  paired_reads = (!(sread1 =~ /input.*/) && !(sread2 =~ /input.*/)) ? "-1 $sread1 -2 $sread2" : ""
+  single_reads = !(single =~ /input.*/) ? "-s $single" : ""
+  additional_params = (params.spades_additional_parameters) ? params.spades_additional_parameters : ""
   """
-  # run haslr
-  haslr.py \\
+  # run spades
+  spades.py \\
+      -o spades \\
       -t $task.cpus \\
-      -o haslr \\
-      -g ${genome_size} \\
-      -l $lreads \\
-      -x ${lr_type} \\
       $additional_params \\
-      -s ${paired_reads} ${single_reads} 
+      ${paired_reads} \\
+      ${single_reads} \\
+      ${lr} ${lreads}
 
   # rename results
-  cp haslr/*/asm.final.fa haslr/haslr_assembly.fa
+  mv spades/contigs.fasta spades/spades_assembly.fasta
 
   # get version
   cat <<-END_VERSIONS > versions.yml
   "${task.process}":
-      haslr: \$( haslr.py --version )
+      spades: \$( spades.py --version | cut -f 4 -d ' ' )
   END_VERSIONS
   """
 }

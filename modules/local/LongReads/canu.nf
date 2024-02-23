@@ -9,7 +9,7 @@ process canu {
   output:
   file "canu/" // Saves all files
   tuple val(id), file("canu/canu_assembly.fasta"), val('canu') // Gets contigs file
-  path('versions.yml')
+  path('versions.yml'), emit: versions
 
   when:
   (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2')

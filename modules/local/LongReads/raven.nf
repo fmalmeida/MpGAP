@@ -9,7 +9,7 @@ process raven {
   output:
   file "raven_assembly.*" // Saves all files
   tuple val(id), file("raven_assembly.fasta"), val('raven') // Gets contigs file
-  path('versions.yml')
+  path('versions.yml'), emit: versions
 
   when:
   (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2')

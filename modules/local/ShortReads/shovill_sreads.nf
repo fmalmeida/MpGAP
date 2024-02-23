@@ -10,7 +10,7 @@ process shovill {
   output:
   file "${assembler}" // Save all output
   tuple val(id), file("${assembler}/shovill_${assembler}_final.fasta"), val("shovill_${assembler}")
-  path('versions.yml')
+  path('versions.yml'), emit: versions
 
   when:
   !(sread1 =~ /input.*/ || sread2 =~ /input.*/) && (single =~ /input.*/) && (entrypoint == 'shortreads_only')

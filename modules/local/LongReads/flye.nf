@@ -9,7 +9,7 @@ process flye {
   output:
   file "flye" // Saves all files
   tuple val(id), file("flye/flye_assembly.fasta"), val('flye') // Gets contigs file
-  path('versions.yml')
+  path('versions.yml'), emit: versions
 
   when:
   (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2')

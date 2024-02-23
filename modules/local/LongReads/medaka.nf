@@ -9,7 +9,7 @@ process medaka {
     output:
     file "${assembler}" // Save everything
     tuple val(id), file("${assembler}/${assembler}_medaka_consensus.fa"), val("${assembler}_medaka") // Save medaka contigs
-    path('versions.yml')
+    path('versions.yml'), emit: versions
 
     when:
     (medaka_model) && (lr_type == 'nanopore') && (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2')

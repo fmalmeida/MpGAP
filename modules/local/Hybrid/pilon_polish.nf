@@ -10,7 +10,7 @@ process pilon_polish {
     output:
     file("${assembler}/*") // Get everything
     tuple val(id), file("${assembler}/${assembler}_pilon_consensus.final.fasta"), val("${assembler}_pilon_polished")
-    path('versions.yml')
+    path('versions.yml'), emit: versions
 
     script:
     paired_cmd = (sread1 =~ /input.*/) ? "" : "${sread1} ${sread2}"

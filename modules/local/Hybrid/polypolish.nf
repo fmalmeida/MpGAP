@@ -10,7 +10,7 @@ process polypolish {
     output:
     file("${assembler}/*") // Get everything
     tuple val(id), file("${assembler}/${assembler}_polypolish_consensus.fasta"), val("${assembler}_polypolish_consensus")
-    path('versions.yml')
+    path('versions.yml'), emit: versions
 
     script:
     paired   = (sread2 =~ /input.*/) ? "false" : "true"

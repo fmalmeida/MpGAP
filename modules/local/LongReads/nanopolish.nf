@@ -9,7 +9,7 @@ process nanopolish {
     output:
     tuple val(id), file("${assembler}_nanopolish_consensus.fa"), val("${assembler}_nanopolish") // Save nanopolished contigs
     file "${assembler}_nanopolish_consensus.complete.vcf" // Save VCF
-    path('versions.yml')
+    path('versions.yml'), emit: versions
 
     when:
     !(fast5 =~ /input.*/) && (lr_type == 'nanopore') && (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2')

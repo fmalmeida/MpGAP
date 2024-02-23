@@ -5,6 +5,7 @@ process multiqc {
   input:
   tuple val(id), val(entrypoint), val(prefix), file(quast_dirs)
   val nfRun
+  path versions
 
   output:
   file "multiqc_report_${nfRun}.html"

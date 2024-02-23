@@ -9,7 +9,7 @@ process wtdbg2 {
   output:
   file "*" // Saves all files
   tuple val(id), file("wtdbg2_assembly.fasta"), val('wtdbg2') // Gets contigs file
-  path('versions.yml')
+  path('versions.yml'), emit: versions
 
   when:
   (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2')
