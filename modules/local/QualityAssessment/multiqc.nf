@@ -6,6 +6,7 @@ process multiqc {
   tuple val(id), val(entrypoint), val(prefix), file(quast_dirs)
   val nfRun
   path versions
+  path config
 
   output:
   file "multiqc_report_${nfRun}.html"
@@ -15,7 +16,12 @@ process multiqc {
   script:
   """
   # Run
-  multiqc . --ignore "*.sam" --ignore "*.bam" --ignore "*.err" --ignore "*.stat" ;
+  multiqc . \\
+    --ignore "*.sam" \\
+    --ignore "*.bam" \\
+    --ignore "*.err" \\
+    --ignore "*.stat" \\
+    --config $config
 
   # Rename to have nf run name
   mv multiqc_report.html multiqc_report_${nfRun}.html ;

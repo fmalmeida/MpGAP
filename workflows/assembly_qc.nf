@@ -7,7 +7,7 @@
  */
 include { quast   } from '../modules/local/QualityAssessment/quast.nf'
 include { multiqc } from '../modules/local/QualityAssessment/multiqc.nf'
-include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'  
+include { CUSTOM_DUMPSOFTWAREVERSIONS } from '../modules/nf-core/custom/dumpsoftwareversions/main'
 
 workflow ASSEMBLY_QC {
   take:
@@ -27,7 +27,8 @@ workflow ASSEMBLY_QC {
     multiqc(
       quast.out.results.groupTuple(by: [0,1,2]),
       Channel.value("$workflow.runName"),
-      CUSTOM_DUMPSOFTWAREVERSIONS.out.mqc_yml.collect().first()
+      CUSTOM_DUMPSOFTWAREVERSIONS.out.mqc_yml.collect().first(),
+      Channel.fromPath("$projectDir/assets/mqc_config.yml", checkIfExists: true)
     )
 
 }
