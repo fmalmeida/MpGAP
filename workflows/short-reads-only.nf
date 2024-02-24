@@ -32,25 +32,25 @@ workflow SHORTREADS_ONLY {
   if (!params.skip_spades) {
     spades(input_tuple)
     SHORTREADS_OUTPUTS['SPADES'] = spades.out[1]
-    ch_versions_sr = ch_versions_sr.mix(spades.out.versions)
+    ch_versions_sr = ch_versions_sr.mix(spades.out.versions.first())
   }
   // Unicycler
   if (!params.skip_unicycler) {
     unicycler(input_tuple)
     SHORTREADS_OUTPUTS['UNICYCLER'] = unicycler.out[1]
-    ch_versions_sr = ch_versions_sr.mix(unicycler.out.versions)
+    ch_versions_sr = ch_versions_sr.mix(unicycler.out.versions.first())
   }
   // Shovill
   if (!params.skip_shovill) {
     shovill(input_tuple.combine(Channel.from('spades', 'skesa', 'megahit')))
     SHORTREADS_OUTPUTS['SHOVILL'] = shovill.out[1]
-    ch_versions_sr = ch_versions_sr.mix(shovill.out.versions)
+    ch_versions_sr = ch_versions_sr.mix(shovill.out.versions.first())
   }
   // Megahit
   if (!params.skip_megahit) {
     megahit(input_tuple)
     SHORTREADS_OUTPUTS['MEGAHIT'] = megahit.out[1]
-    ch_versions_sr = ch_versions_sr.mix(megahit.out.versions)
+    ch_versions_sr = ch_versions_sr.mix(megahit.out.versions.first())
   }
 
   // Gather assemblies for qc

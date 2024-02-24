@@ -18,7 +18,7 @@ workflow ASSEMBLY_QC {
 
     // Run quast (with all)
     quast(input_tuple)
-    ch_versions = ch_versions.mix(quast.out.versions)
+    ch_versions = ch_versions.mix(quast.out.versions.first())
 
     // collect software versions
     CUSTOM_DUMPSOFTWAREVERSIONS( ch_versions.unique().collectFile(name: 'collated_versions.yml') )

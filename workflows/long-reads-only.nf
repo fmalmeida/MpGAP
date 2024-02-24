@@ -65,7 +65,7 @@ workflow LONGREADS_ONLY {
       if (!params.skip_canu) {
         canu(input_tuple)
         LONGREADS_OUTPUTS['CANU']  = canu.out[1]
-        ch_versions_lr = ch_versions_lr.mix(canu.out.versions)
+        ch_versions_lr = ch_versions_lr.mix(canu.out.versions.first())
       }
 
       /*
@@ -74,7 +74,7 @@ workflow LONGREADS_ONLY {
       if (!params.skip_flye) {
         flye(input_tuple)
         LONGREADS_OUTPUTS['FLYE']  = flye.out[1]
-        ch_versions_lr = ch_versions_lr.mix(flye.out.versions)
+        ch_versions_lr = ch_versions_lr.mix(flye.out.versions.first())
       }
 
       /*
@@ -83,7 +83,7 @@ workflow LONGREADS_ONLY {
       if (!params.skip_unicycler) {
         unicycler(input_tuple)
         LONGREADS_OUTPUTS['UNICYCLER'] = unicycler.out[1]
-        ch_versions_lr = ch_versions_lr.mix(unicycler.out.versions)
+        ch_versions_lr = ch_versions_lr.mix(unicycler.out.versions.first())
       }
 
       /*
@@ -92,7 +92,7 @@ workflow LONGREADS_ONLY {
       if (!params.skip_raven) {
         raven(input_tuple)
         LONGREADS_OUTPUTS['RAVEN'] = raven.out[1]
-        ch_versions_lr = ch_versions_lr.mix(raven.out.versions)
+        ch_versions_lr = ch_versions_lr.mix(raven.out.versions.first())
       }
 
       /*
@@ -101,7 +101,7 @@ workflow LONGREADS_ONLY {
       if (!params.skip_shasta) {
         shasta(input_tuple)
         LONGREADS_OUTPUTS['SHASTA'] = shasta.out[1]
-        ch_versions_lr = ch_versions_lr.mix(shasta.out.versions)
+        ch_versions_lr = ch_versions_lr.mix(shasta.out.versions.first())
       }
 
       /*
@@ -110,7 +110,7 @@ workflow LONGREADS_ONLY {
       if (!params.skip_wtdbg2) {
         wtdbg2(input_tuple)
         LONGREADS_OUTPUTS['WTDBG2'] = wtdbg2.out[1]
-        ch_versions_lr = ch_versions_lr.mix(wtdbg2.out.versions)
+        ch_versions_lr = ch_versions_lr.mix(wtdbg2.out.versions.first())
       }
 
       // gather assemblies for polishing steps
@@ -127,21 +127,21 @@ workflow LONGREADS_ONLY {
        */
       medaka(LONGREADS_OUTPUTS['RAW_ASSEMBLIES'])
       LONGREADS_OUTPUTS['MEDAKA'] = medaka.out[1]
-      ch_versions_lr = ch_versions_lr.mix(medaka.out.versions)
+      ch_versions_lr = ch_versions_lr.mix(medaka.out.versions.first())
 
       /*
        * Run nanopolish?
        */
       nanopolish(LONGREADS_OUTPUTS['RAW_ASSEMBLIES'])
       LONGREADS_OUTPUTS['NANOPOLISH'] = nanopolish.out[0]
-      ch_versions_lr = ch_versions_lr.mix(nanopolish.out.versions)
+      ch_versions_lr = ch_versions_lr.mix(nanopolish.out.versions.first())
 
       /*
        * gcpp?
        */
       gcpp(LONGREADS_OUTPUTS['RAW_ASSEMBLIES'])
       LONGREADS_OUTPUTS['GCPP'] = gcpp.out[1]
-      ch_versions_lr = ch_versions_lr.mix(gcpp.out.versions)
+      ch_versions_lr = ch_versions_lr.mix(gcpp.out.versions.first())
 
       // Gather polished assemblies
       LONGREADS_OUTPUTS['POLISHED_ASSEMBLIES'] = LONGREADS_OUTPUTS['MEDAKA']

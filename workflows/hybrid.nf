@@ -100,19 +100,19 @@ workflow HYBRID {
       if (!params.skip_spades) {
         strategy_1_spades(input_branches.main)
         HYBRID_OUTPUTS['SPADES'] = strategy_1_spades.out[1]
-        ch_versions_hb = ch_versions_hb.mix(strategy_1_spades.out.versions)
+        ch_versions_hb = ch_versions_hb.mix(strategy_1_spades.out.versions.first())
       }
       // Unicycler
       if (!params.skip_unicycler) {
         strategy_1_unicycler(input_branches.main)
         HYBRID_OUTPUTS['UNICYCLER'] = strategy_1_unicycler.out[1]
-        ch_versions_hb = ch_versions_hb.mix(strategy_1_unicycler.out.versions)
+        ch_versions_hb = ch_versions_hb.mix(strategy_1_unicycler.out.versions.first())
       }
       // Haslr
       if (!params.skip_haslr) {
         strategy_1_haslr(input_branches.main)
         HYBRID_OUTPUTS['HASLR'] = strategy_1_haslr.out[1]
-        ch_versions_hb = ch_versions_hb.mix(strategy_1_haslr.out.versions)
+        ch_versions_hb = ch_versions_hb.mix(strategy_1_haslr.out.versions.first())
       }
 
       // Get hybrid assemblies
@@ -134,7 +134,7 @@ workflow HYBRID {
       if (!params.skip_canu) {
         strategy_2_canu(input_branches.secondary)
         LONGREADS_OUTPUTS['CANU'] = strategy_2_canu.out[1]
-        ch_versions_hb = ch_versions_hb.mix(strategy_2_canu.out.versions)
+        ch_versions_hb = ch_versions_hb.mix(strategy_2_canu.out.versions.first())
       }
 
       /*
@@ -143,7 +143,7 @@ workflow HYBRID {
       if (!params.skip_flye) {
         strategy_2_flye(input_branches.secondary)
         LONGREADS_OUTPUTS['FLYE'] = strategy_2_flye.out[1]
-        ch_versions_hb = ch_versions_hb.mix(strategy_2_flye.out.versions)
+        ch_versions_hb = ch_versions_hb.mix(strategy_2_flye.out.versions.first())
       }
 
       /*
@@ -152,7 +152,7 @@ workflow HYBRID {
       if (!params.skip_unicycler) {
         strategy_2_unicycler(input_branches.secondary)
         LONGREADS_OUTPUTS['UNICYCLER'] = strategy_2_unicycler.out[1]
-        ch_versions_hb = ch_versions_hb.mix(strategy_2_unicycler.out.versions)
+        ch_versions_hb = ch_versions_hb.mix(strategy_2_unicycler.out.versions.first())
       }
 
       /*
@@ -161,7 +161,7 @@ workflow HYBRID {
       if (!params.skip_raven) {
         strategy_2_raven(input_branches.secondary)
         LONGREADS_OUTPUTS['RAVEN'] = strategy_2_raven.out[1]
-        ch_versions_hb = ch_versions_hb.mix(strategy_2_raven.out.versions)
+        ch_versions_hb = ch_versions_hb.mix(strategy_2_raven.out.versions.first())
       }
 
       /*
@@ -170,7 +170,7 @@ workflow HYBRID {
       if (!params.skip_shasta) {
         strategy_2_shasta(input_branches.secondary)
         LONGREADS_OUTPUTS['SHASTA'] = strategy_2_shasta.out[1]
-        ch_versions_hb = ch_versions_hb.mix(strategy_2_shasta.out.versions)
+        ch_versions_hb = ch_versions_hb.mix(strategy_2_shasta.out.versions.first())
       }
 
       /*
@@ -179,7 +179,7 @@ workflow HYBRID {
       if (!params.skip_wtdbg2) {
         strategy_2_wtdbg2(input_branches.secondary)
         LONGREADS_OUTPUTS['WTDBG2'] = strategy_2_wtdbg2.out[1]
-        ch_versions_hb = ch_versions_hb.mix(strategy_2_wtdbg2.out.versions)
+        ch_versions_hb = ch_versions_hb.mix(strategy_2_wtdbg2.out.versions.first())
       }
 
       // Get long reads assemblies
@@ -199,21 +199,21 @@ workflow HYBRID {
        */
       strategy_2_medaka(LONGREADS_OUTPUTS['RAW_ASSEMBLIES'])
       LONGREADS_OUTPUTS['MEDAKA'] = strategy_2_medaka.out[1]
-      ch_versions_hb = ch_versions_hb.mix(strategy_2_medaka.out.versions)
+      ch_versions_hb = ch_versions_hb.mix(strategy_2_medaka.out.versions.first())
 
       /*
        * Run nanopolish?
        */
       strategy_2_nanopolish(LONGREADS_OUTPUTS['RAW_ASSEMBLIES'])
       LONGREADS_OUTPUTS['NANOPOLISH'] = strategy_2_nanopolish.out[0]
-      ch_versions_hb = ch_versions_hb.mix(strategy_2_nanopolish.out.versions)
+      ch_versions_hb = ch_versions_hb.mix(strategy_2_nanopolish.out.versions.first())
 
       /*
        * gcpp?
        */
       strategy_2_gcpp(LONGREADS_OUTPUTS['RAW_ASSEMBLIES'])
       LONGREADS_OUTPUTS['GCPP'] = strategy_2_gcpp.out[1]
-      ch_versions_hb = ch_versions_hb.mix(strategy_2_gcpp.out.versions)
+      ch_versions_hb = ch_versions_hb.mix(strategy_2_gcpp.out.versions.first())
 
       // Gather long reads assemblies polished
       LONGREADS_OUTPUTS['POLISHED_ASSEMBLIES'] = 
@@ -240,7 +240,7 @@ workflow HYBRID {
       if (!params.skip_pilon) { 
         strategy_2_pilon( ch_sreads_polish )
         HYBRID_OUTPUTS['SREADS_POLISH'] = HYBRID_OUTPUTS['SREADS_POLISH'].mix( strategy_2_pilon.out[1] )
-        ch_versions_hb = ch_versions_hb.mix(strategy_2_pilon.out.versions)
+        ch_versions_hb = ch_versions_hb.mix(strategy_2_pilon.out.versions.first())
       }
 
       /*
@@ -249,7 +249,7 @@ workflow HYBRID {
       if (!params.skip_polypolish) { 
         strategy_2_polypolish( ch_sreads_polish )
         HYBRID_OUTPUTS['SREADS_POLISH'] = HYBRID_OUTPUTS['SREADS_POLISH'].mix( strategy_2_polypolish.out[1] )
-        ch_versions_hb = ch_versions_hb.mix(strategy_2_polypolish.out.versions)
+        ch_versions_hb = ch_versions_hb.mix(strategy_2_polypolish.out.versions.first())
       }
 
       /*
