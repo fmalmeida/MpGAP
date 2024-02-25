@@ -20,6 +20,14 @@ class WorkflowMpGAP {
             System.exit(1)
         }
 
+        if (
+            (params.hybrid_strategy.toString() == "2" || params.hybrid_strategy.toString() == "both") &&
+            (params.skip_pilon && params.skip_polypolish)
+        ) {
+            log.error "ERROR!\nA major error has occurred!\n\t==>  When using --hybrid_strategy as 2 or both you must allow at least one short reads based polisher to run. Currently you set both to not be executed (--skip_pilon and --skip_polypolish).\n\t Online documentation is available at: https://mpgap.readthedocs.io/en/latest/\nPlease, read the docs.\nCheers."
+            System.exit(1)
+        }
+
         if (params.corrected_longreads && params.high_quality_longreads) {
             log.error "ERROR!\nA major error has occurred!\n\t==>  Parameters --corrected_longreads and --high_quality_longreads were used at the same time. These activate assembler configurations for reads of different quality levels. Cannot be used at the same time ( uncorrected < corrected < high_quality ).\nCheers."
             System.exit(1)

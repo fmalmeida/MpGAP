@@ -1,0 +1,17 @@
+{
+  "name": "fmalmeida/mpgap",
+  "homePage": "https://github.com/fmalmeida/mpgap",
+  "repos": {
+    "https://github.com/nf-core/modules.git": {
+      "modules": {
+        "nf-core": {
+          "custom/dumpsoftwareversions": {
+            "branch": "master",
+            "git_sha": "de45447d060b8c8b98575bc637a4a575fd0638e1",
+            "installed_by": ["modules"]
+          }
+        }
+      }
+    }
+  }
+}

@@ -51,32 +51,41 @@ workflow {
   file(params.output).mkdir()
   samplesheet_yaml.copyTo(params.output + "/" + "${samplesheet_yaml.getName()}")
 
+  // ch for versions
+  ch_versions = Channel.empty()
+
   // Parse YAML file
   PARSE_SAMPLESHEET( params.samplesheet )
 
   // short reads only samples
   SHORTREADS_ONLY( PARSE_SAMPLESHEET.out.shortreads )
+  ch_versions = ch_versions.mix(SHORTREADS_ONLY.out.versions)
     
   // long reads only samples
   LONGREADS_ONLY( PARSE_SAMPLESHEET.out.longreads )
+  ch_versions = ch_versions.mix(LONGREADS_ONLY.out.versions)
 
   // hybrid samples
   HYBRID( PARSE_SAMPLESHEET.out.hybrid )
+  ch_versions = ch_versions.mix(HYBRID.out.versions)
 
   // QC
-  ASSEMBLY_QC( SHORTREADS_ONLY.out.mix( LONGREADS_ONLY.out, HYBRID.out ) )
+  ASSEMBLY_QC( 
+    SHORTREADS_ONLY.out.results.mix( LONGREADS_ONLY.out.results, HYBRID.out.results ),
+    ch_versions
+  )
     
 }
 
 /*
  * Completition message
  */
- workflow.onComplete {
-     println "Pipeline completed at: $workflow.complete"
-     println "Execution status: ${ workflow.success ? 'OK' : 'failed' }"
-     println "Execution duration: $workflow.duration"
-     println ""
-     println "${ workflow.success ? 'I wish you nice results!' : 'Do not give up, we can fix it!' }"
-     println "${ workflow.success ? 'Thank you for using fmalmeida/mpgap pipeline!' : '' }"
-     println ""
- }
+workflow.onComplete {
+    println "Pipeline completed at: $workflow.complete"
+    println "Execution status: ${ workflow.success ? 'OK' : 'failed' }"
+    println "Execution duration: $workflow.duration"
+    println ""
+    println "${ workflow.success ? 'I wish you nice results!' : 'Do not give up, we can fix it!' }"
+    println "${ workflow.success ? 'Thank you for using fmalmeida/mpgap pipeline!' : '' }"
+    println ""
+}

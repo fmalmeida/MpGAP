@@ -9,6 +9,7 @@ process medaka {
     output:
     file "${assembler}" // Save everything
     tuple val(id), file("${assembler}/${assembler}_medaka_consensus.fa"), val("${assembler}_medaka") // Save medaka contigs
+    path('versions.yml'), emit: versions
 
     when:
     (medaka_model) && (lr_type == 'nanopore') && (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2')
@@ -40,5 +41,11 @@ process medaka {
 
     # rename results
     mv ${assembler}/consensus.fasta ${assembler}/${assembler}_medaka_consensus.fa
+
+    # get version
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        medaka: \$( medaka --version | cut -f 2 -d ' ' )
+    END_VERSIONS
     """
 }
