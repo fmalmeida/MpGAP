@@ -1,6 +1,7 @@
 process quast {
   publishDir "${params.output}", mode: 'copy', saveAs: { filename ->
     if ( filename.tokenize('/').contains('input_assembly') ) "final_assemblies/${asm_copy_prefix}_${filename.tokenize('/')[1]}"
+    else if ( filename == 'versions.yml' ) null
     else "${prefix}/00_quality_assessment/${filename}"
   }
   tag "${id}"
@@ -11,6 +12,7 @@ process quast {
   output:
   tuple val(id), val(entrypoint), val(prefix), file("${assembler}"), emit: results
   file("input_assembly/*")
+  path('versions.yml'), emit: versions
 
   script:
 
@@ -23,6 +25,10 @@ process quast {
   // define prefix for final assemblies
   asm_copy_prefix = id.replaceAll(':', '_') // fixes hybrid prefixes that has a ':'
 
+  // busco lineage
+  def busco_lineage = params.busco_lineage ?: '/opt/busco_db/bacteria_odb10'
+  busco_lineage     = (busco_lineage.toString().toLowerCase() == 'auto') ? '--auto-lineage' : "-l ${busco_lineage}"
+
   if (params.selected_profile == "docker" || params.selected_profile == "conda")
   """
   # run quast
@@ -32,15 +38,28 @@ process quast {
       ${lreads_param} \\
       ${paired_param} \\
       ${single_param} \\
-      --conserved-genes-finding \\
       --rna-finding \\
       --min-contig 100 \\
       $additional_params \\
       ${contigs}
   
+  # run busco
+  busco \\
+    -i ${contigs} \\
+    -m genome \\
+    $busco_lineage \\
+    -o ${assembler}/busco_stats/run_${assembler}
+  
   # save assembly
   mkdir -p input_assembly
   cp ${contigs} input_assembly/${contigs}
+
+  # get version
+  cat <<-END_VERSIONS > versions.yml
+  "${task.process}":
+      quast: \$( quast.py --version | tail -n+2 | cut -f 2 -d ' ' )
+      busco: \$( busco --version | cut -f 2 -d ' ' )
+  END_VERSIONS
   """
 
   else if (params.selected_profile == "singularity")
@@ -56,14 +75,37 @@ process quast {
       ${lreads_param} \\
       ${paired_param} \\
       ${single_param} \\
-      --conserved-genes-finding \\
       --rna-finding \\
       --min-contig 100 \\
       $additional_params \\
       ${contigs}
   
+  # run busco
+  busco \\
+    -i ${contigs} \\
+    -m genome \\
+    $busco_lineage \\
+    -o ${assembler}/busco_stats/run_${assembler}
+  
+  # change names
+  for i in \$( find ${assembler}/busco_stats/run_${assembler} -name 'short*.json' ) ; do
+    path=\$( dirname \$i ) ;
+    mv \$i \${path}/short_summary_${assembler}.json ;
+  done
+  for i in \$( find ${assembler}/busco_stats/run_${assembler} -name 'short*.txt' ) ; do
+    path=\$( dirname \$i ) ;
+    mv \$i \${path}/short_summary_${assembler}.txt ;
+  done
+  
   # save assembly
   mkdir -p input_assembly
   cp ${contigs} input_assembly/${contigs}
+
+  # get version
+  cat <<-END_VERSIONS > versions.yml
+  "${task.process}":
+      quast: \$( quast.py --version | tail -n+2 | cut -f 2 -d ' ' )
+      busco: \$( busco --version | cut -f 2 -d ' ' )
+  END_VERSIONS
   """
 }

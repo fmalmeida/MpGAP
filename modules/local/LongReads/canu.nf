@@ -9,6 +9,7 @@ process canu {
   output:
   file "canu/" // Saves all files
   tuple val(id), file("canu/canu_assembly.fasta"), val('canu') // Gets contigs file
+  path('versions.yml'), emit: versions
 
   when:
   (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2')
@@ -31,5 +32,11 @@ process canu {
 
   # rename results
   mv canu/${fixed_id}.contigs.fasta canu/canu_assembly.fasta
+
+  # get version
+  cat <<-END_VERSIONS > versions.yml
+  "${task.process}":
+      canu: \$( canu --version | cut -f 2 -d ' ' )
+  END_VERSIONS
   """
 }

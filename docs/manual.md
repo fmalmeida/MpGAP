@@ -84,6 +84,16 @@ Please note that, through the command line, the parameters that are boolean (tru
 | `--input`   | :material-check: | NA      | Path to input [samplesheet](samplesheet.md#) in YAML format |
 | `--output`  | :material-check: | NA      | Directory to store output files                             |
 
+### BUSCO lineage options
+
+| <div style="width:180px">Parameter</div> | Required | Default | Description |
+| :--------------------------------------- | :------- | :------ | :---------- |
+| `--busco_lineage` | :material-close: | bacteria_odb10 | Select a BUSCO lineage for the pipeline to use. |
+
+!!! note
+
+    If blank, bacteria_odb10 will be used. If unsure you can set the param to `auto` which will tell BUSCO to automatically select the most appropriate one (it takes a little bit more of time and space).
+
 ## Start/Max resources on job request
 
 | <div style="width:120px">Parameter</div> | Required | Default | Description |
@@ -132,7 +142,7 @@ However, they can also be set in a sample-specific manner. If a sample has a val
 
     For assembly polishing with medaka models, the assembly is first polished one time with racon using the `-m 8 -x -6 -g -8 -w 500` as this is the dataset in which Medaka has been trained on. Therefore, the medaka polishing in this pipeline mean Racon 1X + Medaka.
 
-### Advanced assembler customization options
+### Advanced customization options
 
 !!! note
 
@@ -162,3 +172,5 @@ However, they can also be set in a sample-specific manner. If a sample has a val
 | `--shovill_additional_parameters`              | :material-close: | False | Passes additional parameters for Shovill assembler. E.g. `" --depth 15 "`. Must be given as shown in Shovill's manual. The pipeline already executes shovill with spades, skesa and megahit, so please, do not use it with shovill's `--assembler` parameter |
 | `--skip_megahit`              | :material-close: | False | Skip the execution of Megahit |
 | `--megahit_additional_parameters`              | :material-close: | False | Passes additional parameters for Megahit assembler. E.g. `" --presets meta-large "`. Must be given as shown in Megahit's manual |
+| `--skip_pilon`              | :material-close: | False | Skip pilon polisher when performing hybrid assembly strategy 2 |
+| `--skip_polypolish`         | :material-close: | False | Skip polypolisher polisher when performing hybrid assembly strategy 2 |

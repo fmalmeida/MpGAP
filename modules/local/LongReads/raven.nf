@@ -9,6 +9,7 @@ process raven {
   output:
   file "raven_assembly.*" // Saves all files
   tuple val(id), file("raven_assembly.fasta"), val('raven') // Gets contigs file
+  path('versions.yml'), emit: versions
 
   when:
   (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2')
@@ -32,5 +33,11 @@ process raven {
       $additional_params \\
       $corrected \\
       $lreads > raven_assembly.fasta ;
+  
+  # get version
+  cat <<-END_VERSIONS > versions.yml
+  "${task.process}":
+      raven: \$( raven --version )
+  END_VERSIONS
   """
 }

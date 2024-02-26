@@ -27,7 +27,7 @@ The pipeline wraps up the following tools and analyses:
 | [Haslr](https://github.com/vpc-ccg/haslr), [Unicycler](https://github.com/rrwick/Unicycler) and [SPAdes](https://github.com/ablab/spades) | Hybrid assembly |
 | [Shovill](https://github.com/tseemann/shovill), [Unicycler](https://github.com/rrwick/Unicycler), [Megahit](https://github.com/voutcn/megahit) and [SPAdes](https://github.com/ablab/spades) | Short reads assembly |
 | [Nanopolish](https://github.com/jts/nanopolish), [Medaka](https://github.com/nanoporetech/medaka), [gcpp](https://github.com/PacificBiosciences/gcpp), [Polypolish](https://github.com/rrwick/Polypolish) and [Pilon](https://github.com/broadinstitute/pilon) | Assembly polishing |
-| [Quast](https://github.com/ablab/quast) and [MultiQC](https://multiqc.info/) | Assembly QC |
+| [Quast](https://github.com/ablab/quast), [BUSCO](https://busco.ezlab.org/busco_userguide.html) and [MultiQC](https://multiqc.info/) | Assembly QC |
 
 !!! note "Quickstart"
 

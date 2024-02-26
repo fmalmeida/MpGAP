@@ -51,21 +51,30 @@ workflow {
   file(params.output).mkdir()
   samplesheet_yaml.copyTo(params.output + "/" + "${samplesheet_yaml.getName()}")
 
+  // ch for versions
+  ch_versions = Channel.empty()
+
   // Parse YAML file
   PARSE_SAMPLESHEET( params.samplesheet )
 
   // short reads only samples
   SHORTREADS_ONLY( PARSE_SAMPLESHEET.out.shortreads )
+  ch_versions = ch_versions.mix(SHORTREADS_ONLY.out.versions)
     
   // long reads only samples
   LONGREADS_ONLY( PARSE_SAMPLESHEET.out.longreads )
+  ch_versions = ch_versions.mix(LONGREADS_ONLY.out.versions)
 
   // hybrid samples
   HYBRID( PARSE_SAMPLESHEET.out.hybrid )
+  ch_versions = ch_versions.mix(HYBRID.out.versions)
 
   // QC
-  ch_all_assemblies = SHORTREADS_ONLY.out.mix( LONGREADS_ONLY.out, HYBRID.out )
-  ASSEMBLY_QC( ch_all_assemblies )
+  ch_all_assemblies = SHORTREADS_ONLY.out.results.mix( LONGREADS_ONLY.out.results, HYBRID.out.results )
+  ASSEMBLY_QC( 
+    ch_all_assemblies,
+    ch_versions
+  )
 
   // generate bacannot samplesheet
   def final_outdir = file(params.output).toUriString()

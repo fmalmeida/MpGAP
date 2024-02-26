@@ -9,6 +9,7 @@ process flye {
   output:
   file "flye" // Saves all files
   tuple val(id), file("flye/flye_assembly.fasta"), val('flye') // Gets contigs file
+  path('versions.yml'), emit: versions
 
   when:
   (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2')
@@ -34,5 +35,11 @@ process flye {
 
   # rename results
   mv flye/assembly.fasta flye/flye_assembly.fasta
+
+  # get version
+  cat <<-END_VERSIONS > versions.yml
+  "${task.process}":
+      flye: \$( flye --version )
+  END_VERSIONS
   """
 }
