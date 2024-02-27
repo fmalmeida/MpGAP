@@ -16,7 +16,7 @@ dependencies:
 - main::openssl
 
 ## anaconda packages
-- anaconda::python=3.8
+- anaconda::python=3.9
 
 ## conda-forge packages
 - conda-forge::gcc
