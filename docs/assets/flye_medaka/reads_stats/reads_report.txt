@@ -4,8 +4,8 @@ Assembly             flye_medaka_consensus
 # total reads        409991               
 # left               0                    
 # right              0                    
-# mapped             455148               
-Mapped (%)           111.01               
+# mapped             454466               
+Mapped (%)           110.85               
 # properly paired    0                    
 Properly paired (%)  0.0                  
 # singletons         0                    
@@ -13,6 +13,6 @@ Singletons (%)       0.0
 # misjoint mates     0                    
 Misjoint mates (%)   0.0                  
 Avg. coverage depth  48                   
-Coverage >= 1x (%)   99.99                
-Coverage >= 5x (%)   99.94                
-Coverage >= 10x (%)  99.88                
+Coverage >= 1x (%)   100.0                
+Coverage >= 5x (%)   99.96                
+Coverage >= 10x (%)  99.9                 

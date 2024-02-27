@@ -1,5 +1,4 @@
 10.1093/bioinformatics/btw354                      # MultiQC
 10.1093/bioinformatics/btt086                      # quast
 10.1093/bioinformatics/btv351                      # busco
-10.1093/bioinformatics/btp352                      # Samtools
 

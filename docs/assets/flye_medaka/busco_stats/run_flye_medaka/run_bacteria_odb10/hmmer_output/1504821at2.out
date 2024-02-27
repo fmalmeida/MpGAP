@@ -1,0 +1,16 @@
+#                                                                                --- full sequence --- -------------- this domain -------------   hmm coord   ali coord   env coord
+# target name            accession   tlen query name           accession   qlen   E-value  score  bias   #  of  c-Evalue  i-Evalue  score  bias  from    to  from    to  from    to  acc description of target
+#    ------------------- ---------- ----- -------------------- ---------- ----- --------- ------ ----- --- --- --------- --------- ------ ----- ----- ----- ----- ----- ----- ----- ---- ---------------------
+contig_81:737122-737718  -            199 1504821at2           -            224    0.0046   17.7   0.4   1   2   7.9e-07     0.016   15.9   0.0     5    40     5    40     1    59 0.92 contig_81_1063 # 737122 # 737718 # 1 # ID=9_1063;partial=00;start_type=GTG;rbs_motif=None;rbs_spacer=None;gc_cont=0.528
+contig_81:737122-737718  -            199 1504821at2           -            224    0.0046   17.7   0.4   2   2     0.077   1.6e+03   -0.4   0.1   106   117   180   191   172   198 0.76 contig_81_1063 # 737122 # 737718 # 1 # ID=9_1063;partial=00;start_type=GTG;rbs_motif=None;rbs_spacer=None;gc_cont=0.528
+contig_1:1626463-1626792 -            110 1504821at2           -            224     0.021   15.6   0.0   1   1   1.2e-06     0.025   15.3   0.0   186   223    38    75    14    76 0.89 contig_1_2386 # 1626463 # 1626792 # -1 # ID=20_2386;partial=00;start_type=ATG;rbs_motif=None;rbs_spacer=None;gc_cont=0.564
+#
+# Program:         hmmsearch
+# Version:         3.1b2 (February 2015)
+# Pipeline mode:   SEARCH
+# Query file:      /opt/busco_db/bacteria_odb10/hmms/1504821at2.hmm
+# Target file:     flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+# Option settings: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1504821at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1504821at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa 
+# Current dir:     /array1/falmeida/NF_WORK/17/da9f3cbcae0ef622d7976e52c3d2a7
+# Date:            Mon Feb 26 20:42:17 2024
+# [ok]

@@ -1,0 +1,17 @@
+#                                                                                 --- full sequence --- -------------- this domain -------------   hmm coord   ali coord   env coord
+# target name             accession   tlen query name           accession   qlen   E-value  score  bias   #  of  c-Evalue  i-Evalue  score  bias  from    to  from    to  from    to  acc description of target
+#     ------------------- ---------- ----- -------------------- ---------- ----- --------- ------ ----- --- --- --------- --------- ------ ----- ----- ----- ----- ----- ----- ----- ---- ---------------------
+contig_12:1575619-1576860 -            414 1419877at2           -            265   3.4e-28  100.0   0.1   1   2   1.5e-09     3e-05   24.8   0.0    29   123    77   191    72   194 0.79 contig_12_2241 # 1575619 # 1576860 # 1 # ID=15_2241;partial=00;start_type=ATG;rbs_motif=None;rbs_spacer=None;gc_cont=0.510
+contig_12:1575619-1576860 -            414 1419877at2           -            265   3.4e-28  100.0   0.1   2   2     7e-24   1.4e-19   71.7   0.0   124   215   248   342   240   358 0.85 contig_12_2241 # 1575619 # 1576860 # 1 # ID=15_2241;partial=00;start_type=ATG;rbs_motif=None;rbs_spacer=None;gc_cont=0.510
+contig_86:2736736-2737884 -            383 1419877at2           -            265   1.4e-26   94.8   0.1   1   2   1.8e-10   3.7e-06   27.8   0.0    29   122    63   176    56   180 0.84 contig_86_3816 # 2736736 # 2737884 # 1 # ID=7_3816;partial=00;start_type=ATG;rbs_motif=None;rbs_spacer=None;gc_cont=0.614
+contig_86:2736736-2737884 -            383 1419877at2           -            265   1.4e-26   94.8   0.1   2   2   9.1e-22   1.9e-17   64.8   0.0   129   221   235   330   228   349 0.84 contig_86_3816 # 2736736 # 2737884 # 1 # ID=7_3816;partial=00;start_type=ATG;rbs_motif=None;rbs_spacer=None;gc_cont=0.614
+#
+# Program:         hmmsearch
+# Version:         3.1b2 (February 2015)
+# Pipeline mode:   SEARCH
+# Query file:      /opt/busco_db/bacteria_odb10/hmms/1419877at2.hmm
+# Target file:     flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+# Option settings: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1419877at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1419877at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa 
+# Current dir:     /array1/falmeida/NF_WORK/17/da9f3cbcae0ef622d7976e52c3d2a7
+# Date:            Mon Feb 26 20:42:16 2024
+# [ok]

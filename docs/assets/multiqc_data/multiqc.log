@@ -1,23 +1,36 @@
-[2024-02-13 07:48:03,144] multiqc                                            [DEBUG  ]  This is MultiQC v1.17
-[2024-02-13 07:48:03,144] multiqc                                            [DEBUG  ]  Command used: /opt/conda/envs/mpgap-3.2/bin/multiqc .
-[2024-02-13 07:48:07,541] multiqc                                            [DEBUG  ]  Could not connect to multiqc.info for version check: HTTP Error 502: Bad Gateway
-[2024-02-13 07:48:07,543] multiqc                                            [DEBUG  ]  Working dir : /array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d
-[2024-02-13 07:48:07,544] multiqc                                            [DEBUG  ]  Template    : default
-[2024-02-13 07:48:07,544] multiqc                                            [DEBUG  ]  Running Python 3.8.16 (default, Mar  2 2023, 03:21:46)  [GCC 11.2.0]
-[2024-02-13 07:48:07,546] multiqc                                            [DEBUG  ]  Analysing modules: custom_content, ccs, ngsderive, purple, conpair, lima, peddy, somalier, methylQA, mosdepth, phantompeakqualtools, qualimap, preseq, hifiasm, quast, qorts, rna_seqc, rockhopper, rsem, rseqc, busco, bustools, goleft_indexcov, gffcompare, disambiguate, supernova, deeptools, sargasso, verifybamid, mirtrace, happy, mirtop, sambamba, gopeaks, homer, hops, macs2, theta2, snpeff, gatk, htseq, bcftools, featureCounts, fgbio, dragen, dragen_fastqc, dedup, pbmarkdup, damageprofiler, mapdamage, biobambam2, jcvi, mtnucratio, picard, vep, sentieon, bakta, prokka, qc3C, nanostat, samblaster, samtools, sexdeterrmine, eigenstratdatabasetools, bamtools, jellyfish, vcftools, longranger, stacks, varscan2, snippy, umitools, truvari, bbmap, bismark, biscuit, diamond, hicexplorer, hicup, hicpro, salmon, kallisto, slamdunk, star, hisat2, tophat, bowtie2, bowtie1, cellranger, snpsplit, odgi, pangolin, nextclade, freyja, humid, kat, leehom, librarian, adapterRemoval, bbduk, clipandmerge, cutadapt, flexbar, sourmash, kaiju, bracken, kraken, malt, motus, trimmomatic, sickle, skewer, sortmerna, biobloomtools, fastq_screen, afterqc, fastp, fastqc, filtlong, prinseqplusplus, pychopper, porechop, pycoqc, minionqc, anglerfish, multivcfanalyzer, clusterflow, checkqc, bcl2fastq, bclconvert, interop, ivar, flash, seqyclean, optitype, whatshap
-[2024-02-13 07:48:07,546] multiqc                                            [DEBUG  ]  Using temporary directory for creating report: /tmp/tmp3o52xp__
-[2024-02-13 07:48:07,553] multiqc                                            [INFO   ]  Search path : /array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d
-[2024-02-13 07:48:08,228] multiqc                                            [DEBUG  ]  Summary of files that were skipped by the search: [skipped_module_specific_max_filesize: 421] // [skipped_no_match: 227] // [skipped_ignore_pattern: 50] // [skipped_directory_fn_ignore_dirs: 10]
-[2024-02-13 07:48:08,799] multiqc.plots.bargraph                             [DEBUG  ]  Using matplotlib version 3.7.3
-[2024-02-13 07:48:08,805] multiqc.plots.linegraph                            [DEBUG  ]  Using matplotlib version 3.7.3
-[2024-02-13 07:48:08,806] multiqc                                            [DEBUG  ]  No samples found: custom_content
-[2024-02-13 07:48:08,820] multiqc.modules.quast.quast                        [INFO   ]  Found 10 reports
-[2024-02-13 07:48:08,838] multiqc.modules.busco.busco                        [INFO   ]  Found 10 reports
-[2024-02-13 07:48:08,848] multiqc.modules.samtools.samtools                  [INFO   ]  Found 10 flagstat reports
-[2024-02-13 07:48:08,848] multiqc.utils.software_versions                    [DEBUG  ]  Reading software versions from config.software_versions
-[2024-02-13 07:48:08,869] multiqc                                            [DEBUG  ]  Compressing plot data
-[2024-02-13 07:48:08,885] multiqc                                            [INFO   ]  Report      : multiqc_report.html
-[2024-02-13 07:48:08,885] multiqc                                            [INFO   ]  Data        : multiqc_data
-[2024-02-13 07:48:08,885] multiqc                                            [DEBUG  ]  Moving data file from '/tmp/tmp3o52xp__/multiqc_data' to '/array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d/multiqc_data'
-[2024-02-13 07:48:08,886] multiqc                                            [DEBUG  ]  Full report path: /array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d/multiqc_report.html
-[2024-02-13 07:48:08,998] multiqc                                            [INFO   ]  MultiQC complete
+[2024-02-27 04:26:00,957] multiqc                                            [DEBUG  ]  This is MultiQC v1.20
+[2024-02-27 04:26:00,959] multiqc                                            [DEBUG  ]  Loading config settings from: mqc_config.yml
+[2024-02-27 04:26:00,959] multiqc                                            [DEBUG  ]  New config: {'report_comment': 'This report has been generated by the <a href="https://github.com/fmalmeida/mpgap/releases/tag/3.2" target="_blank">fmalmeida/mpgap</a> analysis pipeline. For information about how to interpret these results, please see the <a href="https://nf-co.re/scrnaseq/3.2/docs/output" target="_blank">documentation</a>.\n', 'report_section_order': {'software_versions': {'order': -1001}, 'fmalmeida-mpgap-summary': {'order': -1002}}, 'disable_version_detection': True, 'export_plots': True}
+[2024-02-27 04:26:00,959] multiqc                                            [DEBUG  ]  Command used: /opt/conda/envs/mpgap-3.2/bin/multiqc . --ignore *.sam --ignore *.bam --ignore *.err --ignore *.stat --config mqc_config.yml
+[2024-02-27 04:26:02,179] multiqc                                            [DEBUG  ]  Latest MultiQC version is v1.20
+[2024-02-27 04:26:02,180] multiqc                                            [DEBUG  ]  Working dir : /array1/falmeida/NF_WORK/94/b5215a8e9cf57fe4f76f17d144354d
+[2024-02-27 04:26:02,180] multiqc                                            [DEBUG  ]  Template    : default
+[2024-02-27 04:26:02,180] multiqc                                            [DEBUG  ]  Running Python 3.9.16 (main, Mar  8 2023, 14:00:05)  [GCC 11.2.0]
+[2024-02-27 04:26:02,180] multiqc                                            [DEBUG  ]  Ignoring files, directories and paths that match: *.sam, *.bam, *.err, *.stat
+[2024-02-27 04:26:02,181] multiqc                                            [DEBUG  ]  Analysing modules: custom_content, ccs, ngsderive, purple, conpair, lima, peddy, somalier, methylqa, mosdepth, phantompeakqualtools, qualimap, bamdst, preseq, hifiasm, quast, qorts, rna_seqc, rockhopper, rsem, rseqc, busco, bustools, goleft_indexcov, gffcompare, disambiguate, supernova, deeptools, sargasso, verifybamid, mirtrace, happy, mirtop, sambamba, gopeaks, homer, hops, macs2, theta2, snpeff, gatk, htseq, bcftools, featureCounts, fgbio, dragen, dragen_fastqc, dedup, pbmarkdup, damageprofiler, mapdamage, biobambam2, jcvi, mtnucratio, picard, vep, bakta, prokka, qc3C, nanostat, samblaster, samtools, sexdeterrmine, seqera_cli, eigenstratdatabasetools, bamtools, jellyfish, vcftools, longranger, stacks, varscan2, snippy, umitools, truvari, megahit, bbmap, bismark, biscuit, diamond, hicexplorer, hicup, hicpro, salmon, kallisto, slamdunk, star, hisat2, tophat, bowtie2, bowtie1, cellranger, snpsplit, odgi, pangolin, nextclade, freyja, humid, kat, leehom, librarian, nonpareil, adapterRemoval, bbduk, clipandmerge, cutadapt, flexbar, sourmash, kaiju, bracken, kraken, malt, motus, trimmomatic, sickle, skewer, sortmerna, biobloomtools, fastq_screen, afterqc, fastp, fastqc, filtlong, prinseqplusplus, pychopper, porechop, pycoqc, minionqc, anglerfish, multivcfanalyzer, clusterflow, checkqc, bcl2fastq, bclconvert, interop, ivar, flash, seqyclean, optitype, whatshap, xenome, xengsort, metaphlan, seqwho
+[2024-02-27 04:26:02,182] multiqc                                            [DEBUG  ]  Using temporary directory for creating report: /tmp/tmpql_p7rno
+[2024-02-27 04:26:02,189] multiqc                                            [INFO   ]  Search path : /array1/falmeida/NF_WORK/94/b5215a8e9cf57fe4f76f17d144354d
+[2024-02-27 04:26:07,990] multiqc                                            [DEBUG  ]  Summary of files that were skipped by the search: [skipped_module_specific_max_filesize: 6202] // [skipped_no_match: 2460] // [skipped_ignore_pattern: 71] // [skipped_directory_fn_ignore_dirs: 10]
+[2024-02-27 04:26:08,026] multiqc.modules.custom_content.custom_content      [INFO   ]  software_versions: Found 1 sample (html)
+[2024-02-27 04:26:08,032] multiqc.modules.quast.quast                        [INFO   ]  Found 10 reports
+[2024-02-27 04:26:08,033] multiqc.utils.util_functions                       [DEBUG  ]  Wrote data file multiqc_quast.txt
+[2024-02-27 04:26:08,127] multiqc.modules.busco.busco                        [INFO   ]  Found 11 reports
+[2024-02-27 04:26:08,128] multiqc.utils.util_functions                       [DEBUG  ]  Wrote data file multiqc_busco.txt
+[2024-02-27 04:26:08,134] multiqc.utils.software_versions                    [DEBUG  ]  Reading software versions from config.software_versions
+[2024-02-27 04:26:08,134] multiqc                                            [DEBUG  ]  Reordering sections: anchor 'fmalmeida-mpgap-summary' not found.
+[2024-02-27 04:26:08,134] multiqc                                            [DEBUG  ]  Reordering sections: anchor 'software_versions' not found for module 'QUAST'.
+[2024-02-27 04:26:08,134] multiqc                                            [DEBUG  ]  Reordering sections: anchor 'fmalmeida-mpgap-summary' not found for module 'QUAST'.
+[2024-02-27 04:26:08,134] multiqc                                            [DEBUG  ]  Reordering sections: anchor 'software_versions' not found for module 'BUSCO'.
+[2024-02-27 04:26:08,134] multiqc                                            [DEBUG  ]  Reordering sections: anchor 'fmalmeida-mpgap-summary' not found for module 'BUSCO'.
+[2024-02-27 04:26:08,134] multiqc                                            [DEBUG  ]  Reordering sections: anchor 'software_versions' not found for module 'fmalmeida/mpgap Software Versions'.
+[2024-02-27 04:26:08,134] multiqc                                            [DEBUG  ]  Reordering sections: anchor 'fmalmeida-mpgap-summary' not found for module 'fmalmeida/mpgap Software Versions'.
+[2024-02-27 04:26:08,146] multiqc.utils.util_functions                       [DEBUG  ]  Wrote data file multiqc_general_stats.txt
+[2024-02-27 04:26:08,146] multiqc                                            [DEBUG  ]  Compressing plot data
+[2024-02-27 04:26:08,177] multiqc.utils.util_functions                       [DEBUG  ]  Wrote data file multiqc_data.json
+[2024-02-27 04:26:08,177] multiqc                                            [INFO   ]  Report      : multiqc_report.html
+[2024-02-27 04:26:08,177] multiqc                                            [INFO   ]  Data        : multiqc_data
+[2024-02-27 04:26:08,177] multiqc                                            [DEBUG  ]  Moving data file from '/tmp/tmpql_p7rno/multiqc_data' to '/array1/falmeida/NF_WORK/94/b5215a8e9cf57fe4f76f17d144354d/multiqc_data'
+[2024-02-27 04:26:08,178] multiqc                                            [DEBUG  ]  Full report path: /array1/falmeida/NF_WORK/94/b5215a8e9cf57fe4f76f17d144354d/multiqc_report.html
+[2024-02-27 04:26:08,178] multiqc                                            [INFO   ]  Plots       : multiqc_plots
+[2024-02-27 04:26:08,178] multiqc                                            [DEBUG  ]  Moving plots directory from '/tmp/tmpql_p7rno/multiqc_plots' to '/array1/falmeida/NF_WORK/94/b5215a8e9cf57fe4f76f17d144354d/multiqc_plots'
+[2024-02-27 04:26:08,377] multiqc                                            [INFO   ]  MultiQC complete
