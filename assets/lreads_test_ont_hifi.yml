@@ -1,0 +1,4 @@
+samplesheet:
+  - id: ont_only_hifi
+    nanopore:  https://github.com/fmalmeida/test_datasets/raw/main/SRR27467590.fq.gz
+    genome_size: 4m
