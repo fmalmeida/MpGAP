@@ -1,0 +1,25 @@
+#                                                                                --- full sequence --- -------------- this domain -------------   hmm coord   ali coord   env coord
+# target name            accession   tlen query name           accession   qlen   E-value  score  bias   #  of  c-Evalue  i-Evalue  score  bias  from    to  from    to  from    to  acc description of target
+#    ------------------- ---------- ----- -------------------- ---------- ----- --------- ------ ----- --- --- --------- --------- ------ ----- ----- ----- ----- ----- ----- ----- ---- ---------------------
+contig_81:570519-570797  -             93 761140at2            -            323   1.1e-10   42.7   0.1   1   1   3.9e-14   2.3e-10   41.6   0.1   130   187    19    92     4    92 0.75 contig_81_822 # 570519 # 570797 # -1 # ID=9_822;partial=00;start_type=TTG;rbs_motif=None;rbs_spacer=None;gc_cont=0.516
+contig_88:358061-361225  -           1055 761140at2            -            323   5.5e-09   37.0   0.0   1   3   4.4e-11   2.6e-07   31.6   0.0     2    53    56   112    55   117 0.89 contig_88_496 # 358061 # 361225 # -1 # ID=32_496;partial=00;start_type=ATG;rbs_motif=None;rbs_spacer=None;gc_cont=0.532
+contig_88:358061-361225  -           1055 761140at2            -            323   5.5e-09   37.0   0.0   2   3     0.045   2.7e+02    1.9   0.0   133   152   473   493   437   505 0.74 contig_88_496 # 358061 # 361225 # -1 # ID=32_496;partial=00;start_type=ATG;rbs_motif=None;rbs_spacer=None;gc_cont=0.532
+contig_88:358061-361225  -           1055 761140at2            -            323   5.5e-09   37.0   0.0   3   3       1.6   9.6e+03   -3.2   0.0   205   215   629   639   618   641 0.77 contig_88_496 # 358061 # 361225 # -1 # ID=32_496;partial=00;start_type=ATG;rbs_motif=None;rbs_spacer=None;gc_cont=0.532
+contig_40:174222-175061  -            280 761140at2            -            323   3.4e-07   31.1   0.0   1   1   9.1e-11   5.4e-07   30.5   0.0     2    65   135   204   134   210 0.88 contig_40_206 # 174222 # 175061 # -1 # ID=47_206;partial=00;start_type=GTG;rbs_motif=None;rbs_spacer=None;gc_cont=0.527
+contig_5:94130-94576     -            149 761140at2            -            323   2.7e-05   24.9   0.0   1   1   6.9e-09   4.1e-05   24.3   0.0     1    32    14    47    14    57 0.90 contig_5_135 # 94130 # 94576 # 1 # ID=24_135;partial=00;start_type=ATG;rbs_motif=None;rbs_spacer=None;gc_cont=0.499
+contig_6:1804363-1806990 -            876 761140at2            -            323     0.053   14.1   0.1   1   2    0.0012         7    7.1   0.0     2    24    77    99    76   180 0.68 contig_6_2498 # 1804363 # 1806990 # 1 # ID=2_2498;partial=00;start_type=ATG;rbs_motif=None;rbs_spacer=None;gc_cont=0.522
+contig_6:1804363-1806990 -            876 761140at2            -            323     0.053   14.1   0.1   2   2    0.0097        57    4.1   0.1   161   198   704   741   701   783 0.75 contig_6_2498 # 1804363 # 1806990 # 1 # ID=2_2498;partial=00;start_type=ATG;rbs_motif=None;rbs_spacer=None;gc_cont=0.522
+contig_5:94916-96496     -            527 761140at2            -            323     0.092   13.3   2.0   1   3   0.00033         2    8.9   0.0   214   257   123   177   121   182 0.79 contig_5_137 # 94916 # 96496 # 1 # ID=24_137;partial=00;start_type=GTG;rbs_motif=None;rbs_spacer=None;gc_cont=0.509
+contig_5:94916-96496     -            527 761140at2            -            323     0.092   13.3   2.0   2   3     0.017     1e+02    3.3   0.0   277   309   238   273   181   280 0.76 contig_5_137 # 94916 # 96496 # 1 # ID=24_137;partial=00;start_type=GTG;rbs_motif=None;rbs_spacer=None;gc_cont=0.509
+contig_5:94916-96496     -            527 761140at2            -            323     0.092   13.3   2.0   3   3       1.9   1.1e+04   -3.4   0.3   252   284   337   364   319   379 0.54 contig_5_137 # 94916 # 96496 # 1 # ID=24_137;partial=00;start_type=GTG;rbs_motif=None;rbs_spacer=None;gc_cont=0.509
+contig_5:1398769-1399377 -            203 761140at2            -            323      0.14   12.7   0.0   1   1     3e-05      0.18   12.4   0.0     6   117    38   156    33   164 0.73 contig_5_2007 # 1398769 # 1399377 # -1 # ID=24_2007;partial=00;start_type=ATG;rbs_motif=None;rbs_spacer=None;gc_cont=0.493
+#
+# Program:         hmmsearch
+# Version:         3.1b2 (February 2015)
+# Pipeline mode:   SEARCH
+# Query file:      /opt/busco_db/bacteria_odb10/hmms/761140at2.hmm
+# Target file:     flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+# Option settings: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/761140at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/761140at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa 
+# Current dir:     /array1/falmeida/NF_WORK/17/da9f3cbcae0ef622d7976e52c3d2a7
+# Date:            Mon Feb 26 20:42:30 2024
+# [ok]

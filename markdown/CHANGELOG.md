@@ -15,6 +15,7 @@ The tracking for changes started in v2.
   * Parameters `--skip_pilon` and `--skip_polypolish` added to the pipeline
   * MultiQC report was fixed and enhanced
   * Docker image was also modified to download BUSCO standalone and pipeline perform the BUSCO standalone run instead of via quast.
+* [[#66](https://github.com/fmalmeida/MpGAP/issues/66)] - Include an automated generation of a samplesheet for bacannot pipeline.
 
 ## v3.1.4 -- [2022-Sep-03]
 

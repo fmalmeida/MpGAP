@@ -1,0 +1,16 @@
+#                                                                              --- full sequence --- -------------- this domain -------------   hmm coord   ali coord   env coord
+# target name          accession   tlen query name           accession   qlen   E-value  score  bias   #  of  c-Evalue  i-Evalue  score  bias  from    to  from    to  from    to  acc description of target
+#  ------------------- ---------- ----- -------------------- ---------- ----- --------- ------ ----- --- --- --------- --------- ------ ----- ----- ----- ----- ----- ----- ----- ---- ---------------------
+contig_6:139546-140352 -            269 533698at2            -            290     3e-50  172.3   1.6   1   2   1.8e-08   0.00037   21.0   0.5   121   174     4    84     1    94 0.73 contig_6_168 # 139546 # 140352 # -1 # ID=2_168;partial=00;start_type=ATG;rbs_motif=None;rbs_spacer=None;gc_cont=0.584
+contig_6:139546-140352 -            269 533698at2            -            290     3e-50  172.3   1.6   2   2   5.4e-47   1.1e-42  147.4   0.0   172   290   120   249   110   249 0.94 contig_6_168 # 139546 # 140352 # -1 # ID=2_168;partial=00;start_type=ATG;rbs_motif=None;rbs_spacer=None;gc_cont=0.584
+contig_6:140396-140770 -            125 533698at2            -            290   1.5e-24   87.9   0.4   1   1   1.5e-28   3.1e-24   86.9   0.4    34   121    11   123     6   124 0.81 contig_6_169 # 140396 # 140770 # -1 # ID=2_169;partial=00;start_type=ATG;rbs_motif=None;rbs_spacer=None;gc_cont=0.549
+#
+# Program:         hmmsearch
+# Version:         3.1b2 (February 2015)
+# Pipeline mode:   SEARCH
+# Query file:      /opt/busco_db/bacteria_odb10/hmms/533698at2.hmm
+# Target file:     flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+# Option settings: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/533698at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/533698at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa 
+# Current dir:     /array1/falmeida/NF_WORK/17/da9f3cbcae0ef622d7976e52c3d2a7
+# Date:            Mon Feb 26 20:42:30 2024
+# [ok]

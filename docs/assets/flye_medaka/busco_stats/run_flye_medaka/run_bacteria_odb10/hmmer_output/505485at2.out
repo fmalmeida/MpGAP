@@ -1,0 +1,19 @@
+#                                                                                 --- full sequence --- -------------- this domain -------------   hmm coord   ali coord   env coord
+# target name             accession   tlen query name           accession   qlen   E-value  score  bias   #  of  c-Evalue  i-Evalue  score  bias  from    to  from    to  from    to  acc description of target
+#     ------------------- ---------- ----- -------------------- ---------- ----- --------- ------ ----- --- --- --------- --------- ------ ----- ----- ----- ----- ----- ----- ----- ---- ---------------------
+contig_5:471224-472018    -            265 505485at2            -            234     0.063   14.1   0.3   1   2   1.8e-05      0.38   11.6   0.1     2    38    21    57    20    62 0.89 contig_5_654 # 471224 # 472018 # -1 # ID=24_654;partial=00;start_type=ATG;rbs_motif=None;rbs_spacer=None;gc_cont=0.512
+contig_5:471224-472018    -            265 505485at2            -            234     0.063   14.1   0.3   2   2     0.055   1.1e+03    0.2   0.0    36    72   103   142    74   148 0.69 contig_5_654 # 471224 # 472018 # -1 # ID=24_654;partial=00;start_type=ATG;rbs_motif=None;rbs_spacer=None;gc_cont=0.512
+contig_86:1748607-1754525 -           1973 505485at2            -            234       0.3   11.9   2.2   1   4     0.049     1e+03    0.4   0.0    15    48   339   372   327   388 0.77 contig_86_2432 # 1748607 # 1754525 # -1 # ID=7_2432;partial=00;start_type=ATG;rbs_motif=None;rbs_spacer=None;gc_cont=0.500
+contig_86:1748607-1754525 -           1973 505485at2            -            234       0.3   11.9   2.2   2   4    0.0076   1.6e+02    3.0   0.0    19    38   679   698   665   704 0.82 contig_86_2432 # 1748607 # 1754525 # -1 # ID=7_2432;partial=00;start_type=ATG;rbs_motif=None;rbs_spacer=None;gc_cont=0.500
+contig_86:1748607-1754525 -           1973 505485at2            -            234       0.3   11.9   2.2   3   4      0.72   1.5e+04   -3.5   0.0    20    36  1406  1422  1400  1425 0.81 contig_86_2432 # 1748607 # 1754525 # -1 # ID=7_2432;partial=00;start_type=ATG;rbs_motif=None;rbs_spacer=None;gc_cont=0.500
+contig_86:1748607-1754525 -           1973 505485at2            -            234       0.3   11.9   2.2   4   4    0.0014        29    5.4   0.1    18    37  1783  1802  1772  1807 0.81 contig_86_2432 # 1748607 # 1754525 # -1 # ID=7_2432;partial=00;start_type=ATG;rbs_motif=None;rbs_spacer=None;gc_cont=0.500
+#
+# Program:         hmmsearch
+# Version:         3.1b2 (February 2015)
+# Pipeline mode:   SEARCH
+# Query file:      /opt/busco_db/bacteria_odb10/hmms/505485at2.hmm
+# Target file:     flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+# Option settings: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/505485at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/505485at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa 
+# Current dir:     /array1/falmeida/NF_WORK/17/da9f3cbcae0ef622d7976e52c3d2a7
+# Date:            Mon Feb 26 20:42:30 2024
+# [ok]
