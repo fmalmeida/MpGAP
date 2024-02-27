@@ -10,11 +10,12 @@ The tracking for changes started in v2.
 * Increase default `--max_memory` value to 20.GB.
 * Add a directory called `final_assemblies` in the main output directory holding all the assemblies generated in the pipeline execution.
 * Updated documentation as discussed in [[#58](https://github.com/fmalmeida/MpGAP/issues/58)] and [[#57](https://github.com/fmalmeida/MpGAP/issues/57)].
-* [[#61](https://github.com/fmalmeida/MpGAP/issues/61)] - Add a simple parameter to adjust how many cpus and how much memory should the assembly jobs request in the first attempt to avoid lack of resources errors.
 * [[#50](https://github.com/fmalmeida/MpGAP/issues/50)]
   * Parameters `--skip_pilon` and `--skip_polypolish` added to the pipeline
   * MultiQC report was fixed and enhanced
   * Docker image was also modified to download BUSCO standalone and pipeline perform the BUSCO standalone run instead of via quast.
+* [[#53](https://github.com/fmalmeida/MpGAP/issues/53)] - Include hifiasm assembler in the pipeline. Long reads only and hybrid strategy 2.
+* [[#61](https://github.com/fmalmeida/MpGAP/issues/61)] - Add a simple parameter to adjust how many cpus and how much memory should the assembly jobs request in the first attempt to avoid lack of resources errors.
 * [[#66](https://github.com/fmalmeida/MpGAP/issues/66)] - Include an automated generation of a samplesheet for bacannot pipeline.
 
 ## v3.1.4 -- [2022-Sep-03]
