@@ -1,6 +1,7 @@
 process quast {
   publishDir "${params.output}", mode: 'copy', saveAs: { filename ->
     if ( filename.tokenize('/').contains('input_assembly') ) "final_assemblies/${asm_copy_prefix}_${filename.tokenize('/')[1]}"
+    else if ( filename == 'versions.yml' ) null
     else "${prefix}/00_quality_assessment/${filename}"
   }
   tag "${id}"
@@ -11,6 +12,7 @@ process quast {
   output:
   tuple val(id), val(entrypoint), val(prefix), file("${assembler}"), emit: results
   file("input_assembly/*")
+  path('versions.yml'), emit: versions
 
   script:
 
@@ -51,6 +53,13 @@ process quast {
   # save assembly
   mkdir -p input_assembly
   cp ${contigs} input_assembly/${contigs}
+
+  # get version
+  cat <<-END_VERSIONS > versions.yml
+  "${task.process}":
+      quast: \$( quast.py --version | tail -n+2 | cut -f 2 -d ' ' )
+      busco: \$( busco --version | cut -f 2 -d ' ' )
+  END_VERSIONS
   """
 
   else if (params.selected_profile == "singularity")
@@ -78,8 +87,25 @@ process quast {
     $busco_lineage \\
     -o ${assembler}/busco_stats/run_${assembler}
   
+  # change names
+  for i in \$( find ${assembler}/busco_stats/run_${assembler} -name 'short*.json' ) ; do
+    path=\$( dirname \$i ) ;
+    mv \$i \${path}/short_summary_${assembler}.json ;
+  done
+  for i in \$( find ${assembler}/busco_stats/run_${assembler} -name 'short*.txt' ) ; do
+    path=\$( dirname \$i ) ;
+    mv \$i \${path}/short_summary_${assembler}.txt ;
+  done
+  
   # save assembly
   mkdir -p input_assembly
   cp ${contigs} input_assembly/${contigs}
+
+  # get version
+  cat <<-END_VERSIONS > versions.yml
+  "${task.process}":
+      quast: \$( quast.py --version | tail -n+2 | cut -f 2 -d ' ' )
+      busco: \$( busco --version | cut -f 2 -d ' ' )
+  END_VERSIONS
   """
 }

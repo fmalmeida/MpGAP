@@ -9,6 +9,7 @@ process haslr_hybrid {
   output:
   file "*" // Save everything
   tuple val(id), file("haslr/haslr_assembly.fa"), val('haslr') // Gets contigs file
+  path('versions.yml'), emit: versions
 
   when:
   ((!(sread1 =~ /input.*/) && !(sread2 =~ /input.*/)) || !(single =~ /input.*/)) && !(lreads =~ /input.*/) && (entrypoint == 'hybrid_strategy_1')
@@ -31,5 +32,11 @@ process haslr_hybrid {
 
   # rename results
   cp haslr/*/asm.final.fa haslr/haslr_assembly.fa
+
+  # get version
+  cat <<-END_VERSIONS > versions.yml
+  "${task.process}":
+      haslr: \$( haslr.py --version )
+  END_VERSIONS
   """
 }
