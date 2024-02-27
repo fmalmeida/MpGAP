@@ -14,7 +14,7 @@ process hifiasm {
   (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2')
 
   script:
-  additional_params = (params.hifiasm_additional_parameters) ? params.hifiasm_additional_parameters : ""
+  def additional_params = (params.hifiasm_additional_parameters) ? params.hifiasm_additional_parameters : ""
   """
   # run hifiasm
   hifiasm \\
