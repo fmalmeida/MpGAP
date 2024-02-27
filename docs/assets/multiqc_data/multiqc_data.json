@@ -2,83 +2,68 @@
     "report_data_sources": {
         "QUAST": {
             "all_sections": {
-                "shasta_medaka_consensus": "/array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d/shasta_medaka/report.tsv",
-                "canu_assembly": "/array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d/canu/report.tsv",
-                "raven_assembly": "/array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d/raven/report.tsv",
-                "shasta_assembly": "/array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d/shasta/report.tsv",
-                "flye_assembly": "/array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d/flye/report.tsv",
-                "raven_medaka_consensus": "/array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d/raven_medaka/report.tsv",
-                "wtdbg2_medaka_consensus": "/array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d/wtdbg2_medaka/report.tsv",
-                "flye_medaka_consensus": "/array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d/flye_medaka/report.tsv",
-                "canu_medaka_consensus": "/array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d/canu_medaka/report.tsv",
-                "wtdbg2_assembly": "/array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d/wtdbg2/report.tsv"
+                "shasta_medaka_consensus": "/array1/falmeida/NF_WORK/94/b5215a8e9cf57fe4f76f17d144354d/shasta_medaka/report.tsv",
+                "canu_assembly": "/array1/falmeida/NF_WORK/94/b5215a8e9cf57fe4f76f17d144354d/canu/report.tsv",
+                "raven_assembly": "/array1/falmeida/NF_WORK/94/b5215a8e9cf57fe4f76f17d144354d/raven/report.tsv",
+                "shasta_assembly": "/array1/falmeida/NF_WORK/94/b5215a8e9cf57fe4f76f17d144354d/shasta/report.tsv",
+                "flye_assembly": "/array1/falmeida/NF_WORK/94/b5215a8e9cf57fe4f76f17d144354d/flye/report.tsv",
+                "raven_medaka_consensus": "/array1/falmeida/NF_WORK/94/b5215a8e9cf57fe4f76f17d144354d/raven_medaka/report.tsv",
+                "wtdbg2_medaka_consensus": "/array1/falmeida/NF_WORK/94/b5215a8e9cf57fe4f76f17d144354d/wtdbg2_medaka/report.tsv",
+                "flye_medaka_consensus": "/array1/falmeida/NF_WORK/94/b5215a8e9cf57fe4f76f17d144354d/flye_medaka/report.tsv",
+                "canu_medaka_consensus": "/array1/falmeida/NF_WORK/94/b5215a8e9cf57fe4f76f17d144354d/canu_medaka/report.tsv",
+                "wtdbg2_assembly": "/array1/falmeida/NF_WORK/94/b5215a8e9cf57fe4f76f17d144354d/wtdbg2/report.tsv"
             }
         },
         "BUSCO": {
             "all_sections": {
-                "shasta_medaka_consensus": "/array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d/shasta_medaka/busco_stats/short_summary_shasta_medaka_consensus.txt",
-                "canu_assembly": "/array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d/canu/busco_stats/short_summary_canu_assembly.txt",
-                "raven_assembly": "/array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d/raven/busco_stats/short_summary_raven_assembly.txt",
-                "shasta_assembly": "/array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d/shasta/busco_stats/short_summary_shasta_assembly.txt",
-                "flye_assembly": "/array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d/flye/busco_stats/short_summary_flye_assembly.txt",
-                "raven_medaka_consensus": "/array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d/raven_medaka/busco_stats/short_summary_raven_medaka_consensus.txt",
-                "wtdbg2_medaka_consensus": "/array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d/wtdbg2_medaka/busco_stats/short_summary_wtdbg2_medaka_consensus.txt",
-                "flye_medaka_consensus": "/array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d/flye_medaka/busco_stats/short_summary_flye_medaka_consensus.txt",
-                "canu_medaka_consensus": "/array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d/canu_medaka/busco_stats/short_summary_canu_medaka_consensus.txt",
-                "wtdbg2_assembly": "/array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d/wtdbg2/busco_stats/short_summary_wtdbg2_assembly.txt"
-            }
-        },
-        "Samtools": {
-            "flagstat": {
-                "shasta_medaka_consensus.stat": "/array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d/shasta_medaka/reads_stats/shasta_medaka_consensus.stat",
-                "canu_assembly.stat": "/array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d/canu/reads_stats/canu_assembly.stat",
-                "raven_assembly.stat": "/array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d/raven/reads_stats/raven_assembly.stat",
-                "shasta_assembly.stat": "/array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d/shasta/reads_stats/shasta_assembly.stat",
-                "flye_assembly.stat": "/array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d/flye/reads_stats/flye_assembly.stat",
-                "raven_medaka_consensus.stat": "/array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d/raven_medaka/reads_stats/raven_medaka_consensus.stat",
-                "wtdbg2_medaka_consensus.stat": "/array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d/wtdbg2_medaka/reads_stats/wtdbg2_medaka_consensus.stat",
-                "flye_medaka_consensus.stat": "/array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d/flye_medaka/reads_stats/flye_medaka_consensus.stat",
-                "canu_medaka_consensus.stat": "/array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d/canu_medaka/reads_stats/canu_medaka_consensus.stat",
-                "wtdbg2_assembly.stat": "/array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d/wtdbg2/reads_stats/wtdbg2_assembly.stat"
+                "short_summary.specific.bacteria_odb10.run_shasta_medaka": "/array1/falmeida/NF_WORK/94/b5215a8e9cf57fe4f76f17d144354d/shasta_medaka/busco_stats/run_shasta_medaka/short_summary.specific.bacteria_odb10.run_shasta_medaka.txt",
+                "short": "/array1/falmeida/NF_WORK/94/b5215a8e9cf57fe4f76f17d144354d/wtdbg2/busco_stats/run_wtdbg2/run_bacteria_odb10/short_summary.txt",
+                "short_summary.specific.bacteria_odb10.run_canu": "/array1/falmeida/NF_WORK/94/b5215a8e9cf57fe4f76f17d144354d/canu/busco_stats/run_canu/short_summary.specific.bacteria_odb10.run_canu.txt",
+                "short_summary.specific.bacteria_odb10.run_raven": "/array1/falmeida/NF_WORK/94/b5215a8e9cf57fe4f76f17d144354d/raven/busco_stats/run_raven/short_summary.specific.bacteria_odb10.run_raven.txt",
+                "short_summary.specific.bacteria_odb10.run_shasta": "/array1/falmeida/NF_WORK/94/b5215a8e9cf57fe4f76f17d144354d/shasta/busco_stats/run_shasta/short_summary.specific.bacteria_odb10.run_shasta.txt",
+                "short_summary.specific.bacteria_odb10.run_flye": "/array1/falmeida/NF_WORK/94/b5215a8e9cf57fe4f76f17d144354d/flye/busco_stats/run_flye/short_summary.specific.bacteria_odb10.run_flye.txt",
+                "short_summary.specific.bacteria_odb10.run_raven_medaka": "/array1/falmeida/NF_WORK/94/b5215a8e9cf57fe4f76f17d144354d/raven_medaka/busco_stats/run_raven_medaka/short_summary.specific.bacteria_odb10.run_raven_medaka.txt",
+                "short_summary.specific.bacteria_odb10.run_wtdbg2_medaka": "/array1/falmeida/NF_WORK/94/b5215a8e9cf57fe4f76f17d144354d/wtdbg2_medaka/busco_stats/run_wtdbg2_medaka/short_summary.specific.bacteria_odb10.run_wtdbg2_medaka.txt",
+                "short_summary.specific.bacteria_odb10.run_flye_medaka": "/array1/falmeida/NF_WORK/94/b5215a8e9cf57fe4f76f17d144354d/flye_medaka/busco_stats/run_flye_medaka/short_summary.specific.bacteria_odb10.run_flye_medaka.txt",
+                "short_summary.specific.bacteria_odb10.run_canu_medaka": "/array1/falmeida/NF_WORK/94/b5215a8e9cf57fe4f76f17d144354d/canu_medaka/busco_stats/run_canu_medaka/short_summary.specific.bacteria_odb10.run_canu_medaka.txt",
+                "short_summary.specific.bacteria_odb10.run_wtdbg2": "/array1/falmeida/NF_WORK/94/b5215a8e9cf57fe4f76f17d144354d/wtdbg2/busco_stats/run_wtdbg2/short_summary.specific.bacteria_odb10.run_wtdbg2.txt"
             }
         }
     },
     "report_general_stats_data": [
         {
             "shasta_medaka_consensus": {
-                "# contigs (>= 0 bp)": 351.0,
-                "# contigs (>= 1000 bp)": 350.0,
-                "# contigs (>= 5000 bp)": 347.0,
-                "# contigs (>= 10000 bp)": 328.0,
+                "# contigs (>= 0 bp)": 348.0,
+                "# contigs (>= 1000 bp)": 347.0,
+                "# contigs (>= 5000 bp)": 345.0,
+                "# contigs (>= 10000 bp)": 327.0,
                 "# contigs (>= 25000 bp)": 263.0,
-                "# contigs (>= 50000 bp)": 190.0,
-                "Total length (>= 0 bp)": 28287956.0,
-                "Total length (>= 1000 bp)": 28287426.0,
-                "Total length (>= 5000 bp)": 28274424.0,
-                "Total length (>= 10000 bp)": 28141427.0,
-                "Total length (>= 25000 bp)": 26982512.0,
-                "Total length (>= 50000 bp)": 24450299.0,
-                "# contigs": 351.0,
-                "Largest contig": 478225.0,
-                "Total length": 28287956.0,
-                "GC (%)": 49.45,
-                "N50": 136427.0,
-                "N90": 38463.0,
-                "auN": 156409.3,
+                "# contigs (>= 50000 bp)": 191.0,
+                "Total length (>= 0 bp)": 28263299.0,
+                "Total length (>= 1000 bp)": 28262761.0,
+                "Total length (>= 5000 bp)": 28254659.0,
+                "Total length (>= 10000 bp)": 28128128.0,
+                "Total length (>= 25000 bp)": 26989856.0,
+                "Total length (>= 50000 bp)": 24496183.0,
+                "# contigs": 348.0,
+                "Largest contig": 478233.0,
+                "Total length": 28263299.0,
+                "GC (%)": 49.44,
+                "N50": 136426.0,
+                "N90": 38464.0,
+                "auN": 156522.2,
                 "L50": 69.0,
                 "L90": 214.0,
                 "# total reads": 409991.0,
                 "# left": 0.0,
                 "# right": 0.0,
-                "Mapped (%)": 118.78,
+                "Mapped (%)": 116.08,
                 "Properly paired (%)": 0.0,
-                "Avg. coverage depth": 51.0,
+                "Avg. coverage depth": 50.0,
                 "Coverage >= 1x (%)": 100.0,
                 "# N's per 100 kbp": 0.0,
-                "Complete BUSCO (%)": 0.0,
-                "Partial BUSCO (%)": 0.0,
-                "# predicted rRNA genes": 47.0,
-                "# predicted rRNA genes_partial": 2.0
+                "# predicted rRNA genes": 38.0,
+                "# predicted rRNA genes_partial": 1.0
             },
             "canu_assembly": {
                 "# contigs (>= 0 bp)": 36.0,
@@ -110,8 +95,6 @@
                 "Avg. coverage depth": 51.0,
                 "Coverage >= 1x (%)": 100.0,
                 "# N's per 100 kbp": 0.0,
-                "Complete BUSCO (%)": 0.0,
-                "Partial BUSCO (%)": 0.0,
                 "# predicted rRNA genes": 60.0,
                 "# predicted rRNA genes_partial": 1.0
             },
@@ -145,78 +128,72 @@
                 "Avg. coverage depth": 46.0,
                 "Coverage >= 1x (%)": 100.0,
                 "# N's per 100 kbp": 0.0,
-                "Complete BUSCO (%)": 0.0,
-                "Partial BUSCO (%)": 0.0,
                 "# predicted rRNA genes": 35.0,
                 "# predicted rRNA genes_partial": 0.0
             },
             "shasta_assembly": {
-                "# contigs (>= 0 bp)": 352.0,
-                "# contigs (>= 1000 bp)": 350.0,
-                "# contigs (>= 5000 bp)": 348.0,
-                "# contigs (>= 10000 bp)": 328.0,
+                "# contigs (>= 0 bp)": 349.0,
+                "# contigs (>= 1000 bp)": 347.0,
+                "# contigs (>= 5000 bp)": 345.0,
+                "# contigs (>= 10000 bp)": 327.0,
                 "# contigs (>= 25000 bp)": 264.0,
-                "# contigs (>= 50000 bp)": 190.0,
-                "Total length (>= 0 bp)": 28362459.0,
-                "Total length (>= 1000 bp)": 28361837.0,
-                "Total length (>= 5000 bp)": 28352887.0,
-                "Total length (>= 10000 bp)": 28210930.0,
-                "Total length (>= 25000 bp)": 27069671.0,
-                "Total length (>= 50000 bp)": 24504137.0,
-                "# contigs": 351.0,
-                "Largest contig": 479058.0,
-                "Total length": 28362398.0,
-                "GC (%)": 49.47,
-                "N50": 135598.0,
-                "N90": 38411.0,
-                "auN": 156650.6,
-                "L50": 70.0,
-                "L90": 215.0,
+                "# contigs (>= 50000 bp)": 191.0,
+                "Total length (>= 0 bp)": 28336194.0,
+                "Total length (>= 1000 bp)": 28335572.0,
+                "Total length (>= 5000 bp)": 28326622.0,
+                "Total length (>= 10000 bp)": 28197056.0,
+                "Total length (>= 25000 bp)": 27077296.0,
+                "Total length (>= 50000 bp)": 24550494.0,
+                "# contigs": 348.0,
+                "Largest contig": 479047.0,
+                "Total length": 28336133.0,
+                "GC (%)": 49.46,
+                "N50": 136759.0,
+                "N90": 38627.0,
+                "auN": 156774.4,
+                "L50": 69.0,
+                "L90": 214.0,
                 "# total reads": 409991.0,
                 "# left": 0.0,
                 "# right": 0.0,
-                "Mapped (%)": 117.53,
+                "Mapped (%)": 115.37,
                 "Properly paired (%)": 0.0,
-                "Avg. coverage depth": 51.0,
+                "Avg. coverage depth": 50.0,
                 "Coverage >= 1x (%)": 100.0,
                 "# N's per 100 kbp": 0.0,
-                "Complete BUSCO (%)": 0.0,
-                "Partial BUSCO (%)": 0.0,
-                "# predicted rRNA genes": 39.0,
-                "# predicted rRNA genes_partial": 1.0
+                "# predicted rRNA genes": 30.0,
+                "# predicted rRNA genes_partial": 0.0
             },
             "flye_assembly": {
-                "# contigs (>= 0 bp)": 88.0,
-                "# contigs (>= 1000 bp)": 76.0,
-                "# contigs (>= 5000 bp)": 53.0,
+                "# contigs (>= 0 bp)": 89.0,
+                "# contigs (>= 1000 bp)": 78.0,
+                "# contigs (>= 5000 bp)": 54.0,
                 "# contigs (>= 10000 bp)": 44.0,
                 "# contigs (>= 25000 bp)": 34.0,
                 "# contigs (>= 50000 bp)": 23.0,
-                "Total length (>= 0 bp)": 29325492.0,
-                "Total length (>= 1000 bp)": 29317531.0,
-                "Total length (>= 5000 bp)": 29261651.0,
-                "Total length (>= 10000 bp)": 29192741.0,
-                "Total length (>= 25000 bp)": 29021999.0,
-                "Total length (>= 50000 bp)": 28634203.0,
-                "# contigs": 88.0,
-                "Largest contig": 3007913.0,
-                "Total length": 29325492.0,
-                "GC (%)": 49.48,
-                "N50": 2278250.0,
+                "Total length (>= 0 bp)": 29325332.0,
+                "Total length (>= 1000 bp)": 29317938.0,
+                "Total length (>= 5000 bp)": 29261428.0,
+                "Total length (>= 10000 bp)": 29186846.0,
+                "Total length (>= 25000 bp)": 29014761.0,
+                "Total length (>= 50000 bp)": 28627378.0,
+                "# contigs": 89.0,
+                "Largest contig": 3007463.0,
+                "Total length": 29325332.0,
+                "GC (%)": 49.49,
+                "N50": 2284182.0,
                 "N90": 666020.0,
-                "auN": 1835925.4,
+                "auN": 1835961.2,
                 "L50": 6.0,
                 "L90": 16.0,
                 "# total reads": 409991.0,
                 "# left": 0.0,
                 "# right": 0.0,
-                "Mapped (%)": 111.05,
+                "Mapped (%)": 110.97,
                 "Properly paired (%)": 0.0,
                 "Avg. coverage depth": 48.0,
                 "Coverage >= 1x (%)": 100.0,
                 "# N's per 100 kbp": 0.0,
-                "Complete BUSCO (%)": 0.0,
-                "Partial BUSCO (%)": 0.0,
                 "# predicted rRNA genes": 38.0,
                 "# predicted rRNA genes_partial": 1.0
             },
@@ -250,78 +227,72 @@
                 "Avg. coverage depth": 46.0,
                 "Coverage >= 1x (%)": 100.0,
                 "# N's per 100 kbp": 0.0,
-                "Complete BUSCO (%)": 0.0,
-                "Partial BUSCO (%)": 0.0,
                 "# predicted rRNA genes": 36.0,
                 "# predicted rRNA genes_partial": 0.0
             },
             "wtdbg2_medaka_consensus": {
-                "# contigs (>= 0 bp)": 44.0,
-                "# contigs (>= 1000 bp)": 43.0,
-                "# contigs (>= 5000 bp)": 37.0,
+                "# contigs (>= 0 bp)": 45.0,
+                "# contigs (>= 1000 bp)": 44.0,
+                "# contigs (>= 5000 bp)": 38.0,
                 "# contigs (>= 10000 bp)": 30.0,
                 "# contigs (>= 25000 bp)": 27.0,
                 "# contigs (>= 50000 bp)": 22.0,
-                "Total length (>= 0 bp)": 28626778.0,
-                "Total length (>= 1000 bp)": 28626477.0,
-                "Total length (>= 5000 bp)": 28605691.0,
-                "Total length (>= 10000 bp)": 28557617.0,
-                "Total length (>= 25000 bp)": 28516394.0,
-                "Total length (>= 50000 bp)": 28347853.0,
-                "# contigs": 44.0,
-                "Largest contig": 3937981.0,
-                "Total length": 28626778.0,
+                "Total length (>= 0 bp)": 28631945.0,
+                "Total length (>= 1000 bp)": 28631644.0,
+                "Total length (>= 5000 bp)": 28611685.0,
+                "Total length (>= 10000 bp)": 28557520.0,
+                "Total length (>= 25000 bp)": 28516291.0,
+                "Total length (>= 50000 bp)": 28347754.0,
+                "# contigs": 45.0,
+                "Largest contig": 3937425.0,
+                "Total length": 28631945.0,
                 "GC (%)": 49.63,
-                "N50": 2047658.0,
-                "N90": 619702.0,
-                "auN": 2111523.1,
+                "N50": 2047669.0,
+                "N90": 619694.0,
+                "auN": 2111037.2,
                 "L50": 6.0,
                 "L90": 15.0,
                 "# total reads": 409991.0,
                 "# left": 0.0,
                 "# right": 0.0,
-                "Mapped (%)": 114.23,
+                "Mapped (%)": 114.32,
                 "Properly paired (%)": 0.0,
-                "Avg. coverage depth": 48.0,
+                "Avg. coverage depth": 49.0,
                 "Coverage >= 1x (%)": 99.99,
                 "# N's per 100 kbp": 0.0,
-                "Complete BUSCO (%)": 0.0,
-                "Partial BUSCO (%)": 0.0,
                 "# predicted rRNA genes": 36.0,
                 "# predicted rRNA genes_partial": 1.0
             },
             "flye_medaka_consensus": {
-                "# contigs (>= 0 bp)": 85.0,
-                "# contigs (>= 1000 bp)": 76.0,
-                "# contigs (>= 5000 bp)": 53.0,
+                "# contigs (>= 0 bp)": 84.0,
+                "# contigs (>= 1000 bp)": 77.0,
+                "# contigs (>= 5000 bp)": 54.0,
                 "# contigs (>= 10000 bp)": 44.0,
                 "# contigs (>= 25000 bp)": 34.0,
                 "# contigs (>= 50000 bp)": 23.0,
-                "Total length (>= 0 bp)": 29335530.0,
-                "Total length (>= 1000 bp)": 29329187.0,
-                "Total length (>= 5000 bp)": 29274769.0,
-                "Total length (>= 10000 bp)": 29205985.0,
-                "Total length (>= 25000 bp)": 29036260.0,
-                "Total length (>= 50000 bp)": 28650057.0,
-                "# contigs": 85.0,
-                "Largest contig": 3009856.0,
-                "Total length": 29335530.0,
+                "Total length (>= 0 bp)": 29332743.0,
+                "Total length (>= 1000 bp)": 29327738.0,
+                "Total length (>= 5000 bp)": 29274410.0,
+                "Total length (>= 10000 bp)": 29200110.0,
+                "Total length (>= 25000 bp)": 29029000.0,
+                "Total length (>= 50000 bp)": 28643628.0,
+                "# contigs": 84.0,
+                "Largest contig": 3009410.0,
+                "Total length": 29332743.0,
                 "GC (%)": 49.5,
-                "N50": 2279797.0,
+                "N50": 2285407.0,
                 "N90": 666409.0,
-                "auN": 1837446.5,
+                "auN": 1837700.3,
                 "L50": 6.0,
                 "L90": 16.0,
                 "# total reads": 409991.0,
                 "# left": 0.0,
                 "# right": 0.0,
-                "Mapped (%)": 111.01,
+                "Mapped (%)": 110.85,
                 "Properly paired (%)": 0.0,
                 "Avg. coverage depth": 48.0,
-                "Coverage >= 1x (%)": 99.99,
+                "Coverage >= 1x (%)": 100.0,
                 "# N's per 100 kbp": 0.0,
-                "Complete BUSCO (%)": 0.0,
-                "Partial BUSCO (%)": 0.0,
                 "# predicted rRNA genes": 38.0,
                 "# predicted rRNA genes_partial": 0.0
             },
@@ -355,397 +326,41 @@
                 "Avg. coverage depth": 51.0,
                 "Coverage >= 1x (%)": 100.0,
                 "# N's per 100 kbp": 0.0,
-                "Complete BUSCO (%)": 0.0,
-                "Partial BUSCO (%)": 0.0,
                 "# predicted rRNA genes": 59.0,
                 "# predicted rRNA genes_partial": 2.0
             },
             "wtdbg2_assembly": {
-                "# contigs (>= 0 bp)": 54.0,
-                "# contigs (>= 1000 bp)": 52.0,
-                "# contigs (>= 5000 bp)": 40.0,
+                "# contigs (>= 0 bp)": 55.0,
+                "# contigs (>= 1000 bp)": 53.0,
+                "# contigs (>= 5000 bp)": 41.0,
                 "# contigs (>= 10000 bp)": 30.0,
                 "# contigs (>= 25000 bp)": 27.0,
                 "# contigs (>= 50000 bp)": 22.0,
-                "Total length (>= 0 bp)": 28619494.0,
-                "Total length (>= 1000 bp)": 28618464.0,
-                "Total length (>= 5000 bp)": 28572205.0,
-                "Total length (>= 10000 bp)": 28508056.0,
-                "Total length (>= 25000 bp)": 28466347.0,
-                "Total length (>= 50000 bp)": 28297837.0,
-                "# contigs": 54.0,
-                "Largest contig": 3931666.0,
-                "Total length": 28619494.0,
+                "Total length (>= 0 bp)": 28625709.0,
+                "Total length (>= 1000 bp)": 28624679.0,
+                "Total length (>= 5000 bp)": 28578789.0,
+                "Total length (>= 10000 bp)": 28508033.0,
+                "Total length (>= 25000 bp)": 28466324.0,
+                "Total length (>= 50000 bp)": 28297801.0,
+                "# contigs": 55.0,
+                "Largest contig": 3931675.0,
+                "Total length": 28625709.0,
                 "GC (%)": 49.59,
-                "N50": 2043848.0,
-                "N90": 618645.0,
-                "auN": 2104650.9,
+                "N50": 2043810.0,
+                "N90": 618648.0,
+                "auN": 2104191.4,
                 "L50": 6.0,
                 "L90": 15.0,
                 "# total reads": 409991.0,
                 "# left": 0.0,
                 "# right": 0.0,
-                "Mapped (%)": 113.96,
+                "Mapped (%)": 114.7,
                 "Properly paired (%)": 0.0,
-                "Avg. coverage depth": 48.0,
-                "Coverage >= 1x (%)": 99.85,
+                "Avg. coverage depth": 49.0,
+                "Coverage >= 1x (%)": 99.86,
                 "# N's per 100 kbp": 0.0,
-                "Complete BUSCO (%)": 0.0,
-                "Partial BUSCO (%)": 0.0,
                 "# predicted rRNA genes": 36.0,
                 "# predicted rRNA genes_partial": 1.0
-            }
-        },
-        {
-            "shasta_medaka_consensus.stat": {
-                "total_passed": 502753,
-                "total_failed": 0,
-                "secondary_passed": 55494,
-                "secondary_failed": 0,
-                "supplementary_passed": 37268,
-                "supplementary_failed": 0,
-                "duplicates_passed": 0,
-                "duplicates_failed": 0,
-                "mapped_passed": 486976,
-                "mapped_failed": 0,
-                "mapped_passed_pct": 96.86,
-                "mapped_failed_pct": NaN,
-                "paired in sequencing_passed": 0,
-                "paired in sequencing_failed": 0,
-                "read1_passed": 0,
-                "read1_failed": 0,
-                "read2_passed": 0,
-                "read2_failed": 0,
-                "properly paired_passed": 0,
-                "properly paired_failed": 0,
-                "properly paired_passed_pct": NaN,
-                "properly paired_failed_pct": NaN,
-                "with itself and mate mapped_passed": 0,
-                "with itself and mate mapped_failed": 0,
-                "singletons_passed": 0,
-                "singletons_failed": 0,
-                "singletons_passed_pct": NaN,
-                "singletons_failed_pct": NaN,
-                "with mate mapped to a different chr_passed": 0,
-                "with mate mapped to a different chr_failed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_passed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_failed": 0,
-                "flagstat_total": 502753
-            },
-            "canu_assembly.stat": {
-                "total_passed": 489033,
-                "total_failed": 0,
-                "secondary_passed": 52950,
-                "secondary_failed": 0,
-                "supplementary_passed": 26092,
-                "supplementary_failed": 0,
-                "duplicates_passed": 0,
-                "duplicates_failed": 0,
-                "mapped_passed": 482522,
-                "mapped_failed": 0,
-                "mapped_passed_pct": 98.67,
-                "mapped_failed_pct": NaN,
-                "paired in sequencing_passed": 0,
-                "paired in sequencing_failed": 0,
-                "read1_passed": 0,
-                "read1_failed": 0,
-                "read2_passed": 0,
-                "read2_failed": 0,
-                "properly paired_passed": 0,
-                "properly paired_failed": 0,
-                "properly paired_passed_pct": NaN,
-                "properly paired_failed_pct": NaN,
-                "with itself and mate mapped_passed": 0,
-                "with itself and mate mapped_failed": 0,
-                "singletons_passed": 0,
-                "singletons_failed": 0,
-                "singletons_passed_pct": NaN,
-                "singletons_failed_pct": NaN,
-                "with mate mapped to a different chr_passed": 0,
-                "with mate mapped to a different chr_failed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_passed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_failed": 0,
-                "flagstat_total": 489033
-            },
-            "raven_assembly.stat": {
-                "total_passed": 447357,
-                "total_failed": 0,
-                "secondary_passed": 9855,
-                "secondary_failed": 0,
-                "supplementary_passed": 27511,
-                "supplementary_failed": 0,
-                "duplicates_passed": 0,
-                "duplicates_failed": 0,
-                "mapped_passed": 428845,
-                "mapped_failed": 0,
-                "mapped_passed_pct": 95.86,
-                "mapped_failed_pct": NaN,
-                "paired in sequencing_passed": 0,
-                "paired in sequencing_failed": 0,
-                "read1_passed": 0,
-                "read1_failed": 0,
-                "read2_passed": 0,
-                "read2_failed": 0,
-                "properly paired_passed": 0,
-                "properly paired_failed": 0,
-                "properly paired_passed_pct": NaN,
-                "properly paired_failed_pct": NaN,
-                "with itself and mate mapped_passed": 0,
-                "with itself and mate mapped_failed": 0,
-                "singletons_passed": 0,
-                "singletons_failed": 0,
-                "singletons_passed_pct": NaN,
-                "singletons_failed_pct": NaN,
-                "with mate mapped to a different chr_passed": 0,
-                "with mate mapped to a different chr_failed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_passed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_failed": 0,
-                "flagstat_total": 447357
-            },
-            "shasta_assembly.stat": {
-                "total_passed": 497654,
-                "total_failed": 0,
-                "secondary_passed": 50439,
-                "secondary_failed": 0,
-                "supplementary_passed": 37224,
-                "supplementary_failed": 0,
-                "duplicates_passed": 0,
-                "duplicates_failed": 0,
-                "mapped_passed": 481852,
-                "mapped_failed": 0,
-                "mapped_passed_pct": 96.82,
-                "mapped_failed_pct": NaN,
-                "paired in sequencing_passed": 0,
-                "paired in sequencing_failed": 0,
-                "read1_passed": 0,
-                "read1_failed": 0,
-                "read2_passed": 0,
-                "read2_failed": 0,
-                "properly paired_passed": 0,
-                "properly paired_failed": 0,
-                "properly paired_passed_pct": NaN,
-                "properly paired_failed_pct": NaN,
-                "with itself and mate mapped_passed": 0,
-                "with itself and mate mapped_failed": 0,
-                "singletons_passed": 0,
-                "singletons_failed": 0,
-                "singletons_passed_pct": NaN,
-                "singletons_failed_pct": NaN,
-                "with mate mapped to a different chr_passed": 0,
-                "with mate mapped to a different chr_failed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_passed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_failed": 0,
-                "flagstat_total": 497654
-            },
-            "flye_assembly.stat": {
-                "total_passed": 461781,
-                "total_failed": 0,
-                "secondary_passed": 15023,
-                "secondary_failed": 0,
-                "supplementary_passed": 36767,
-                "supplementary_failed": 0,
-                "duplicates_passed": 0,
-                "duplicates_failed": 0,
-                "mapped_passed": 455293,
-                "mapped_failed": 0,
-                "mapped_passed_pct": 98.6,
-                "mapped_failed_pct": NaN,
-                "paired in sequencing_passed": 0,
-                "paired in sequencing_failed": 0,
-                "read1_passed": 0,
-                "read1_failed": 0,
-                "read2_passed": 0,
-                "read2_failed": 0,
-                "properly paired_passed": 0,
-                "properly paired_failed": 0,
-                "properly paired_passed_pct": NaN,
-                "properly paired_failed_pct": NaN,
-                "with itself and mate mapped_passed": 0,
-                "with itself and mate mapped_failed": 0,
-                "singletons_passed": 0,
-                "singletons_failed": 0,
-                "singletons_passed_pct": NaN,
-                "singletons_failed_pct": NaN,
-                "with mate mapped to a different chr_passed": 0,
-                "with mate mapped to a different chr_failed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_passed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_failed": 0,
-                "flagstat_total": 461781
-            },
-            "raven_medaka_consensus.stat": {
-                "total_passed": 451857,
-                "total_failed": 0,
-                "secondary_passed": 9618,
-                "secondary_failed": 0,
-                "supplementary_passed": 32248,
-                "supplementary_failed": 0,
-                "duplicates_passed": 0,
-                "duplicates_failed": 0,
-                "mapped_passed": 437871,
-                "mapped_failed": 0,
-                "mapped_passed_pct": 96.9,
-                "mapped_failed_pct": NaN,
-                "paired in sequencing_passed": 0,
-                "paired in sequencing_failed": 0,
-                "read1_passed": 0,
-                "read1_failed": 0,
-                "read2_passed": 0,
-                "read2_failed": 0,
-                "properly paired_passed": 0,
-                "properly paired_failed": 0,
-                "properly paired_passed_pct": NaN,
-                "properly paired_failed_pct": NaN,
-                "with itself and mate mapped_passed": 0,
-                "with itself and mate mapped_failed": 0,
-                "singletons_passed": 0,
-                "singletons_failed": 0,
-                "singletons_passed_pct": NaN,
-                "singletons_failed_pct": NaN,
-                "with mate mapped to a different chr_passed": 0,
-                "with mate mapped to a different chr_failed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_passed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_failed": 0,
-                "flagstat_total": 451857
-            },
-            "wtdbg2_medaka_consensus.stat": {
-                "total_passed": 478759,
-                "total_failed": 0,
-                "secondary_passed": 18162,
-                "secondary_failed": 0,
-                "supplementary_passed": 50606,
-                "supplementary_failed": 0,
-                "duplicates_passed": 0,
-                "duplicates_failed": 0,
-                "mapped_passed": 468328,
-                "mapped_failed": 0,
-                "mapped_passed_pct": 97.82,
-                "mapped_failed_pct": NaN,
-                "paired in sequencing_passed": 0,
-                "paired in sequencing_failed": 0,
-                "read1_passed": 0,
-                "read1_failed": 0,
-                "read2_passed": 0,
-                "read2_failed": 0,
-                "properly paired_passed": 0,
-                "properly paired_failed": 0,
-                "properly paired_passed_pct": NaN,
-                "properly paired_failed_pct": NaN,
-                "with itself and mate mapped_passed": 0,
-                "with itself and mate mapped_failed": 0,
-                "singletons_passed": 0,
-                "singletons_failed": 0,
-                "singletons_passed_pct": NaN,
-                "singletons_failed_pct": NaN,
-                "with mate mapped to a different chr_passed": 0,
-                "with mate mapped to a different chr_failed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_passed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_failed": 0,
-                "flagstat_total": 478759
-            },
-            "flye_medaka_consensus.stat": {
-                "total_passed": 461643,
-                "total_failed": 0,
-                "secondary_passed": 14493,
-                "secondary_failed": 0,
-                "supplementary_passed": 37159,
-                "supplementary_failed": 0,
-                "duplicates_passed": 0,
-                "duplicates_failed": 0,
-                "mapped_passed": 455148,
-                "mapped_failed": 0,
-                "mapped_passed_pct": 98.59,
-                "mapped_failed_pct": NaN,
-                "paired in sequencing_passed": 0,
-                "paired in sequencing_failed": 0,
-                "read1_passed": 0,
-                "read1_failed": 0,
-                "read2_passed": 0,
-                "read2_failed": 0,
-                "properly paired_passed": 0,
-                "properly paired_failed": 0,
-                "properly paired_passed_pct": NaN,
-                "properly paired_failed_pct": NaN,
-                "with itself and mate mapped_passed": 0,
-                "with itself and mate mapped_failed": 0,
-                "singletons_passed": 0,
-                "singletons_failed": 0,
-                "singletons_passed_pct": NaN,
-                "singletons_failed_pct": NaN,
-                "with mate mapped to a different chr_passed": 0,
-                "with mate mapped to a different chr_failed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_passed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_failed": 0,
-                "flagstat_total": 461643
-            },
-            "canu_medaka_consensus.stat": {
-                "total_passed": 488348,
-                "total_failed": 0,
-                "secondary_passed": 52100,
-                "secondary_failed": 0,
-                "supplementary_passed": 26257,
-                "supplementary_failed": 0,
-                "duplicates_passed": 0,
-                "duplicates_failed": 0,
-                "mapped_passed": 481835,
-                "mapped_failed": 0,
-                "mapped_passed_pct": 98.67,
-                "mapped_failed_pct": NaN,
-                "paired in sequencing_passed": 0,
-                "paired in sequencing_failed": 0,
-                "read1_passed": 0,
-                "read1_failed": 0,
-                "read2_passed": 0,
-                "read2_failed": 0,
-                "properly paired_passed": 0,
-                "properly paired_failed": 0,
-                "properly paired_passed_pct": NaN,
-                "properly paired_failed_pct": NaN,
-                "with itself and mate mapped_passed": 0,
-                "with itself and mate mapped_failed": 0,
-                "singletons_passed": 0,
-                "singletons_failed": 0,
-                "singletons_passed_pct": NaN,
-                "singletons_failed_pct": NaN,
-                "with mate mapped to a different chr_passed": 0,
-                "with mate mapped to a different chr_failed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_passed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_failed": 0,
-                "flagstat_total": 488348
-            },
-            "wtdbg2_assembly.stat": {
-                "total_passed": 478475,
-                "total_failed": 0,
-                "secondary_passed": 20163,
-                "secondary_failed": 0,
-                "supplementary_passed": 48321,
-                "supplementary_failed": 0,
-                "duplicates_passed": 0,
-                "duplicates_failed": 0,
-                "mapped_passed": 467242,
-                "mapped_failed": 0,
-                "mapped_passed_pct": 97.65,
-                "mapped_failed_pct": NaN,
-                "paired in sequencing_passed": 0,
-                "paired in sequencing_failed": 0,
-                "read1_passed": 0,
-                "read1_failed": 0,
-                "read2_passed": 0,
-                "read2_failed": 0,
-                "properly paired_passed": 0,
-                "properly paired_failed": 0,
-                "properly paired_passed_pct": NaN,
-                "properly paired_failed_pct": NaN,
-                "with itself and mate mapped_passed": 0,
-                "with itself and mate mapped_failed": 0,
-                "singletons_passed": 0,
-                "singletons_failed": 0,
-                "singletons_passed_pct": NaN,
-                "singletons_failed_pct": NaN,
-                "with mate mapped to a different chr_passed": 0,
-                "with mate mapped to a different chr_failed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_passed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_failed": 0,
-                "flagstat_total": 478475
             }
         }
     ],
@@ -793,693 +408,1198 @@
                 "dmax": 29.866501999999997,
                 "dmin": 0.0
             }
-        },
-        {
-            "flagstat_total": {
-                "title": "M Reads",
-                "description": "Total reads in the bam file (millions)",
-                "min": 0,
-                "modify": 1e-06,
-                "shared_key": "read_count",
-                "hidden": true,
-                "namespace": "Samtools",
-                "rid": "mqc-generalstats-samtools-flagstat_total",
-                "scale": "GnBu",
-                "format": "{:,.1f}",
-                "colour": "77,175,74",
-                "max": null,
-                "ceiling": null,
-                "floor": null,
-                "minRange": null,
-                "placement": 1000.0,
-                "dmax": 0.502753,
-                "dmin": 0.0
-            },
-            "mapped_passed": {
-                "title": "M Reads Mapped",
-                "description": "Reads Mapped in the bam file (millions)",
-                "min": 0,
-                "modify": 1e-06,
-                "shared_key": "read_count",
-                "namespace": "Samtools",
-                "rid": "mqc-generalstats-samtools-mapped_passed",
-                "scale": "GnBu",
-                "format": "{:,.1f}",
-                "colour": "77,175,74",
-                "hidden": null,
-                "max": null,
-                "ceiling": null,
-                "floor": null,
-                "minRange": null,
-                "placement": 1000.0,
-                "dmax": 0.502753,
-                "dmin": 0.0
-            },
-            "mapped_passed_pct": {
-                "title": "% Reads Mapped",
-                "description": "% Reads Mapped in the bam file",
-                "min": 0,
-                "max": 100,
-                "suffix": "%",
-                "scale": "RdYlGn",
-                "hidden": true,
-                "namespace": "Samtools",
-                "rid": "mqc-generalstats-samtools-mapped_passed_pct",
-                "format": "{:,.1f}",
-                "colour": "77,175,74",
-                "ceiling": null,
-                "floor": null,
-                "minRange": null,
-                "shared_key": null,
-                "modify": null,
-                "placement": 1000.0,
-                "dmax": 100.0,
-                "dmin": 0.0
-            }
         }
     ],
-    "report_multiqc_command": "/opt/conda/envs/mpgap-3.2/bin/multiqc .",
+    "report_multiqc_command": "/opt/conda/envs/mpgap-3.2/bin/multiqc . --ignore *.sam --ignore *.bam --ignore *.err --ignore *.stat --config mqc_config.yml",
     "report_plot_data": {
-        "quast_num_contigs": {
-            "plot_type": "bar_graph",
-            "samples": [
-                [
-                    "canu_assembly",
-                    "canu_medaka_consensus",
-                    "flye_assembly",
-                    "flye_medaka_consensus",
-                    "raven_assembly",
-                    "raven_medaka_consensus",
-                    "shasta_assembly",
-                    "shasta_medaka_consensus",
-                    "wtdbg2_assembly",
-                    "wtdbg2_medaka_consensus"
-                ]
-            ],
-            "datasets": [
-                [
-                    {
-                        "name": ">= 50000 bp",
-                        "data": [
-                            17.0,
-                            17.0,
-                            23.0,
-                            23.0,
-                            16.0,
-                            16.0,
-                            190.0,
-                            190.0,
-                            22.0,
-                            22.0
-                        ],
-                        "color": "#7cb5ec"
+        "violin-quast_table": {
+            "id": "violin-quast_table",
+            "layout": {
+                "autosize": true,
+                "colorway": [
+                    "#7cb5ec",
+                    "#434348",
+                    "#90ed7d",
+                    "#f7a35c",
+                    "#8085e9",
+                    "#f15c80",
+                    "#e4d354",
+                    "#2b908f",
+                    "#f45b5b",
+                    "#91e8e1"
+                ],
+                "font": {
+                    "color": "Black",
+                    "family": "Lucida Grande"
+                },
+                "height": 500,
+                "hoverlabel": {
+                    "namelength": -1
+                },
+                "margin": {
+                    "b": 40,
+                    "l": 60,
+                    "pad": 0,
+                    "r": 15,
+                    "t": 50
+                },
+                "modebar": {
+                    "activecolor": "rgba(0, 0, 0, 1)",
+                    "bgcolor": "rgba(0, 0, 0, 0)",
+                    "color": "rgba(0, 0, 0, 0.5)"
+                },
+                "paper_bgcolor": "rgba(0,0,0,0)",
+                "plot_bgcolor": "rgba(0,0,0,0)",
+                "showlegend": false,
+                "title": {
+                    "font": {
+                        "size": 20
                     },
-                    {
-                        "name": "25000-50000 bp",
-                        "data": [
-                            5.0,
-                            5.0,
-                            11.0,
-                            11.0,
-                            1.0,
-                            1.0,
-                            74.0,
-                            73.0,
-                            5.0,
-                            5.0
-                        ],
-                        "color": "#434348"
+                    "text": "QUAST: Assembly Statistics",
+                    "x": 0.5,
+                    "xanchor": "center"
+                },
+                "xaxis": {
+                    "automargin": false,
+                    "color": "rgba(0,0,0,0.3)",
+                    "gridcolor": "rgba(0,0,0,0.1)",
+                    "tickfont": {
+                        "color": "rgba(0,0,0,0.5)",
+                        "size": 9
                     },
-                    {
-                        "name": "10000-25000 bp",
-                        "data": [
-                            6.0,
-                            6.0,
-                            10.0,
-                            10.0,
-                            1.0,
-                            1.0,
-                            64.0,
-                            65.0,
-                            3.0,
-                            3.0
-                        ],
-                        "color": "#90ed7d"
+                    "zerolinecolor": "rgba(0,0,0,0.1)"
+                },
+                "yaxis": {
+                    "automargin": true,
+                    "color": "rgba(0,0,0,0.3)",
+                    "gridcolor": "rgba(0,0,0,0.1)",
+                    "tickfont": {
+                        "color": "rgba(0,0,0,0.5)",
+                        "size": 9
                     },
-                    {
-                        "name": "5000-10000 bp",
-                        "data": [
-                            1.0,
-                            1.0,
-                            9.0,
-                            9.0,
-                            0.0,
-                            0.0,
-                            20.0,
-                            19.0,
-                            10.0,
-                            7.0
-                        ],
-                        "color": "#f7a35c"
-                    },
-                    {
-                        "name": "1000-5000 bp",
-                        "data": [
-                            7.0,
-                            7.0,
-                            23.0,
-                            23.0,
-                            0.0,
-                            0.0,
-                            2.0,
-                            3.0,
-                            12.0,
-                            6.0
-                        ],
-                        "color": "#8085e9"
-                    },
-                    {
-                        "name": "0-1000 bp",
-                        "data": [
-                            0.0,
-                            0.0,
-                            12.0,
-                            9.0,
-                            0.0,
-                            0.0,
-                            2.0,
-                            1.0,
-                            2.0,
-                            1.0
-                        ],
-                        "color": "#f15c80"
-                    }
-                ]
-            ],
-            "config": {
-                "id": "quast_num_contigs",
-                "title": "QUAST: Number of Contigs",
-                "ylab": "# Contigs",
-                "yDecimals": false
-            }
-        },
-        "busco_plot_eukaryota_odb9": {
-            "plot_type": "bar_graph",
-            "samples": [
-                [
-                    "canu_assembly",
-                    "canu_medaka_consensus",
-                    "flye_assembly",
-                    "flye_medaka_consensus",
-                    "raven_assembly",
-                    "raven_medaka_consensus",
-                    "shasta_assembly",
-                    "shasta_medaka_consensus",
-                    "wtdbg2_assembly",
-                    "wtdbg2_medaka_consensus"
-                ]
-            ],
-            "datasets": [
-                [
-                    {
-                        "name": "Missing BUSCOs",
-                        "data": [
-                            303.0,
-                            303.0,
-                            303.0,
-                            303.0,
-                            303.0,
-                            303.0,
-                            303.0,
-                            303.0,
-                            303.0,
-                            303.0
-                        ],
-                        "color": "#e34a33"
-                    }
-                ]
-            ],
-            "config": {
-                "id": "busco_plot_eukaryota_odb9",
-                "title": "BUSCO Assessment Results: eukaryota_odb9",
-                "ylab": "# BUSCOs",
-                "cpswitch_counts_label": "Number of BUSCOs"
-            }
-        },
-        "samtools-flagstat-dp": {
-            "plot_type": "beeswarm",
-            "samples": [
-                [
-                    "shasta_medaka_consensus.stat",
-                    "canu_assembly.stat",
-                    "raven_assembly.stat",
-                    "shasta_assembly.stat",
-                    "flye_assembly.stat",
-                    "raven_medaka_consensus.stat",
-                    "wtdbg2_medaka_consensus.stat",
-                    "flye_medaka_consensus.stat",
-                    "canu_medaka_consensus.stat",
-                    "wtdbg2_assembly.stat"
-                ],
-                [
-                    "shasta_medaka_consensus.stat",
-                    "canu_assembly.stat",
-                    "raven_assembly.stat",
-                    "shasta_assembly.stat",
-                    "flye_assembly.stat",
-                    "raven_medaka_consensus.stat",
-                    "wtdbg2_medaka_consensus.stat",
-                    "flye_medaka_consensus.stat",
-                    "canu_medaka_consensus.stat",
-                    "wtdbg2_assembly.stat"
-                ],
-                [
-                    "shasta_medaka_consensus.stat",
-                    "canu_assembly.stat",
-                    "raven_assembly.stat",
-                    "shasta_assembly.stat",
-                    "flye_assembly.stat",
-                    "raven_medaka_consensus.stat",
-                    "wtdbg2_medaka_consensus.stat",
-                    "flye_medaka_consensus.stat",
-                    "canu_medaka_consensus.stat",
-                    "wtdbg2_assembly.stat"
-                ],
-                [
-                    "shasta_medaka_consensus.stat",
-                    "canu_assembly.stat",
-                    "raven_assembly.stat",
-                    "shasta_assembly.stat",
-                    "flye_assembly.stat",
-                    "raven_medaka_consensus.stat",
-                    "wtdbg2_medaka_consensus.stat",
-                    "flye_medaka_consensus.stat",
-                    "canu_medaka_consensus.stat",
-                    "wtdbg2_assembly.stat"
-                ],
-                [
-                    "shasta_medaka_consensus.stat",
-                    "canu_assembly.stat",
-                    "raven_assembly.stat",
-                    "shasta_assembly.stat",
-                    "flye_assembly.stat",
-                    "raven_medaka_consensus.stat",
-                    "wtdbg2_medaka_consensus.stat",
-                    "flye_medaka_consensus.stat",
-                    "canu_medaka_consensus.stat",
-                    "wtdbg2_assembly.stat"
-                ],
-                [
-                    "shasta_medaka_consensus.stat",
-                    "canu_assembly.stat",
-                    "raven_assembly.stat",
-                    "shasta_assembly.stat",
-                    "flye_assembly.stat",
-                    "raven_medaka_consensus.stat",
-                    "wtdbg2_medaka_consensus.stat",
-                    "flye_medaka_consensus.stat",
-                    "canu_medaka_consensus.stat",
-                    "wtdbg2_assembly.stat"
-                ],
-                [
-                    "shasta_medaka_consensus.stat",
-                    "canu_assembly.stat",
-                    "raven_assembly.stat",
-                    "shasta_assembly.stat",
-                    "flye_assembly.stat",
-                    "raven_medaka_consensus.stat",
-                    "wtdbg2_medaka_consensus.stat",
-                    "flye_medaka_consensus.stat",
-                    "canu_medaka_consensus.stat",
-                    "wtdbg2_assembly.stat"
-                ],
-                [
-                    "shasta_medaka_consensus.stat",
-                    "canu_assembly.stat",
-                    "raven_assembly.stat",
-                    "shasta_assembly.stat",
-                    "flye_assembly.stat",
-                    "raven_medaka_consensus.stat",
-                    "wtdbg2_medaka_consensus.stat",
-                    "flye_medaka_consensus.stat",
-                    "canu_medaka_consensus.stat",
-                    "wtdbg2_assembly.stat"
-                ],
-                [
-                    "shasta_medaka_consensus.stat",
-                    "canu_assembly.stat",
-                    "raven_assembly.stat",
-                    "shasta_assembly.stat",
-                    "flye_assembly.stat",
-                    "raven_medaka_consensus.stat",
-                    "wtdbg2_medaka_consensus.stat",
-                    "flye_medaka_consensus.stat",
-                    "canu_medaka_consensus.stat",
-                    "wtdbg2_assembly.stat"
-                ],
-                [
-                    "shasta_medaka_consensus.stat",
-                    "canu_assembly.stat",
-                    "raven_assembly.stat",
-                    "shasta_assembly.stat",
-                    "flye_assembly.stat",
-                    "raven_medaka_consensus.stat",
-                    "wtdbg2_medaka_consensus.stat",
-                    "flye_medaka_consensus.stat",
-                    "canu_medaka_consensus.stat",
-                    "wtdbg2_assembly.stat"
-                ],
-                [
-                    "shasta_medaka_consensus.stat",
-                    "canu_assembly.stat",
-                    "raven_assembly.stat",
-                    "shasta_assembly.stat",
-                    "flye_assembly.stat",
-                    "raven_medaka_consensus.stat",
-                    "wtdbg2_medaka_consensus.stat",
-                    "flye_medaka_consensus.stat",
-                    "canu_medaka_consensus.stat",
-                    "wtdbg2_assembly.stat"
-                ],
-                [
-                    "shasta_medaka_consensus.stat",
-                    "canu_assembly.stat",
-                    "raven_assembly.stat",
-                    "shasta_assembly.stat",
-                    "flye_assembly.stat",
-                    "raven_medaka_consensus.stat",
-                    "wtdbg2_medaka_consensus.stat",
-                    "flye_medaka_consensus.stat",
-                    "canu_medaka_consensus.stat",
-                    "wtdbg2_assembly.stat"
-                ]
-            ],
-            "datasets": [
-                [
-                    0.502753,
-                    0.489033,
-                    0.447357,
-                    0.497654,
-                    0.461781,
-                    0.45185699999999995,
-                    0.478759,
-                    0.46164299999999997,
-                    0.488348,
-                    0.478475
-                ],
-                [
-                    0.502753,
-                    0.489033,
-                    0.447357,
-                    0.497654,
-                    0.461781,
-                    0.45185699999999995,
-                    0.478759,
-                    0.46164299999999997,
-                    0.488348,
-                    0.478475
-                ],
-                [
-                    0.48697599999999996,
-                    0.48252199999999995,
-                    0.428845,
-                    0.481852,
-                    0.455293,
-                    0.43787099999999995,
-                    0.46832799999999997,
-                    0.455148,
-                    0.48183499999999996,
-                    0.467242
-                ],
-                [
-                    0.055493999999999995,
-                    0.05295,
-                    0.009855,
-                    0.050439,
-                    0.015023,
-                    0.009618,
-                    0.018161999999999998,
-                    0.014492999999999999,
-                    0.0521,
-                    0.020163
-                ],
-                [
-                    0.037267999999999996,
-                    0.026091999999999997,
-                    0.027510999999999997,
-                    0.037224,
-                    0.036767,
-                    0.032248,
-                    0.050606,
-                    0.037159,
-                    0.026257,
-                    0.048320999999999996
-                ],
-                [
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                [
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                [
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                [
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                [
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                [
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                [
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0
-                ]
-            ],
-            "categories": [
-                {
-                    "namespace": "",
-                    "title": "Total Reads",
-                    "description": "Total Reads",
-                    "max": 0.502753,
-                    "min": 0.0,
-                    "suffix": "M reads",
-                    "decimalPlaces": 2,
-                    "bordercol": "rgb(55,126,184)"
+                    "zerolinecolor": "rgba(0,0,0,0.1)"
                 },
-                {
-                    "namespace": "",
-                    "title": "Total Passed QC",
-                    "description": "Total Passed QC",
-                    "max": 0.502753,
-                    "min": 0.0,
-                    "suffix": "M reads",
-                    "decimalPlaces": 2,
-                    "bordercol": "rgb(55,126,184)"
-                },
-                {
-                    "namespace": "",
-                    "title": "Mapped",
-                    "description": "Mapped",
-                    "max": 0.502753,
-                    "min": 0.0,
-                    "suffix": "M reads",
-                    "decimalPlaces": 2,
-                    "bordercol": "rgb(55,126,184)"
-                },
-                {
-                    "namespace": "",
-                    "title": "Secondary Alignments",
-                    "description": "Secondary Alignments",
-                    "max": 0.502753,
-                    "min": 0.0,
-                    "suffix": "M reads",
-                    "decimalPlaces": 2,
-                    "bordercol": "rgb(55,126,184)"
-                },
-                {
-                    "namespace": "",
-                    "title": "Supplementary Alignments",
-                    "description": "Supplementary Alignments",
-                    "max": 0.502753,
-                    "min": 0.0,
-                    "suffix": "M reads",
-                    "decimalPlaces": 2,
-                    "bordercol": "rgb(55,126,184)"
-                },
-                {
-                    "namespace": "",
-                    "title": "Duplicates",
-                    "description": "Duplicates",
-                    "max": 0.502753,
-                    "min": 0.0,
-                    "suffix": "M reads",
-                    "decimalPlaces": 2,
-                    "bordercol": "rgb(55,126,184)"
-                },
-                {
-                    "namespace": "",
-                    "title": "Paired in Sequencing",
-                    "description": "Paired in Sequencing",
-                    "max": 0.502753,
-                    "min": 0.0,
-                    "suffix": "M reads",
-                    "decimalPlaces": 2,
-                    "bordercol": "rgb(55,126,184)"
-                },
-                {
-                    "namespace": "",
-                    "title": "Properly Paired",
-                    "description": "Properly Paired",
-                    "max": 0.502753,
-                    "min": 0.0,
-                    "suffix": "M reads",
-                    "decimalPlaces": 2,
-                    "bordercol": "rgb(55,126,184)"
-                },
-                {
-                    "namespace": "",
-                    "title": "Self and mate mapped",
-                    "description": "Reads with itself and mate mapped",
-                    "max": 0.502753,
-                    "min": 0.0,
-                    "suffix": "M reads",
-                    "decimalPlaces": 2,
-                    "bordercol": "rgb(55,126,184)"
-                },
-                {
-                    "namespace": "",
-                    "title": "Singletons",
-                    "description": "Singletons",
-                    "max": 0.502753,
-                    "min": 0.0,
-                    "suffix": "M reads",
-                    "decimalPlaces": 2,
-                    "bordercol": "rgb(55,126,184)"
-                },
-                {
-                    "namespace": "",
-                    "title": "Mate mapped to diff chr",
-                    "description": "Mate mapped to different chromosome",
-                    "max": 0.502753,
-                    "min": 0.0,
-                    "suffix": "M reads",
-                    "decimalPlaces": 2,
-                    "bordercol": "rgb(55,126,184)"
-                },
-                {
-                    "namespace": "",
-                    "title": "Diff chr (mapQ >= 5)",
-                    "description": "Mate mapped to different chromosome (mapQ >= 5)",
-                    "max": 0.502753,
-                    "min": 0.0,
-                    "suffix": "M reads",
-                    "decimalPlaces": 2,
-                    "bordercol": "rgb(55,126,184)"
+                "violingap": 0,
+                "grid": {
+                    "columns": 1,
+                    "roworder": "top to bottom",
+                    "ygap": 0.4
                 }
-            ]
+            },
+            "datasets": [
+                {
+                    "label": 1,
+                    "uid": "violin-quast_table",
+                    "dconfig": {},
+                    "layout": {
+                        "xaxis": {
+                            "hoverformat": null,
+                            "ticksuffix": "",
+                            "title": {
+                                "text": null
+                            },
+                            "rangemode": "normal",
+                            "autorangeoptions": {
+                                "clipmin": null,
+                                "clipmax": null,
+                                "minallowed": null,
+                                "maxallowed": null
+                            }
+                        },
+                        "yaxis": {
+                            "hoverformat": null,
+                            "ticksuffix": "",
+                            "title": {
+                                "text": null
+                            },
+                            "rangemode": "normal",
+                            "autorangeoptions": {
+                                "clipmin": null,
+                                "clipmax": null,
+                                "minallowed": null,
+                                "maxallowed": null
+                            }
+                        }
+                    },
+                    "trace_params": {
+                        "hovertemplate": "<b>%{text}</b>: %{x}<extra></extra>",
+                        "orientation": "h",
+                        "box": {
+                            "visible": true
+                        },
+                        "meanline": {
+                            "visible": true
+                        },
+                        "fillcolor": "grey",
+                        "line": {
+                            "width": 2,
+                            "color": "grey"
+                        },
+                        "opacity": 0.5,
+                        "points": false,
+                        "hoveron": "points"
+                    },
+                    "pct_range": {
+                        "xaxis": {
+                            "min": 0,
+                            "max": 100
+                        },
+                        "yaxis": {
+                            "min": 0,
+                            "max": 100
+                        }
+                    },
+                    "metrics": [
+                        "N50",
+                        "L50",
+                        "Largest_contig",
+                        "Total_length"
+                    ],
+                    "header_by_metric": {
+                        "N50": {
+                            "namespace": "QUAST",
+                            "title": "N50 (Kbp)",
+                            "description": "N50 is the contig length such that using longer or equal length contigs produces half (50%) of the bases of the assembly.",
+                            "dmax": 3783.467,
+                            "dmin": 0.0,
+                            "suffix": "Kbp",
+                            "hidden": null,
+                            "xaxis": {
+                                "ticksuffix": "Kbp",
+                                "tickvals": null,
+                                "range": [
+                                    -18.917335,
+                                    3802.478921675
+                                ]
+                            },
+                            "show_points": true,
+                            "show_only_outliers": false,
+                            "hoverformat": ".2f"
+                        },
+                        "L50": {
+                            "namespace": "QUAST",
+                            "title": "L50 (K)",
+                            "description": "L50 is the number of contigs larger than N50, i.e. the minimum number of contigs comprising 50% of the total assembly length.",
+                            "dmax": 0.069,
+                            "dmin": 0.0,
+                            "suffix": "K",
+                            "hidden": null,
+                            "xaxis": {
+                                "ticksuffix": "K",
+                                "tickvals": null,
+                                "range": [
+                                    -0.00034500000000000004,
+                                    0.06934672500000001
+                                ]
+                            },
+                            "show_points": true,
+                            "show_only_outliers": false,
+                            "hoverformat": ".2f"
+                        },
+                        "Largest_contig": {
+                            "namespace": "QUAST",
+                            "title": "Largest contig (Kbp)",
+                            "description": "The size of the largest contig of the assembly",
+                            "dmax": 4881.813,
+                            "dmin": 0.0,
+                            "suffix": "Kbp",
+                            "hidden": null,
+                            "xaxis": {
+                                "ticksuffix": "Kbp",
+                                "tickvals": null,
+                                "range": [
+                                    -24.409065000000002,
+                                    4906.344110325
+                                ]
+                            },
+                            "show_points": true,
+                            "show_only_outliers": false,
+                            "hoverformat": ".2f"
+                        },
+                        "Total_length": {
+                            "namespace": "QUAST",
+                            "title": "Length (Mbp)",
+                            "description": "The total number of bases in the assembly.",
+                            "dmax": 29.866501999999997,
+                            "dmin": 0.0,
+                            "suffix": "Mbp",
+                            "hidden": null,
+                            "xaxis": {
+                                "ticksuffix": "Mbp",
+                                "tickvals": null,
+                                "range": [
+                                    -0.14933251,
+                                    30.016581172549998
+                                ]
+                            },
+                            "show_points": true,
+                            "show_only_outliers": false,
+                            "hoverformat": ".2f"
+                        }
+                    },
+                    "violin_values_by_sample_by_metric": {
+                        "N50": {
+                            "shasta_medaka_consensus": 136.42600000000002,
+                            "canu_assembly": 3713.674,
+                            "raven_assembly": 3783.467,
+                            "shasta_assembly": 136.75900000000001,
+                            "flye_assembly": 2284.1820000000002,
+                            "raven_medaka_consensus": 3782.302,
+                            "wtdbg2_medaka_consensus": 2047.669,
+                            "flye_medaka_consensus": 2285.407,
+                            "canu_medaka_consensus": 3718.495,
+                            "wtdbg2_assembly": 2043.81
+                        },
+                        "L50": {
+                            "shasta_medaka_consensus": 0.069,
+                            "canu_assembly": 0.004,
+                            "raven_assembly": 0.004,
+                            "shasta_assembly": 0.069,
+                            "flye_assembly": 0.006,
+                            "raven_medaka_consensus": 0.004,
+                            "wtdbg2_medaka_consensus": 0.006,
+                            "flye_medaka_consensus": 0.006,
+                            "canu_medaka_consensus": 0.004,
+                            "wtdbg2_assembly": 0.006
+                        },
+                        "Largest_contig": {
+                            "shasta_medaka_consensus": 478.233,
+                            "canu_assembly": 4875.381,
+                            "raven_assembly": 4871.805,
+                            "shasta_assembly": 479.047,
+                            "flye_assembly": 3007.463,
+                            "raven_medaka_consensus": 4874.129,
+                            "wtdbg2_medaka_consensus": 3937.425,
+                            "flye_medaka_consensus": 3009.41,
+                            "canu_medaka_consensus": 4881.813,
+                            "wtdbg2_assembly": 3931.675
+                        },
+                        "Total_length": {
+                            "shasta_medaka_consensus": 28.263299,
+                            "canu_assembly": 29.828639,
+                            "raven_assembly": 29.481737,
+                            "shasta_assembly": 28.336133,
+                            "flye_assembly": 29.325332,
+                            "raven_medaka_consensus": 29.482805,
+                            "wtdbg2_medaka_consensus": 28.631944999999998,
+                            "flye_medaka_consensus": 29.332742999999997,
+                            "canu_medaka_consensus": 29.866501999999997,
+                            "wtdbg2_assembly": 28.625708999999997
+                        }
+                    },
+                    "scatter_values_by_sample_by_metric": {
+                        "N50": {},
+                        "L50": {},
+                        "Largest_contig": {},
+                        "Total_length": {}
+                    },
+                    "all_samples": [
+                        "canu_assembly",
+                        "canu_medaka_consensus",
+                        "flye_assembly",
+                        "flye_medaka_consensus",
+                        "raven_assembly",
+                        "raven_medaka_consensus",
+                        "shasta_assembly",
+                        "shasta_medaka_consensus",
+                        "wtdbg2_assembly",
+                        "wtdbg2_medaka_consensus"
+                    ],
+                    "scatter_trace_params": {
+                        "mode": "markers",
+                        "marker": {
+                            "size": 4,
+                            "color": "rgba(0,0,0,1)"
+                        },
+                        "showlegend": false,
+                        "hovertemplate": "<b>%{text}</b>: %{x}<extra></extra>",
+                        "hoverlabel": {
+                            "bgcolor": "white"
+                        }
+                    }
+                }
+            ],
+            "plot_type": "violin",
+            "pct_axis_update": {
+                "ticksuffix": "%",
+                "hoverformat": ".1f"
+            },
+            "axis_controlled_by_switches": [],
+            "p_active": false,
+            "l_active": false,
+            "square": null,
+            "static": true,
+            "violin_height": 70,
+            "extra_height": 63
+        },
+        "quast_num_contigs": {
+            "id": "quast_num_contigs",
+            "layout": {
+                "autosize": true,
+                "colorway": [
+                    "#7cb5ec",
+                    "#434348",
+                    "#90ed7d",
+                    "#f7a35c",
+                    "#8085e9",
+                    "#f15c80",
+                    "#e4d354",
+                    "#2b908f",
+                    "#f45b5b",
+                    "#91e8e1"
+                ],
+                "font": {
+                    "color": "Black",
+                    "family": "Lucida Grande"
+                },
+                "height": 390,
+                "hoverlabel": {
+                    "namelength": -1,
+                    "bgcolor": "rgba(255, 255, 255, 0.8)",
+                    "font": {
+                        "color": "black"
+                    }
+                },
+                "margin": {
+                    "b": 65,
+                    "l": 60,
+                    "pad": 5,
+                    "r": 15,
+                    "t": 50
+                },
+                "modebar": {
+                    "activecolor": "rgba(0, 0, 0, 1)",
+                    "bgcolor": "rgba(0, 0, 0, 0)",
+                    "color": "rgba(0, 0, 0, 0.5)"
+                },
+                "paper_bgcolor": "rgba(0,0,0,0)",
+                "plot_bgcolor": "rgba(0,0,0,0)",
+                "showlegend": true,
+                "title": {
+                    "font": {
+                        "size": 20
+                    },
+                    "text": "QUAST: Number of Contigs",
+                    "x": 0.5,
+                    "xanchor": "center"
+                },
+                "xaxis": {
+                    "automargin": true,
+                    "color": "rgba(0,0,0,0.3)",
+                    "gridcolor": "rgba(0,0,0,0.05)",
+                    "tickfont": {
+                        "color": "rgba(0,0,0,1)",
+                        "size": 10
+                    },
+                    "zerolinecolor": "rgba(0,0,0,0.05)"
+                },
+                "yaxis": {
+                    "automargin": true,
+                    "color": "rgba(0,0,0,0.3)",
+                    "gridcolor": "rgba(0,0,0,0.05)",
+                    "tickfont": {
+                        "color": "rgba(0,0,0,1)",
+                        "size": 10
+                    },
+                    "zerolinecolor": "rgba(0,0,0,0.05)",
+                    "showgrid": false,
+                    "categoryorder": "category descending"
+                },
+                "barmode": "relative",
+                "bargroupgap": 0,
+                "bargap": 0.2,
+                "legend": {
+                    "tracegroupgap": 0
+                },
+                "hovermode": "y unified"
+            },
+            "datasets": [
+                {
+                    "label": 1,
+                    "uid": "quast_num_contigs",
+                    "dconfig": {},
+                    "layout": {
+                        "xaxis": {
+                            "title": {
+                                "text": "# Contigs"
+                            },
+                            "hoverformat": ",.0f",
+                            "ticksuffix": "",
+                            "autorangeoptions": {
+                                "minallowed": 0,
+                                "maxallowed": 349
+                            }
+                        },
+                        "yaxis": {
+                            "title": null,
+                            "hoverformat": null,
+                            "ticksuffix": "",
+                            "autorangeoptions": {
+                                "clipmin": null,
+                                "clipmax": null,
+                                "minallowed": null,
+                                "maxallowed": null
+                            },
+                            "type": "category"
+                        },
+                        "showlegend": true
+                    },
+                    "trace_params": {
+                        "hovertemplate": "<b></b>%{meta}: <b>%{x}</b><extra></extra>",
+                        "orientation": "h",
+                        "marker": {
+                            "line": {
+                                "width": 0
+                            }
+                        },
+                        "textposition": "inside",
+                        "insidetextanchor": "start"
+                    },
+                    "pct_range": {
+                        "xaxis": {
+                            "min": 0,
+                            "max": 100
+                        },
+                        "yaxis": {
+                            "min": 0,
+                            "max": 100
+                        }
+                    },
+                    "cats": [
+                        {
+                            "name": ">= 50000 bp",
+                            "data": [
+                                17,
+                                17,
+                                23,
+                                23,
+                                16,
+                                16,
+                                191,
+                                191,
+                                22,
+                                22
+                            ],
+                            "color": "0.49,0.71,0.93",
+                            "data_pct": [
+                                47.22222222222222,
+                                47.22222222222222,
+                                25.842696629213485,
+                                27.380952380952383,
+                                88.88888888888889,
+                                88.88888888888889,
+                                54.72779369627507,
+                                54.88505747126437,
+                                40.0,
+                                48.888888888888886
+                            ]
+                        },
+                        {
+                            "name": "25000-50000 bp",
+                            "data": [
+                                5,
+                                5,
+                                11,
+                                11,
+                                1,
+                                1,
+                                73,
+                                72,
+                                5,
+                                5
+                            ],
+                            "color": "0.26,0.26,0.28",
+                            "data_pct": [
+                                13.88888888888889,
+                                13.88888888888889,
+                                12.359550561797752,
+                                13.095238095238097,
+                                5.555555555555555,
+                                5.555555555555555,
+                                20.916905444126073,
+                                20.689655172413794,
+                                9.090909090909092,
+                                11.11111111111111
+                            ]
+                        },
+                        {
+                            "name": "10000-25000 bp",
+                            "data": [
+                                6,
+                                6,
+                                10,
+                                10,
+                                1,
+                                1,
+                                63,
+                                64,
+                                3,
+                                3
+                            ],
+                            "color": "0.56,0.93,0.49",
+                            "data_pct": [
+                                16.666666666666664,
+                                16.666666666666664,
+                                11.235955056179774,
+                                11.904761904761903,
+                                5.555555555555555,
+                                5.555555555555555,
+                                18.05157593123209,
+                                18.39080459770115,
+                                5.454545454545454,
+                                6.666666666666667
+                            ]
+                        },
+                        {
+                            "name": "5000-10000 bp",
+                            "data": [
+                                1,
+                                1,
+                                10,
+                                10,
+                                0,
+                                0,
+                                18,
+                                18,
+                                11,
+                                8
+                            ],
+                            "color": "0.97,0.64,0.36",
+                            "data_pct": [
+                                2.7777777777777777,
+                                2.7777777777777777,
+                                11.235955056179774,
+                                11.904761904761903,
+                                0.0,
+                                0.0,
+                                5.157593123209169,
+                                5.172413793103448,
+                                20.0,
+                                17.77777777777778
+                            ]
+                        },
+                        {
+                            "name": "1000-5000 bp",
+                            "data": [
+                                7,
+                                7,
+                                24,
+                                23,
+                                0,
+                                0,
+                                2,
+                                2,
+                                12,
+                                6
+                            ],
+                            "color": "0.50,0.52,0.91",
+                            "data_pct": [
+                                19.444444444444446,
+                                19.444444444444446,
+                                26.96629213483146,
+                                27.380952380952383,
+                                0.0,
+                                0.0,
+                                0.5730659025787965,
+                                0.5747126436781609,
+                                21.818181818181817,
+                                13.333333333333334
+                            ]
+                        },
+                        {
+                            "name": "0-1000 bp",
+                            "data": [
+                                0,
+                                0,
+                                11,
+                                7,
+                                0,
+                                0,
+                                2,
+                                1,
+                                2,
+                                1
+                            ],
+                            "color": "0.95,0.36,0.50",
+                            "data_pct": [
+                                0.0,
+                                0.0,
+                                12.359550561797752,
+                                8.333333333333332,
+                                0.0,
+                                0.0,
+                                0.5730659025787965,
+                                0.28735632183908044,
+                                3.6363636363636362,
+                                2.2222222222222223
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "canu_assembly",
+                        "canu_medaka_consensus",
+                        "flye_assembly",
+                        "flye_medaka_consensus",
+                        "raven_assembly",
+                        "raven_medaka_consensus",
+                        "shasta_assembly",
+                        "shasta_medaka_consensus",
+                        "wtdbg2_assembly",
+                        "wtdbg2_medaka_consensus"
+                    ]
+                }
+            ],
+            "plot_type": "bar_graph",
+            "pct_axis_update": {
+                "ticksuffix": "%",
+                "hoverformat": ".1f"
+            },
+            "axis_controlled_by_switches": [
+                "xaxis"
+            ],
+            "p_active": false,
+            "l_active": false,
+            "square": null
+        },
+        "busco_plot_bacteria_odb10": {
+            "id": "busco_plot_bacteria_odb10",
+            "layout": {
+                "autosize": true,
+                "colorway": [
+                    "#7cb5ec",
+                    "#434348",
+                    "#90ed7d",
+                    "#f7a35c",
+                    "#8085e9",
+                    "#f15c80",
+                    "#e4d354",
+                    "#2b908f",
+                    "#f45b5b",
+                    "#91e8e1"
+                ],
+                "font": {
+                    "color": "Black",
+                    "family": "Lucida Grande"
+                },
+                "height": 415,
+                "hoverlabel": {
+                    "namelength": -1,
+                    "bgcolor": "rgba(255, 255, 255, 0.8)",
+                    "font": {
+                        "color": "black"
+                    }
+                },
+                "margin": {
+                    "b": 65,
+                    "l": 60,
+                    "pad": 5,
+                    "r": 15,
+                    "t": 50
+                },
+                "modebar": {
+                    "activecolor": "rgba(0, 0, 0, 1)",
+                    "bgcolor": "rgba(0, 0, 0, 0)",
+                    "color": "rgba(0, 0, 0, 0.5)"
+                },
+                "paper_bgcolor": "rgba(0,0,0,0)",
+                "plot_bgcolor": "rgba(0,0,0,0)",
+                "showlegend": true,
+                "title": {
+                    "font": {
+                        "size": 20
+                    },
+                    "text": "BUSCO Assessment Results: bacteria_odb10",
+                    "x": 0.5,
+                    "xanchor": "center"
+                },
+                "xaxis": {
+                    "automargin": true,
+                    "color": "rgba(0,0,0,0.3)",
+                    "gridcolor": "rgba(0,0,0,0.05)",
+                    "tickfont": {
+                        "color": "rgba(0,0,0,1)",
+                        "size": 10
+                    },
+                    "zerolinecolor": "rgba(0,0,0,0.05)"
+                },
+                "yaxis": {
+                    "automargin": true,
+                    "color": "rgba(0,0,0,0.3)",
+                    "gridcolor": "rgba(0,0,0,0.05)",
+                    "tickfont": {
+                        "color": "rgba(0,0,0,1)",
+                        "size": 10
+                    },
+                    "zerolinecolor": "rgba(0,0,0,0.05)",
+                    "showgrid": false,
+                    "categoryorder": "category descending"
+                },
+                "barmode": "relative",
+                "bargroupgap": 0,
+                "bargap": 0.2,
+                "legend": {
+                    "tracegroupgap": 0
+                },
+                "hovermode": "y unified"
+            },
+            "datasets": [
+                {
+                    "label": 1,
+                    "uid": "busco_plot_bacteria_odb10",
+                    "dconfig": {},
+                    "layout": {
+                        "xaxis": {
+                            "title": {
+                                "text": "# BUSCOs"
+                            },
+                            "hoverformat": ",.0f",
+                            "ticksuffix": "",
+                            "autorangeoptions": {
+                                "minallowed": 0,
+                                "maxallowed": 124
+                            }
+                        },
+                        "yaxis": {
+                            "title": null,
+                            "hoverformat": null,
+                            "ticksuffix": "",
+                            "autorangeoptions": {
+                                "clipmin": null,
+                                "clipmax": null,
+                                "minallowed": null,
+                                "maxallowed": null
+                            },
+                            "type": "category"
+                        },
+                        "showlegend": true
+                    },
+                    "trace_params": {
+                        "hovertemplate": "<b></b>%{meta}: <b>%{x}</b><extra></extra>",
+                        "orientation": "h",
+                        "marker": {
+                            "line": {
+                                "width": 0
+                            }
+                        },
+                        "textposition": "inside",
+                        "insidetextanchor": "start"
+                    },
+                    "pct_range": {
+                        "xaxis": {
+                            "min": 0,
+                            "max": 100
+                        },
+                        "yaxis": {
+                            "min": 0,
+                            "max": 100
+                        }
+                    },
+                    "cats": [
+                        {
+                            "name": "Complete and single-copy BUSCOs",
+                            "data": [
+                                6,
+                                6,
+                                8,
+                                9,
+                                8,
+                                9,
+                                8,
+                                7,
+                                8,
+                                6,
+                                8
+                            ],
+                            "color": "0.19,0.64,0.33",
+                            "data_pct": [
+                                4.838709677419355,
+                                4.838709677419355,
+                                6.451612903225806,
+                                7.258064516129033,
+                                6.451612903225806,
+                                7.258064516129033,
+                                6.451612903225806,
+                                5.64516129032258,
+                                6.451612903225806,
+                                4.838709677419355,
+                                6.451612903225806
+                            ]
+                        },
+                        {
+                            "name": "Fragmented BUSCOs",
+                            "data": [
+                                26,
+                                28,
+                                32,
+                                30,
+                                32,
+                                29,
+                                33,
+                                23,
+                                32,
+                                26,
+                                34
+                            ],
+                            "color": "1.00,0.91,0.78",
+                            "data_pct": [
+                                20.967741935483872,
+                                22.58064516129032,
+                                25.806451612903224,
+                                24.193548387096776,
+                                25.806451612903224,
+                                23.387096774193548,
+                                26.61290322580645,
+                                18.548387096774192,
+                                25.806451612903224,
+                                20.967741935483872,
+                                27.419354838709676
+                            ]
+                        },
+                        {
+                            "name": "Missing BUSCOs",
+                            "data": [
+                                92,
+                                90,
+                                84,
+                                85,
+                                84,
+                                86,
+                                83,
+                                94,
+                                84,
+                                92,
+                                82
+                            ],
+                            "color": "0.89,0.29,0.20",
+                            "data_pct": [
+                                74.19354838709677,
+                                72.58064516129032,
+                                67.74193548387096,
+                                68.54838709677419,
+                                67.74193548387096,
+                                69.35483870967742,
+                                66.93548387096774,
+                                75.80645161290323,
+                                67.74193548387096,
+                                74.19354838709677,
+                                66.12903225806451
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "short",
+                        "short_summary.specific.bacteria_odb10.run_canu",
+                        "short_summary.specific.bacteria_odb10.run_canu_medaka",
+                        "short_summary.specific.bacteria_odb10.run_flye",
+                        "short_summary.specific.bacteria_odb10.run_flye_medaka",
+                        "short_summary.specific.bacteria_odb10.run_raven",
+                        "short_summary.specific.bacteria_odb10.run_raven_medaka",
+                        "short_summary.specific.bacteria_odb10.run_shasta",
+                        "short_summary.specific.bacteria_odb10.run_shasta_medaka",
+                        "short_summary.specific.bacteria_odb10.run_wtdbg2",
+                        "short_summary.specific.bacteria_odb10.run_wtdbg2_medaka"
+                    ]
+                }
+            ],
+            "plot_type": "bar_graph",
+            "pct_axis_update": {
+                "ticksuffix": "%",
+                "hoverformat": ".1f"
+            },
+            "axis_controlled_by_switches": [
+                "xaxis"
+            ],
+            "p_active": false,
+            "l_active": false,
+            "square": null
+        },
+        "violin-general_stats_table": {
+            "id": "violin-general_stats_table",
+            "layout": {
+                "autosize": true,
+                "colorway": [
+                    "#7cb5ec",
+                    "#434348",
+                    "#90ed7d",
+                    "#f7a35c",
+                    "#8085e9",
+                    "#f15c80",
+                    "#e4d354",
+                    "#2b908f",
+                    "#f45b5b",
+                    "#91e8e1"
+                ],
+                "font": {
+                    "color": "Black",
+                    "family": "Lucida Grande"
+                },
+                "height": 500,
+                "hoverlabel": {
+                    "namelength": -1
+                },
+                "margin": {
+                    "b": 40,
+                    "l": 60,
+                    "pad": 0,
+                    "r": 15,
+                    "t": 50
+                },
+                "modebar": {
+                    "activecolor": "rgba(0, 0, 0, 1)",
+                    "bgcolor": "rgba(0, 0, 0, 0)",
+                    "color": "rgba(0, 0, 0, 0.5)"
+                },
+                "paper_bgcolor": "rgba(0,0,0,0)",
+                "plot_bgcolor": "rgba(0,0,0,0)",
+                "showlegend": false,
+                "title": {
+                    "font": {
+                        "size": 20
+                    },
+                    "text": "General Statistics",
+                    "x": 0.5,
+                    "xanchor": "center"
+                },
+                "xaxis": {
+                    "automargin": false,
+                    "color": "rgba(0,0,0,0.3)",
+                    "gridcolor": "rgba(0,0,0,0.1)",
+                    "tickfont": {
+                        "color": "rgba(0,0,0,0.5)",
+                        "size": 9
+                    },
+                    "zerolinecolor": "rgba(0,0,0,0.1)"
+                },
+                "yaxis": {
+                    "automargin": true,
+                    "color": "rgba(0,0,0,0.3)",
+                    "gridcolor": "rgba(0,0,0,0.1)",
+                    "tickfont": {
+                        "color": "rgba(0,0,0,0.5)",
+                        "size": 9
+                    },
+                    "zerolinecolor": "rgba(0,0,0,0.1)"
+                },
+                "violingap": 0,
+                "grid": {
+                    "columns": 1,
+                    "roworder": "top to bottom",
+                    "ygap": 0.4
+                }
+            },
+            "datasets": [
+                {
+                    "label": 1,
+                    "uid": "violin-general_stats_table",
+                    "dconfig": {},
+                    "layout": {
+                        "xaxis": {
+                            "hoverformat": null,
+                            "ticksuffix": "",
+                            "title": {
+                                "text": null
+                            },
+                            "rangemode": "normal",
+                            "autorangeoptions": {
+                                "clipmin": null,
+                                "clipmax": null,
+                                "minallowed": null,
+                                "maxallowed": null
+                            }
+                        },
+                        "yaxis": {
+                            "hoverformat": null,
+                            "ticksuffix": "",
+                            "title": {
+                                "text": null
+                            },
+                            "rangemode": "normal",
+                            "autorangeoptions": {
+                                "clipmin": null,
+                                "clipmax": null,
+                                "minallowed": null,
+                                "maxallowed": null
+                            }
+                        }
+                    },
+                    "trace_params": {
+                        "hovertemplate": "<b>%{text}</b>: %{x}<extra></extra>",
+                        "orientation": "h",
+                        "box": {
+                            "visible": true
+                        },
+                        "meanline": {
+                            "visible": true
+                        },
+                        "fillcolor": "grey",
+                        "line": {
+                            "width": 2,
+                            "color": "grey"
+                        },
+                        "opacity": 0.5,
+                        "points": false,
+                        "hoveron": "points"
+                    },
+                    "pct_range": {
+                        "xaxis": {
+                            "min": 0,
+                            "max": 100
+                        },
+                        "yaxis": {
+                            "min": 0,
+                            "max": 100
+                        }
+                    },
+                    "metrics": [
+                        "mqc-generalstats-quast-N50",
+                        "mqc-generalstats-quast-Total_length"
+                    ],
+                    "header_by_metric": {
+                        "mqc-generalstats-quast-N50": {
+                            "namespace": "QUAST",
+                            "title": "N50 (Kbp)",
+                            "description": "N50 is the contig length such that using longer or equal length contigs produces half (50%) of the bases of the assembly (kilo base pairs)",
+                            "dmax": 3783.467,
+                            "dmin": 0.0,
+                            "suffix": "Kbp",
+                            "hidden": null,
+                            "xaxis": {
+                                "ticksuffix": "Kbp",
+                                "tickvals": null,
+                                "range": [
+                                    -18.917335,
+                                    3802.478921675
+                                ]
+                            },
+                            "show_points": true,
+                            "show_only_outliers": false,
+                            "hoverformat": ".2f"
+                        },
+                        "mqc-generalstats-quast-Total_length": {
+                            "namespace": "QUAST",
+                            "title": "Assembly Length (Mbp)",
+                            "description": "The total number of bases in the assembly (Mbp).",
+                            "dmax": 29.866501999999997,
+                            "dmin": 0.0,
+                            "suffix": "Mbp",
+                            "hidden": null,
+                            "xaxis": {
+                                "ticksuffix": "Mbp",
+                                "tickvals": null,
+                                "range": [
+                                    -0.14933251,
+                                    30.016581172549998
+                                ]
+                            },
+                            "show_points": true,
+                            "show_only_outliers": false,
+                            "hoverformat": ".2f"
+                        }
+                    },
+                    "violin_values_by_sample_by_metric": {
+                        "mqc-generalstats-quast-N50": {
+                            "shasta_medaka_consensus": 136.42600000000002,
+                            "canu_assembly": 3713.674,
+                            "raven_assembly": 3783.467,
+                            "shasta_assembly": 136.75900000000001,
+                            "flye_assembly": 2284.1820000000002,
+                            "raven_medaka_consensus": 3782.302,
+                            "wtdbg2_medaka_consensus": 2047.669,
+                            "flye_medaka_consensus": 2285.407,
+                            "canu_medaka_consensus": 3718.495,
+                            "wtdbg2_assembly": 2043.81
+                        },
+                        "mqc-generalstats-quast-Total_length": {
+                            "shasta_medaka_consensus": 28.263299,
+                            "canu_assembly": 29.828639,
+                            "raven_assembly": 29.481737,
+                            "shasta_assembly": 28.336133,
+                            "flye_assembly": 29.325332,
+                            "raven_medaka_consensus": 29.482805,
+                            "wtdbg2_medaka_consensus": 28.631944999999998,
+                            "flye_medaka_consensus": 29.332742999999997,
+                            "canu_medaka_consensus": 29.866501999999997,
+                            "wtdbg2_assembly": 28.625708999999997
+                        }
+                    },
+                    "scatter_values_by_sample_by_metric": {
+                        "mqc-generalstats-quast-N50": {},
+                        "mqc-generalstats-quast-Total_length": {}
+                    },
+                    "all_samples": [
+                        "canu_assembly",
+                        "canu_medaka_consensus",
+                        "flye_assembly",
+                        "flye_medaka_consensus",
+                        "raven_assembly",
+                        "raven_medaka_consensus",
+                        "shasta_assembly",
+                        "shasta_medaka_consensus",
+                        "wtdbg2_assembly",
+                        "wtdbg2_medaka_consensus"
+                    ],
+                    "scatter_trace_params": {
+                        "mode": "markers",
+                        "marker": {
+                            "size": 4,
+                            "color": "rgba(0,0,0,1)"
+                        },
+                        "showlegend": false,
+                        "hovertemplate": "<b>%{text}</b>: %{x}<extra></extra>",
+                        "hoverlabel": {
+                            "bgcolor": "white"
+                        }
+                    }
+                }
+            ],
+            "plot_type": "violin",
+            "pct_axis_update": {
+                "ticksuffix": "%",
+                "hoverformat": ".1f"
+            },
+            "axis_controlled_by_switches": [],
+            "p_active": false,
+            "l_active": false,
+            "square": null,
+            "static": true,
+            "violin_height": 70,
+            "extra_height": 63
         }
     },
     "report_saved_raw_data": {
         "multiqc_quast": {
             "shasta_medaka_consensus": {
-                "# contigs (>= 0 bp)": 351.0,
-                "# contigs (>= 1000 bp)": 350.0,
-                "# contigs (>= 5000 bp)": 347.0,
-                "# contigs (>= 10000 bp)": 328.0,
+                "# contigs (>= 0 bp)": 348.0,
+                "# contigs (>= 1000 bp)": 347.0,
+                "# contigs (>= 5000 bp)": 345.0,
+                "# contigs (>= 10000 bp)": 327.0,
                 "# contigs (>= 25000 bp)": 263.0,
-                "# contigs (>= 50000 bp)": 190.0,
-                "Total length (>= 0 bp)": 28287956.0,
-                "Total length (>= 1000 bp)": 28287426.0,
-                "Total length (>= 5000 bp)": 28274424.0,
-                "Total length (>= 10000 bp)": 28141427.0,
-                "Total length (>= 25000 bp)": 26982512.0,
-                "Total length (>= 50000 bp)": 24450299.0,
-                "# contigs": 351.0,
-                "Largest contig": 478225.0,
-                "Total length": 28287956.0,
-                "GC (%)": 49.45,
-                "N50": 136427.0,
-                "N90": 38463.0,
-                "auN": 156409.3,
+                "# contigs (>= 50000 bp)": 191.0,
+                "Total length (>= 0 bp)": 28263299.0,
+                "Total length (>= 1000 bp)": 28262761.0,
+                "Total length (>= 5000 bp)": 28254659.0,
+                "Total length (>= 10000 bp)": 28128128.0,
+                "Total length (>= 25000 bp)": 26989856.0,
+                "Total length (>= 50000 bp)": 24496183.0,
+                "# contigs": 348.0,
+                "Largest contig": 478233.0,
+                "Total length": 28263299.0,
+                "GC (%)": 49.44,
+                "N50": 136426.0,
+                "N90": 38464.0,
+                "auN": 156522.2,
                 "L50": 69.0,
                 "L90": 214.0,
                 "# total reads": 409991.0,
                 "# left": 0.0,
                 "# right": 0.0,
-                "Mapped (%)": 118.78,
+                "Mapped (%)": 116.08,
                 "Properly paired (%)": 0.0,
-                "Avg. coverage depth": 51.0,
+                "Avg. coverage depth": 50.0,
                 "Coverage >= 1x (%)": 100.0,
                 "# N's per 100 kbp": 0.0,
-                "Complete BUSCO (%)": 0.0,
-                "Partial BUSCO (%)": 0.0,
-                "# predicted rRNA genes": 47.0,
-                "# predicted rRNA genes_partial": 2.0
+                "# predicted rRNA genes": 38.0,
+                "# predicted rRNA genes_partial": 1.0
             },
             "canu_assembly": {
                 "# contigs (>= 0 bp)": 36.0,
@@ -1511,8 +1631,6 @@
                 "Avg. coverage depth": 51.0,
                 "Coverage >= 1x (%)": 100.0,
                 "# N's per 100 kbp": 0.0,
-                "Complete BUSCO (%)": 0.0,
-                "Partial BUSCO (%)": 0.0,
                 "# predicted rRNA genes": 60.0,
                 "# predicted rRNA genes_partial": 1.0
             },
@@ -1546,78 +1664,72 @@
                 "Avg. coverage depth": 46.0,
                 "Coverage >= 1x (%)": 100.0,
                 "# N's per 100 kbp": 0.0,
-                "Complete BUSCO (%)": 0.0,
-                "Partial BUSCO (%)": 0.0,
                 "# predicted rRNA genes": 35.0,
                 "# predicted rRNA genes_partial": 0.0
             },
             "shasta_assembly": {
-                "# contigs (>= 0 bp)": 352.0,
-                "# contigs (>= 1000 bp)": 350.0,
-                "# contigs (>= 5000 bp)": 348.0,
-                "# contigs (>= 10000 bp)": 328.0,
+                "# contigs (>= 0 bp)": 349.0,
+                "# contigs (>= 1000 bp)": 347.0,
+                "# contigs (>= 5000 bp)": 345.0,
+                "# contigs (>= 10000 bp)": 327.0,
                 "# contigs (>= 25000 bp)": 264.0,
-                "# contigs (>= 50000 bp)": 190.0,
-                "Total length (>= 0 bp)": 28362459.0,
-                "Total length (>= 1000 bp)": 28361837.0,
-                "Total length (>= 5000 bp)": 28352887.0,
-                "Total length (>= 10000 bp)": 28210930.0,
-                "Total length (>= 25000 bp)": 27069671.0,
-                "Total length (>= 50000 bp)": 24504137.0,
-                "# contigs": 351.0,
-                "Largest contig": 479058.0,
-                "Total length": 28362398.0,
-                "GC (%)": 49.47,
-                "N50": 135598.0,
-                "N90": 38411.0,
-                "auN": 156650.6,
-                "L50": 70.0,
-                "L90": 215.0,
+                "# contigs (>= 50000 bp)": 191.0,
+                "Total length (>= 0 bp)": 28336194.0,
+                "Total length (>= 1000 bp)": 28335572.0,
+                "Total length (>= 5000 bp)": 28326622.0,
+                "Total length (>= 10000 bp)": 28197056.0,
+                "Total length (>= 25000 bp)": 27077296.0,
+                "Total length (>= 50000 bp)": 24550494.0,
+                "# contigs": 348.0,
+                "Largest contig": 479047.0,
+                "Total length": 28336133.0,
+                "GC (%)": 49.46,
+                "N50": 136759.0,
+                "N90": 38627.0,
+                "auN": 156774.4,
+                "L50": 69.0,
+                "L90": 214.0,
                 "# total reads": 409991.0,
                 "# left": 0.0,
                 "# right": 0.0,
-                "Mapped (%)": 117.53,
+                "Mapped (%)": 115.37,
                 "Properly paired (%)": 0.0,
-                "Avg. coverage depth": 51.0,
+                "Avg. coverage depth": 50.0,
                 "Coverage >= 1x (%)": 100.0,
                 "# N's per 100 kbp": 0.0,
-                "Complete BUSCO (%)": 0.0,
-                "Partial BUSCO (%)": 0.0,
-                "# predicted rRNA genes": 39.0,
-                "# predicted rRNA genes_partial": 1.0
+                "# predicted rRNA genes": 30.0,
+                "# predicted rRNA genes_partial": 0.0
             },
             "flye_assembly": {
-                "# contigs (>= 0 bp)": 88.0,
-                "# contigs (>= 1000 bp)": 76.0,
-                "# contigs (>= 5000 bp)": 53.0,
+                "# contigs (>= 0 bp)": 89.0,
+                "# contigs (>= 1000 bp)": 78.0,
+                "# contigs (>= 5000 bp)": 54.0,
                 "# contigs (>= 10000 bp)": 44.0,
                 "# contigs (>= 25000 bp)": 34.0,
                 "# contigs (>= 50000 bp)": 23.0,
-                "Total length (>= 0 bp)": 29325492.0,
-                "Total length (>= 1000 bp)": 29317531.0,
-                "Total length (>= 5000 bp)": 29261651.0,
-                "Total length (>= 10000 bp)": 29192741.0,
-                "Total length (>= 25000 bp)": 29021999.0,
-                "Total length (>= 50000 bp)": 28634203.0,
-                "# contigs": 88.0,
-                "Largest contig": 3007913.0,
-                "Total length": 29325492.0,
-                "GC (%)": 49.48,
-                "N50": 2278250.0,
+                "Total length (>= 0 bp)": 29325332.0,
+                "Total length (>= 1000 bp)": 29317938.0,
+                "Total length (>= 5000 bp)": 29261428.0,
+                "Total length (>= 10000 bp)": 29186846.0,
+                "Total length (>= 25000 bp)": 29014761.0,
+                "Total length (>= 50000 bp)": 28627378.0,
+                "# contigs": 89.0,
+                "Largest contig": 3007463.0,
+                "Total length": 29325332.0,
+                "GC (%)": 49.49,
+                "N50": 2284182.0,
                 "N90": 666020.0,
-                "auN": 1835925.4,
+                "auN": 1835961.2,
                 "L50": 6.0,
                 "L90": 16.0,
                 "# total reads": 409991.0,
                 "# left": 0.0,
                 "# right": 0.0,
-                "Mapped (%)": 111.05,
+                "Mapped (%)": 110.97,
                 "Properly paired (%)": 0.0,
                 "Avg. coverage depth": 48.0,
                 "Coverage >= 1x (%)": 100.0,
                 "# N's per 100 kbp": 0.0,
-                "Complete BUSCO (%)": 0.0,
-                "Partial BUSCO (%)": 0.0,
                 "# predicted rRNA genes": 38.0,
                 "# predicted rRNA genes_partial": 1.0
             },
@@ -1651,78 +1763,72 @@
                 "Avg. coverage depth": 46.0,
                 "Coverage >= 1x (%)": 100.0,
                 "# N's per 100 kbp": 0.0,
-                "Complete BUSCO (%)": 0.0,
-                "Partial BUSCO (%)": 0.0,
                 "# predicted rRNA genes": 36.0,
                 "# predicted rRNA genes_partial": 0.0
             },
             "wtdbg2_medaka_consensus": {
-                "# contigs (>= 0 bp)": 44.0,
-                "# contigs (>= 1000 bp)": 43.0,
-                "# contigs (>= 5000 bp)": 37.0,
+                "# contigs (>= 0 bp)": 45.0,
+                "# contigs (>= 1000 bp)": 44.0,
+                "# contigs (>= 5000 bp)": 38.0,
                 "# contigs (>= 10000 bp)": 30.0,
                 "# contigs (>= 25000 bp)": 27.0,
                 "# contigs (>= 50000 bp)": 22.0,
-                "Total length (>= 0 bp)": 28626778.0,
-                "Total length (>= 1000 bp)": 28626477.0,
-                "Total length (>= 5000 bp)": 28605691.0,
-                "Total length (>= 10000 bp)": 28557617.0,
-                "Total length (>= 25000 bp)": 28516394.0,
-                "Total length (>= 50000 bp)": 28347853.0,
-                "# contigs": 44.0,
-                "Largest contig": 3937981.0,
-                "Total length": 28626778.0,
+                "Total length (>= 0 bp)": 28631945.0,
+                "Total length (>= 1000 bp)": 28631644.0,
+                "Total length (>= 5000 bp)": 28611685.0,
+                "Total length (>= 10000 bp)": 28557520.0,
+                "Total length (>= 25000 bp)": 28516291.0,
+                "Total length (>= 50000 bp)": 28347754.0,
+                "# contigs": 45.0,
+                "Largest contig": 3937425.0,
+                "Total length": 28631945.0,
                 "GC (%)": 49.63,
-                "N50": 2047658.0,
-                "N90": 619702.0,
-                "auN": 2111523.1,
+                "N50": 2047669.0,
+                "N90": 619694.0,
+                "auN": 2111037.2,
                 "L50": 6.0,
                 "L90": 15.0,
                 "# total reads": 409991.0,
                 "# left": 0.0,
                 "# right": 0.0,
-                "Mapped (%)": 114.23,
+                "Mapped (%)": 114.32,
                 "Properly paired (%)": 0.0,
-                "Avg. coverage depth": 48.0,
+                "Avg. coverage depth": 49.0,
                 "Coverage >= 1x (%)": 99.99,
                 "# N's per 100 kbp": 0.0,
-                "Complete BUSCO (%)": 0.0,
-                "Partial BUSCO (%)": 0.0,
                 "# predicted rRNA genes": 36.0,
                 "# predicted rRNA genes_partial": 1.0
             },
             "flye_medaka_consensus": {
-                "# contigs (>= 0 bp)": 85.0,
-                "# contigs (>= 1000 bp)": 76.0,
-                "# contigs (>= 5000 bp)": 53.0,
+                "# contigs (>= 0 bp)": 84.0,
+                "# contigs (>= 1000 bp)": 77.0,
+                "# contigs (>= 5000 bp)": 54.0,
                 "# contigs (>= 10000 bp)": 44.0,
                 "# contigs (>= 25000 bp)": 34.0,
                 "# contigs (>= 50000 bp)": 23.0,
-                "Total length (>= 0 bp)": 29335530.0,
-                "Total length (>= 1000 bp)": 29329187.0,
-                "Total length (>= 5000 bp)": 29274769.0,
-                "Total length (>= 10000 bp)": 29205985.0,
-                "Total length (>= 25000 bp)": 29036260.0,
-                "Total length (>= 50000 bp)": 28650057.0,
-                "# contigs": 85.0,
-                "Largest contig": 3009856.0,
-                "Total length": 29335530.0,
+                "Total length (>= 0 bp)": 29332743.0,
+                "Total length (>= 1000 bp)": 29327738.0,
+                "Total length (>= 5000 bp)": 29274410.0,
+                "Total length (>= 10000 bp)": 29200110.0,
+                "Total length (>= 25000 bp)": 29029000.0,
+                "Total length (>= 50000 bp)": 28643628.0,
+                "# contigs": 84.0,
+                "Largest contig": 3009410.0,
+                "Total length": 29332743.0,
                 "GC (%)": 49.5,
-                "N50": 2279797.0,
+                "N50": 2285407.0,
                 "N90": 666409.0,
-                "auN": 1837446.5,
+                "auN": 1837700.3,
                 "L50": 6.0,
                 "L90": 16.0,
                 "# total reads": 409991.0,
                 "# left": 0.0,
                 "# right": 0.0,
-                "Mapped (%)": 111.01,
+                "Mapped (%)": 110.85,
                 "Properly paired (%)": 0.0,
                 "Avg. coverage depth": 48.0,
-                "Coverage >= 1x (%)": 99.99,
+                "Coverage >= 1x (%)": 100.0,
                 "# N's per 100 kbp": 0.0,
-                "Complete BUSCO (%)": 0.0,
-                "Partial BUSCO (%)": 0.0,
                 "# predicted rRNA genes": 38.0,
                 "# predicted rRNA genes_partial": 0.0
             },
@@ -1756,495 +1862,148 @@
                 "Avg. coverage depth": 51.0,
                 "Coverage >= 1x (%)": 100.0,
                 "# N's per 100 kbp": 0.0,
-                "Complete BUSCO (%)": 0.0,
-                "Partial BUSCO (%)": 0.0,
                 "# predicted rRNA genes": 59.0,
                 "# predicted rRNA genes_partial": 2.0
             },
             "wtdbg2_assembly": {
-                "# contigs (>= 0 bp)": 54.0,
-                "# contigs (>= 1000 bp)": 52.0,
-                "# contigs (>= 5000 bp)": 40.0,
+                "# contigs (>= 0 bp)": 55.0,
+                "# contigs (>= 1000 bp)": 53.0,
+                "# contigs (>= 5000 bp)": 41.0,
                 "# contigs (>= 10000 bp)": 30.0,
                 "# contigs (>= 25000 bp)": 27.0,
                 "# contigs (>= 50000 bp)": 22.0,
-                "Total length (>= 0 bp)": 28619494.0,
-                "Total length (>= 1000 bp)": 28618464.0,
-                "Total length (>= 5000 bp)": 28572205.0,
-                "Total length (>= 10000 bp)": 28508056.0,
-                "Total length (>= 25000 bp)": 28466347.0,
-                "Total length (>= 50000 bp)": 28297837.0,
-                "# contigs": 54.0,
-                "Largest contig": 3931666.0,
-                "Total length": 28619494.0,
+                "Total length (>= 0 bp)": 28625709.0,
+                "Total length (>= 1000 bp)": 28624679.0,
+                "Total length (>= 5000 bp)": 28578789.0,
+                "Total length (>= 10000 bp)": 28508033.0,
+                "Total length (>= 25000 bp)": 28466324.0,
+                "Total length (>= 50000 bp)": 28297801.0,
+                "# contigs": 55.0,
+                "Largest contig": 3931675.0,
+                "Total length": 28625709.0,
                 "GC (%)": 49.59,
-                "N50": 2043848.0,
-                "N90": 618645.0,
-                "auN": 2104650.9,
+                "N50": 2043810.0,
+                "N90": 618648.0,
+                "auN": 2104191.4,
                 "L50": 6.0,
                 "L90": 15.0,
                 "# total reads": 409991.0,
                 "# left": 0.0,
                 "# right": 0.0,
-                "Mapped (%)": 113.96,
+                "Mapped (%)": 114.7,
                 "Properly paired (%)": 0.0,
-                "Avg. coverage depth": 48.0,
-                "Coverage >= 1x (%)": 99.85,
+                "Avg. coverage depth": 49.0,
+                "Coverage >= 1x (%)": 99.86,
                 "# N's per 100 kbp": 0.0,
-                "Complete BUSCO (%)": 0.0,
-                "Partial BUSCO (%)": 0.0,
                 "# predicted rRNA genes": 36.0,
                 "# predicted rRNA genes_partial": 1.0
             }
         },
         "multiqc_busco": {
-            "shasta_medaka_consensus": {
-                "lineage_dataset": "eukaryota_odb9",
-                "complete": 0.0,
-                "complete_single_copy": 0.0,
+            "short_summary.specific.bacteria_odb10.run_shasta_medaka": {
+                "lineage_dataset": "bacteria_odb10",
+                "complete": 8.0,
+                "complete_single_copy": 8.0,
                 "complete_duplicated": 0.0,
-                "fragmented": 0.0,
-                "missing": 303.0,
-                "total": 303.0
+                "fragmented": 32.0,
+                "missing": 84.0,
+                "total": 124.0
             },
-            "canu_assembly": {
-                "lineage_dataset": "eukaryota_odb9",
-                "complete": 0.0,
-                "complete_single_copy": 0.0,
+            "short": {
+                "lineage_dataset": "bacteria_odb10",
+                "complete": 6.0,
+                "complete_single_copy": 6.0,
                 "complete_duplicated": 0.0,
-                "fragmented": 0.0,
-                "missing": 303.0,
-                "total": 303.0
+                "fragmented": 26.0,
+                "missing": 92.0,
+                "total": 124.0
             },
-            "raven_assembly": {
-                "lineage_dataset": "eukaryota_odb9",
-                "complete": 0.0,
-                "complete_single_copy": 0.0,
+            "short_summary.specific.bacteria_odb10.run_canu": {
+                "lineage_dataset": "bacteria_odb10",
+                "complete": 6.0,
+                "complete_single_copy": 6.0,
                 "complete_duplicated": 0.0,
-                "fragmented": 0.0,
-                "missing": 303.0,
-                "total": 303.0
+                "fragmented": 28.0,
+                "missing": 90.0,
+                "total": 124.0
             },
-            "shasta_assembly": {
-                "lineage_dataset": "eukaryota_odb9",
-                "complete": 0.0,
-                "complete_single_copy": 0.0,
+            "short_summary.specific.bacteria_odb10.run_raven": {
+                "lineage_dataset": "bacteria_odb10",
+                "complete": 9.0,
+                "complete_single_copy": 9.0,
                 "complete_duplicated": 0.0,
-                "fragmented": 0.0,
-                "missing": 303.0,
-                "total": 303.0
+                "fragmented": 29.0,
+                "missing": 86.0,
+                "total": 124.0
             },
-            "flye_assembly": {
-                "lineage_dataset": "eukaryota_odb9",
-                "complete": 0.0,
-                "complete_single_copy": 0.0,
+            "short_summary.specific.bacteria_odb10.run_shasta": {
+                "lineage_dataset": "bacteria_odb10",
+                "complete": 7.0,
+                "complete_single_copy": 7.0,
                 "complete_duplicated": 0.0,
-                "fragmented": 0.0,
-                "missing": 303.0,
-                "total": 303.0
+                "fragmented": 23.0,
+                "missing": 94.0,
+                "total": 124.0
             },
-            "raven_medaka_consensus": {
-                "lineage_dataset": "eukaryota_odb9",
-                "complete": 0.0,
-                "complete_single_copy": 0.0,
+            "short_summary.specific.bacteria_odb10.run_flye": {
+                "lineage_dataset": "bacteria_odb10",
+                "complete": 9.0,
+                "complete_single_copy": 9.0,
                 "complete_duplicated": 0.0,
-                "fragmented": 0.0,
-                "missing": 303.0,
-                "total": 303.0
+                "fragmented": 30.0,
+                "missing": 85.0,
+                "total": 124.0
             },
-            "wtdbg2_medaka_consensus": {
-                "lineage_dataset": "eukaryota_odb9",
-                "complete": 0.0,
-                "complete_single_copy": 0.0,
+            "short_summary.specific.bacteria_odb10.run_raven_medaka": {
+                "lineage_dataset": "bacteria_odb10",
+                "complete": 8.0,
+                "complete_single_copy": 8.0,
                 "complete_duplicated": 0.0,
-                "fragmented": 0.0,
-                "missing": 303.0,
-                "total": 303.0
+                "fragmented": 33.0,
+                "missing": 83.0,
+                "total": 124.0
             },
-            "flye_medaka_consensus": {
-                "lineage_dataset": "eukaryota_odb9",
-                "complete": 0.0,
-                "complete_single_copy": 0.0,
+            "short_summary.specific.bacteria_odb10.run_wtdbg2_medaka": {
+                "lineage_dataset": "bacteria_odb10",
+                "complete": 8.0,
+                "complete_single_copy": 8.0,
                 "complete_duplicated": 0.0,
-                "fragmented": 0.0,
-                "missing": 303.0,
-                "total": 303.0
+                "fragmented": 34.0,
+                "missing": 82.0,
+                "total": 124.0
             },
-            "canu_medaka_consensus": {
-                "lineage_dataset": "eukaryota_odb9",
-                "complete": 0.0,
-                "complete_single_copy": 0.0,
+            "short_summary.specific.bacteria_odb10.run_flye_medaka": {
+                "lineage_dataset": "bacteria_odb10",
+                "complete": 8.0,
+                "complete_single_copy": 8.0,
                 "complete_duplicated": 0.0,
-                "fragmented": 0.0,
-                "missing": 303.0,
-                "total": 303.0
+                "fragmented": 32.0,
+                "missing": 84.0,
+                "total": 124.0
             },
-            "wtdbg2_assembly": {
-                "lineage_dataset": "eukaryota_odb9",
-                "complete": 0.0,
-                "complete_single_copy": 0.0,
+            "short_summary.specific.bacteria_odb10.run_canu_medaka": {
+                "lineage_dataset": "bacteria_odb10",
+                "complete": 8.0,
+                "complete_single_copy": 8.0,
                 "complete_duplicated": 0.0,
-                "fragmented": 0.0,
-                "missing": 303.0,
-                "total": 303.0
-            }
-        },
-        "multiqc_samtools_flagstat": {
-            "shasta_medaka_consensus.stat": {
-                "total_passed": 502753,
-                "total_failed": 0,
-                "secondary_passed": 55494,
-                "secondary_failed": 0,
-                "supplementary_passed": 37268,
-                "supplementary_failed": 0,
-                "duplicates_passed": 0,
-                "duplicates_failed": 0,
-                "mapped_passed": 486976,
-                "mapped_failed": 0,
-                "mapped_passed_pct": 96.86,
-                "mapped_failed_pct": NaN,
-                "paired in sequencing_passed": 0,
-                "paired in sequencing_failed": 0,
-                "read1_passed": 0,
-                "read1_failed": 0,
-                "read2_passed": 0,
-                "read2_failed": 0,
-                "properly paired_passed": 0,
-                "properly paired_failed": 0,
-                "properly paired_passed_pct": NaN,
-                "properly paired_failed_pct": NaN,
-                "with itself and mate mapped_passed": 0,
-                "with itself and mate mapped_failed": 0,
-                "singletons_passed": 0,
-                "singletons_failed": 0,
-                "singletons_passed_pct": NaN,
-                "singletons_failed_pct": NaN,
-                "with mate mapped to a different chr_passed": 0,
-                "with mate mapped to a different chr_failed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_passed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_failed": 0,
-                "flagstat_total": 502753
+                "fragmented": 32.0,
+                "missing": 84.0,
+                "total": 124.0
             },
-            "canu_assembly.stat": {
-                "total_passed": 489033,
-                "total_failed": 0,
-                "secondary_passed": 52950,
-                "secondary_failed": 0,
-                "supplementary_passed": 26092,
-                "supplementary_failed": 0,
-                "duplicates_passed": 0,
-                "duplicates_failed": 0,
-                "mapped_passed": 482522,
-                "mapped_failed": 0,
-                "mapped_passed_pct": 98.67,
-                "mapped_failed_pct": NaN,
-                "paired in sequencing_passed": 0,
-                "paired in sequencing_failed": 0,
-                "read1_passed": 0,
-                "read1_failed": 0,
-                "read2_passed": 0,
-                "read2_failed": 0,
-                "properly paired_passed": 0,
-                "properly paired_failed": 0,
-                "properly paired_passed_pct": NaN,
-                "properly paired_failed_pct": NaN,
-                "with itself and mate mapped_passed": 0,
-                "with itself and mate mapped_failed": 0,
-                "singletons_passed": 0,
-                "singletons_failed": 0,
-                "singletons_passed_pct": NaN,
-                "singletons_failed_pct": NaN,
-                "with mate mapped to a different chr_passed": 0,
-                "with mate mapped to a different chr_failed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_passed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_failed": 0,
-                "flagstat_total": 489033
-            },
-            "raven_assembly.stat": {
-                "total_passed": 447357,
-                "total_failed": 0,
-                "secondary_passed": 9855,
-                "secondary_failed": 0,
-                "supplementary_passed": 27511,
-                "supplementary_failed": 0,
-                "duplicates_passed": 0,
-                "duplicates_failed": 0,
-                "mapped_passed": 428845,
-                "mapped_failed": 0,
-                "mapped_passed_pct": 95.86,
-                "mapped_failed_pct": NaN,
-                "paired in sequencing_passed": 0,
-                "paired in sequencing_failed": 0,
-                "read1_passed": 0,
-                "read1_failed": 0,
-                "read2_passed": 0,
-                "read2_failed": 0,
-                "properly paired_passed": 0,
-                "properly paired_failed": 0,
-                "properly paired_passed_pct": NaN,
-                "properly paired_failed_pct": NaN,
-                "with itself and mate mapped_passed": 0,
-                "with itself and mate mapped_failed": 0,
-                "singletons_passed": 0,
-                "singletons_failed": 0,
-                "singletons_passed_pct": NaN,
-                "singletons_failed_pct": NaN,
-                "with mate mapped to a different chr_passed": 0,
-                "with mate mapped to a different chr_failed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_passed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_failed": 0,
-                "flagstat_total": 447357
-            },
-            "shasta_assembly.stat": {
-                "total_passed": 497654,
-                "total_failed": 0,
-                "secondary_passed": 50439,
-                "secondary_failed": 0,
-                "supplementary_passed": 37224,
-                "supplementary_failed": 0,
-                "duplicates_passed": 0,
-                "duplicates_failed": 0,
-                "mapped_passed": 481852,
-                "mapped_failed": 0,
-                "mapped_passed_pct": 96.82,
-                "mapped_failed_pct": NaN,
-                "paired in sequencing_passed": 0,
-                "paired in sequencing_failed": 0,
-                "read1_passed": 0,
-                "read1_failed": 0,
-                "read2_passed": 0,
-                "read2_failed": 0,
-                "properly paired_passed": 0,
-                "properly paired_failed": 0,
-                "properly paired_passed_pct": NaN,
-                "properly paired_failed_pct": NaN,
-                "with itself and mate mapped_passed": 0,
-                "with itself and mate mapped_failed": 0,
-                "singletons_passed": 0,
-                "singletons_failed": 0,
-                "singletons_passed_pct": NaN,
-                "singletons_failed_pct": NaN,
-                "with mate mapped to a different chr_passed": 0,
-                "with mate mapped to a different chr_failed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_passed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_failed": 0,
-                "flagstat_total": 497654
-            },
-            "flye_assembly.stat": {
-                "total_passed": 461781,
-                "total_failed": 0,
-                "secondary_passed": 15023,
-                "secondary_failed": 0,
-                "supplementary_passed": 36767,
-                "supplementary_failed": 0,
-                "duplicates_passed": 0,
-                "duplicates_failed": 0,
-                "mapped_passed": 455293,
-                "mapped_failed": 0,
-                "mapped_passed_pct": 98.6,
-                "mapped_failed_pct": NaN,
-                "paired in sequencing_passed": 0,
-                "paired in sequencing_failed": 0,
-                "read1_passed": 0,
-                "read1_failed": 0,
-                "read2_passed": 0,
-                "read2_failed": 0,
-                "properly paired_passed": 0,
-                "properly paired_failed": 0,
-                "properly paired_passed_pct": NaN,
-                "properly paired_failed_pct": NaN,
-                "with itself and mate mapped_passed": 0,
-                "with itself and mate mapped_failed": 0,
-                "singletons_passed": 0,
-                "singletons_failed": 0,
-                "singletons_passed_pct": NaN,
-                "singletons_failed_pct": NaN,
-                "with mate mapped to a different chr_passed": 0,
-                "with mate mapped to a different chr_failed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_passed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_failed": 0,
-                "flagstat_total": 461781
-            },
-            "raven_medaka_consensus.stat": {
-                "total_passed": 451857,
-                "total_failed": 0,
-                "secondary_passed": 9618,
-                "secondary_failed": 0,
-                "supplementary_passed": 32248,
-                "supplementary_failed": 0,
-                "duplicates_passed": 0,
-                "duplicates_failed": 0,
-                "mapped_passed": 437871,
-                "mapped_failed": 0,
-                "mapped_passed_pct": 96.9,
-                "mapped_failed_pct": NaN,
-                "paired in sequencing_passed": 0,
-                "paired in sequencing_failed": 0,
-                "read1_passed": 0,
-                "read1_failed": 0,
-                "read2_passed": 0,
-                "read2_failed": 0,
-                "properly paired_passed": 0,
-                "properly paired_failed": 0,
-                "properly paired_passed_pct": NaN,
-                "properly paired_failed_pct": NaN,
-                "with itself and mate mapped_passed": 0,
-                "with itself and mate mapped_failed": 0,
-                "singletons_passed": 0,
-                "singletons_failed": 0,
-                "singletons_passed_pct": NaN,
-                "singletons_failed_pct": NaN,
-                "with mate mapped to a different chr_passed": 0,
-                "with mate mapped to a different chr_failed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_passed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_failed": 0,
-                "flagstat_total": 451857
-            },
-            "wtdbg2_medaka_consensus.stat": {
-                "total_passed": 478759,
-                "total_failed": 0,
-                "secondary_passed": 18162,
-                "secondary_failed": 0,
-                "supplementary_passed": 50606,
-                "supplementary_failed": 0,
-                "duplicates_passed": 0,
-                "duplicates_failed": 0,
-                "mapped_passed": 468328,
-                "mapped_failed": 0,
-                "mapped_passed_pct": 97.82,
-                "mapped_failed_pct": NaN,
-                "paired in sequencing_passed": 0,
-                "paired in sequencing_failed": 0,
-                "read1_passed": 0,
-                "read1_failed": 0,
-                "read2_passed": 0,
-                "read2_failed": 0,
-                "properly paired_passed": 0,
-                "properly paired_failed": 0,
-                "properly paired_passed_pct": NaN,
-                "properly paired_failed_pct": NaN,
-                "with itself and mate mapped_passed": 0,
-                "with itself and mate mapped_failed": 0,
-                "singletons_passed": 0,
-                "singletons_failed": 0,
-                "singletons_passed_pct": NaN,
-                "singletons_failed_pct": NaN,
-                "with mate mapped to a different chr_passed": 0,
-                "with mate mapped to a different chr_failed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_passed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_failed": 0,
-                "flagstat_total": 478759
-            },
-            "flye_medaka_consensus.stat": {
-                "total_passed": 461643,
-                "total_failed": 0,
-                "secondary_passed": 14493,
-                "secondary_failed": 0,
-                "supplementary_passed": 37159,
-                "supplementary_failed": 0,
-                "duplicates_passed": 0,
-                "duplicates_failed": 0,
-                "mapped_passed": 455148,
-                "mapped_failed": 0,
-                "mapped_passed_pct": 98.59,
-                "mapped_failed_pct": NaN,
-                "paired in sequencing_passed": 0,
-                "paired in sequencing_failed": 0,
-                "read1_passed": 0,
-                "read1_failed": 0,
-                "read2_passed": 0,
-                "read2_failed": 0,
-                "properly paired_passed": 0,
-                "properly paired_failed": 0,
-                "properly paired_passed_pct": NaN,
-                "properly paired_failed_pct": NaN,
-                "with itself and mate mapped_passed": 0,
-                "with itself and mate mapped_failed": 0,
-                "singletons_passed": 0,
-                "singletons_failed": 0,
-                "singletons_passed_pct": NaN,
-                "singletons_failed_pct": NaN,
-                "with mate mapped to a different chr_passed": 0,
-                "with mate mapped to a different chr_failed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_passed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_failed": 0,
-                "flagstat_total": 461643
-            },
-            "canu_medaka_consensus.stat": {
-                "total_passed": 488348,
-                "total_failed": 0,
-                "secondary_passed": 52100,
-                "secondary_failed": 0,
-                "supplementary_passed": 26257,
-                "supplementary_failed": 0,
-                "duplicates_passed": 0,
-                "duplicates_failed": 0,
-                "mapped_passed": 481835,
-                "mapped_failed": 0,
-                "mapped_passed_pct": 98.67,
-                "mapped_failed_pct": NaN,
-                "paired in sequencing_passed": 0,
-                "paired in sequencing_failed": 0,
-                "read1_passed": 0,
-                "read1_failed": 0,
-                "read2_passed": 0,
-                "read2_failed": 0,
-                "properly paired_passed": 0,
-                "properly paired_failed": 0,
-                "properly paired_passed_pct": NaN,
-                "properly paired_failed_pct": NaN,
-                "with itself and mate mapped_passed": 0,
-                "with itself and mate mapped_failed": 0,
-                "singletons_passed": 0,
-                "singletons_failed": 0,
-                "singletons_passed_pct": NaN,
-                "singletons_failed_pct": NaN,
-                "with mate mapped to a different chr_passed": 0,
-                "with mate mapped to a different chr_failed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_passed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_failed": 0,
-                "flagstat_total": 488348
-            },
-            "wtdbg2_assembly.stat": {
-                "total_passed": 478475,
-                "total_failed": 0,
-                "secondary_passed": 20163,
-                "secondary_failed": 0,
-                "supplementary_passed": 48321,
-                "supplementary_failed": 0,
-                "duplicates_passed": 0,
-                "duplicates_failed": 0,
-                "mapped_passed": 467242,
-                "mapped_failed": 0,
-                "mapped_passed_pct": 97.65,
-                "mapped_failed_pct": NaN,
-                "paired in sequencing_passed": 0,
-                "paired in sequencing_failed": 0,
-                "read1_passed": 0,
-                "read1_failed": 0,
-                "read2_passed": 0,
-                "read2_failed": 0,
-                "properly paired_passed": 0,
-                "properly paired_failed": 0,
-                "properly paired_passed_pct": NaN,
-                "properly paired_failed_pct": NaN,
-                "with itself and mate mapped_passed": 0,
-                "with itself and mate mapped_failed": 0,
-                "singletons_passed": 0,
-                "singletons_failed": 0,
-                "singletons_passed_pct": NaN,
-                "singletons_failed_pct": NaN,
-                "with mate mapped to a different chr_passed": 0,
-                "with mate mapped to a different chr_failed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_passed": 0,
-                "with mate mapped to a different chr (mapQ >= 5)_failed": 0,
-                "flagstat_total": 478475
+            "short_summary.specific.bacteria_odb10.run_wtdbg2": {
+                "lineage_dataset": "bacteria_odb10",
+                "complete": 6.0,
+                "complete_single_copy": 6.0,
+                "complete_duplicated": 0.0,
+                "fragmented": 26.0,
+                "missing": 92.0,
+                "total": 124.0
             }
         },
         "multiqc_general_stats": {
             "shasta_medaka_consensus": {
-                "QUAST_mqc-generalstats-quast-N50": 136427.0,
-                "QUAST_mqc-generalstats-quast-Total_length": 28287956.0
+                "QUAST_mqc-generalstats-quast-N50": 136426.0,
+                "QUAST_mqc-generalstats-quast-Total_length": 28263299.0
             },
             "canu_assembly": {
                 "QUAST_mqc-generalstats-quast-N50": 3713674.0,
@@ -2255,99 +2014,50 @@
                 "QUAST_mqc-generalstats-quast-Total_length": 29481737.0
             },
             "shasta_assembly": {
-                "QUAST_mqc-generalstats-quast-N50": 135598.0,
-                "QUAST_mqc-generalstats-quast-Total_length": 28362398.0
+                "QUAST_mqc-generalstats-quast-N50": 136759.0,
+                "QUAST_mqc-generalstats-quast-Total_length": 28336133.0
             },
             "flye_assembly": {
-                "QUAST_mqc-generalstats-quast-N50": 2278250.0,
-                "QUAST_mqc-generalstats-quast-Total_length": 29325492.0
+                "QUAST_mqc-generalstats-quast-N50": 2284182.0,
+                "QUAST_mqc-generalstats-quast-Total_length": 29325332.0
             },
             "raven_medaka_consensus": {
                 "QUAST_mqc-generalstats-quast-N50": 3782302.0,
                 "QUAST_mqc-generalstats-quast-Total_length": 29482805.0
             },
             "wtdbg2_medaka_consensus": {
-                "QUAST_mqc-generalstats-quast-N50": 2047658.0,
-                "QUAST_mqc-generalstats-quast-Total_length": 28626778.0
+                "QUAST_mqc-generalstats-quast-N50": 2047669.0,
+                "QUAST_mqc-generalstats-quast-Total_length": 28631945.0
             },
             "flye_medaka_consensus": {
-                "QUAST_mqc-generalstats-quast-N50": 2279797.0,
-                "QUAST_mqc-generalstats-quast-Total_length": 29335530.0
+                "QUAST_mqc-generalstats-quast-N50": 2285407.0,
+                "QUAST_mqc-generalstats-quast-Total_length": 29332743.0
             },
             "canu_medaka_consensus": {
                 "QUAST_mqc-generalstats-quast-N50": 3718495.0,
                 "QUAST_mqc-generalstats-quast-Total_length": 29866502.0
             },
             "wtdbg2_assembly": {
-                "QUAST_mqc-generalstats-quast-N50": 2043848.0,
-                "QUAST_mqc-generalstats-quast-Total_length": 28619494.0
-            },
-            "shasta_medaka_consensus.stat": {
-                "Samtools_mqc-generalstats-samtools-flagstat_total": 502753,
-                "Samtools_mqc-generalstats-samtools-mapped_passed": 486976,
-                "Samtools_mqc-generalstats-samtools-mapped_passed_pct": 96.86
-            },
-            "canu_assembly.stat": {
-                "Samtools_mqc-generalstats-samtools-flagstat_total": 489033,
-                "Samtools_mqc-generalstats-samtools-mapped_passed": 482522,
-                "Samtools_mqc-generalstats-samtools-mapped_passed_pct": 98.67
-            },
-            "raven_assembly.stat": {
-                "Samtools_mqc-generalstats-samtools-flagstat_total": 447357,
-                "Samtools_mqc-generalstats-samtools-mapped_passed": 428845,
-                "Samtools_mqc-generalstats-samtools-mapped_passed_pct": 95.86
-            },
-            "shasta_assembly.stat": {
-                "Samtools_mqc-generalstats-samtools-flagstat_total": 497654,
-                "Samtools_mqc-generalstats-samtools-mapped_passed": 481852,
-                "Samtools_mqc-generalstats-samtools-mapped_passed_pct": 96.82
-            },
-            "flye_assembly.stat": {
-                "Samtools_mqc-generalstats-samtools-flagstat_total": 461781,
-                "Samtools_mqc-generalstats-samtools-mapped_passed": 455293,
-                "Samtools_mqc-generalstats-samtools-mapped_passed_pct": 98.6
-            },
-            "raven_medaka_consensus.stat": {
-                "Samtools_mqc-generalstats-samtools-flagstat_total": 451857,
-                "Samtools_mqc-generalstats-samtools-mapped_passed": 437871,
-                "Samtools_mqc-generalstats-samtools-mapped_passed_pct": 96.9
-            },
-            "wtdbg2_medaka_consensus.stat": {
-                "Samtools_mqc-generalstats-samtools-flagstat_total": 478759,
-                "Samtools_mqc-generalstats-samtools-mapped_passed": 468328,
-                "Samtools_mqc-generalstats-samtools-mapped_passed_pct": 97.82
-            },
-            "flye_medaka_consensus.stat": {
-                "Samtools_mqc-generalstats-samtools-flagstat_total": 461643,
-                "Samtools_mqc-generalstats-samtools-mapped_passed": 455148,
-                "Samtools_mqc-generalstats-samtools-mapped_passed_pct": 98.59
-            },
-            "canu_medaka_consensus.stat": {
-                "Samtools_mqc-generalstats-samtools-flagstat_total": 488348,
-                "Samtools_mqc-generalstats-samtools-mapped_passed": 481835,
-                "Samtools_mqc-generalstats-samtools-mapped_passed_pct": 98.67
-            },
-            "wtdbg2_assembly.stat": {
-                "Samtools_mqc-generalstats-samtools-flagstat_total": 478475,
-                "Samtools_mqc-generalstats-samtools-mapped_passed": 467242,
-                "Samtools_mqc-generalstats-samtools-mapped_passed_pct": 97.65
+                "QUAST_mqc-generalstats-quast-N50": 2043810.0,
+                "QUAST_mqc-generalstats-quast-Total_length": 28625709.0
             }
         }
     },
     "config_analysis_dir_abs": [
-        "/array1/falmeida/NF_WORK/1f/19c41f8eedd40cd75a96147efd678d"
+        "/array1/falmeida/NF_WORK/94/b5215a8e9cf57fe4f76f17d144354d"
     ],
     "config_analysis_dir": [
         "."
     ],
-    "config_creation_date": "2024-02-13, 07:48 UTC",
+    "config_creation_date": "2024-02-27, 04:26 UTC",
     "config_git_hash": null,
     "config_intro_text": null,
-    "config_report_comment": null,
+    "config_report_comment": "This report has been generated by the <a href=\"https://github.com/fmalmeida/mpgap/releases/tag/3.2\" target=\"_blank\">fmalmeida/mpgap</a> analysis pipeline. For information about how to interpret these results, please see the <a href=\"https://nf-co.re/scrnaseq/3.2/docs/output\" target=\"_blank\">documentation</a>.\n",
     "config_report_header_info": null,
-    "config_script_path": "/opt/conda/envs/mpgap-3.2/lib/python3.8/site-packages/multiqc/utils",
-    "config_short_version": "1.17",
+    "config_script_path": "/opt/conda/envs/mpgap-3.2/lib/python3.9/site-packages/multiqc/utils",
+    "config_short_version": "1.20",
     "config_subtitle": null,
     "config_title": null,
-    "config_version": "1.17"
+    "config_version": "1.20",
+    "config_output_dir": "/array1/falmeida/NF_WORK/94/b5215a8e9cf57fe4f76f17d144354d"
 }

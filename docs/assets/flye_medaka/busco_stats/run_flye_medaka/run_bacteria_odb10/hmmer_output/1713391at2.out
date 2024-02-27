@@ -1,0 +1,16 @@
+#                                                                               --- full sequence --- -------------- this domain -------------   hmm coord   ali coord   env coord
+# target name           accession   tlen query name           accession   qlen   E-value  score  bias   #  of  c-Evalue  i-Evalue  score  bias  from    to  from    to  from    to  acc description of target
+#   ------------------- ---------- ----- -------------------- ---------- ----- --------- ------ ----- --- --- --------- --------- ------ ----- ----- ----- ----- ----- ----- ----- ---- ---------------------
+contig_5:315357-316055  -            233 1713391at2           -             97   1.2e-06   30.2   0.0   1   1   1.2e-09   2.4e-05   26.0   0.0     3    96   114   230   112   231 0.71 contig_5_459 # 315357 # 316055 # 1 # ID=24_459;partial=00;start_type=ATG;rbs_motif=None;rbs_spacer=None;gc_cont=0.504
+contig_10:390272-391948 -            559 1713391at2           -             97     0.033   15.9   0.0   1   2      0.92   1.9e+04   -2.5   0.0    41    61    44    65    43    68 0.78 contig_10_536 # 390272 # 391948 # -1 # ID=80_536;partial=00;start_type=ATG;rbs_motif=None;rbs_spacer=None;gc_cont=0.555
+contig_10:390272-391948 -            559 1713391at2           -             97     0.033   15.9   0.0   2   2   5.8e-06      0.12   14.2   0.0    24    62   320   357   307   377 0.83 contig_10_536 # 390272 # 391948 # -1 # ID=80_536;partial=00;start_type=ATG;rbs_motif=None;rbs_spacer=None;gc_cont=0.555
+#
+# Program:         hmmsearch
+# Version:         3.1b2 (February 2015)
+# Pipeline mode:   SEARCH
+# Query file:      /opt/busco_db/bacteria_odb10/hmms/1713391at2.hmm
+# Target file:     flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+# Option settings: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1713391at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1713391at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa 
+# Current dir:     /array1/falmeida/NF_WORK/17/da9f3cbcae0ef622d7976e52c3d2a7
+# Date:            Mon Feb 26 20:42:20 2024
+# [ok]

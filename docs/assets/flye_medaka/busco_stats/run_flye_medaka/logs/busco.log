@@ -1,0 +1,295 @@
+2024-02-26 20:37:05 DEBUG:busco.run_BUSCO	Command line: /opt/conda/envs/mpgap-3.2/bin/busco -i flye_medaka_consensus.fa -m genome -l /opt/busco_db/bacteria_odb10 -o flye_medaka/busco_stats/run_flye_medaka
+2024-02-26 20:37:05 INFO:busco.run_BUSCO	***** Start a BUSCO v5.6.1 analysis, current time: 02/26/2024 20:37:05 *****
+2024-02-26 20:37:05 DEBUG:busco.ConfigManager	Getting config file
+2024-02-26 20:37:05 INFO:busco.ConfigManager	Configuring BUSCO with local environment
+2024-02-26 20:37:05 INFO:busco.BuscoConfig	Running genome mode
+2024-02-26 20:37:05 INFO:busco.BuscoDownloadManager	Downloading information on latest versions of BUSCO data...
+2024-02-26 20:37:07 DEBUG:busco.BuscoConfig	State of BUSCO config before run:
+2024-02-26 20:37:07 DEBUG:busco.BuscoConfig	{'_allow_no_value': False,
+ '_comment_prefixes': ('#', ';'),
+ '_converters': <configparser.ConverterMapping object at 0x7f58cc0c5430>,
+ '_defaults': {},
+ '_delimiters': ('=', ':'),
+ '_dict': <class 'dict'>,
+ '_empty_lines_in_values': True,
+ '_inline_comment_prefixes': (),
+ '_input_filepath': '/array1/falmeida/NF_WORK/17/da9f3cbcae0ef622d7976e52c3d2a7/flye_medaka_consensus.fa',
+ '_interpolation': <configparser.BasicInterpolation object at 0x7f5995fc4130>,
+ '_mode': 'genome',
+ '_optcre': re.compile('\n        (?P<option>.*?)                    # very permissive!\n        \\s*(?P<vi>=|:)\\s*              # any number of space/tab,\n                                           # followed by any of t, re.VERBOSE),
+ '_proxies': {'DEFAULT': <Section: DEFAULT>,
+              'augustus': <Section: augustus>,
+              'bbtools': <Section: bbtools>,
+              'busco_run': <Section: busco_run>,
+              'etraining': <Section: etraining>,
+              'gff2gbSmallDNA.pl': <Section: gff2gbSmallDNA.pl>,
+              'hmmsearch': <Section: hmmsearch>,
+              'makeblastdb': <Section: makeblastdb>,
+              'metaeuk': <Section: metaeuk>,
+              'miniprot': <Section: miniprot>,
+              'new_species.pl': <Section: new_species.pl>,
+              'optimize_augustus.pl': <Section: optimize_augustus.pl>,
+              'prodigal': <Section: prodigal>,
+              'sepp': <Section: sepp>,
+              'tblastn': <Section: tblastn>},
+ '_sections': {'augustus': {'command': '', 'path': ''},
+               'bbtools': {'command': '', 'path': ''},
+               'busco_run': {'auto-lineage': 'False',
+                             'auto-lineage-euk': 'False',
+                             'auto-lineage-prok': 'False',
+                             'batch_mode': 'False',
+                             'cpu': '1',
+                             'datasets_version': 'odb10',
+                             'download_base_url': 'https://busco-data.ezlab.org/v5/data/',
+                             'download_path': '/array1/falmeida/NF_WORK/17/da9f3cbcae0ef622d7976e52c3d2a7/busco_downloads',
+                             'force': 'False',
+                             'in': '/array1/falmeida/NF_WORK/17/da9f3cbcae0ef622d7976e52c3d2a7/flye_medaka_consensus.fa',
+                             'lineage_dataset': '/opt/busco_db/bacteria_odb10',
+                             'main_out': 'flye_medaka/busco_stats/run_flye_medaka',
+                             'mode': 'genome',
+                             'offline': 'False',
+                             'opt-out-run-stats': 'False',
+                             'out': 'flye_medaka/busco_stats/run_flye_medaka',
+                             'out_path': '/array1/falmeida/NF_WORK/17/da9f3cbcae0ef622d7976e52c3d2a7',
+                             'quiet': 'False',
+                             'restart': 'False',
+                             'skip_bbtools': 'False',
+                             'tar': 'False',
+                             'use_augustus': 'False',
+                             'use_miniprot': 'False'},
+               'etraining': {'command': '', 'path': ''},
+               'gff2gbSmallDNA.pl': {'command': '', 'path': ''},
+               'hmmsearch': {'command': '', 'path': ''},
+               'makeblastdb': {'command': '', 'path': ''},
+               'metaeuk': {'command': '', 'path': ''},
+               'miniprot': {'command': '', 'path': ''},
+               'new_species.pl': {'command': '', 'path': ''},
+               'optimize_augustus.pl': {'command': '', 'path': ''},
+               'prodigal': {'command': '', 'path': ''},
+               'sepp': {'command': '', 'path': ''},
+               'tblastn': {'command': '', 'path': ''}},
+ '_strict': True,
+ 'conf_file': 'local environment',
+ 'default_section': 'DEFAULT',
+ 'downloader': <busco.BuscoDownloadManager.BuscoDownloadManager object at 0x7f59960caf10>,
+ 'main_out': 'flye_medaka/busco_stats/run_flye_medaka',
+ 'params': {'augustus_parameters': None,
+            'augustus_species': None,
+            'auto-lineage': False,
+            'auto-lineage-euk': False,
+            'auto-lineage-prok': False,
+            'config_file': None,
+            'contig_break': None,
+            'cpu': None,
+            'datasets_version': None,
+            'download': '==SUPPRESS==',
+            'download_base_url': None,
+            'download_path': None,
+            'evalue': None,
+            'force': False,
+            'help': '==SUPPRESS==',
+            'in': 'flye_medaka_consensus.fa',
+            'limit': None,
+            'lineage_dataset': '/opt/busco_db/bacteria_odb10',
+            'list_datasets': '==SUPPRESS==',
+            'long': False,
+            'metaeuk_parameters': None,
+            'metaeuk_rerun_parameters': None,
+            'mode': 'genome',
+            'offline': False,
+            'opt-out-run-stats': False,
+            'out': 'flye_medaka/busco_stats/run_flye_medaka',
+            'out_path': None,
+            'quiet': False,
+            'restart': False,
+            'scaffold_composition': False,
+            'skip_bbtools': False,
+            'tar': False,
+            'use_augustus': False,
+            'use_miniprot': False,
+            'version': '==SUPPRESS=='},
+ 'run_stats': {'batch_mode': False,
+               'lineage_dataset': ['/opt/busco_db/bacteria_odb10'],
+               'mode': 'genome'}}
+2024-02-26 20:37:07 INFO:busco.BuscoRunner	Input file is /array1/falmeida/NF_WORK/17/da9f3cbcae0ef622d7976e52c3d2a7/flye_medaka_consensus.fa
+2024-02-26 20:37:07 INFO:busco.BuscoDownloadManager	Using local lineages directory /opt/busco_db/bacteria_odb10
+2024-02-26 20:37:08 DEBUG:busco.analysis.BuscoAnalysis	Check all required tools are accessible...
+2024-02-26 20:37:08 DEBUG:busco.analysis.BuscoAnalysis	Checking dataset for HMM profiles
+2024-02-26 20:37:08 INFO:busco.analysis.BuscoAnalysis	Running BUSCO using lineage dataset bacteria_odb10 (prokaryota, 2024-01-08)
+2024-02-26 20:37:08 DEBUG:busco.busco_tools.base	Tool: bbtools
+2024-02-26 20:37:08 DEBUG:busco.busco_tools.base	Version: 39.01
+2024-02-26 20:37:08 INFO:busco.busco_tools.Toolset	Running 1 job(s) on bbtools, starting at 02/26/2024 20:37:08
+2024-02-26 20:37:08 DEBUG:busco.busco_tools.Toolset	cmd call: stats.sh format=2 in=/array1/falmeida/NF_WORK/17/da9f3cbcae0ef622d7976e52c3d2a7/flye_medaka_consensus.fa n=10
+2024-02-26 20:37:09 INFO:busco.busco_tools.Toolset	[bbtools]	1 of 1 task(s) completed
+2024-02-26 20:37:09 INFO:busco.analysis.GenomeAnalysis	***** Run Prodigal on input to predict and extract genes *****
+2024-02-26 20:37:09 DEBUG:busco.busco_tools.base	Tool: prodigal
+2024-02-26 20:37:09 DEBUG:busco.busco_tools.base	Version: 2.6.3
+2024-02-26 20:37:09 INFO:busco.busco_tools.prodigal	Running Prodigal with genetic code 11 in single mode
+2024-02-26 20:37:09 INFO:busco.busco_tools.Toolset	Running 1 job(s) on prodigal, starting at 02/26/2024 20:37:09
+2024-02-26 20:37:10 DEBUG:busco.busco_tools.Toolset	cmd call: prodigal -p single -f gff -g 11 -a flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/tmp/prodigal_mode_single_code_11.faa -d flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/tmp/prodigal_mode_single_code_11.fna -i /array1/falmeida/NF_WORK/17/da9f3cbcae0ef622d7976e52c3d2a7/flye_medaka_consensus.fa
+2024-02-26 20:39:10 INFO:busco.busco_tools.Toolset	[prodigal]	1 of 1 task(s) completed
+2024-02-26 20:39:10 DEBUG:busco.busco_tools.prodigal	Coding density is 0.6489875319552391
+2024-02-26 20:39:10 INFO:busco.busco_tools.prodigal	Running Prodigal with genetic code 4 in single mode
+2024-02-26 20:39:10 INFO:busco.busco_tools.Toolset	Running 1 job(s) on prodigal, starting at 02/26/2024 20:39:10
+2024-02-26 20:39:10 DEBUG:busco.busco_tools.Toolset	cmd call: prodigal -p single -f gff -g 4 -a flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/tmp/prodigal_mode_single_code_4.faa -d flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/tmp/prodigal_mode_single_code_4.fna -i /array1/falmeida/NF_WORK/17/da9f3cbcae0ef622d7976e52c3d2a7/flye_medaka_consensus.fa
+2024-02-26 20:42:08 INFO:busco.busco_tools.Toolset	[prodigal]	1 of 1 task(s) completed
+2024-02-26 20:42:08 DEBUG:busco.busco_tools.prodigal	Coding density is 0.7848411951565392
+2024-02-26 20:42:11 INFO:busco.busco_tools.prodigal	Genetic code 4 selected as optimal
+2024-02-26 20:42:11 INFO:busco.analysis.BuscoAnalysis	***** Run HMMER on gene sequences *****
+2024-02-26 20:42:11 DEBUG:busco.busco_tools.base	Tool: hmmsearch
+2024-02-26 20:42:11 DEBUG:busco.busco_tools.base	Version: 3.1
+2024-02-26 20:42:11 INFO:busco.busco_tools.Toolset	Running 124 job(s) on hmmsearch, starting at 02/26/2024 20:42:11
+2024-02-26 20:42:13 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1009041at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1009041at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:13 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1024388at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1024388at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:13 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1036075at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1036075at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:13 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1043239at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1043239at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:13 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1049662at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1049662at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:13 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1054741at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1054741at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:14 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1069591at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1069591at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:14 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1074831at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1074831at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:14 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1080436at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1080436at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:14 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1093223at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1093223at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:14 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1132353at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1132353at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:14 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1151822at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1151822at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:15 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1166299at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1166299at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:15 INFO:busco.busco_tools.Toolset	[hmmsearch]	13 of 124 task(s) completed
+2024-02-26 20:42:15 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1211060at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1211060at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:15 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1257362at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1257362at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:15 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1266295at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1266295at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:15 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1270636at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1270636at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:15 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1272633at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1272633at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:15 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1346419at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1346419at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:15 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1395197at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1395197at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:15 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1398618at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1398618at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:16 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1419877at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1419877at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:16 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/143460at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/143460at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:16 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1456375at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1456375at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:16 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1470978at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1470978at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:16 INFO:busco.busco_tools.Toolset	[hmmsearch]	25 of 124 task(s) completed
+2024-02-26 20:42:16 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1490892at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1490892at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:16 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1491686at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1491686at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:16 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1497415at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1497415at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:16 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1502854at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1502854at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:17 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1504821at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1504821at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:17 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1505038at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1505038at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:18 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1540940at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1540940at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:18 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1567535at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1567535at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:18 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1572673at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1572673at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:18 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1574817at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1574817at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:18 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1590629at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1590629at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:19 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1592033at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1592033at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:19 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1595498at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1595498at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:19 INFO:busco.busco_tools.Toolset	[hmmsearch]	38 of 124 task(s) completed
+2024-02-26 20:42:19 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1623045at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1623045at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:19 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1661836at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1661836at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:19 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1666043at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1666043at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:19 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1671455at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1671455at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:19 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1674344at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1674344at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:19 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1676462at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1676462at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:19 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1692188at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1692188at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:20 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1698718at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1698718at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:20 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1701531at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1701531at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:20 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1702697at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1702697at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:20 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1707228at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1707228at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:20 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1713391at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1713391at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:20 INFO:busco.busco_tools.Toolset	[hmmsearch]	50 of 124 task(s) completed
+2024-02-26 20:42:20 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1720952at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1720952at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:20 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1758685at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1758685at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:20 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1760144at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1760144at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:20 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1766414at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1766414at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:20 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1772647at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1772647at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:21 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1776954at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1776954at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:21 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1786618at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1786618at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:21 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1799923at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1799923at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:21 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/182107at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/182107at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:21 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1822215at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1822215at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:21 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1822695at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1822695at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:21 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1827295at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1827295at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:23 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1827334at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1827334at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:23 INFO:busco.busco_tools.Toolset	[hmmsearch]	63 of 124 task(s) completed
+2024-02-26 20:42:23 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1830156at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1830156at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:23 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1838961at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1838961at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:23 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1842956at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1842956at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:23 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1844275at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1844275at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:23 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1846503at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1846503at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:23 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1874945at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1874945at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:23 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1890943at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1890943at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:23 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1893906at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1893906at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:24 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1904463at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1904463at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:24 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1906715at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1906715at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:24 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1932144at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1932144at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:24 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1937072at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1937072at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:24 INFO:busco.busco_tools.Toolset	[hmmsearch]	75 of 124 task(s) completed
+2024-02-26 20:42:24 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1937493at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1937493at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:24 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1940575at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1940575at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:24 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1949059at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1949059at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:24 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1959318at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1959318at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:24 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1963491at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1963491at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:24 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1971380at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1971380at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:25 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1978865at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1978865at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:25 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1990141at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1990141at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:25 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/1990650at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/1990650at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:25 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/2005443at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/2005443at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:25 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/2012682at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/2012682at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:25 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/2035880at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/2035880at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:25 INFO:busco.busco_tools.Toolset	[hmmsearch]	87 of 124 task(s) completed
+2024-02-26 20:42:25 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/2040741at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/2040741at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:25 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/2046660at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/2046660at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:25 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/2063644at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/2063644at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:25 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/2066663at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/2066663at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:25 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/2075502at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/2075502at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:26 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/219876at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/219876at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:27 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/223233at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/223233at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:27 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/226836at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/226836at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:27 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/232152at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/232152at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:27 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/26038at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/26038at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:28 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/267682at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/267682at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:28 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/353391at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/353391at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:28 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/384865at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/384865at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:28 INFO:busco.busco_tools.Toolset	[hmmsearch]	100 of 124 task(s) completed
+2024-02-26 20:42:28 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/402899at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/402899at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:28 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/430176at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/430176at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:28 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/4421at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/4421at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:29 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/462069at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/462069at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:29 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/469058at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/469058at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:29 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/504464at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/504464at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:29 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/505485at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/505485at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:30 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/533698at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/533698at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:30 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/662686at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/662686at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:30 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/665824at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/665824at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:30 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/761140at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/761140at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:30 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/776861at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/776861at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:30 INFO:busco.busco_tools.Toolset	[hmmsearch]	112 of 124 task(s) completed
+2024-02-26 20:42:30 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/837522at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/837522at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:31 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/841869at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/841869at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:31 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/874197at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/874197at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:31 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/91428at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/91428at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:31 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/923547at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/923547at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:31 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/932854at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/932854at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:32 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/932993at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/932993at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:32 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/95696at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/95696at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:32 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/9601at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/9601at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:33 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/961486at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/961486at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:33 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/981870at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/981870at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:33 DEBUG:busco.busco_tools.Toolset	cmd call: hmmsearch --domtblout flye_medaka/busco_stats/run_flye_medaka/run_bacteria_odb10/hmmer_output/984717at2.out --cpu 1 /opt/busco_db/bacteria_odb10/hmms/984717at2.hmm flye_medaka/busco_stats/run_flye_medaka/prodigal_output/predicted_genes/predicted.faa
+2024-02-26 20:42:33 INFO:busco.busco_tools.Toolset	[hmmsearch]	124 of 124 task(s) completed
+2024-02-26 20:42:33 INFO:busco.busco_tools.hmmer	Results:	C:6.5%[S:6.5%,D:0.0%],F:25.8%,M:67.7%,n:124	   
+
+2024-02-26 20:42:33 INFO:busco.BuscoRunner	
+
+    ---------------------------------------------------
+    |Results from dataset bacteria_odb10               |
+    ---------------------------------------------------
+    |C:6.5%[S:6.5%,D:0.0%],F:25.8%,M:67.7%,n:124       |
+    |8    Complete BUSCOs (C)                          |
+    |8    Complete and single-copy BUSCOs (S)          |
+    |0    Complete and duplicated BUSCOs (D)           |
+    |32    Fragmented BUSCOs (F)                       |
+    |84    Missing BUSCOs (M)                          |
+    |124    Total BUSCO groups searched                |
+    ---------------------------------------------------
+2024-02-26 20:42:33 INFO:busco.BuscoRunner	BUSCO analysis done. Total running time: 326 seconds
+2024-02-26 20:42:33 INFO:busco.BuscoRunner	Results written in flye_medaka/busco_stats/run_flye_medaka
+2024-02-26 20:42:33 INFO:busco.BuscoRunner	For assistance with interpreting the results, please consult the userguide: https://busco.ezlab.org/busco_userguide.html
+
+2024-02-26 20:42:33 INFO:busco.BuscoRunner	Visit this page https://gitlab.com/ezlab/busco#how-to-cite-busco to see how to cite BUSCO
