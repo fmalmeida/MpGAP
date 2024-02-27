@@ -25,7 +25,7 @@ include { wtdbg2 as strategy_2_wtdbg2 } from '../modules/local/LongReads/wtdbg2.
 include { shasta as strategy_2_shasta } from '../modules/local/LongReads/shasta.nf'
 
 // Hifiasm assembler
-include { hifiasm as strategy_2_hifiasm } from '../modules/LongReads/hifiasm.nf'
+include { hifiasm as strategy_2_hifiasm } from '../modules/local/LongReads/hifiasm.nf'
 
 /*
  * Modules for long reads assemblies polishment

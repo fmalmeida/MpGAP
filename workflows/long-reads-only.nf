@@ -25,7 +25,7 @@ include { wtdbg2 } from '../modules/local/LongReads/wtdbg2.nf'
 include { shasta } from '../modules/local/LongReads/shasta.nf'
 
 // Hifiasm assembler
-include { hifiasm } from '../modules/LongReads/hifiasm.nf'
+include { hifiasm } from '../modules/local/LongReads/hifiasm.nf'
 
 /*
  * Modules for long reads assemblies polishment
