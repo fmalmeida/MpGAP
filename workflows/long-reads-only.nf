@@ -24,6 +24,9 @@ include { wtdbg2 } from '../modules/LongReads/wtdbg2.nf'
 // Shasta assembler
 include { shasta } from '../modules/LongReads/shasta.nf'
 
+// Hifiasm assembler
+include { hifiasm } from '../modules/LongReads/hifiasm.nf'
+
 /*
  * Modules for long reads assemblies polishment
  */
@@ -56,6 +59,7 @@ workflow LONGREADS_ONLY {
       LONGREADS_OUTPUTS['MEDAKA']      = Channel.empty()
       LONGREADS_OUTPUTS['NANOPOLISH']  = Channel.empty()
       LONGREADS_OUTPUTS['GCPP']        = Channel.empty()
+      LONGREADS_OUTPUTS['HIFIASM']     = Channel.empty()
 
       /*
        * Canu
@@ -105,13 +109,22 @@ workflow LONGREADS_ONLY {
         LONGREADS_OUTPUTS['WTDBG2'] = wtdbg2.out[1]
       }
 
+      /*
+       *Hifiasm
+       */
+      if (!params.skip_hifiasm) {
+        hifiasm(input_tuple)
+        LONGREADS_OUTPUTS['HIFIASM'] = hifiasm.out[1]
+      }
+
       // gather assemblies for polishing steps
       LONGREADS_OUTPUTS['RAW_ASSEMBLIES'] = LONGREADS_OUTPUTS['CANU']
                                             .mix(LONGREADS_OUTPUTS['UNICYCLER'], 
                                                  LONGREADS_OUTPUTS['FLYE'] , 
                                                  LONGREADS_OUTPUTS['RAVEN'], 
                                                  LONGREADS_OUTPUTS['WTDBG2'], 
-                                                 LONGREADS_OUTPUTS['SHASTA'])
+                                                 LONGREADS_OUTPUTS['SHASTA'],
+                                                 LONGREADS_OUTPUTS['HIFIASM'])
                                             .combine(input_tuple, by: 0)
 
       /*

@@ -24,6 +24,9 @@ include { wtdbg2 as strategy_2_wtdbg2 } from '../modules/LongReads/wtdbg2.nf'
 // Shasta assembler
 include { shasta as strategy_2_shasta } from '../modules/LongReads/shasta.nf'
 
+// Hifiasm assembler
+include { hifiasm as strategy_2_hifiasm } from '../modules/LongReads/hifiasm.nf'
+
 /*
  * Modules for long reads assemblies polishment
  */
@@ -75,6 +78,7 @@ workflow HYBRID {
       LONGREADS_OUTPUTS['MEDAKA']      = Channel.empty()
       LONGREADS_OUTPUTS['NANOPOLISH']  = Channel.empty()
       LONGREADS_OUTPUTS['GCPP']        = Channel.empty()
+      LONGREADS_OUTPUTS['HIFIASM']     = Channel.empty()
 
       def HYBRID_OUTPUTS = [:]
       HYBRID_OUTPUTS['UNICYCLER']     = Channel.empty()
@@ -164,12 +168,22 @@ workflow HYBRID {
       }
 
       /*
+       *Hifiasm
+       */
+      if (!params.skip_hifiasm) {
+        strategy_2_hifiasm(input_branches.secondary)
+        LONGREADS_OUTPUTS['HIFIASM'] = strategy_2_hifiasm.out[1]
+      }
+
+      /*
        * wtdbg2
        */
       if (!params.skip_wtdbg2) {
         strategy_2_wtdbg2(input_branches.secondary)
         LONGREADS_OUTPUTS['WTDBG2'] = strategy_2_wtdbg2.out[1]
       }
+
+
 
       // Get long reads assemblies
       LONGREADS_OUTPUTS['RAW_ASSEMBLIES'] = 
@@ -179,7 +193,8 @@ workflow HYBRID {
           LONGREADS_OUTPUTS['UNICYCLER'],
           LONGREADS_OUTPUTS['RAVEN'],
           LONGREADS_OUTPUTS['WTDBG2'],
-          LONGREADS_OUTPUTS['SHASTA']
+          LONGREADS_OUTPUTS['SHASTA'],
+          LONGREADS_OUTPUTS['HIFIASM']
         )
         .combine(input_tuple, by: 0)
 
@@ -219,33 +234,14 @@ workflow HYBRID {
       } else {
         ch_sreads_polish = LONGREADS_OUTPUTS['RAW_ASSEMBLIES'].mix(LONGREADS_OUTPUTS['POLISHED_ASSEMBLIES'])
       }
+      strategy_2_pilon( ch_sreads_polish )
+      strategy_2_polypolish( ch_sreads_polish )
 
-      /*
-       * pilon?
-       */
-      if (!params.skip_pilon) { 
-        strategy_2_pilon( ch_sreads_polish )
-        HYBRID_OUTPUTS['SREADS_POLISH'] = HYBRID_OUTPUTS['SREADS_POLISH'].mix( strategy_2_pilon.out[1] )
-      }
-
-      /*
-       * polypolisher?
-       */
-      if (!params.skip_polypolish) { 
-        strategy_2_polypolish( ch_sreads_polish )
-        HYBRID_OUTPUTS['SREADS_POLISH'] = HYBRID_OUTPUTS['SREADS_POLISH'].mix( strategy_2_polypolish.out[1] )
-      }
-
-      /*
-       * Is there anything?
-       */
-      if ( !params.skip_pilon || !params.skip_polypolish) { 
-        HYBRID_OUTPUTS['SREADS_POLISH'] = HYBRID_OUTPUTS['SREADS_POLISH'].combine( input_tuple, by: 0 )
-      }
-
-      /*
-       * Finalize workflow
-       */
+      
+      HYBRID_OUTPUTS['SREADS_POLISH'] = 
+        strategy_2_pilon.out[1].mix(
+          strategy_2_polypolish.out[1]
+        ).combine( input_tuple, by: 0 )
 
       // Gather assemblies for qc
       HYBRID_OUTPUTS['ALL_RESULTS'] = 
