@@ -38,6 +38,7 @@ nextflow run fmalmeida/mpgap \
     --skip_unicycler \
     --flye_additional_parameters ' --keep-haplotypes ' \
     --quast_additional_parameters ' --eukaryote ' \
+    --skip_hifiasm \
     --max_cpus 20 \
     --max_memory '40.GB'
 ```
