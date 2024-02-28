@@ -23,7 +23,7 @@ The pipeline wraps up the following tools and analyses:
 
 | Software | Analysis |
 | :------- | :------- |
-|  [Canu](https://github.com/marbl/canu), [Flye](https://github.com/fenderglass/Flye), [Unicycler](https://github.com/rrwick/Unicycler), [Raven](https://github.com/lbcb-sci/raven), [Shasta](https://github.com/chanzuckerberg/shasta) and [wtdbg2](https://github.com/ruanjue/wtdbg2) | Long reads assembly |
+|  [Hifiasm](https://github.com/chhylp123/hifiasm), [Canu](https://github.com/marbl/canu), [Flye](https://github.com/fenderglass/Flye), [Unicycler](https://github.com/rrwick/Unicycler), [Raven](https://github.com/lbcb-sci/raven), [Shasta](https://github.com/chanzuckerberg/shasta) and [wtdbg2](https://github.com/ruanjue/wtdbg2) | Long reads assembly |
 | [Haslr](https://github.com/vpc-ccg/haslr), [Unicycler](https://github.com/rrwick/Unicycler) and [SPAdes](https://github.com/ablab/spades) | Hybrid assembly |
 | [Shovill](https://github.com/tseemann/shovill), [Unicycler](https://github.com/rrwick/Unicycler), [Megahit](https://github.com/voutcn/megahit) and [SPAdes](https://github.com/ablab/spades) | Short reads assembly |
 | [Nanopolish](https://github.com/jts/nanopolish), [Medaka](https://github.com/nanoporetech/medaka), [gcpp](https://github.com/PacificBiosciences/gcpp), [Polypolish](https://github.com/rrwick/Polypolish) and [Pilon](https://github.com/broadinstitute/pilon) | Assembly polishing |

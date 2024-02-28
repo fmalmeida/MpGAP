@@ -243,6 +243,13 @@
                     "hidden": true,
                     "fa_icon": "fas fa-ban"
                 },
+                "skip_hifiasm": {
+                    "type": "boolean",
+                    "description": "Skip Hifiasm assembler",
+                    "help_text": "Hifiasm is a long reads only assembler. Can be use for hybrid assemblies in strategy 2.",
+                    "hidden": true,
+                    "fa_icon": "fas fa-ban"
+                },
                 "skip_pilon": {
                     "type": "boolean",
                     "description": "Skip pilon polisher",
@@ -338,6 +345,13 @@
                     "type": "string",
                     "description": "Shasta additional parameters",
                     "help_text": "Must be given as shown in shasta manual. E.g. \" --Reads.minReadLength 5000 \", inside quotes and separated by spaces",
+                    "hidden": true,
+                    "fa_icon": "fas fa-quote-left"
+                },
+                "hifiasm_additional_parameters": {
+                    "type": "string",
+                    "description": "Hifiasm additional parameters",
+                    "help_text": "Must be giveen as shown in hifiasm manual. E.g. \" --ul ul.fq.gz \", inside quotes and separated by spaces",
                     "hidden": true,
                     "fa_icon": "fas fa-quote-left"
                 }

@@ -17,8 +17,8 @@ RUN medaka --help
 
 # fix permissions
 USER root
-RUN mkdir -p $CONDA_PREFIX/envs/mpgap-3.2/lib/python3.8/site-packages/medaka && \
-      chmod -R 777 $CONDA_PREFIX/envs/mpgap-3.2/lib/python3.8/site-packages/medaka
+RUN mkdir -p $CONDA_PREFIX/envs/mpgap-3.2/lib/python3.9/site-packages/medaka && \
+      chmod -R 777 $CONDA_PREFIX/envs/mpgap-3.2/lib/python3.9/site-packages/medaka
 
 # pre-download BUSCO bacteria database
 RUN mkdir -p /opt/busco_db/ && \

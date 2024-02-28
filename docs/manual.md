@@ -42,6 +42,7 @@ The pipeline is capable of assembling Illumina, ONT and Pacbio reads in three ma
     + Raven
     + Shasta
     + wtdbg2
+    + hifiasm
 
 3. **Hybrid assemblies (using both short and long reads)**
     + Unicycler
@@ -162,6 +163,8 @@ However, they can also be set in a sample-specific manner. If a sample has a val
 | `--shasta_additional_parameters`              | :material-close: | False | Passes additional parameters for Raven assembler. E.g. `" --Assembly.detangleMethod 1 "`. Must be given as shown in Shasta's manual |
 | `--skip_wtdbg2`              | :material-close: | False | Skip the execution of wtdbg2 |
 | `--wtdbg2_additional_parameters`              | :material-close: | False | Passes additional parameters for wtdbg2 assembler. E.g. `" -k 250 "`. Must be given as shown in wtdbg2's manual. Remember, the script called for wtdbg2 is `wtdbg2.pl` thus you must give the parameters used by it |
+| `--skip_hifiasm`              | :material-close: | False | Skip the execution of hifiasm |
+| `--hifiasm_additional_parameters`              | :material-close: | False | Passes additional parameters for hifiasm assembler. E.g. `" --ul ul.fq.gz "`. Must be given as shown in hifiasm's manual |
 | `--skip_unicycler`              | :material-close: | False | Skip the execution of Unicycler |
 | `--unicycler_additional_parameters`              | :material-close: | False | Passes additional parameters for Unicycler assembler. E.g. `" --mode conservative --no_correct "`. Must be given as shown in Unicycler's manual |
 | `--skip_spades`              | :material-close: | False | Skip the execution of SPAdes |

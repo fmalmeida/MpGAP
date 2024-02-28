@@ -24,6 +24,9 @@ include { wtdbg2 as strategy_2_wtdbg2 } from '../modules/local/LongReads/wtdbg2.
 // Shasta assembler
 include { shasta as strategy_2_shasta } from '../modules/local/LongReads/shasta.nf'
 
+// Hifiasm assembler
+include { hifiasm as strategy_2_hifiasm } from '../modules/local/LongReads/hifiasm.nf'
+
 /*
  * Modules for long reads assemblies polishment
  */
@@ -75,6 +78,7 @@ workflow HYBRID {
       LONGREADS_OUTPUTS['MEDAKA']      = Channel.empty()
       LONGREADS_OUTPUTS['NANOPOLISH']  = Channel.empty()
       LONGREADS_OUTPUTS['GCPP']        = Channel.empty()
+      LONGREADS_OUTPUTS['HIFIASM']     = Channel.empty()
 
       def HYBRID_OUTPUTS = [:]
       HYBRID_OUTPUTS['UNICYCLER']     = Channel.empty()
@@ -174,6 +178,14 @@ workflow HYBRID {
       }
 
       /*
+       *Hifiasm
+       */
+      if (!params.skip_hifiasm) {
+        strategy_2_hifiasm(input_branches.secondary)
+        LONGREADS_OUTPUTS['HIFIASM'] = strategy_2_hifiasm.out[1]
+      }
+
+      /*
        * wtdbg2
        */
       if (!params.skip_wtdbg2) {
@@ -181,6 +193,8 @@ workflow HYBRID {
         LONGREADS_OUTPUTS['WTDBG2'] = strategy_2_wtdbg2.out[1]
         ch_versions_hb = ch_versions_hb.mix(strategy_2_wtdbg2.out.versions.first())
       }
+
+
 
       // Get long reads assemblies
       LONGREADS_OUTPUTS['RAW_ASSEMBLIES'] = 
@@ -190,7 +204,8 @@ workflow HYBRID {
           LONGREADS_OUTPUTS['UNICYCLER'],
           LONGREADS_OUTPUTS['RAVEN'],
           LONGREADS_OUTPUTS['WTDBG2'],
-          LONGREADS_OUTPUTS['SHASTA']
+          LONGREADS_OUTPUTS['SHASTA'],
+          LONGREADS_OUTPUTS['HIFIASM']
         )
         .combine(input_tuple, by: 0)
 

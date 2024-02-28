@@ -55,7 +55,7 @@ dependencies:
 - bioconda::csvtk=0.23.0
 - bioconda::wtdbg=2.5
 - bioconda::medaka=1.11.1
-
+- bioconda::hifiasm=0.19.8
 # for medaka > 1.4
 - bioconda::samtools>=1.11
 - bioconda::tabix>=1.11
