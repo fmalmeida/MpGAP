@@ -21,7 +21,7 @@ process haslr_hybrid {
   additional_params = (params.haslr_additional_parameters) ? params.haslr_additional_parameters : ""
   """
   # run haslr
-  haslr.py \\
+  /usr/local/bin/haslr.py \\
       -t $task.cpus \\
       -o haslr \\
       -g ${genome_size} \\
@@ -31,7 +31,15 @@ process haslr_hybrid {
       -s ${paired_reads} ${single_reads} 
 
   # rename results
-  cp haslr/*/asm.final.fa haslr/haslr_assembly.fa
+  if [[ -f haslr/*/asm.final.fa ]]
+  then
+    cp haslr/*/asm.final.fa haslr/haslr_assembly.fa
+  else
+    echo 'Haslr did not generate any assembly. This may be due the reads, but also can be due haslr tool itself.'
+    echo 'See this issue: https://github.com/vpc-ccg/haslr/issues/4'
+    echo 'If your you know your reads are good, then consider running the pipeline without haslr, --skip_haslr.'
+    exit 2
+  fi
 
   # get version
   cat <<-END_VERSIONS > versions.yml
