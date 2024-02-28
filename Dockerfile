@@ -28,6 +28,13 @@ RUN mkdir -p /opt/busco_db/ && \
       rm bacteria.tar.gz && \
       chmod -R 777 /opt/busco_db/
 
+# build haslr tool due problems with conda version
+# conda only used to install dependencies
+RUN git clone https://github.com/vpc-ccg/haslr.git && \
+      cd haslr && \
+      make && \
+      ln -rs bin/* /usr/local/bin
+
 # install ps
 RUN apt-get update && apt-get install -y procps && rm -rf /var/lib/apt/lists/*
 

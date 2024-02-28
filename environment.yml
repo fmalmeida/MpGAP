@@ -17,6 +17,7 @@ dependencies:
 
 ## anaconda packages
 - anaconda::python=3.9
+- anaconda::git
 
 ## conda-forge packages
 - conda-forge::gcc
