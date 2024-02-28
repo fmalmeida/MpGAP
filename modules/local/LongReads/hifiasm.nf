@@ -25,5 +25,15 @@ process hifiasm {
 
   # convert to fasta
   awk '/^S/{print ">"\$2"\\n"\$3}' hifiasm.bp.p_ctg.gfa > hifiasm_assembly.fasta
+
+  # check if assembly was produced
+  if [[ -s hifiasm_assembly.fasta ]]
+  then
+    echo 'assembly: ok'
+  else
+    echo 'Assembly is empty. Are your reads really hifi?'
+    echo 'Consider reviewing your reads or using --skip_hifiasm.'
+    exit 2
+  fi
   """
 }
