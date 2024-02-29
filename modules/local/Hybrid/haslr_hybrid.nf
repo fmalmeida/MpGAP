@@ -21,7 +21,7 @@ process haslr_hybrid {
   additional_params = (params.haslr_additional_parameters) ? params.haslr_additional_parameters : ""
   """
   # run haslr
-  /usr/local/bin/haslr.py \\
+  /opt/haslr/bin/haslr.py \\
       -t $task.cpus \\
       -o haslr \\
       -g ${genome_size} \\
