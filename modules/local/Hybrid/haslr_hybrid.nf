@@ -35,9 +35,14 @@ process haslr_hybrid {
   then
     cp haslr/*/asm.final.fa haslr/haslr_assembly.fa
   else
+    echo
+    echo
+    echo 'ERROR:'
     echo 'Haslr did not generate any assembly. This may be due the reads, but also can be due haslr tool itself.'
     echo 'See this issue: https://github.com/vpc-ccg/haslr/issues/4'
     echo 'If your you know your reads are good, then consider running the pipeline without haslr, --skip_haslr.'
+    echo
+    echo
     exit 2
   fi
 

@@ -31,8 +31,13 @@ process hifiasm {
   then
     echo 'assembly: ok'
   else
+    echo
+    echo
+    echo 'ERROR:'
     echo 'Assembly is empty. Are your reads really hifi?'
     echo 'Consider reviewing your reads or using --skip_hifiasm.'
+    echo
+    echo
     exit 2
   fi
   """
