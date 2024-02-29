@@ -31,7 +31,7 @@ process haslr_hybrid {
       -s ${paired_reads} ${single_reads} 
 
   # rename results
-  if [[ -f haslr/*/asm.final.fa ]]
+  if [ -f haslr/*/asm.final.fa ]
   then
     cp haslr/*/asm.final.fa haslr/haslr_assembly.fa
   else
