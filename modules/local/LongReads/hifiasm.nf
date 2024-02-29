@@ -28,7 +28,7 @@ process hifiasm {
   awk '/^S/{print ">"\$2"\\n"\$3}' hifiasm.bp.p_ctg.gfa > hifiasm_assembly.fasta
 
   # check if assembly was produced
-  if [[ -s hifiasm_assembly.fasta ]]
+  if [ -s hifiasm_assembly.fasta ]
   then
     echo 'assembly: ok'
   else
