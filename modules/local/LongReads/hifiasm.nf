@@ -11,7 +11,8 @@ process hifiasm {
   tuple val(id), file("hifiasm_assembly.fasta"), val('hifiasm') // Gets contigs file
 
   when:
-  (entrypoint == 'longreads_only' || entrypoint == 'hybrid_strategy_2')
+  ( entrypoint == 'longreads_only'  || entrypoint == 'hybrid_strategy_2'  ) &&
+  ( corrected_longreads.toBoolean() || high_quality_longreads.toBoolean() ) // only run hifiasm if reads are at least of good quality
 
   script:
   def additional_params = (params.hifiasm_additional_parameters) ? params.hifiasm_additional_parameters : ""

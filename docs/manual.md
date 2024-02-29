@@ -44,6 +44,10 @@ The pipeline is capable of assembling Illumina, ONT and Pacbio reads in three ma
     + wtdbg2
     + hifiasm
 
+!!! note
+    
+    [Hifiasm](https://github.com/chhylp123/hifiasm) is a software that expect high quality reads as input. Thus, the pipeline only executes this assembler if the either `--corrected_longreads` or `--high_quality_longreads` is used (is true). When true, users can further control it with `--skip_hifiasm` and `--hifiasm_additional_parameters` as all the other assemblers can.
+
 3. **Hybrid assemblies (using both short and long reads)**
     + Unicycler
     + SPAdes
