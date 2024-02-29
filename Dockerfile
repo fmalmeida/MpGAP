@@ -20,16 +20,20 @@ USER root
 RUN mkdir -p $CONDA_PREFIX/envs/mpgap-3.2/lib/python3.9/site-packages/medaka && \
       chmod -R 777 $CONDA_PREFIX/envs/mpgap-3.2/lib/python3.9/site-packages/medaka
 
-# pre-download BUSCO bacteria database
-RUN mkdir -p /opt/busco_db/ && \
-      wget -O /opt/busco_db/bacteria.tar.gz https://busco-data.ezlab.org/v5/data/lineages/bacteria_odb10.2024-01-08.tar.gz && \
-      cd /opt/busco_db/ && \
-      tar zxvf bacteria.tar.gz && \
-      rm bacteria.tar.gz && \
-      chmod -R 777 /opt/busco_db/
-
 # install packages
 RUN apt-get update && apt-get install -y procps zlib1g-dev build-essential && rm -rf /var/lib/apt/lists/*
+
+# create dir
+RUN mkdir -p /opt/busco_db/ && chmod -R 777 /opt/busco_db && chmod 777 /opt
+
+# return user
+USER mambauser
+
+# pre-download BUSCO bacteria database
+RUN wget -O /opt/busco_db/bacteria.tar.gz https://busco-data.ezlab.org/v5/data/lineages/bacteria_odb10.2024-01-08.tar.gz && \
+      cd /opt/busco_db/ && \
+      tar zxvf bacteria.tar.gz && \
+      rm bacteria.tar.gz
 
 # build haslr tool due problems with conda version
 # conda only used to install dependencies
@@ -38,6 +42,3 @@ RUN cd /opt && \
       cd haslr && \
       sed -i 's/-march=native/-msse4.1/g' src/haslr_assemble/lib/spoa.make && \
       /usr/bin/make
-
-# return user
-USER mambauser
