@@ -25,12 +25,6 @@ nextflow pull fmalmeida/mpgap
 
 > All images can be downloaded on the fly, automatically by nextflow, and this is the recommended way to do it.
 
-If you want to download it yourself, you can do it like the following:
-
-```bash
-docker pull fmalmeida/mpgap:v3.2
-```
-
 !!! info "If using singularity"
 
     **Docker and singularity images are downloaded on the fly**. Be sure to properly set `NXF_SINGULARITY_LIBRARYDIR` env variable to a writable directory if using Singularity. This will make that the downloaded images are reusable through different executions. Read more at: https://www.nextflow.io/docs/latest/singularity.html#singularity-docker-hub
@@ -38,12 +32,11 @@ docker pull fmalmeida/mpgap:v3.2
     For example, you would:
 
     ```bash
-    # apply this command to each image
-    # just change the "/" and ":" for "-".
-    # E.g. Image fmalmeida/mpgap:v3.2 becomes fmalmeida-mpgap-v3.2.img
-    singularity pull \
-        --dir $NXF_SINGULARITY_LIBRARYDIR \
-        fmalmeida-mpgap-v3.2.img docker://fmalmeida/mpgap:v3.2
+    export NXF_SINGULARITY_LIBRARYDIR=MY_SINGULARITY_IMAGES    # Set a path to your singularity storage dir
+    export NXF_SINGULARITY_CACHEDIR=MY_SINGULARITY_CACHE       # Set a path to your singularity cache dir
+
+    # run
+    nextflow run fmalmeida/mpgap -profile singularity [options]
     ```
 
 !!! info "If using conda"

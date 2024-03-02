@@ -90,9 +90,8 @@ Therefore, feedbacks are very well welcomed. If you believe that your use case i
         # for singularity
         # remember to properly set NXF_SINGULARITY_LIBRARYDIR
         # read more at https://www.nextflow.io/docs/latest/singularity.html#singularity-docker-hub
-        export NXF_SINGULARITY_LIBRARYDIR=MY_SINGULARITY_IMAGES    # your singularity storage dir
-        export NXF_SINGULARITY_CACHEDIR=MY_SINGULARITY_CACHE       # your singularity cache dir
-        singularity pull --dir $NXF_SINGULARITY_LIBRARYDIR fmalmeida-mpgap-v3.2.img docker://fmalmeida/mpgap:v3.2
+        export NXF_SINGULARITY_LIBRARYDIR=MY_SINGULARITY_IMAGES    # Set a path to your singularity storage dir
+        export NXF_SINGULARITY_CACHEDIR=MY_SINGULARITY_CACHE       # Set a path to your singularity cache dir
 
         # run
         nextflow run fmalmeida/mpgap -profile singularity [options]
