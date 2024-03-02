@@ -29,45 +29,19 @@ process quast {
   def busco_lineage = params.busco_lineage ?: '/opt/busco_db/bacteria_odb10'
   busco_lineage     = (busco_lineage.toString().toLowerCase() == 'auto') ? '--auto-lineage' : "-l ${busco_lineage}"
 
-  if (params.selected_profile == "docker" || params.selected_profile == "conda")
-  """
-  # run quast
-  quast.py \\
-      -o ${assembler} \\
-      -t $task.cpus \\
-      ${lreads_param} \\
-      ${paired_param} \\
-      ${single_param} \\
-      --rna-finding \\
-      --min-contig 100 \\
-      $additional_params \\
-      ${contigs}
-  
-  # run busco
-  busco \\
-    -i ${contigs} \\
-    -m genome \\
-    $busco_lineage \\
-    -o ${assembler}/busco_stats/run_${assembler}
-  
-  # save assembly
-  mkdir -p input_assembly
-  cp ${contigs} input_assembly/${contigs}
+  //
+  // scripts
+  //
 
-  # get version
-  cat <<-END_VERSIONS > versions.yml
-  "${task.process}":
-      quast: \$( quast.py --version | tail -n+2 | cut -f 2 -d ' ' )
-      busco: \$( busco --version | cut -f 2 -d ' ' )
-  END_VERSIONS
-  """
-
-  else if (params.selected_profile == "singularity")
+  if (params.selected_profile == "singularity")
   """
   # fix busco usage in singularity
   mkdir -p ~/.quast/busco
   cp -R /opt/conda/envs/mpgap-*/lib/python3.8/site-packages/quast_libs/busco ~/.quast
+  """
 
+  // any case
+  """
   # run quast
   quast.py \\
       -o ${assembler} \\
