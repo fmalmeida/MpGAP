@@ -16,6 +16,17 @@
                     "help_text": "Set path to the YAML samplesheet containing input data for assembly.\n\nPlease read the manual for more information: https://mpgap.readthedocs.io/en/latest/samplesheet.html",
                     "description": "Samplesheet YAML. See https://mpgap.readthedocs.io/en/latest/samplesheet.html"
                 },
+                "organism": {
+                    "type": "string",
+                    "help_text": "Set the organism type of inputs. Bacteria, Eukaryote or Fungus.",
+                    "description": "This modifies the parameters for Quast and BUSCO so that gene prediction and genome assessment use the proper databases.",
+                    "default": "bacteria",
+                    "enum": [
+                        "bacteria",
+                        "eukaryote",
+                        "fungus"
+                    ]
+                },
                 "genome_size": {
                     "type": "string",
                     "description": "Set the expected genome size (E.g. 5.6m; 1.2g). Required by Canu and Haslr.",
@@ -36,7 +47,8 @@
             },
             "required": [
                 "input",
-                "output"
+                "output",
+                "organism"
             ]
         },
         "computational_options": {

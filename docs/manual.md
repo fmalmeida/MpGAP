@@ -86,14 +86,15 @@ Please note that, through the command line, the parameters that are boolean (tru
 
 | <div style="width:180px">Parameter</div> | Required | Default | Description |
 | :--------------------------------------- | :------- | :------ | :---------- |
-| `--input`   | :material-check: | NA      | Path to input [samplesheet](samplesheet.md#) in YAML format |
-| `--output`  | :material-check: | NA      | Directory to store output files                             |
+| `--input`    | :material-check: | NA       | Path to input [samplesheet](samplesheet.md#) in YAML format |
+| `--output`   | :material-check: | NA       | Directory to store output files                             |
+| `--organism` | :material-check: | bacteria | Organism type of inputs, options are: bacteria, eukaryote, fungus. It impacts the datases selected for Quast and BUSCO QC modules. |
 
 ### BUSCO lineage options
 
 | <div style="width:180px">Parameter</div> | Required | Default | Description |
 | :--------------------------------------- | :------- | :------ | :---------- |
-| `--busco_lineage` | :material-close: | bacteria_odb10 | Select a BUSCO lineage for the pipeline to use. |
+| `--busco_lineage` | :material-close: | bacteria_odb10 or eukaryota_odb10 or fungi_obd10 | Select a BUSCO lineage for the pipeline to use. Depends on `--organism`. |
 
 !!! note
 

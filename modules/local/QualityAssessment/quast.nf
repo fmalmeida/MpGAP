@@ -21,13 +21,24 @@ process quast {
   single_param = !(single =~ /input.?/) ? "--single ${single}" : ""
   lreads_param = !(lreads =~ /input.?/) ? "--${lr_type} ${lreads}" : ""
   additional_params = (params.quast_additional_parameters) ? params.quast_additional_parameters : ""
+  if ( additional_params.tokenize(' ').intersect(['--eukaryote', '-e', '--fungus']).size() == 0 ) {
+    if (params.organism == 'eukaryote') { additional_params = additional_params + ' --eukaryote ' }
+    if (params.organism == 'fungus')    { additional_params = additional_params + ' --fungus '    }
+  }
 
   // define prefix for final assemblies
   asm_copy_prefix = id.replaceAll(':', '_') // fixes hybrid prefixes that has a ':'
 
-  // busco lineage
-  def busco_lineage = params.busco_lineage ?: '/opt/busco_db/bacteria_odb10'
-  busco_lineage     = (busco_lineage.toString().toLowerCase() == 'auto') ? '--auto-lineage' : "-l ${busco_lineage}"
+  // busco lineage < bacteria_odb10 / fungi_odb10 / eukaryota_odb10 >
+  def busco_lineage = ''
+  if (!params.busco_lineage) {
+    if (params.organism == 'bacteria')  { busco_lineage = '/opt/busco_db/bacteria_odb10'  }
+    if (params.organism == 'eukaryote') { busco_lineage = '/opt/busco_db/eukaryota_odb10' }
+    if (params.organism == 'fungus')    { busco_lineage = '/opt/busco_db/fungi_odb10'     }
+  } else {
+    busco_lineage = params.busco_lineage
+  }
+  busco_lineage = (busco_lineage.toString().toLowerCase() == 'auto') ? '--auto-lineage' : "-l ${busco_lineage}"
 
   //
   // scripts
