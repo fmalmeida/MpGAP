@@ -93,6 +93,8 @@ Therefore, feedbacks are very well welcomed. If you believe that your use case i
         export NXF_SINGULARITY_LIBRARYDIR=MY_SINGULARITY_IMAGES    # Set a path to your singularity storage dir
         export NXF_SINGULARITY_CACHEDIR=MY_SINGULARITY_CACHE       # Set a path to your singularity cache dir
 
+        # TODO: ADD Information about TMPDIR
+
         # run
         nextflow run fmalmeida/mpgap -profile singularity [options]
         ```
