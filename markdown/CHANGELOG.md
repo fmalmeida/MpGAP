@@ -2,7 +2,7 @@
 
 The tracking for changes started in v2.
 
-## v3.2 -- TBD
+## v3.2 -- [2024-Mar-06]
 
 * Update unicyler to v0.5.0
 * Adjust Pilon polishing module to select how many rounds of polishing to run. Default is 4.
