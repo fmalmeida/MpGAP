@@ -87,11 +87,12 @@ Therefore, feedbacks are very well welcomed. If you believe that your use case i
     * for singularity
 
         ```bash
-        # for singularity
+        # for singularity --> prepare env variables
         # remember to properly set NXF_SINGULARITY_LIBRARYDIR
         # read more at https://www.nextflow.io/docs/latest/singularity.html#singularity-docker-hub
-        export NXF_SINGULARITY_LIBRARYDIR=MY_SINGULARITY_IMAGES    # Set a path to your singularity storage dir
-        export NXF_SINGULARITY_CACHEDIR=MY_SINGULARITY_CACHE       # Set a path to your singularity cache dir
+        export NXF_SINGULARITY_LIBRARYDIR=<path in your machine>    # Set a path to your singularity storage dir
+        export NXF_SINGULARITY_CACHEDIR=<path in your machine>      # Set a path to your singularity cache dir
+        export SINGULARITY_CACHEDIR=<path in your machine>          # Set a path to your singularity cache dir
 
         # TODO: ADD Information about TMPDIR
 

@@ -32,8 +32,10 @@ nextflow pull fmalmeida/mpgap
     For example, you would:
 
     ```bash
-    export NXF_SINGULARITY_LIBRARYDIR=MY_SINGULARITY_IMAGES    # Set a path to your singularity storage dir
-    export NXF_SINGULARITY_CACHEDIR=MY_SINGULARITY_CACHE       # Set a path to your singularity cache dir
+    # prepare env variables
+    export NXF_SINGULARITY_LIBRARYDIR=<path in your machine>    # Set a path to your singularity storage dir
+    export NXF_SINGULARITY_CACHEDIR=<path in your machine>      # Set a path to your singularity cache dir
+    export SINGULARITY_CACHEDIR=<path in your machine>          # Set a path to your singularity cache dir
 
     # run
     nextflow run fmalmeida/mpgap -profile singularity [options]

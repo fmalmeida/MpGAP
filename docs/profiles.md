@@ -32,6 +32,11 @@ If you are using `singularity` and are persistently observing issues downloading
     This is exemplified in the [installation page](installation.md#downloading-docker-images)
 
 ```bash
+# prepare env variables
+export NXF_SINGULARITY_LIBRARYDIR=<path in your machine>    # Set a path to your singularity storage dir
+export NXF_SINGULARITY_CACHEDIR=<path in your machine>      # Set a path to your singularity cache dir
+export SINGULARITY_CACHEDIR=<path in your machine>          # Set a path to your singularity cache dir
+
 # run
 nextflow run fmalmeida/ngs-preprocess -profile singularity [OPTIONS]
 ```
