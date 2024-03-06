@@ -1,0 +1,127 @@
+# BUSCO version is: 5.6.1 
+# The lineage dataset is: bacteria_odb10 (Creation date: 2024-01-08, number of genomes: 4085, number of BUSCOs: 124)
+# Busco id	Status	Sequence	Gene Start	Gene End	Strand	Score	Length	OrthoDB url	Description
+4421at2	Missing
+9601at2	Fragmented	contig	213259	210779	-	233.9	495	https://v10-1.orthodb.org/?query=9601at2	DNA-directed RNA polymerase, subunit 2, hybrid-binding domain
+26038at2	Fragmented	contig	641977	643626	+	123.1	147	https://v10-1.orthodb.org/?query=26038at2	PurM-like, C-terminal domain
+91428at2	Fragmented	contig	942383	939870	-	333.4	418	https://v10-1.orthodb.org/?query=91428at2	Alanine--tRNA ligase
+95696at2	Missing
+143460at2	Missing
+182107at2	Missing
+219876at2	Missing
+223233at2	Fragmented	contig	676780	675839	-	32.0	100	https://v10-1.orthodb.org/?query=223233at2	DNA topoisomerase, type IA
+226836at2	Missing
+232152at2	Missing
+267682at2	Fragmented	contig	501139	500441	-	180.7	171	https://v10-1.orthodb.org/?query=267682at2	Amidophosphoribosyltransferase
+353391at2	Missing
+384865at2	Missing
+402899at2	Fragmented	contig	682594	681791	-	71.9	92	https://v10-1.orthodb.org/?query=402899at2	Tyrosine--tRNA ligase
+430176at2	Fragmented	contig	1154563	1155516	+	383.7	223	https://v10-1.orthodb.org/?query=430176at2	ATPase, F1/V1/A1 complex, alpha/beta subunit, N-terminal domain
+462069at2	Fragmented	contig	427359	428087	+	81.6	105	https://v10-1.orthodb.org/?query=462069at2	Phosphoglycerate kinase
+469058at2	Fragmented	contig	946049	947701	+	162.3	196	https://v10-1.orthodb.org/?query=469058at2	Phenylalanine--tRNA ligase alpha subunit
+504464at2	Fragmented	contig	286200	285412	-	93.8	99	https://v10-1.orthodb.org/?query=504464at2	GMP synthase
+505485at2	Missing
+533698at2	Fragmented	contig	140352	139546	-	172.3	169	https://v10-1.orthodb.org/?query=533698at2	Enolase
+662686at2	Missing
+665824at2	Missing
+761140at2	Fragmented	contig	570797	570519	-	42.7	57	https://v10-1.orthodb.org/?query=761140at2	Methionine--tRNA ligase
+776861at2	Complete	contig	1407799	1412616	+	299.2	421	https://v10-1.orthodb.org/?query=776861at2	Cytidylate kinase
+837522at2	Fragmented	contig	527516	526107	-	571.4	346	https://v10-1.orthodb.org/?query=837522at2	ATP synthase subunit alpha
+841869at2	Fragmented	contig	2413769	2414473	+	34.3	68	https://v10-1.orthodb.org/?query=841869at2	UDP-N-acetylenolpyruvoylglucosamine reductase
+874197at2	Missing
+923547at2	Complete	contig	220891	219089	-	360.1	304	https://v10-1.orthodb.org/?query=923547at2	Phosphoribosylformylglycinamidine cyclo-ligase
+932854at2	Missing
+932993at2	Missing
+961486at2	Missing
+981870at2	Fragmented	contig	220650	221564	+	120.5	114	https://v10-1.orthodb.org/?query=981870at2	Chorismate synthase
+984717at2	Missing
+1009041at2	Missing
+1024388at2	Fragmented	contig	536342	535350	-	304.5	251	https://v10-1.orthodb.org/?query=1024388at2	S-adenosylmethionine synthetase
+1036075at2	Missing
+1043239at2	Missing
+1049662at2	Fragmented	contig	526866	528848	+	290.3	333	https://v10-1.orthodb.org/?query=1049662at2	Methylglyoxal synthase-like domain
+1054741at2	Missing
+1069591at2	Fragmented	contig	126274	127635	+	67.6	143	https://v10-1.orthodb.org/?query=1069591at2	tRNA dimethylallyltransferase
+1074831at2	Fragmented	contig	81422	80796	-	25.2	83	https://v10-1.orthodb.org/?query=1074831at2	DNA repair protein RecN
+1080436at2	Missing
+1093223at2	Missing
+1132353at2	Missing
+1151822at2	Missing
+1166299at2	Fragmented	contig	2516707	2516051	-	56.2	81	https://v10-1.orthodb.org/?query=1166299at2	tRNA pseudouridine synthase B
+1211060at2	Fragmented	contig	212430	212729	+	43.4	36	https://v10-1.orthodb.org/?query=1211060at2	RNA-binding S4 domain
+1257362at2	Missing
+1266295at2	Fragmented	contig	302986	302510	-	77.9	99	https://v10-1.orthodb.org/?query=1266295at2	Triosephosphate isomerase
+1270636at2	Complete	contig	53116	52280	-	109.4	134	https://v10-1.orthodb.org/?query=1270636at2	Ribosomal protein L3
+1272633at2	Missing
+1346419at2	Fragmented	contig	44506	45036	+	50.8	82	https://v10-1.orthodb.org/?query=1346419at2	Flavoprotein
+1395197at2	Missing
+1398618at2	Missing
+1419877at2	Fragmented	contig	1575619	1576860	+	100.0	185	https://v10-1.orthodb.org/?query=1419877at2	glycerol-3-phosphate dehydrogenase
+1456375at2	Missing
+1470978at2	Missing
+1490892at2	Missing
+1491686at2	Missing
+1497415at2	Missing
+1502854at2	Missing
+1504821at2	Missing
+1505038at2	Missing
+1540940at2	Missing
+1567535at2	Missing
+1572673at2	Complete	contig	484780	485538	+	95.8	100	https://v10-1.orthodb.org/?query=1572673at2	50S ribosomal protein L4
+1574817at2	Missing
+1590629at2	Missing
+1592033at2	Missing
+1595498at2	Missing
+1623045at2	Missing
+1661836at2	Missing
+1666043at2	Missing
+1671455at2	Fragmented	contig	891543	892097	+	57.6	96	https://v10-1.orthodb.org/?query=1671455at2	Ribosomal protein L1
+1674344at2	Missing
+1676462at2	Missing
+1692188at2	Missing
+1698718at2	Missing
+1701531at2	Fragmented	contig	1200302	1199655	-	52.1	73	https://v10-1.orthodb.org/?query=1701531at2	ATP synthase, F1 complex, gamma subunit
+1702697at2	Missing
+1707228at2	Missing
+1713391at2	Missing
+1720952at2	Missing
+1758685at2	Complete	contig	1997796	1998224	+	19.7	75	https://v10-1.orthodb.org/?query=1758685at2	DNA repair protein RecO
+1760144at2	Complete	contig	961802	962848	+	34.6	80	https://v10-1.orthodb.org/?query=1760144at2	Translation initiation factor 3, C-terminal
+1766414at2	Missing
+1772647at2	Missing
+1776954at2	Missing
+1786618at2	Missing
+1799923at2	Missing
+1822215at2	Missing
+1822695at2	Missing
+1827295at2	Fragmented	contig	1754525	1748607	-	53.5	44	https://v10-1.orthodb.org/?query=1827295at2	tRNA threonylcarbamoyl adenosine modification protein TsaE
+1827334at2	Missing
+1830156at2	Missing
+1838961at2	Missing
+1842956at2	Missing
+1844275at2	Complete	contig	1400487	1406909	+	112.3	168	https://v10-1.orthodb.org/?query=1844275at2	Aspartate carbamoyltransferase
+1846503at2	Missing
+1874945at2	Fragmented	contig	892952	891939	-	33.8	59	https://v10-1.orthodb.org/?query=1874945at2	Ribosomal protein L15
+1890943at2	Complete	contig	99925	97340	-	75.7	67	https://v10-1.orthodb.org/?query=1890943at2	ribonuclease III
+1893906at2	Missing
+1904463at2	Fragmented	contig	1003064	1002177	-	72.8	64	https://v10-1.orthodb.org/?query=1904463at2	Ribosomal protein L27
+1906715at2	Fragmented	contig	1529223	1529918	+	28.8	50	https://v10-1.orthodb.org/?query=1906715at2	Protein GrpE
+1932144at2	Missing
+1937072at2	Missing
+1937493at2	Missing
+1940575at2	Missing
+1949059at2	Missing
+1959318at2	Missing
+1963491at2	Missing
+1971380at2	Missing
+1978865at2	Missing
+1990141at2	Fragmented	contig	535096	535839	+	70.4	55	https://v10-1.orthodb.org/?query=1990141at2	Ribosomal protein S15
+1990650at2	Missing
+2005443at2	Missing
+2012682at2	Missing
+2035880at2	Missing
+2040741at2	Missing
+2046660at2	Missing
+2063644at2	Fragmented	contig	497051	497587	+	16.0	13	https://v10-1.orthodb.org/?query=2063644at2	Ribosomal protein L29/L35
+2066663at2	Missing
+2075502at2	Missing

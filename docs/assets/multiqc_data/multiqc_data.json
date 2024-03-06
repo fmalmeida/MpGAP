@@ -1,0 +1,2074 @@
+{
+    "report_data_sources": {
+        "QUAST": {
+            "all_sections": {
+                "shasta_medaka_consensus": "/array1/falmeida/NF_WORK/9c/ec4d4577a92fe1fac96da940917e82/shasta_medaka/report.tsv",
+                "canu_assembly": "/array1/falmeida/NF_WORK/9c/ec4d4577a92fe1fac96da940917e82/canu/report.tsv",
+                "raven_assembly": "/array1/falmeida/NF_WORK/9c/ec4d4577a92fe1fac96da940917e82/raven/report.tsv",
+                "shasta_assembly": "/array1/falmeida/NF_WORK/9c/ec4d4577a92fe1fac96da940917e82/shasta/report.tsv",
+                "flye_assembly": "/array1/falmeida/NF_WORK/9c/ec4d4577a92fe1fac96da940917e82/flye/report.tsv",
+                "raven_medaka_consensus": "/array1/falmeida/NF_WORK/9c/ec4d4577a92fe1fac96da940917e82/raven_medaka/report.tsv",
+                "wtdbg2_medaka_consensus": "/array1/falmeida/NF_WORK/9c/ec4d4577a92fe1fac96da940917e82/wtdbg2_medaka/report.tsv",
+                "flye_medaka_consensus": "/array1/falmeida/NF_WORK/9c/ec4d4577a92fe1fac96da940917e82/flye_medaka/report.tsv",
+                "canu_medaka_consensus": "/array1/falmeida/NF_WORK/9c/ec4d4577a92fe1fac96da940917e82/canu_medaka/report.tsv",
+                "wtdbg2_assembly": "/array1/falmeida/NF_WORK/9c/ec4d4577a92fe1fac96da940917e82/wtdbg2/report.tsv"
+            }
+        },
+        "BUSCO": {
+            "all_sections": {
+                "shasta_medaka": "/array1/falmeida/NF_WORK/9c/ec4d4577a92fe1fac96da940917e82/shasta_medaka/busco_stats/run_shasta_medaka/run_fungi_odb10/short_summary_shasta_medaka.txt",
+                "canu": "/array1/falmeida/NF_WORK/9c/ec4d4577a92fe1fac96da940917e82/canu/busco_stats/run_canu/run_fungi_odb10/short_summary_canu.txt",
+                "raven": "/array1/falmeida/NF_WORK/9c/ec4d4577a92fe1fac96da940917e82/raven/busco_stats/run_raven/run_fungi_odb10/short_summary_raven.txt",
+                "shasta": "/array1/falmeida/NF_WORK/9c/ec4d4577a92fe1fac96da940917e82/shasta/busco_stats/run_shasta/run_fungi_odb10/short_summary_shasta.txt",
+                "flye": "/array1/falmeida/NF_WORK/9c/ec4d4577a92fe1fac96da940917e82/flye/busco_stats/run_flye/run_fungi_odb10/short_summary_flye.txt",
+                "raven_medaka": "/array1/falmeida/NF_WORK/9c/ec4d4577a92fe1fac96da940917e82/raven_medaka/busco_stats/run_raven_medaka/run_fungi_odb10/short_summary_raven_medaka.txt",
+                "wtdbg2_medaka": "/array1/falmeida/NF_WORK/9c/ec4d4577a92fe1fac96da940917e82/wtdbg2_medaka/busco_stats/run_wtdbg2_medaka/run_fungi_odb10/short_summary_wtdbg2_medaka.txt",
+                "flye_medaka": "/array1/falmeida/NF_WORK/9c/ec4d4577a92fe1fac96da940917e82/flye_medaka/busco_stats/run_flye_medaka/run_fungi_odb10/short_summary_flye_medaka.txt",
+                "canu_medaka": "/array1/falmeida/NF_WORK/9c/ec4d4577a92fe1fac96da940917e82/canu_medaka/busco_stats/run_canu_medaka/run_fungi_odb10/short_summary_canu_medaka.txt",
+                "wtdbg2": "/array1/falmeida/NF_WORK/9c/ec4d4577a92fe1fac96da940917e82/wtdbg2/busco_stats/run_wtdbg2/run_fungi_odb10/short_summary_wtdbg2.txt"
+            }
+        }
+    },
+    "report_general_stats_data": [
+        {
+            "shasta_medaka_consensus": {
+                "# contigs (>= 0 bp)": 349.0,
+                "# contigs (>= 1000 bp)": 348.0,
+                "# contigs (>= 5000 bp)": 346.0,
+                "# contigs (>= 10000 bp)": 327.0,
+                "# contigs (>= 25000 bp)": 263.0,
+                "# contigs (>= 50000 bp)": 191.0,
+                "Total length (>= 0 bp)": 28257574.0,
+                "Total length (>= 1000 bp)": 28257044.0,
+                "Total length (>= 5000 bp)": 28249013.0,
+                "Total length (>= 10000 bp)": 28114755.0,
+                "Total length (>= 25000 bp)": 26976641.0,
+                "Total length (>= 50000 bp)": 24483036.0,
+                "# contigs": 349.0,
+                "Largest contig": 478226.0,
+                "Total length": 28257574.0,
+                "GC (%)": 49.44,
+                "N50": 136426.0,
+                "N90": 38464.0,
+                "auN": 156501.8,
+                "L50": 69.0,
+                "L90": 214.0,
+                "# total reads": 409991.0,
+                "# left": 0.0,
+                "# right": 0.0,
+                "Mapped (%)": 115.37,
+                "Properly paired (%)": 0.0,
+                "Avg. coverage depth": 50.0,
+                "Coverage >= 1x (%)": 100.0,
+                "# N's per 100 kbp": 0.0,
+                "# predicted rRNA genes": 37.0,
+                "# predicted rRNA genes_partial": 0.0
+            },
+            "canu_assembly": {
+                "# contigs (>= 0 bp)": 36.0,
+                "# contigs (>= 1000 bp)": 36.0,
+                "# contigs (>= 5000 bp)": 29.0,
+                "# contigs (>= 10000 bp)": 28.0,
+                "# contigs (>= 25000 bp)": 22.0,
+                "# contigs (>= 50000 bp)": 17.0,
+                "Total length (>= 0 bp)": 29828639.0,
+                "Total length (>= 1000 bp)": 29828639.0,
+                "Total length (>= 5000 bp)": 29813736.0,
+                "Total length (>= 10000 bp)": 29805233.0,
+                "Total length (>= 25000 bp)": 29710861.0,
+                "Total length (>= 50000 bp)": 29539812.0,
+                "# contigs": 36.0,
+                "Largest contig": 4875381.0,
+                "Total length": 29828639.0,
+                "GC (%)": 49.36,
+                "N50": 3713674.0,
+                "N90": 1663324.0,
+                "auN": 3454611.5,
+                "L50": 4.0,
+                "L90": 8.0,
+                "# total reads": 409991.0,
+                "# left": 0.0,
+                "# right": 0.0,
+                "Mapped (%)": 117.69,
+                "Properly paired (%)": 0.0,
+                "Avg. coverage depth": 51.0,
+                "Coverage >= 1x (%)": 100.0,
+                "# N's per 100 kbp": 0.0,
+                "# predicted rRNA genes": 60.0,
+                "# predicted rRNA genes_partial": 1.0
+            },
+            "raven_assembly": {
+                "# contigs (>= 0 bp)": 18.0,
+                "# contigs (>= 1000 bp)": 18.0,
+                "# contigs (>= 5000 bp)": 18.0,
+                "# contigs (>= 10000 bp)": 18.0,
+                "# contigs (>= 25000 bp)": 17.0,
+                "# contigs (>= 50000 bp)": 16.0,
+                "Total length (>= 0 bp)": 29481737.0,
+                "Total length (>= 1000 bp)": 29481737.0,
+                "Total length (>= 5000 bp)": 29481737.0,
+                "Total length (>= 10000 bp)": 29481737.0,
+                "Total length (>= 25000 bp)": 29467896.0,
+                "Total length (>= 50000 bp)": 29433454.0,
+                "# contigs": 18.0,
+                "Largest contig": 4871805.0,
+                "Total length": 29481737.0,
+                "GC (%)": 49.38,
+                "N50": 3783467.0,
+                "N90": 2182466.0,
+                "auN": 3464883.5,
+                "L50": 4.0,
+                "L90": 8.0,
+                "# total reads": 409991.0,
+                "# left": 0.0,
+                "# right": 0.0,
+                "Mapped (%)": 104.6,
+                "Properly paired (%)": 0.0,
+                "Avg. coverage depth": 46.0,
+                "Coverage >= 1x (%)": 100.0,
+                "# N's per 100 kbp": 0.0,
+                "# predicted rRNA genes": 35.0,
+                "# predicted rRNA genes_partial": 0.0
+            },
+            "shasta_assembly": {
+                "# contigs (>= 0 bp)": 350.0,
+                "# contigs (>= 1000 bp)": 348.0,
+                "# contigs (>= 5000 bp)": 346.0,
+                "# contigs (>= 10000 bp)": 327.0,
+                "# contigs (>= 25000 bp)": 264.0,
+                "# contigs (>= 50000 bp)": 191.0,
+                "Total length (>= 0 bp)": 28330868.0,
+                "Total length (>= 1000 bp)": 28330246.0,
+                "Total length (>= 5000 bp)": 28321294.0,
+                "Total length (>= 10000 bp)": 28183867.0,
+                "Total length (>= 25000 bp)": 27064049.0,
+                "Total length (>= 50000 bp)": 24537223.0,
+                "# contigs": 349.0,
+                "Largest contig": 479032.0,
+                "Total length": 28330807.0,
+                "GC (%)": 49.46,
+                "N50": 136758.0,
+                "N90": 38622.0,
+                "auN": 156752.3,
+                "L50": 69.0,
+                "L90": 214.0,
+                "# total reads": 409991.0,
+                "# left": 0.0,
+                "# right": 0.0,
+                "Mapped (%)": 115.0,
+                "Properly paired (%)": 0.0,
+                "Avg. coverage depth": 50.0,
+                "Coverage >= 1x (%)": 100.0,
+                "# N's per 100 kbp": 0.0,
+                "# predicted rRNA genes": 27.0,
+                "# predicted rRNA genes_partial": 2.0
+            },
+            "flye_assembly": {
+                "# contigs (>= 0 bp)": 87.0,
+                "# contigs (>= 1000 bp)": 79.0,
+                "# contigs (>= 5000 bp)": 54.0,
+                "# contigs (>= 10000 bp)": 44.0,
+                "# contigs (>= 25000 bp)": 32.0,
+                "# contigs (>= 50000 bp)": 23.0,
+                "Total length (>= 0 bp)": 29321964.0,
+                "Total length (>= 1000 bp)": 29316128.0,
+                "Total length (>= 5000 bp)": 29257160.0,
+                "Total length (>= 10000 bp)": 29182681.0,
+                "Total length (>= 25000 bp)": 28986504.0,
+                "Total length (>= 50000 bp)": 28669237.0,
+                "# contigs": 87.0,
+                "Largest contig": 3007462.0,
+                "Total length": 29321964.0,
+                "GC (%)": 49.49,
+                "N50": 2284154.0,
+                "N90": 666110.0,
+                "auN": 1838905.0,
+                "L50": 6.0,
+                "L90": 16.0,
+                "# total reads": 409991.0,
+                "# left": 0.0,
+                "# right": 0.0,
+                "Mapped (%)": 112.2,
+                "Properly paired (%)": 0.0,
+                "Avg. coverage depth": 48.0,
+                "Coverage >= 1x (%)": 100.0,
+                "# N's per 100 kbp": 0.0,
+                "# predicted rRNA genes": 38.0,
+                "# predicted rRNA genes_partial": 1.0
+            },
+            "raven_medaka_consensus": {
+                "# contigs (>= 0 bp)": 18.0,
+                "# contigs (>= 1000 bp)": 18.0,
+                "# contigs (>= 5000 bp)": 18.0,
+                "# contigs (>= 10000 bp)": 18.0,
+                "# contigs (>= 25000 bp)": 17.0,
+                "# contigs (>= 50000 bp)": 16.0,
+                "Total length (>= 0 bp)": 29482805.0,
+                "Total length (>= 1000 bp)": 29482805.0,
+                "Total length (>= 5000 bp)": 29482805.0,
+                "Total length (>= 10000 bp)": 29482805.0,
+                "Total length (>= 25000 bp)": 29469019.0,
+                "Total length (>= 50000 bp)": 29436547.0,
+                "# contigs": 18.0,
+                "Largest contig": 4874129.0,
+                "Total length": 29482805.0,
+                "GC (%)": 49.41,
+                "N50": 3782302.0,
+                "N90": 2183078.0,
+                "auN": 3465245.2,
+                "L50": 4.0,
+                "L90": 8.0,
+                "# total reads": 409991.0,
+                "# left": 0.0,
+                "# right": 0.0,
+                "Mapped (%)": 106.8,
+                "Properly paired (%)": 0.0,
+                "Avg. coverage depth": 46.0,
+                "Coverage >= 1x (%)": 100.0,
+                "# N's per 100 kbp": 0.0,
+                "# predicted rRNA genes": 36.0,
+                "# predicted rRNA genes_partial": 0.0
+            },
+            "wtdbg2_medaka_consensus": {
+                "# contigs (>= 0 bp)": 45.0,
+                "# contigs (>= 1000 bp)": 44.0,
+                "# contigs (>= 5000 bp)": 38.0,
+                "# contigs (>= 10000 bp)": 30.0,
+                "# contigs (>= 25000 bp)": 27.0,
+                "# contigs (>= 50000 bp)": 22.0,
+                "Total length (>= 0 bp)": 28632319.0,
+                "Total length (>= 1000 bp)": 28632018.0,
+                "Total length (>= 5000 bp)": 28612060.0,
+                "Total length (>= 10000 bp)": 28557636.0,
+                "Total length (>= 25000 bp)": 28516414.0,
+                "Total length (>= 50000 bp)": 28347875.0,
+                "# contigs": 45.0,
+                "Largest contig": 3937893.0,
+                "Total length": 28632319.0,
+                "GC (%)": 49.62,
+                "N50": 2047660.0,
+                "N90": 619703.0,
+                "auN": 2111113.5,
+                "L50": 6.0,
+                "L90": 15.0,
+                "# total reads": 409991.0,
+                "# left": 0.0,
+                "# right": 0.0,
+                "Mapped (%)": 114.28,
+                "Properly paired (%)": 0.0,
+                "Avg. coverage depth": 49.0,
+                "Coverage >= 1x (%)": 99.99,
+                "# N's per 100 kbp": 0.0,
+                "# predicted rRNA genes": 36.0,
+                "# predicted rRNA genes_partial": 1.0
+            },
+            "flye_medaka_consensus": {
+                "# contigs (>= 0 bp)": 85.0,
+                "# contigs (>= 1000 bp)": 79.0,
+                "# contigs (>= 5000 bp)": 54.0,
+                "# contigs (>= 10000 bp)": 44.0,
+                "# contigs (>= 25000 bp)": 32.0,
+                "# contigs (>= 50000 bp)": 23.0,
+                "Total length (>= 0 bp)": 29331139.0,
+                "Total length (>= 1000 bp)": 29326657.0,
+                "Total length (>= 5000 bp)": 29269595.0,
+                "Total length (>= 10000 bp)": 29195274.0,
+                "Total length (>= 25000 bp)": 29000428.0,
+                "Total length (>= 50000 bp)": 28684946.0,
+                "# contigs": 85.0,
+                "Largest contig": 3009402.0,
+                "Total length": 29331139.0,
+                "GC (%)": 49.51,
+                "N50": 2285325.0,
+                "N90": 666529.0,
+                "auN": 1840459.7,
+                "L50": 6.0,
+                "L90": 16.0,
+                "# total reads": 409991.0,
+                "# left": 0.0,
+                "# right": 0.0,
+                "Mapped (%)": 112.48,
+                "Properly paired (%)": 0.0,
+                "Avg. coverage depth": 48.0,
+                "Coverage >= 1x (%)": 99.99,
+                "# N's per 100 kbp": 0.0,
+                "# predicted rRNA genes": 38.0,
+                "# predicted rRNA genes_partial": 0.0
+            },
+            "canu_medaka_consensus": {
+                "# contigs (>= 0 bp)": 36.0,
+                "# contigs (>= 1000 bp)": 36.0,
+                "# contigs (>= 5000 bp)": 29.0,
+                "# contigs (>= 10000 bp)": 28.0,
+                "# contigs (>= 25000 bp)": 22.0,
+                "# contigs (>= 50000 bp)": 17.0,
+                "Total length (>= 0 bp)": 29866502.0,
+                "Total length (>= 1000 bp)": 29866502.0,
+                "Total length (>= 5000 bp)": 29852031.0,
+                "Total length (>= 10000 bp)": 29843518.0,
+                "Total length (>= 25000 bp)": 29748804.0,
+                "Total length (>= 50000 bp)": 29577413.0,
+                "# contigs": 36.0,
+                "Largest contig": 4881813.0,
+                "Total length": 29866502.0,
+                "GC (%)": 49.38,
+                "N50": 3718495.0,
+                "N90": 1665340.0,
+                "auN": 3459161.0,
+                "L50": 4.0,
+                "L90": 8.0,
+                "# total reads": 409991.0,
+                "# left": 0.0,
+                "# right": 0.0,
+                "Mapped (%)": 117.52,
+                "Properly paired (%)": 0.0,
+                "Avg. coverage depth": 51.0,
+                "Coverage >= 1x (%)": 100.0,
+                "# N's per 100 kbp": 0.0,
+                "# predicted rRNA genes": 59.0,
+                "# predicted rRNA genes_partial": 2.0
+            },
+            "wtdbg2_assembly": {
+                "# contigs (>= 0 bp)": 55.0,
+                "# contigs (>= 1000 bp)": 53.0,
+                "# contigs (>= 5000 bp)": 41.0,
+                "# contigs (>= 10000 bp)": 30.0,
+                "# contigs (>= 25000 bp)": 27.0,
+                "# contigs (>= 50000 bp)": 22.0,
+                "Total length (>= 0 bp)": 28625627.0,
+                "Total length (>= 1000 bp)": 28624597.0,
+                "Total length (>= 5000 bp)": 28578707.0,
+                "Total length (>= 10000 bp)": 28507949.0,
+                "Total length (>= 25000 bp)": 28466240.0,
+                "Total length (>= 50000 bp)": 28297720.0,
+                "# contigs": 55.0,
+                "Largest contig": 3931605.0,
+                "Total length": 28625627.0,
+                "GC (%)": 49.59,
+                "N50": 2043797.0,
+                "N90": 618645.0,
+                "auN": 2104176.9,
+                "L50": 6.0,
+                "L90": 15.0,
+                "# total reads": 409991.0,
+                "# left": 0.0,
+                "# right": 0.0,
+                "Mapped (%)": 114.68,
+                "Properly paired (%)": 0.0,
+                "Avg. coverage depth": 49.0,
+                "Coverage >= 1x (%)": 99.86,
+                "# N's per 100 kbp": 0.0,
+                "# predicted rRNA genes": 36.0,
+                "# predicted rRNA genes_partial": 1.0
+            }
+        }
+    ],
+    "report_general_stats_headers": [
+        {
+            "N50": {
+                "title": "N50 (Kbp)",
+                "description": "N50 is the contig length such that using longer or equal length contigs produces half (50%) of the bases of the assembly (kilo base pairs)",
+                "min": 0,
+                "suffix": "Kbp",
+                "scale": "RdYlGn",
+                "modify": 0.001,
+                "namespace": "QUAST",
+                "rid": "mqc-generalstats-quast-N50",
+                "format": "{:,.1f}",
+                "colour": "55,126,184",
+                "hidden": null,
+                "max": null,
+                "ceiling": null,
+                "floor": null,
+                "minRange": null,
+                "shared_key": null,
+                "placement": 1000.0,
+                "dmax": 3783.467,
+                "dmin": 0.0
+            },
+            "Total length": {
+                "title": "Assembly Length (Mbp)",
+                "description": "The total number of bases in the assembly (Mbp).",
+                "min": 0,
+                "suffix": "Mbp",
+                "scale": "YlGn",
+                "modify": 1e-06,
+                "namespace": "QUAST",
+                "rid": "mqc-generalstats-quast-Total_length",
+                "format": "{:,.1f}",
+                "colour": "55,126,184",
+                "hidden": null,
+                "max": null,
+                "ceiling": null,
+                "floor": null,
+                "minRange": null,
+                "shared_key": null,
+                "placement": 1000.0,
+                "dmax": 29.866501999999997,
+                "dmin": 0.0
+            }
+        }
+    ],
+    "report_multiqc_command": "/opt/conda/envs/mpgap-3.2/bin/multiqc . --ignore *.sam --ignore *.bam --ignore *.err --ignore *.stat --config mqc_config.yml",
+    "report_plot_data": {
+        "violin-quast_table": {
+            "id": "violin-quast_table",
+            "layout": {
+                "autosize": true,
+                "colorway": [
+                    "#7cb5ec",
+                    "#434348",
+                    "#90ed7d",
+                    "#f7a35c",
+                    "#8085e9",
+                    "#f15c80",
+                    "#e4d354",
+                    "#2b908f",
+                    "#f45b5b",
+                    "#91e8e1"
+                ],
+                "font": {
+                    "color": "Black",
+                    "family": "Lucida Grande"
+                },
+                "height": 500,
+                "hoverlabel": {
+                    "namelength": -1
+                },
+                "margin": {
+                    "b": 40,
+                    "l": 60,
+                    "pad": 0,
+                    "r": 15,
+                    "t": 50
+                },
+                "modebar": {
+                    "activecolor": "rgba(0, 0, 0, 1)",
+                    "bgcolor": "rgba(0, 0, 0, 0)",
+                    "color": "rgba(0, 0, 0, 0.5)"
+                },
+                "paper_bgcolor": "rgba(0,0,0,0)",
+                "plot_bgcolor": "rgba(0,0,0,0)",
+                "showlegend": false,
+                "title": {
+                    "font": {
+                        "size": 20
+                    },
+                    "text": "QUAST: Assembly Statistics",
+                    "x": 0.5,
+                    "xanchor": "center"
+                },
+                "xaxis": {
+                    "automargin": false,
+                    "color": "rgba(0,0,0,0.3)",
+                    "gridcolor": "rgba(0,0,0,0.1)",
+                    "tickfont": {
+                        "color": "rgba(0,0,0,0.5)",
+                        "size": 9
+                    },
+                    "zerolinecolor": "rgba(0,0,0,0.1)"
+                },
+                "yaxis": {
+                    "automargin": true,
+                    "color": "rgba(0,0,0,0.3)",
+                    "gridcolor": "rgba(0,0,0,0.1)",
+                    "tickfont": {
+                        "color": "rgba(0,0,0,0.5)",
+                        "size": 9
+                    },
+                    "zerolinecolor": "rgba(0,0,0,0.1)"
+                },
+                "violingap": 0,
+                "grid": {
+                    "columns": 1,
+                    "roworder": "top to bottom",
+                    "ygap": 0.4
+                }
+            },
+            "datasets": [
+                {
+                    "label": 1,
+                    "uid": "violin-quast_table",
+                    "dconfig": {},
+                    "layout": {
+                        "xaxis": {
+                            "hoverformat": null,
+                            "ticksuffix": "",
+                            "title": {
+                                "text": null
+                            },
+                            "rangemode": "normal",
+                            "autorangeoptions": {
+                                "clipmin": null,
+                                "clipmax": null,
+                                "minallowed": null,
+                                "maxallowed": null
+                            }
+                        },
+                        "yaxis": {
+                            "hoverformat": null,
+                            "ticksuffix": "",
+                            "title": {
+                                "text": null
+                            },
+                            "rangemode": "normal",
+                            "autorangeoptions": {
+                                "clipmin": null,
+                                "clipmax": null,
+                                "minallowed": null,
+                                "maxallowed": null
+                            }
+                        }
+                    },
+                    "trace_params": {
+                        "hovertemplate": "<b>%{text}</b>: %{x}<extra></extra>",
+                        "orientation": "h",
+                        "box": {
+                            "visible": true
+                        },
+                        "meanline": {
+                            "visible": true
+                        },
+                        "fillcolor": "grey",
+                        "line": {
+                            "width": 2,
+                            "color": "grey"
+                        },
+                        "opacity": 0.5,
+                        "points": false,
+                        "hoveron": "points"
+                    },
+                    "pct_range": {
+                        "xaxis": {
+                            "min": 0,
+                            "max": 100
+                        },
+                        "yaxis": {
+                            "min": 0,
+                            "max": 100
+                        }
+                    },
+                    "metrics": [
+                        "N50",
+                        "L50",
+                        "Largest_contig",
+                        "Total_length"
+                    ],
+                    "header_by_metric": {
+                        "N50": {
+                            "namespace": "QUAST",
+                            "title": "N50 (Kbp)",
+                            "description": "N50 is the contig length such that using longer or equal length contigs produces half (50%) of the bases of the assembly.",
+                            "dmax": 3783.467,
+                            "dmin": 0.0,
+                            "suffix": "Kbp",
+                            "hidden": null,
+                            "xaxis": {
+                                "ticksuffix": "Kbp",
+                                "tickvals": null,
+                                "range": [
+                                    -18.917335,
+                                    3802.478921675
+                                ]
+                            },
+                            "show_points": true,
+                            "show_only_outliers": false,
+                            "hoverformat": ".2f"
+                        },
+                        "L50": {
+                            "namespace": "QUAST",
+                            "title": "L50 (K)",
+                            "description": "L50 is the number of contigs larger than N50, i.e. the minimum number of contigs comprising 50% of the total assembly length.",
+                            "dmax": 0.069,
+                            "dmin": 0.0,
+                            "suffix": "K",
+                            "hidden": null,
+                            "xaxis": {
+                                "ticksuffix": "K",
+                                "tickvals": null,
+                                "range": [
+                                    -0.00034500000000000004,
+                                    0.06934672500000001
+                                ]
+                            },
+                            "show_points": true,
+                            "show_only_outliers": false,
+                            "hoverformat": ".2f"
+                        },
+                        "Largest_contig": {
+                            "namespace": "QUAST",
+                            "title": "Largest contig (Kbp)",
+                            "description": "The size of the largest contig of the assembly",
+                            "dmax": 4881.813,
+                            "dmin": 0.0,
+                            "suffix": "Kbp",
+                            "hidden": null,
+                            "xaxis": {
+                                "ticksuffix": "Kbp",
+                                "tickvals": null,
+                                "range": [
+                                    -24.409065000000002,
+                                    4906.344110325
+                                ]
+                            },
+                            "show_points": true,
+                            "show_only_outliers": false,
+                            "hoverformat": ".2f"
+                        },
+                        "Total_length": {
+                            "namespace": "QUAST",
+                            "title": "Length (Mbp)",
+                            "description": "The total number of bases in the assembly.",
+                            "dmax": 29.866501999999997,
+                            "dmin": 0.0,
+                            "suffix": "Mbp",
+                            "hidden": null,
+                            "xaxis": {
+                                "ticksuffix": "Mbp",
+                                "tickvals": null,
+                                "range": [
+                                    -0.14933251,
+                                    30.016581172549998
+                                ]
+                            },
+                            "show_points": true,
+                            "show_only_outliers": false,
+                            "hoverformat": ".2f"
+                        }
+                    },
+                    "violin_values_by_sample_by_metric": {
+                        "N50": {
+                            "shasta_medaka_consensus": 136.42600000000002,
+                            "canu_assembly": 3713.674,
+                            "raven_assembly": 3783.467,
+                            "shasta_assembly": 136.758,
+                            "flye_assembly": 2284.154,
+                            "raven_medaka_consensus": 3782.302,
+                            "wtdbg2_medaka_consensus": 2047.66,
+                            "flye_medaka_consensus": 2285.3250000000003,
+                            "canu_medaka_consensus": 3718.495,
+                            "wtdbg2_assembly": 2043.797
+                        },
+                        "L50": {
+                            "shasta_medaka_consensus": 0.069,
+                            "canu_assembly": 0.004,
+                            "raven_assembly": 0.004,
+                            "shasta_assembly": 0.069,
+                            "flye_assembly": 0.006,
+                            "raven_medaka_consensus": 0.004,
+                            "wtdbg2_medaka_consensus": 0.006,
+                            "flye_medaka_consensus": 0.006,
+                            "canu_medaka_consensus": 0.004,
+                            "wtdbg2_assembly": 0.006
+                        },
+                        "Largest_contig": {
+                            "shasta_medaka_consensus": 478.226,
+                            "canu_assembly": 4875.381,
+                            "raven_assembly": 4871.805,
+                            "shasta_assembly": 479.032,
+                            "flye_assembly": 3007.462,
+                            "raven_medaka_consensus": 4874.129,
+                            "wtdbg2_medaka_consensus": 3937.893,
+                            "flye_medaka_consensus": 3009.402,
+                            "canu_medaka_consensus": 4881.813,
+                            "wtdbg2_assembly": 3931.605
+                        },
+                        "Total_length": {
+                            "shasta_medaka_consensus": 28.257573999999998,
+                            "canu_assembly": 29.828639,
+                            "raven_assembly": 29.481737,
+                            "shasta_assembly": 28.330807,
+                            "flye_assembly": 29.321963999999998,
+                            "raven_medaka_consensus": 29.482805,
+                            "wtdbg2_medaka_consensus": 28.632319,
+                            "flye_medaka_consensus": 29.331139,
+                            "canu_medaka_consensus": 29.866501999999997,
+                            "wtdbg2_assembly": 28.625626999999998
+                        }
+                    },
+                    "scatter_values_by_sample_by_metric": {
+                        "N50": {},
+                        "L50": {},
+                        "Largest_contig": {},
+                        "Total_length": {}
+                    },
+                    "all_samples": [
+                        "canu_assembly",
+                        "canu_medaka_consensus",
+                        "flye_assembly",
+                        "flye_medaka_consensus",
+                        "raven_assembly",
+                        "raven_medaka_consensus",
+                        "shasta_assembly",
+                        "shasta_medaka_consensus",
+                        "wtdbg2_assembly",
+                        "wtdbg2_medaka_consensus"
+                    ],
+                    "scatter_trace_params": {
+                        "mode": "markers",
+                        "marker": {
+                            "size": 4,
+                            "color": "rgba(0,0,0,1)"
+                        },
+                        "showlegend": false,
+                        "hovertemplate": "<b>%{text}</b>: %{x}<extra></extra>",
+                        "hoverlabel": {
+                            "bgcolor": "white"
+                        }
+                    }
+                }
+            ],
+            "plot_type": "violin",
+            "pct_axis_update": {
+                "ticksuffix": "%",
+                "hoverformat": ".1f"
+            },
+            "axis_controlled_by_switches": [],
+            "p_active": false,
+            "l_active": false,
+            "square": null,
+            "static": true,
+            "violin_height": 70,
+            "extra_height": 63
+        },
+        "quast_num_contigs": {
+            "id": "quast_num_contigs",
+            "layout": {
+                "autosize": true,
+                "colorway": [
+                    "#7cb5ec",
+                    "#434348",
+                    "#90ed7d",
+                    "#f7a35c",
+                    "#8085e9",
+                    "#f15c80",
+                    "#e4d354",
+                    "#2b908f",
+                    "#f45b5b",
+                    "#91e8e1"
+                ],
+                "font": {
+                    "color": "Black",
+                    "family": "Lucida Grande"
+                },
+                "height": 390,
+                "hoverlabel": {
+                    "namelength": -1,
+                    "bgcolor": "rgba(255, 255, 255, 0.8)",
+                    "font": {
+                        "color": "black"
+                    }
+                },
+                "margin": {
+                    "b": 65,
+                    "l": 60,
+                    "pad": 5,
+                    "r": 15,
+                    "t": 50
+                },
+                "modebar": {
+                    "activecolor": "rgba(0, 0, 0, 1)",
+                    "bgcolor": "rgba(0, 0, 0, 0)",
+                    "color": "rgba(0, 0, 0, 0.5)"
+                },
+                "paper_bgcolor": "rgba(0,0,0,0)",
+                "plot_bgcolor": "rgba(0,0,0,0)",
+                "showlegend": true,
+                "title": {
+                    "font": {
+                        "size": 20
+                    },
+                    "text": "QUAST: Number of Contigs",
+                    "x": 0.5,
+                    "xanchor": "center"
+                },
+                "xaxis": {
+                    "automargin": true,
+                    "color": "rgba(0,0,0,0.3)",
+                    "gridcolor": "rgba(0,0,0,0.05)",
+                    "tickfont": {
+                        "color": "rgba(0,0,0,1)",
+                        "size": 10
+                    },
+                    "zerolinecolor": "rgba(0,0,0,0.05)"
+                },
+                "yaxis": {
+                    "automargin": true,
+                    "color": "rgba(0,0,0,0.3)",
+                    "gridcolor": "rgba(0,0,0,0.05)",
+                    "tickfont": {
+                        "color": "rgba(0,0,0,1)",
+                        "size": 10
+                    },
+                    "zerolinecolor": "rgba(0,0,0,0.05)",
+                    "showgrid": false,
+                    "categoryorder": "category descending"
+                },
+                "barmode": "relative",
+                "bargroupgap": 0,
+                "bargap": 0.2,
+                "legend": {
+                    "tracegroupgap": 0
+                },
+                "hovermode": "y unified"
+            },
+            "datasets": [
+                {
+                    "label": 1,
+                    "uid": "quast_num_contigs",
+                    "dconfig": {},
+                    "layout": {
+                        "xaxis": {
+                            "title": {
+                                "text": "# Contigs"
+                            },
+                            "hoverformat": ",.0f",
+                            "ticksuffix": "",
+                            "autorangeoptions": {
+                                "minallowed": 0,
+                                "maxallowed": 350
+                            }
+                        },
+                        "yaxis": {
+                            "title": null,
+                            "hoverformat": null,
+                            "ticksuffix": "",
+                            "autorangeoptions": {
+                                "clipmin": null,
+                                "clipmax": null,
+                                "minallowed": null,
+                                "maxallowed": null
+                            },
+                            "type": "category"
+                        },
+                        "showlegend": true
+                    },
+                    "trace_params": {
+                        "hovertemplate": "<b></b>%{meta}: <b>%{x}</b><extra></extra>",
+                        "orientation": "h",
+                        "marker": {
+                            "line": {
+                                "width": 0
+                            }
+                        },
+                        "textposition": "inside",
+                        "insidetextanchor": "start"
+                    },
+                    "pct_range": {
+                        "xaxis": {
+                            "min": 0,
+                            "max": 100
+                        },
+                        "yaxis": {
+                            "min": 0,
+                            "max": 100
+                        }
+                    },
+                    "cats": [
+                        {
+                            "name": ">= 50000 bp",
+                            "data": [
+                                17,
+                                17,
+                                23,
+                                23,
+                                16,
+                                16,
+                                191,
+                                191,
+                                22,
+                                22
+                            ],
+                            "color": "0.49,0.71,0.93",
+                            "data_pct": [
+                                47.22222222222222,
+                                47.22222222222222,
+                                26.436781609195403,
+                                27.058823529411764,
+                                88.88888888888889,
+                                88.88888888888889,
+                                54.57142857142857,
+                                54.72779369627507,
+                                40.0,
+                                48.888888888888886
+                            ]
+                        },
+                        {
+                            "name": "25000-50000 bp",
+                            "data": [
+                                5,
+                                5,
+                                9,
+                                9,
+                                1,
+                                1,
+                                73,
+                                72,
+                                5,
+                                5
+                            ],
+                            "color": "0.26,0.26,0.28",
+                            "data_pct": [
+                                13.88888888888889,
+                                13.88888888888889,
+                                10.344827586206897,
+                                10.588235294117647,
+                                5.555555555555555,
+                                5.555555555555555,
+                                20.857142857142858,
+                                20.630372492836678,
+                                9.090909090909092,
+                                11.11111111111111
+                            ]
+                        },
+                        {
+                            "name": "10000-25000 bp",
+                            "data": [
+                                6,
+                                6,
+                                12,
+                                12,
+                                1,
+                                1,
+                                63,
+                                64,
+                                3,
+                                3
+                            ],
+                            "color": "0.56,0.93,0.49",
+                            "data_pct": [
+                                16.666666666666664,
+                                16.666666666666664,
+                                13.793103448275861,
+                                14.117647058823529,
+                                5.555555555555555,
+                                5.555555555555555,
+                                18.0,
+                                18.33810888252149,
+                                5.454545454545454,
+                                6.666666666666667
+                            ]
+                        },
+                        {
+                            "name": "5000-10000 bp",
+                            "data": [
+                                1,
+                                1,
+                                10,
+                                10,
+                                0,
+                                0,
+                                19,
+                                19,
+                                11,
+                                8
+                            ],
+                            "color": "0.97,0.64,0.36",
+                            "data_pct": [
+                                2.7777777777777777,
+                                2.7777777777777777,
+                                11.494252873563218,
+                                11.76470588235294,
+                                0.0,
+                                0.0,
+                                5.428571428571429,
+                                5.444126074498568,
+                                20.0,
+                                17.77777777777778
+                            ]
+                        },
+                        {
+                            "name": "1000-5000 bp",
+                            "data": [
+                                7,
+                                7,
+                                25,
+                                25,
+                                0,
+                                0,
+                                2,
+                                2,
+                                12,
+                                6
+                            ],
+                            "color": "0.50,0.52,0.91",
+                            "data_pct": [
+                                19.444444444444446,
+                                19.444444444444446,
+                                28.735632183908045,
+                                29.411764705882355,
+                                0.0,
+                                0.0,
+                                0.5714285714285714,
+                                0.5730659025787965,
+                                21.818181818181817,
+                                13.333333333333334
+                            ]
+                        },
+                        {
+                            "name": "0-1000 bp",
+                            "data": [
+                                0,
+                                0,
+                                8,
+                                6,
+                                0,
+                                0,
+                                2,
+                                1,
+                                2,
+                                1
+                            ],
+                            "color": "0.95,0.36,0.50",
+                            "data_pct": [
+                                0.0,
+                                0.0,
+                                9.195402298850574,
+                                7.0588235294117645,
+                                0.0,
+                                0.0,
+                                0.5714285714285714,
+                                0.28653295128939826,
+                                3.6363636363636362,
+                                2.2222222222222223
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "canu_assembly",
+                        "canu_medaka_consensus",
+                        "flye_assembly",
+                        "flye_medaka_consensus",
+                        "raven_assembly",
+                        "raven_medaka_consensus",
+                        "shasta_assembly",
+                        "shasta_medaka_consensus",
+                        "wtdbg2_assembly",
+                        "wtdbg2_medaka_consensus"
+                    ]
+                }
+            ],
+            "plot_type": "bar_graph",
+            "pct_axis_update": {
+                "ticksuffix": "%",
+                "hoverformat": ".1f"
+            },
+            "axis_controlled_by_switches": [
+                "xaxis"
+            ],
+            "p_active": false,
+            "l_active": false,
+            "square": null
+        },
+        "busco_plot_fungi_odb10": {
+            "id": "busco_plot_fungi_odb10",
+            "layout": {
+                "autosize": true,
+                "colorway": [
+                    "#7cb5ec",
+                    "#434348",
+                    "#90ed7d",
+                    "#f7a35c",
+                    "#8085e9",
+                    "#f15c80",
+                    "#e4d354",
+                    "#2b908f",
+                    "#f45b5b",
+                    "#91e8e1"
+                ],
+                "font": {
+                    "color": "Black",
+                    "family": "Lucida Grande"
+                },
+                "height": 390,
+                "hoverlabel": {
+                    "namelength": -1,
+                    "bgcolor": "rgba(255, 255, 255, 0.8)",
+                    "font": {
+                        "color": "black"
+                    }
+                },
+                "margin": {
+                    "b": 65,
+                    "l": 60,
+                    "pad": 5,
+                    "r": 15,
+                    "t": 50
+                },
+                "modebar": {
+                    "activecolor": "rgba(0, 0, 0, 1)",
+                    "bgcolor": "rgba(0, 0, 0, 0)",
+                    "color": "rgba(0, 0, 0, 0.5)"
+                },
+                "paper_bgcolor": "rgba(0,0,0,0)",
+                "plot_bgcolor": "rgba(0,0,0,0)",
+                "showlegend": true,
+                "title": {
+                    "font": {
+                        "size": 20
+                    },
+                    "text": "BUSCO Assessment Results: fungi_odb10",
+                    "x": 0.5,
+                    "xanchor": "center"
+                },
+                "xaxis": {
+                    "automargin": true,
+                    "color": "rgba(0,0,0,0.3)",
+                    "gridcolor": "rgba(0,0,0,0.05)",
+                    "tickfont": {
+                        "color": "rgba(0,0,0,1)",
+                        "size": 10
+                    },
+                    "zerolinecolor": "rgba(0,0,0,0.05)"
+                },
+                "yaxis": {
+                    "automargin": true,
+                    "color": "rgba(0,0,0,0.3)",
+                    "gridcolor": "rgba(0,0,0,0.05)",
+                    "tickfont": {
+                        "color": "rgba(0,0,0,1)",
+                        "size": 10
+                    },
+                    "zerolinecolor": "rgba(0,0,0,0.05)",
+                    "showgrid": false,
+                    "categoryorder": "category descending"
+                },
+                "barmode": "relative",
+                "bargroupgap": 0,
+                "bargap": 0.2,
+                "legend": {
+                    "tracegroupgap": 0
+                },
+                "hovermode": "y unified"
+            },
+            "datasets": [
+                {
+                    "label": 1,
+                    "uid": "busco_plot_fungi_odb10",
+                    "dconfig": {},
+                    "layout": {
+                        "xaxis": {
+                            "title": {
+                                "text": "# BUSCOs"
+                            },
+                            "hoverformat": ",.0f",
+                            "ticksuffix": "",
+                            "autorangeoptions": {
+                                "minallowed": 0,
+                                "maxallowed": 758
+                            }
+                        },
+                        "yaxis": {
+                            "title": null,
+                            "hoverformat": null,
+                            "ticksuffix": "",
+                            "autorangeoptions": {
+                                "clipmin": null,
+                                "clipmax": null,
+                                "minallowed": null,
+                                "maxallowed": null
+                            },
+                            "type": "category"
+                        },
+                        "showlegend": true
+                    },
+                    "trace_params": {
+                        "hovertemplate": "<b></b>%{meta}: <b>%{x}</b><extra></extra>",
+                        "orientation": "h",
+                        "marker": {
+                            "line": {
+                                "width": 0
+                            }
+                        },
+                        "textposition": "inside",
+                        "insidetextanchor": "start"
+                    },
+                    "pct_range": {
+                        "xaxis": {
+                            "min": 0,
+                            "max": 100
+                        },
+                        "yaxis": {
+                            "min": 0,
+                            "max": 100
+                        }
+                    },
+                    "cats": [
+                        {
+                            "name": "Complete and single-copy BUSCOs",
+                            "data": [
+                                668,
+                                716,
+                                702,
+                                721,
+                                671,
+                                711,
+                                544,
+                                683,
+                                632,
+                                716
+                            ],
+                            "color": "0.19,0.64,0.33",
+                            "data_pct": [
+                                88.12664907651715,
+                                94.45910290237467,
+                                92.61213720316623,
+                                95.11873350923483,
+                                88.52242744063325,
+                                93.7994722955145,
+                                71.76781002638522,
+                                90.10554089709763,
+                                83.37730870712402,
+                                94.45910290237467
+                            ]
+                        },
+                        {
+                            "name": "Fragmented BUSCOs",
+                            "data": [
+                                53,
+                                24,
+                                33,
+                                23,
+                                52,
+                                26,
+                                88,
+                                36,
+                                76,
+                                24
+                            ],
+                            "color": "1.00,0.91,0.78",
+                            "data_pct": [
+                                6.992084432717678,
+                                3.16622691292876,
+                                4.353562005277045,
+                                3.034300791556728,
+                                6.860158311345646,
+                                3.430079155672823,
+                                11.609498680738787,
+                                4.749340369393139,
+                                10.026385224274406,
+                                3.16622691292876
+                            ]
+                        },
+                        {
+                            "name": "Complete and duplicated BUSCOs",
+                            "data": [
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                1,
+                                0,
+                                1,
+                                0,
+                                1
+                            ],
+                            "color": "0.99,0.73,0.52",
+                            "data_pct": [
+                                0.13192612137203166,
+                                0.13192612137203166,
+                                0.13192612137203166,
+                                0.13192612137203166,
+                                0.13192612137203166,
+                                0.13192612137203166,
+                                0.0,
+                                0.13192612137203166,
+                                0.0,
+                                0.13192612137203166
+                            ]
+                        },
+                        {
+                            "name": "Missing BUSCOs",
+                            "data": [
+                                36,
+                                17,
+                                22,
+                                13,
+                                34,
+                                20,
+                                126,
+                                38,
+                                50,
+                                17
+                            ],
+                            "color": "0.89,0.29,0.20",
+                            "data_pct": [
+                                4.749340369393139,
+                                2.242744063324538,
+                                2.9023746701846966,
+                                1.7150395778364116,
+                                4.485488126649076,
+                                2.638522427440633,
+                                16.62269129287599,
+                                5.013192612137203,
+                                6.596306068601583,
+                                2.242744063324538
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "canu",
+                        "canu_medaka",
+                        "flye",
+                        "flye_medaka",
+                        "raven",
+                        "raven_medaka",
+                        "shasta",
+                        "shasta_medaka",
+                        "wtdbg2",
+                        "wtdbg2_medaka"
+                    ]
+                }
+            ],
+            "plot_type": "bar_graph",
+            "pct_axis_update": {
+                "ticksuffix": "%",
+                "hoverformat": ".1f"
+            },
+            "axis_controlled_by_switches": [
+                "xaxis"
+            ],
+            "p_active": false,
+            "l_active": false,
+            "square": null
+        },
+        "violin-general_stats_table": {
+            "id": "violin-general_stats_table",
+            "layout": {
+                "autosize": true,
+                "colorway": [
+                    "#7cb5ec",
+                    "#434348",
+                    "#90ed7d",
+                    "#f7a35c",
+                    "#8085e9",
+                    "#f15c80",
+                    "#e4d354",
+                    "#2b908f",
+                    "#f45b5b",
+                    "#91e8e1"
+                ],
+                "font": {
+                    "color": "Black",
+                    "family": "Lucida Grande"
+                },
+                "height": 500,
+                "hoverlabel": {
+                    "namelength": -1
+                },
+                "margin": {
+                    "b": 40,
+                    "l": 60,
+                    "pad": 0,
+                    "r": 15,
+                    "t": 50
+                },
+                "modebar": {
+                    "activecolor": "rgba(0, 0, 0, 1)",
+                    "bgcolor": "rgba(0, 0, 0, 0)",
+                    "color": "rgba(0, 0, 0, 0.5)"
+                },
+                "paper_bgcolor": "rgba(0,0,0,0)",
+                "plot_bgcolor": "rgba(0,0,0,0)",
+                "showlegend": false,
+                "title": {
+                    "font": {
+                        "size": 20
+                    },
+                    "text": "General Statistics",
+                    "x": 0.5,
+                    "xanchor": "center"
+                },
+                "xaxis": {
+                    "automargin": false,
+                    "color": "rgba(0,0,0,0.3)",
+                    "gridcolor": "rgba(0,0,0,0.1)",
+                    "tickfont": {
+                        "color": "rgba(0,0,0,0.5)",
+                        "size": 9
+                    },
+                    "zerolinecolor": "rgba(0,0,0,0.1)"
+                },
+                "yaxis": {
+                    "automargin": true,
+                    "color": "rgba(0,0,0,0.3)",
+                    "gridcolor": "rgba(0,0,0,0.1)",
+                    "tickfont": {
+                        "color": "rgba(0,0,0,0.5)",
+                        "size": 9
+                    },
+                    "zerolinecolor": "rgba(0,0,0,0.1)"
+                },
+                "violingap": 0,
+                "grid": {
+                    "columns": 1,
+                    "roworder": "top to bottom",
+                    "ygap": 0.4
+                }
+            },
+            "datasets": [
+                {
+                    "label": 1,
+                    "uid": "violin-general_stats_table",
+                    "dconfig": {},
+                    "layout": {
+                        "xaxis": {
+                            "hoverformat": null,
+                            "ticksuffix": "",
+                            "title": {
+                                "text": null
+                            },
+                            "rangemode": "normal",
+                            "autorangeoptions": {
+                                "clipmin": null,
+                                "clipmax": null,
+                                "minallowed": null,
+                                "maxallowed": null
+                            }
+                        },
+                        "yaxis": {
+                            "hoverformat": null,
+                            "ticksuffix": "",
+                            "title": {
+                                "text": null
+                            },
+                            "rangemode": "normal",
+                            "autorangeoptions": {
+                                "clipmin": null,
+                                "clipmax": null,
+                                "minallowed": null,
+                                "maxallowed": null
+                            }
+                        }
+                    },
+                    "trace_params": {
+                        "hovertemplate": "<b>%{text}</b>: %{x}<extra></extra>",
+                        "orientation": "h",
+                        "box": {
+                            "visible": true
+                        },
+                        "meanline": {
+                            "visible": true
+                        },
+                        "fillcolor": "grey",
+                        "line": {
+                            "width": 2,
+                            "color": "grey"
+                        },
+                        "opacity": 0.5,
+                        "points": false,
+                        "hoveron": "points"
+                    },
+                    "pct_range": {
+                        "xaxis": {
+                            "min": 0,
+                            "max": 100
+                        },
+                        "yaxis": {
+                            "min": 0,
+                            "max": 100
+                        }
+                    },
+                    "metrics": [
+                        "mqc-generalstats-quast-N50",
+                        "mqc-generalstats-quast-Total_length"
+                    ],
+                    "header_by_metric": {
+                        "mqc-generalstats-quast-N50": {
+                            "namespace": "QUAST",
+                            "title": "N50 (Kbp)",
+                            "description": "N50 is the contig length such that using longer or equal length contigs produces half (50%) of the bases of the assembly (kilo base pairs)",
+                            "dmax": 3783.467,
+                            "dmin": 0.0,
+                            "suffix": "Kbp",
+                            "hidden": null,
+                            "xaxis": {
+                                "ticksuffix": "Kbp",
+                                "tickvals": null,
+                                "range": [
+                                    -18.917335,
+                                    3802.478921675
+                                ]
+                            },
+                            "show_points": true,
+                            "show_only_outliers": false,
+                            "hoverformat": ".2f"
+                        },
+                        "mqc-generalstats-quast-Total_length": {
+                            "namespace": "QUAST",
+                            "title": "Assembly Length (Mbp)",
+                            "description": "The total number of bases in the assembly (Mbp).",
+                            "dmax": 29.866501999999997,
+                            "dmin": 0.0,
+                            "suffix": "Mbp",
+                            "hidden": null,
+                            "xaxis": {
+                                "ticksuffix": "Mbp",
+                                "tickvals": null,
+                                "range": [
+                                    -0.14933251,
+                                    30.016581172549998
+                                ]
+                            },
+                            "show_points": true,
+                            "show_only_outliers": false,
+                            "hoverformat": ".2f"
+                        }
+                    },
+                    "violin_values_by_sample_by_metric": {
+                        "mqc-generalstats-quast-N50": {
+                            "shasta_medaka_consensus": 136.42600000000002,
+                            "canu_assembly": 3713.674,
+                            "raven_assembly": 3783.467,
+                            "shasta_assembly": 136.758,
+                            "flye_assembly": 2284.154,
+                            "raven_medaka_consensus": 3782.302,
+                            "wtdbg2_medaka_consensus": 2047.66,
+                            "flye_medaka_consensus": 2285.3250000000003,
+                            "canu_medaka_consensus": 3718.495,
+                            "wtdbg2_assembly": 2043.797
+                        },
+                        "mqc-generalstats-quast-Total_length": {
+                            "shasta_medaka_consensus": 28.257573999999998,
+                            "canu_assembly": 29.828639,
+                            "raven_assembly": 29.481737,
+                            "shasta_assembly": 28.330807,
+                            "flye_assembly": 29.321963999999998,
+                            "raven_medaka_consensus": 29.482805,
+                            "wtdbg2_medaka_consensus": 28.632319,
+                            "flye_medaka_consensus": 29.331139,
+                            "canu_medaka_consensus": 29.866501999999997,
+                            "wtdbg2_assembly": 28.625626999999998
+                        }
+                    },
+                    "scatter_values_by_sample_by_metric": {
+                        "mqc-generalstats-quast-N50": {},
+                        "mqc-generalstats-quast-Total_length": {}
+                    },
+                    "all_samples": [
+                        "canu_assembly",
+                        "canu_medaka_consensus",
+                        "flye_assembly",
+                        "flye_medaka_consensus",
+                        "raven_assembly",
+                        "raven_medaka_consensus",
+                        "shasta_assembly",
+                        "shasta_medaka_consensus",
+                        "wtdbg2_assembly",
+                        "wtdbg2_medaka_consensus"
+                    ],
+                    "scatter_trace_params": {
+                        "mode": "markers",
+                        "marker": {
+                            "size": 4,
+                            "color": "rgba(0,0,0,1)"
+                        },
+                        "showlegend": false,
+                        "hovertemplate": "<b>%{text}</b>: %{x}<extra></extra>",
+                        "hoverlabel": {
+                            "bgcolor": "white"
+                        }
+                    }
+                }
+            ],
+            "plot_type": "violin",
+            "pct_axis_update": {
+                "ticksuffix": "%",
+                "hoverformat": ".1f"
+            },
+            "axis_controlled_by_switches": [],
+            "p_active": false,
+            "l_active": false,
+            "square": null,
+            "static": true,
+            "violin_height": 70,
+            "extra_height": 63
+        }
+    },
+    "report_saved_raw_data": {
+        "multiqc_quast": {
+            "shasta_medaka_consensus": {
+                "# contigs (>= 0 bp)": 349.0,
+                "# contigs (>= 1000 bp)": 348.0,
+                "# contigs (>= 5000 bp)": 346.0,
+                "# contigs (>= 10000 bp)": 327.0,
+                "# contigs (>= 25000 bp)": 263.0,
+                "# contigs (>= 50000 bp)": 191.0,
+                "Total length (>= 0 bp)": 28257574.0,
+                "Total length (>= 1000 bp)": 28257044.0,
+                "Total length (>= 5000 bp)": 28249013.0,
+                "Total length (>= 10000 bp)": 28114755.0,
+                "Total length (>= 25000 bp)": 26976641.0,
+                "Total length (>= 50000 bp)": 24483036.0,
+                "# contigs": 349.0,
+                "Largest contig": 478226.0,
+                "Total length": 28257574.0,
+                "GC (%)": 49.44,
+                "N50": 136426.0,
+                "N90": 38464.0,
+                "auN": 156501.8,
+                "L50": 69.0,
+                "L90": 214.0,
+                "# total reads": 409991.0,
+                "# left": 0.0,
+                "# right": 0.0,
+                "Mapped (%)": 115.37,
+                "Properly paired (%)": 0.0,
+                "Avg. coverage depth": 50.0,
+                "Coverage >= 1x (%)": 100.0,
+                "# N's per 100 kbp": 0.0,
+                "# predicted rRNA genes": 37.0,
+                "# predicted rRNA genes_partial": 0.0
+            },
+            "canu_assembly": {
+                "# contigs (>= 0 bp)": 36.0,
+                "# contigs (>= 1000 bp)": 36.0,
+                "# contigs (>= 5000 bp)": 29.0,
+                "# contigs (>= 10000 bp)": 28.0,
+                "# contigs (>= 25000 bp)": 22.0,
+                "# contigs (>= 50000 bp)": 17.0,
+                "Total length (>= 0 bp)": 29828639.0,
+                "Total length (>= 1000 bp)": 29828639.0,
+                "Total length (>= 5000 bp)": 29813736.0,
+                "Total length (>= 10000 bp)": 29805233.0,
+                "Total length (>= 25000 bp)": 29710861.0,
+                "Total length (>= 50000 bp)": 29539812.0,
+                "# contigs": 36.0,
+                "Largest contig": 4875381.0,
+                "Total length": 29828639.0,
+                "GC (%)": 49.36,
+                "N50": 3713674.0,
+                "N90": 1663324.0,
+                "auN": 3454611.5,
+                "L50": 4.0,
+                "L90": 8.0,
+                "# total reads": 409991.0,
+                "# left": 0.0,
+                "# right": 0.0,
+                "Mapped (%)": 117.69,
+                "Properly paired (%)": 0.0,
+                "Avg. coverage depth": 51.0,
+                "Coverage >= 1x (%)": 100.0,
+                "# N's per 100 kbp": 0.0,
+                "# predicted rRNA genes": 60.0,
+                "# predicted rRNA genes_partial": 1.0
+            },
+            "raven_assembly": {
+                "# contigs (>= 0 bp)": 18.0,
+                "# contigs (>= 1000 bp)": 18.0,
+                "# contigs (>= 5000 bp)": 18.0,
+                "# contigs (>= 10000 bp)": 18.0,
+                "# contigs (>= 25000 bp)": 17.0,
+                "# contigs (>= 50000 bp)": 16.0,
+                "Total length (>= 0 bp)": 29481737.0,
+                "Total length (>= 1000 bp)": 29481737.0,
+                "Total length (>= 5000 bp)": 29481737.0,
+                "Total length (>= 10000 bp)": 29481737.0,
+                "Total length (>= 25000 bp)": 29467896.0,
+                "Total length (>= 50000 bp)": 29433454.0,
+                "# contigs": 18.0,
+                "Largest contig": 4871805.0,
+                "Total length": 29481737.0,
+                "GC (%)": 49.38,
+                "N50": 3783467.0,
+                "N90": 2182466.0,
+                "auN": 3464883.5,
+                "L50": 4.0,
+                "L90": 8.0,
+                "# total reads": 409991.0,
+                "# left": 0.0,
+                "# right": 0.0,
+                "Mapped (%)": 104.6,
+                "Properly paired (%)": 0.0,
+                "Avg. coverage depth": 46.0,
+                "Coverage >= 1x (%)": 100.0,
+                "# N's per 100 kbp": 0.0,
+                "# predicted rRNA genes": 35.0,
+                "# predicted rRNA genes_partial": 0.0
+            },
+            "shasta_assembly": {
+                "# contigs (>= 0 bp)": 350.0,
+                "# contigs (>= 1000 bp)": 348.0,
+                "# contigs (>= 5000 bp)": 346.0,
+                "# contigs (>= 10000 bp)": 327.0,
+                "# contigs (>= 25000 bp)": 264.0,
+                "# contigs (>= 50000 bp)": 191.0,
+                "Total length (>= 0 bp)": 28330868.0,
+                "Total length (>= 1000 bp)": 28330246.0,
+                "Total length (>= 5000 bp)": 28321294.0,
+                "Total length (>= 10000 bp)": 28183867.0,
+                "Total length (>= 25000 bp)": 27064049.0,
+                "Total length (>= 50000 bp)": 24537223.0,
+                "# contigs": 349.0,
+                "Largest contig": 479032.0,
+                "Total length": 28330807.0,
+                "GC (%)": 49.46,
+                "N50": 136758.0,
+                "N90": 38622.0,
+                "auN": 156752.3,
+                "L50": 69.0,
+                "L90": 214.0,
+                "# total reads": 409991.0,
+                "# left": 0.0,
+                "# right": 0.0,
+                "Mapped (%)": 115.0,
+                "Properly paired (%)": 0.0,
+                "Avg. coverage depth": 50.0,
+                "Coverage >= 1x (%)": 100.0,
+                "# N's per 100 kbp": 0.0,
+                "# predicted rRNA genes": 27.0,
+                "# predicted rRNA genes_partial": 2.0
+            },
+            "flye_assembly": {
+                "# contigs (>= 0 bp)": 87.0,
+                "# contigs (>= 1000 bp)": 79.0,
+                "# contigs (>= 5000 bp)": 54.0,
+                "# contigs (>= 10000 bp)": 44.0,
+                "# contigs (>= 25000 bp)": 32.0,
+                "# contigs (>= 50000 bp)": 23.0,
+                "Total length (>= 0 bp)": 29321964.0,
+                "Total length (>= 1000 bp)": 29316128.0,
+                "Total length (>= 5000 bp)": 29257160.0,
+                "Total length (>= 10000 bp)": 29182681.0,
+                "Total length (>= 25000 bp)": 28986504.0,
+                "Total length (>= 50000 bp)": 28669237.0,
+                "# contigs": 87.0,
+                "Largest contig": 3007462.0,
+                "Total length": 29321964.0,
+                "GC (%)": 49.49,
+                "N50": 2284154.0,
+                "N90": 666110.0,
+                "auN": 1838905.0,
+                "L50": 6.0,
+                "L90": 16.0,
+                "# total reads": 409991.0,
+                "# left": 0.0,
+                "# right": 0.0,
+                "Mapped (%)": 112.2,
+                "Properly paired (%)": 0.0,
+                "Avg. coverage depth": 48.0,
+                "Coverage >= 1x (%)": 100.0,
+                "# N's per 100 kbp": 0.0,
+                "# predicted rRNA genes": 38.0,
+                "# predicted rRNA genes_partial": 1.0
+            },
+            "raven_medaka_consensus": {
+                "# contigs (>= 0 bp)": 18.0,
+                "# contigs (>= 1000 bp)": 18.0,
+                "# contigs (>= 5000 bp)": 18.0,
+                "# contigs (>= 10000 bp)": 18.0,
+                "# contigs (>= 25000 bp)": 17.0,
+                "# contigs (>= 50000 bp)": 16.0,
+                "Total length (>= 0 bp)": 29482805.0,
+                "Total length (>= 1000 bp)": 29482805.0,
+                "Total length (>= 5000 bp)": 29482805.0,
+                "Total length (>= 10000 bp)": 29482805.0,
+                "Total length (>= 25000 bp)": 29469019.0,
+                "Total length (>= 50000 bp)": 29436547.0,
+                "# contigs": 18.0,
+                "Largest contig": 4874129.0,
+                "Total length": 29482805.0,
+                "GC (%)": 49.41,
+                "N50": 3782302.0,
+                "N90": 2183078.0,
+                "auN": 3465245.2,
+                "L50": 4.0,
+                "L90": 8.0,
+                "# total reads": 409991.0,
+                "# left": 0.0,
+                "# right": 0.0,
+                "Mapped (%)": 106.8,
+                "Properly paired (%)": 0.0,
+                "Avg. coverage depth": 46.0,
+                "Coverage >= 1x (%)": 100.0,
+                "# N's per 100 kbp": 0.0,
+                "# predicted rRNA genes": 36.0,
+                "# predicted rRNA genes_partial": 0.0
+            },
+            "wtdbg2_medaka_consensus": {
+                "# contigs (>= 0 bp)": 45.0,
+                "# contigs (>= 1000 bp)": 44.0,
+                "# contigs (>= 5000 bp)": 38.0,
+                "# contigs (>= 10000 bp)": 30.0,
+                "# contigs (>= 25000 bp)": 27.0,
+                "# contigs (>= 50000 bp)": 22.0,
+                "Total length (>= 0 bp)": 28632319.0,
+                "Total length (>= 1000 bp)": 28632018.0,
+                "Total length (>= 5000 bp)": 28612060.0,
+                "Total length (>= 10000 bp)": 28557636.0,
+                "Total length (>= 25000 bp)": 28516414.0,
+                "Total length (>= 50000 bp)": 28347875.0,
+                "# contigs": 45.0,
+                "Largest contig": 3937893.0,
+                "Total length": 28632319.0,
+                "GC (%)": 49.62,
+                "N50": 2047660.0,
+                "N90": 619703.0,
+                "auN": 2111113.5,
+                "L50": 6.0,
+                "L90": 15.0,
+                "# total reads": 409991.0,
+                "# left": 0.0,
+                "# right": 0.0,
+                "Mapped (%)": 114.28,
+                "Properly paired (%)": 0.0,
+                "Avg. coverage depth": 49.0,
+                "Coverage >= 1x (%)": 99.99,
+                "# N's per 100 kbp": 0.0,
+                "# predicted rRNA genes": 36.0,
+                "# predicted rRNA genes_partial": 1.0
+            },
+            "flye_medaka_consensus": {
+                "# contigs (>= 0 bp)": 85.0,
+                "# contigs (>= 1000 bp)": 79.0,
+                "# contigs (>= 5000 bp)": 54.0,
+                "# contigs (>= 10000 bp)": 44.0,
+                "# contigs (>= 25000 bp)": 32.0,
+                "# contigs (>= 50000 bp)": 23.0,
+                "Total length (>= 0 bp)": 29331139.0,
+                "Total length (>= 1000 bp)": 29326657.0,
+                "Total length (>= 5000 bp)": 29269595.0,
+                "Total length (>= 10000 bp)": 29195274.0,
+                "Total length (>= 25000 bp)": 29000428.0,
+                "Total length (>= 50000 bp)": 28684946.0,
+                "# contigs": 85.0,
+                "Largest contig": 3009402.0,
+                "Total length": 29331139.0,
+                "GC (%)": 49.51,
+                "N50": 2285325.0,
+                "N90": 666529.0,
+                "auN": 1840459.7,
+                "L50": 6.0,
+                "L90": 16.0,
+                "# total reads": 409991.0,
+                "# left": 0.0,
+                "# right": 0.0,
+                "Mapped (%)": 112.48,
+                "Properly paired (%)": 0.0,
+                "Avg. coverage depth": 48.0,
+                "Coverage >= 1x (%)": 99.99,
+                "# N's per 100 kbp": 0.0,
+                "# predicted rRNA genes": 38.0,
+                "# predicted rRNA genes_partial": 0.0
+            },
+            "canu_medaka_consensus": {
+                "# contigs (>= 0 bp)": 36.0,
+                "# contigs (>= 1000 bp)": 36.0,
+                "# contigs (>= 5000 bp)": 29.0,
+                "# contigs (>= 10000 bp)": 28.0,
+                "# contigs (>= 25000 bp)": 22.0,
+                "# contigs (>= 50000 bp)": 17.0,
+                "Total length (>= 0 bp)": 29866502.0,
+                "Total length (>= 1000 bp)": 29866502.0,
+                "Total length (>= 5000 bp)": 29852031.0,
+                "Total length (>= 10000 bp)": 29843518.0,
+                "Total length (>= 25000 bp)": 29748804.0,
+                "Total length (>= 50000 bp)": 29577413.0,
+                "# contigs": 36.0,
+                "Largest contig": 4881813.0,
+                "Total length": 29866502.0,
+                "GC (%)": 49.38,
+                "N50": 3718495.0,
+                "N90": 1665340.0,
+                "auN": 3459161.0,
+                "L50": 4.0,
+                "L90": 8.0,
+                "# total reads": 409991.0,
+                "# left": 0.0,
+                "# right": 0.0,
+                "Mapped (%)": 117.52,
+                "Properly paired (%)": 0.0,
+                "Avg. coverage depth": 51.0,
+                "Coverage >= 1x (%)": 100.0,
+                "# N's per 100 kbp": 0.0,
+                "# predicted rRNA genes": 59.0,
+                "# predicted rRNA genes_partial": 2.0
+            },
+            "wtdbg2_assembly": {
+                "# contigs (>= 0 bp)": 55.0,
+                "# contigs (>= 1000 bp)": 53.0,
+                "# contigs (>= 5000 bp)": 41.0,
+                "# contigs (>= 10000 bp)": 30.0,
+                "# contigs (>= 25000 bp)": 27.0,
+                "# contigs (>= 50000 bp)": 22.0,
+                "Total length (>= 0 bp)": 28625627.0,
+                "Total length (>= 1000 bp)": 28624597.0,
+                "Total length (>= 5000 bp)": 28578707.0,
+                "Total length (>= 10000 bp)": 28507949.0,
+                "Total length (>= 25000 bp)": 28466240.0,
+                "Total length (>= 50000 bp)": 28297720.0,
+                "# contigs": 55.0,
+                "Largest contig": 3931605.0,
+                "Total length": 28625627.0,
+                "GC (%)": 49.59,
+                "N50": 2043797.0,
+                "N90": 618645.0,
+                "auN": 2104176.9,
+                "L50": 6.0,
+                "L90": 15.0,
+                "# total reads": 409991.0,
+                "# left": 0.0,
+                "# right": 0.0,
+                "Mapped (%)": 114.68,
+                "Properly paired (%)": 0.0,
+                "Avg. coverage depth": 49.0,
+                "Coverage >= 1x (%)": 99.86,
+                "# N's per 100 kbp": 0.0,
+                "# predicted rRNA genes": 36.0,
+                "# predicted rRNA genes_partial": 1.0
+            }
+        },
+        "multiqc_busco": {
+            "shasta_medaka": {
+                "lineage_dataset": "fungi_odb10",
+                "complete": 684.0,
+                "complete_single_copy": 683.0,
+                "complete_duplicated": 1.0,
+                "fragmented": 36.0,
+                "missing": 38.0,
+                "total": 758.0
+            },
+            "canu": {
+                "lineage_dataset": "fungi_odb10",
+                "complete": 669.0,
+                "complete_single_copy": 668.0,
+                "complete_duplicated": 1.0,
+                "fragmented": 53.0,
+                "missing": 36.0,
+                "total": 758.0
+            },
+            "raven": {
+                "lineage_dataset": "fungi_odb10",
+                "complete": 672.0,
+                "complete_single_copy": 671.0,
+                "complete_duplicated": 1.0,
+                "fragmented": 52.0,
+                "missing": 34.0,
+                "total": 758.0
+            },
+            "shasta": {
+                "lineage_dataset": "fungi_odb10",
+                "complete": 544.0,
+                "complete_single_copy": 544.0,
+                "complete_duplicated": 0.0,
+                "fragmented": 88.0,
+                "missing": 126.0,
+                "total": 758.0
+            },
+            "flye": {
+                "lineage_dataset": "fungi_odb10",
+                "complete": 703.0,
+                "complete_single_copy": 702.0,
+                "complete_duplicated": 1.0,
+                "fragmented": 33.0,
+                "missing": 22.0,
+                "total": 758.0
+            },
+            "raven_medaka": {
+                "lineage_dataset": "fungi_odb10",
+                "complete": 712.0,
+                "complete_single_copy": 711.0,
+                "complete_duplicated": 1.0,
+                "fragmented": 26.0,
+                "missing": 20.0,
+                "total": 758.0
+            },
+            "wtdbg2_medaka": {
+                "lineage_dataset": "fungi_odb10",
+                "complete": 717.0,
+                "complete_single_copy": 716.0,
+                "complete_duplicated": 1.0,
+                "fragmented": 24.0,
+                "missing": 17.0,
+                "total": 758.0
+            },
+            "flye_medaka": {
+                "lineage_dataset": "fungi_odb10",
+                "complete": 722.0,
+                "complete_single_copy": 721.0,
+                "complete_duplicated": 1.0,
+                "fragmented": 23.0,
+                "missing": 13.0,
+                "total": 758.0
+            },
+            "canu_medaka": {
+                "lineage_dataset": "fungi_odb10",
+                "complete": 717.0,
+                "complete_single_copy": 716.0,
+                "complete_duplicated": 1.0,
+                "fragmented": 24.0,
+                "missing": 17.0,
+                "total": 758.0
+            },
+            "wtdbg2": {
+                "lineage_dataset": "fungi_odb10",
+                "complete": 632.0,
+                "complete_single_copy": 632.0,
+                "complete_duplicated": 0.0,
+                "fragmented": 76.0,
+                "missing": 50.0,
+                "total": 758.0
+            }
+        },
+        "multiqc_general_stats": {
+            "shasta_medaka_consensus": {
+                "QUAST_mqc-generalstats-quast-N50": 136426.0,
+                "QUAST_mqc-generalstats-quast-Total_length": 28257574.0
+            },
+            "canu_assembly": {
+                "QUAST_mqc-generalstats-quast-N50": 3713674.0,
+                "QUAST_mqc-generalstats-quast-Total_length": 29828639.0
+            },
+            "raven_assembly": {
+                "QUAST_mqc-generalstats-quast-N50": 3783467.0,
+                "QUAST_mqc-generalstats-quast-Total_length": 29481737.0
+            },
+            "shasta_assembly": {
+                "QUAST_mqc-generalstats-quast-N50": 136758.0,
+                "QUAST_mqc-generalstats-quast-Total_length": 28330807.0
+            },
+            "flye_assembly": {
+                "QUAST_mqc-generalstats-quast-N50": 2284154.0,
+                "QUAST_mqc-generalstats-quast-Total_length": 29321964.0
+            },
+            "raven_medaka_consensus": {
+                "QUAST_mqc-generalstats-quast-N50": 3782302.0,
+                "QUAST_mqc-generalstats-quast-Total_length": 29482805.0
+            },
+            "wtdbg2_medaka_consensus": {
+                "QUAST_mqc-generalstats-quast-N50": 2047660.0,
+                "QUAST_mqc-generalstats-quast-Total_length": 28632319.0
+            },
+            "flye_medaka_consensus": {
+                "QUAST_mqc-generalstats-quast-N50": 2285325.0,
+                "QUAST_mqc-generalstats-quast-Total_length": 29331139.0
+            },
+            "canu_medaka_consensus": {
+                "QUAST_mqc-generalstats-quast-N50": 3718495.0,
+                "QUAST_mqc-generalstats-quast-Total_length": 29866502.0
+            },
+            "wtdbg2_assembly": {
+                "QUAST_mqc-generalstats-quast-N50": 2043797.0,
+                "QUAST_mqc-generalstats-quast-Total_length": 28625627.0
+            }
+        }
+    },
+    "config_analysis_dir_abs": [
+        "/array1/falmeida/NF_WORK/9c/ec4d4577a92fe1fac96da940917e82"
+    ],
+    "config_analysis_dir": [
+        "."
+    ],
+    "config_creation_date": "2024-03-06, 01:19 -03",
+    "config_git_hash": null,
+    "config_intro_text": null,
+    "config_report_comment": "This report has been generated by the <a href=\"https://github.com/fmalmeida/mpgap/releases/tag/3.2\" target=\"_blank\">fmalmeida/mpgap</a> analysis pipeline. For information about how to interpret these results, please see the <a href=\"https://nf-co.re/scrnaseq/3.2/docs/output\" target=\"_blank\">documentation</a>.\n",
+    "config_report_header_info": null,
+    "config_script_path": "/opt/conda/envs/mpgap-3.2/lib/python3.9/site-packages/multiqc/utils",
+    "config_short_version": "1.20",
+    "config_subtitle": null,
+    "config_title": null,
+    "config_version": "1.20",
+    "config_output_dir": "/array1/falmeida/NF_WORK/9c/ec4d4577a92fe1fac96da940917e82"
+}

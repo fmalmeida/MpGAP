@@ -1,15 +1,16 @@
 <img src="assets/lOGO_3.png" width="300px">
 
 [![F1000 Paper](https://img.shields.io/badge/Citation%20F1000-10.12688/f1000research.139488.1-orange)](https://doi.org/10.12688/f1000research.139488.1)
-[![Github Releases](https://img.shields.io/github/v/release/fmalmeida/mpgap)](https://github.com/fmalmeida/mpgap/releases)
+[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/fmalmeida/mpgap?include_prereleases&label=Latest%20release)](https://github.com/fmalmeida/mpgap/releases)
 [![Documentation](https://img.shields.io/badge/Documentation-readthedocs-brightgreen)](https://mpgap.readthedocs.io/en/latest/?badge=latest)
-[![Nextflow](https://img.shields.io/badge/nextflow%20DSL2-%E2%89%A521.04.0-23aa62.svg?labelColor=000000)](https://www.nextflow.io/)
-[![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/)
+[![Nextflow](https://img.shields.io/badge/nextflow%20DSL2-%E2%89%A521.10.3-23aa62.svg?labelColor=000000)](https://www.nextflow.io/)
 [![run with docker](https://img.shields.io/badge/run%20with-docker-0db7ed?labelColor=000000&logo=docker)](https://www.docker.com/)
 [![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)
 [![License](https://img.shields.io/badge/License-GPL%203-black)](https://github.com/fmalmeida/mpgap/blob/master/LICENSE)
-[![Zenodo Archive](https://zenodo.org/badge/DOI/10.5281/zenodo.3997375.svg)](https://doi.org/10.5281/zenodo.3445485)
 [![Follow on Twitter](http://img.shields.io/badge/twitter-%40fmarquesalmeida-1DA1F2?labelColor=000000&logo=twitter)](https://twitter.com/fmarquesalmeida)
+[![Zenodo Archive](https://img.shields.io/badge/Zenodo-Archive-blue)](https://doi.org/10.5281/zenodo.3445485)
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/github.com/fmalmeida/mpgap)
 
 <p align="center">
 
@@ -35,9 +36,9 @@ This pipeline wraps up the following software:
 
 || **Source** |
 |:- | :- |
-| **Assemblers** | [Canu](https://github.com/marbl/canu), [Flye](https://github.com/fenderglass/Flye), [Raven](https://github.com/lbcb-sci/raven), [Shasta](https://github.com/chanzuckerberg/shasta), [wtdbg2](https://github.com/ruanjue/wtdbg2), [Haslr](https://github.com/vpc-ccg/haslr), [Unicycler](https://github.com/rrwick/Unicycler), [Spades](https://github.com/ablab/spades), [Shovill](https://github.com/tseemann/shovill), [Megahit](https://github.com/voutcn/megahit) |
-| **Polishers** | [Nanopolish](https://github.com/jts/nanopolish), [Medaka](https://github.com/nanoporetech/medaka), [gcpp](https://github.com/PacificBiosciences/gcpp), [Pilon](https://github.com/broadinstitute/pilon) |
-| **Quality check** | [QUAST](https://github.com/ablab/quast), [MultiQC](https://multiqc.info/) |
+| **Assemblers** | [Hifiasm](https://github.com/chhylp123/hifiasm), [Canu](https://github.com/marbl/canu), [Flye](https://github.com/fenderglass/Flye), [Raven](https://github.com/lbcb-sci/raven), [Shasta](https://github.com/chanzuckerberg/shasta), [wtdbg2](https://github.com/ruanjue/wtdbg2), [Haslr](https://github.com/vpc-ccg/haslr), [Unicycler](https://github.com/rrwick/Unicycler), [Spades](https://github.com/ablab/spades), [Shovill](https://github.com/tseemann/shovill), [Megahit](https://github.com/voutcn/megahit) |
+| **Polishers** | [Nanopolish](https://github.com/jts/nanopolish), [Medaka](https://github.com/nanoporetech/medaka), [gcpp](https://github.com/PacificBiosciences/gcpp), [Polypolish](https://github.com/rrwick/Polypolish) and [Pilon](https://github.com/broadinstitute/pilon) |
+| **Quality check** | [Quast](https://github.com/ablab/quast), [BUSCO](https://busco.ezlab.org/busco_userguide.html) and [MultiQC](https://multiqc.info/) |
 
 ### Release notes
 
@@ -77,7 +78,7 @@ Therefore, feedbacks are very well welcomed. If you believe that your use case i
 
         ```bash
         # for docker
-        docker pull fmalmeida/mpgap:v3.1
+        docker pull fmalmeida/mpgap:v3.2
 
         # run
         nextflow run fmalmeida/mpgap -profile docker [options]
@@ -86,12 +87,14 @@ Therefore, feedbacks are very well welcomed. If you believe that your use case i
     * for singularity
 
         ```bash
-        # for singularity
+        # for singularity --> prepare env variables
         # remember to properly set NXF_SINGULARITY_LIBRARYDIR
         # read more at https://www.nextflow.io/docs/latest/singularity.html#singularity-docker-hub
-        export NXF_SINGULARITY_LIBRARYDIR=MY_SINGULARITY_IMAGES    # your singularity storage dir
-        export NXF_SINGULARITY_CACHEDIR=MY_SINGULARITY_CACHE       # your singularity cache dir
-        singularity pull --dir $NXF_SINGULARITY_LIBRARYDIR fmalmeida-mpgap-v3.1.img docker://fmalmeida/mpgap:v3.1
+        export NXF_SINGULARITY_LIBRARYDIR=<path in your machine>    # Set a path to your singularity storage dir
+        export NXF_SINGULARITY_CACHEDIR=<path in your machine>      # Set a path to your singularity cache dir
+        export SINGULARITY_CACHEDIR=<path in your machine>          # Set a path to your singularity cache dir
+
+        # TODO: ADD Information about TMPDIR
 
         # run
         nextflow run fmalmeida/mpgap -profile singularity [options]
@@ -120,7 +123,24 @@ Therefore, feedbacks are very well welcomed. If you believe that your use case i
 
 :fire: Please read the documentation below on [selecting between conda, docker or singularity](https://github.com/fmalmeida/mpgap/tree/master#selecting-between-profiles) profiles, since the tools will be made available differently depending on the profile desired.
 
+## Quickstart
+
+A few testing datasets have been made available so that users can quickly try-out the features available in the pipeline:
+
+```bash
+# short-reads
+nextflow run fmalmeida/mpgap -profile test,sreads,<docker/singularity>
+
+# long-reads
+nextflow run fmalmeida/mpgap -profile test,lreads,<ont/pacbio>,<docker/singularity>
+
+# hybrid
+nextflow run fmalmeida/mpgap -profile test,hybrid,<ont/pacbio>,<docker/singularity>
+```
+
 ## Documentation
+
+<a href="https://mpgap.readthedocs.io/en/latest/index.html"><strong>Complete online documentation. »</strong></a>
 
 ### Selecting between profiles
 
@@ -171,22 +191,22 @@ Also, since in quast 5.0.2 the automatic download of its busco databases is brok
 
 ```bash
 # create the directory
-mkdir -p $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/
+mkdir -p $CONDA_PREFIX/envs/mpgap-3.2/lib/python3.8/site-packages/quast_libs/busco/
 
 # bacteria db
-wget -O $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/bacteria.tar.gz https://busco.ezlab.org/v2/datasets/bacteria_odb9.tar.gz
+wget -O $CONDA_PREFIX/envs/mpgap-3.2/lib/python3.8/site-packages/quast_libs/busco/bacteria.tar.gz https://busco.ezlab.org/v2/datasets/bacteria_odb9.tar.gz
 
 # eukaryota db
-wget -O $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/eukaryota.tar.gz https://busco.ezlab.org/v2/datasets/eukaryota_odb9.tar.gz
+wget -O $CONDA_PREFIX/envs/mpgap-3.2/lib/python3.8/site-packages/quast_libs/busco/eukaryota.tar.gz https://busco.ezlab.org/v2/datasets/eukaryota_odb9.tar.gz
 
 # fungi db
-wget -O $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco/fungi.tar.gz https://busco.ezlab.org/v2/datasets/fungi_odb9.tar.gz
-chmod -R 777 $CONDA_PREFIX/envs/mpgap-3.1/lib/python3.6/site-packages/quast_libs/busco
+wget -O $CONDA_PREFIX/envs/mpgap-3.2/lib/python3.8/site-packages/quast_libs/busco/fungi.tar.gz https://busco.ezlab.org/v2/datasets/fungi_odb9.tar.gz
+chmod -R 777 $CONDA_PREFIX/envs/mpgap-3.2/lib/python3.8/site-packages/quast_libs/busco
 
 # get augustus database with
 # must be executed in the end because its links for bacteria, fungi and eukaryota are broken
 # it is only working for augustus
-conda activate mpgap-3.1 && quast-download-busco
+conda activate mpgap-3.2 && quast-download-busco
 ```
 
 ### Explanation of hybrid strategies
@@ -201,9 +221,7 @@ It uses the hybrid assembly modes from Unicycler, Haslr and/or SPAdes.
 
 #### Strategy 2
 
-It produces a long reads only assembly and polishes (correct errors) it with short reads using Pilon.
-
-> If polishing with Illumina paired end reads pilon will be executed with [Unicycler-polish program](https://github.com/rrwick/Unicycler/blob/main/docs/unicycler-polish.md), taking advantage of its ability to perform multiple rounds of polishing until changes are minimal.
+It produces a long reads only assembly and polishes (correct errors) it with short reads using Pilon. By default, it runs 4 rounds of polishing (params.pilon_polish_rounds).
 
 #### Example:
 
@@ -275,7 +293,11 @@ It will result in the following:
 
 ## Citation
 
-To cite this tool please refer to our [Zenodo tag](https://doi.org/10.5281/zenodo.3445485).
+In order to cite this pipeline, please refer to:
+
+> Almeida FMd, Campos TAd and Pappas Jr GJ. Scalable and versatile container-based pipelines for de novo genome assembly and bacterial annotation. [version 1; peer review: awaiting peer review]. F1000Research 2023, 12:1205 (https://doi.org/10.12688/f1000research.139488.1)
+
+Additionally, archived versions of the pipeline are also found in [Zenodo](https://doi.org/10.5281/zenodo.3445485).
 
 This pipeline uses code and infrastructure developed and maintained by the [nf-core](https://nf-co.re) community, reused here under the [GPLv3](https://github.com/fmalmeida/ngs-preprocess/blob/master/LICENSE).
 

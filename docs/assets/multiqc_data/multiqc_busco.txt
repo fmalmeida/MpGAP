@@ -1,0 +1,11 @@
+Sample	lineage_dataset	complete	complete_single_copy	complete_duplicated	fragmented	missing	total
+canu	fungi_odb10	669.0	668.0	1.0	53.0	36.0	758.0
+canu_medaka	fungi_odb10	717.0	716.0	1.0	24.0	17.0	758.0
+flye	fungi_odb10	703.0	702.0	1.0	33.0	22.0	758.0
+flye_medaka	fungi_odb10	722.0	721.0	1.0	23.0	13.0	758.0
+raven	fungi_odb10	672.0	671.0	1.0	52.0	34.0	758.0
+raven_medaka	fungi_odb10	712.0	711.0	1.0	26.0	20.0	758.0
+shasta	fungi_odb10	544.0	544.0	0.0	88.0	126.0	758.0
+shasta_medaka	fungi_odb10	684.0	683.0	1.0	36.0	38.0	758.0
+wtdbg2	fungi_odb10	632.0	632.0	0.0	76.0	50.0	758.0
+wtdbg2_medaka	fungi_odb10	717.0	716.0	1.0	24.0	17.0	758.0

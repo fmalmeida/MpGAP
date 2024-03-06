@@ -1,0 +1,31 @@
+# A summary of the main assembly statistics
+
+## Main QUAST statistics
+
+Sample                    # contigs   Largest contig   Total length   GC (%)   N50         L90     Properly paired (%)   Avg. coverage depth   # predicted rRNA genes
+-----------------------   ---------   --------------   ------------   ------   ---------   -----   -------------------   -------------------   ----------------------
+canu_assembly             36.0        4875381.0        29828639.0     49.36    3713674.0   8.0     0.0                   51.0                  60.0
+canu_medaka_consensus     36.0        4881813.0        29866502.0     49.38    3718495.0   8.0     0.0                   51.0                  59.0
+flye_assembly             87.0        3007462.0        29321964.0     49.49    2284154.0   16.0    0.0                   48.0                  38.0
+flye_medaka_consensus     85.0        3009402.0        29331139.0     49.51    2285325.0   16.0    0.0                   48.0                  38.0
+raven_assembly            18.0        4871805.0        29481737.0     49.38    3783467.0   8.0     0.0                   46.0                  35.0
+raven_medaka_consensus    18.0        4874129.0        29482805.0     49.41    3782302.0   8.0     0.0                   46.0                  36.0
+shasta_assembly           349.0       479032.0         28330807.0     49.46    136758.0    214.0   0.0                   50.0                  27.0
+shasta_medaka_consensus   349.0       478226.0         28257574.0     49.44    136426.0    214.0   0.0                   50.0                  37.0
+wtdbg2_assembly           55.0        3931605.0        28625627.0     49.59    2043797.0   15.0    0.0                   49.0                  36.0
+wtdbg2_medaka_consensus   45.0        3937893.0        28632319.0     49.62    2047660.0   15.0    0.0                   49.0                  36.0
+
+## Main BUSCO statistics
+
+Sample          lineage_dataset   complete   complete_single_copy   complete_duplicated   fragmented   missing   total
+-------------   ---------------   --------   --------------------   -------------------   ----------   -------   -----
+canu            fungi_odb10       669.0      668.0                  1.0                   53.0         36.0      758.0
+canu_medaka     fungi_odb10       717.0      716.0                  1.0                   24.0         17.0      758.0
+flye            fungi_odb10       703.0      702.0                  1.0                   33.0         22.0      758.0
+flye_medaka     fungi_odb10       722.0      721.0                  1.0                   23.0         13.0      758.0
+raven           fungi_odb10       672.0      671.0                  1.0                   52.0         34.0      758.0
+raven_medaka    fungi_odb10       712.0      711.0                  1.0                   26.0         20.0      758.0
+shasta          fungi_odb10       544.0      544.0                  0.0                   88.0         126.0     758.0
+shasta_medaka   fungi_odb10       684.0      683.0                  1.0                   36.0         38.0      758.0
+wtdbg2          fungi_odb10       632.0      632.0                  0.0                   76.0         50.0      758.0
+wtdbg2_medaka   fungi_odb10       717.0      716.0                  1.0                   24.0         17.0      758.0

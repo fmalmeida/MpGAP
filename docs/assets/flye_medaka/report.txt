@@ -1,0 +1,33 @@
+All statistics are based on contigs of size >= 100 bp, unless otherwise noted (e.g., "# contigs (>= 0 bp)" and "Total length (>= 0 bp)" include all contigs).
+
+Assembly                    flye_medaka_consensus
+# contigs (>= 0 bp)         85                   
+# contigs (>= 1000 bp)      79                   
+# contigs (>= 5000 bp)      54                   
+# contigs (>= 10000 bp)     44                   
+# contigs (>= 25000 bp)     32                   
+# contigs (>= 50000 bp)     23                   
+Total length (>= 0 bp)      29331139             
+Total length (>= 1000 bp)   29326657             
+Total length (>= 5000 bp)   29269595             
+Total length (>= 10000 bp)  29195274             
+Total length (>= 25000 bp)  29000428             
+Total length (>= 50000 bp)  28684946             
+# contigs                   85                   
+Largest contig              3009402              
+Total length                29331139             
+GC (%)                      49.51                
+N50                         2285325              
+N90                         666529               
+auN                         1840459.7            
+L50                         6                    
+L90                         16                   
+# total reads               409991               
+# left                      0                    
+# right                     0                    
+Mapped (%)                  112.48               
+Properly paired (%)         0.0                  
+Avg. coverage depth         48                   
+Coverage >= 1x (%)          99.99                
+# N's per 100 kbp           0.00                 
+# predicted rRNA genes      38 + 0 part          

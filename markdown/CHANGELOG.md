@@ -2,6 +2,26 @@
 
 The tracking for changes started in v2.
 
+## v3.2 -- [2024-Mar-06]
+
+* Update unicyler to v0.5.0
+* Adjust Pilon polishing module to select how many rounds of polishing to run. Default is 4.
+* Adjust `raven` module to allow pre-set `-k` and `-w` values for corrected/high-quality longreads, while allowing user modification
+* Increase default `--max_memory` value to 20.GB.
+* Added to parameters to allow users to quickly update how many resources the first attempt of an assembly task should ask
+  * `--start_asm_cpus`
+  * `--start_asm_mem`
+* Add a directory called `final_assemblies` in the main output directory holding all the assemblies generated in the pipeline execution.
+* Updated documentation as discussed in [[#58](https://github.com/fmalmeida/MpGAP/issues/58)] and [[#57](https://github.com/fmalmeida/MpGAP/issues/57)].
+* [[#50](https://github.com/fmalmeida/MpGAP/issues/50)]
+  * Parameters `--skip_pilon` and `--skip_polypolish` added to the pipeline
+  * MultiQC report was fixed and enhanced
+  * Docker image was also modified to download BUSCO standalone and pipeline perform the BUSCO standalone run instead of via quast.
+* [[#53](https://github.com/fmalmeida/MpGAP/issues/53)] - Include hifiasm assembler in the pipeline. Long reads only and hybrid strategy 2.
+* [[#61](https://github.com/fmalmeida/MpGAP/issues/61)] - Add a simple parameter to adjust how many cpus and how much memory should the assembly jobs request in the first attempt to avoid lack of resources errors.
+* [[#66](https://github.com/fmalmeida/MpGAP/issues/66)] - Include an automated generation of a samplesheet for bacannot pipeline.
+* [[#72]](https://github.com/fmalmeida/MpGAP/issues/72) - hifiasm is only executed for corrected (or high quality) longreads
+
 ## v3.1.4 -- [2022-Sep-03]
 
 This version addresses the changes discussed in [#36](https://github.com/fmalmeida/MpGAP/issues/36), [#37](https://github.com/fmalmeida/MpGAP/issues/37) and [#38](https://github.com/fmalmeida/MpGAP/issues/38).

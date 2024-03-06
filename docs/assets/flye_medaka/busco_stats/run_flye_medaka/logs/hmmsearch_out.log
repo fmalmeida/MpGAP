@@ -1,0 +1,113 @@
+# hmmsearch :: search profile(s) against a sequence database
+# HMMER 3.1b2 (February 2015); http://hmmer.org/
+# Copyright (C) 2015 Howard Hughes Medical Institute.
+# Freely distributed under the GNU General Public License (GPLv3).
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# query HMM file:                  ./busco_db/fungi_odb10/hmms/92267at4751.hmm
+# target sequence database:        flye_medaka/busco_stats/run_flye_medaka/run_fungi_odb10/metaeuk_output/rerun_results/flye_medaka_consensus.fa.modified.fas
+# per-dom hits tabular output:     flye_medaka/busco_stats/run_flye_medaka/run_fungi_odb10/hmmer_output/rerun_results/92267at4751.out
+# number of worker threads:        1
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Query:       92267at4751  [M=512]
+Scores for complete sequences (score includes all domains):
+   --- full sequence ---   --- best 1 domain ---    -#dom-
+    E-value  score  bias    E-value  score  bias    exp  N  Sequence                                             Description
+    ------- ------ -----    ------- ------ -----   ---- --  --------                                             -----------
+   1.4e-127  420.1   6.0   5.1e-124  408.3   6.0    3.6  1  92267at4751_1245748_1:000549|contig_12:586877-588338  
+    9.8e-98  321.6   0.0      3e-86  283.7   0.0    2.1  2  92267at4751_40296_1:00239e|contig_12:586051-586905    
+
+
+Domain annotation for each sequence (and alignments):
+>> 92267at4751_1245748_1:000549|contig_12:586877-588338  
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !  408.3   6.0  4.6e-126  5.1e-124       1     301 [.       1     367 [.       1     377 [. 0.85
+
+  Alignments for each domain:
+  == domain 1  score: 408.3 bits;  conditional E-value: 4.6e-126
+                                           92267at4751   1 mptisvdk..lfealgk.ytteefdelcfefgielded...tteeerpqlkieipAn 51 
+                                                           mptisvdk  lf++lg+ ytteefdelcfefg    +      ++e+pqlkieipAn
+  92267at4751_1245748_1:000549|contig_12:586877-588338   1 MPTISVDKaaLFKELGReYTTEEFDELCFEFGTTNSDRpivDGKQEPPQLKIEIPAN 57 
+                                                           9******9889*****99**************97665412134679*********** PP
+
+                                           92267at4751  52 rydllcieGiaraLnvflgk...pkyklv.............ketekirpyvaaail 92 
+                                                           rydllc+eGi+ +Ln+flg+   p+y+lv             ++ +++rp+v++ail
+  92267at4751_1245748_1:000549|contig_12:586877-588338  58 RYDLLCFEGIQLMLNIFLGRkplPNYRLVepangqlekiivkEDVSRVRPLVSGAIL 114
+                                                           ******************98445577764222221111112167899********** PP
+
+                                           92267at4751  93 rnvkfteesYesfidlqdkLhqnlarkRtlvaiGTHdldtikgpftYealkpkdikf 149
+                                                           rn+kf++++Yesfi+lqdkLhqnlar+Rtlv+iGTHdldti+gpftYeal+pkdikf
+  92267at4751_1245748_1:000549|contig_12:586877-588338 115 RNIKFDKARYESFIALQDKLHQNLARQRTLVSIGTHDLDTIQGPFTYEALPPKDIKF 171
+                                                           ********************************************************* PP
+
+                                           92267at4751 150 vpLnqtke.taeelmefye...................dkhlgkylhiirdspvypv 186
+                                                           vpLnqtke ++eelm+fye                   dkhlgkylhiirdspvypv
+  92267at4751_1245748_1:000549|contig_12:586877-588338 172 VPLNQTKElNGEELMSFYEvwtdhlwliaintyiykqkDKHLGKYLHIIRDSPVYPV 228
+                                                           ******98689******9666666666666666666668****************** PP
+
+                                           92267at4751 187 ildskrtvlslPPiiNsdhskitldtknvfievtatdktkleivlnilvamfseyce 243
+                                                           i+dskrtv+slPPiiN+dhskitldtknv+ie+ta dktkl+iv++i+v+mfs+y++
+  92267at4751_1245748_1:000549|contig_12:586877-588338 229 IYDSKRTVCSLPPIINGDHSKITLDTKNVLIEITALDKTKLDIVTKIMVTMFSQYTS 285
+                                                           ********************************************************* PP
+
+                                           92267at4751 244 epft..................vepvkivsehn...rvtpdlepr...aevsyinsc 276
+                                                           +pft                  vepv+ivsehn   rv+pd++pr   aevsyin+c
+  92267at4751_1245748_1:000549|contig_12:586877-588338 286 KPFTyvrsaspcthdtnsflcsVEPVQIVSEHNnetRVEPDIAPRttqAEVSYINQC 342
+                                                           ***76666666666666666668********983335679998873336799***** PP
+
+                                           92267at4751 277 lglelsaeeiaklLekmslvevppt 301
+                                                           +glels+eei+klL+km++ + p  
+  92267at4751_1245748_1:000549|contig_12:586877-588338 343 CGLELSPEEICKLLTKMAYQARPSA 367
+                                                           ******************9887765 PP
+
+>> 92267at4751_40296_1:00239e|contig_12:586051-586905  
+   #    score  bias  c-Evalue  i-Evalue hmmfrom  hmm to    alifrom  ali to    envfrom  env to     acc
+ ---   ------ ----- --------- --------- ------- -------    ------- -------    ------- -------    ----
+   1 !  283.7   0.0   2.8e-88     3e-86     297     468 ..       7     188 ..       3     193 .. 0.92
+   2 !   35.8   0.0   3.6e-13     4e-11     470     512 .]     232     285 .]     222     285 .] 0.80
+
+  Alignments for each domain:
+  == domain 1  score: 283.7 bits;  conditional E-value: 2.8e-88
+                                         92267at4751 297 evpptraDiLhecdimedvaiaygfnnlpta......tvakplpinklsdivrke.ama 348
+                                                           pptraD+Lh++dimedvaiaygfn+lp +      t+a+plpinklsdivr+e ama
+  92267at4751_40296_1:00239e|contig_12:586051-586905   7 MFPPTRADVLHQADIMEDVAIAYGFNSLPRSfpsksgTIAQPLPINKLSDIVRMEaAMA 65 
+                                                         679*************************8533333339***************983599 PP
+
+                                         92267at4751 349 gwsevlpliLcshdenfallnrkdd..tavklanpktleyqvvrtsLlpglLKtireNk 405
+                                                         gw+evlpliLcshdenfa+lnrkdd  tavklanpkt+e+qvvrtsLlpglLKtireNk
+  92267at4751_40296_1:00239e|contig_12:586051-586905  66 GWTEVLPLILCSHDENFAWLNRKDDgtTAVKLANPKTVEFQVVRTSLLPGLLKTIRENK 124
+                                                         ***********************986689****************************** PP
+
+                                         92267at4751 406 khslpikvfEvsdvvlkdes.erkarNerhlaavyvgktsgfevvhglldrilkmlkgy 463
+                                                         +h++pik+fE+sdv++kd + erk+rNerh+aa+++g+tsgfevvhglldri++mlk+ 
+  92267at4751_40296_1:00239e|contig_12:586051-586905 125 HHAVPIKIFECSDVAFKDLTlERKSRNERHFAAAWYGRTSGFEVVHGLLDRIMAMLKSA 183
+                                                         ******************766*************************************9 PP
+
+                                         92267at4751 464 yieek 468
+                                                         +i+ +
+  92267at4751_40296_1:00239e|contig_12:586051-586905 184 FITGE 188
+                                                         99765 PP
+
+  == domain 2  score: 35.8 bits;  conditional E-value: 3.6e-13
+                                         92267at4751 470 ektffpgraaki..........iGelGilhpevlekfel.ypvsalelnlekfl 512
+                                                         e+t+fpg+aa+i          iG++Gilhp+vlek+el ypvs+le+n+e+fl
+  92267at4751_40296_1:00239e|contig_12:586051-586905 232 EPTYFPGHAASIhlriagkdhvIGAFGILHPTVLEKYELkYPVSTLEINIEAFL 285
+                                                         6889999988633333333333****************989**********996 PP
+
+
+
+Internal pipeline statistics summary:
+-------------------------------------
+Query model(s):                              1  (512 nodes)
+Target sequences:                          221  (91174 residues searched)
+Passed MSV filter:                         5  (0.0226244); expected 4.4 (0.02)
+Passed bias filter:                        4  (0.0180995); expected 4.4 (0.02)
+Passed Vit filter:                         2  (0.00904977); expected 0.2 (0.001)
+Passed Fwd filter:                         2  (0.00904977); expected 0.0 (1e-05)
+Initial search space (Z):                221  [actual number of targets]
+Domain search space  (domZ):               2  [number of targets reported over threshold]
+# CPU time: 0.04u 0.00s 00:00:00.04 Elapsed: 00:00:00.04
+# Mc/sec: 1167.03
+//
+[ok]

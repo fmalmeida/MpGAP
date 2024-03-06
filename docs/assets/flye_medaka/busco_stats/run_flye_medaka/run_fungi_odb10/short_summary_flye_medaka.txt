@@ -1,0 +1,30 @@
+# BUSCO version is: 5.6.1 
+# The lineage dataset is: fungi_odb10 (Creation date: 2024-01-08, number of genomes: 549, number of BUSCOs: 758)
+# Summarized benchmarking in BUSCO notation for file /array1/falmeida/NF_WORK/7c/42e252fff6a9a579f0694ac367553e/flye_medaka_consensus.fa
+# BUSCO was run in mode: euk_genome_met
+# Gene predictor used: metaeuk
+
+	***** Results: *****
+
+	C:95.2%[S:95.1%,D:0.1%],F:3.0%,M:1.8%,n:758	   
+	722	Complete BUSCOs (C)			   
+	721	Complete and single-copy BUSCOs (S)	   
+	1	Complete and duplicated BUSCOs (D)	   
+	23	Fragmented BUSCOs (F)			   
+	13	Missing BUSCOs (M)			   
+	758	Total BUSCO groups searched		   
+
+Assembly Statistics:
+	85	Number of scaffolds
+	85	Number of contigs
+	29331139	Total length
+	0.000%	Percent gaps
+	2 MB	Scaffold N50
+	2 MB	Contigs N50
+
+
+Dependencies and versions:
+	hmmsearch: 3.1
+	bbtools: 39.01
+	metaeuk: 6.a5d39d9
+	busco: 5.6.1

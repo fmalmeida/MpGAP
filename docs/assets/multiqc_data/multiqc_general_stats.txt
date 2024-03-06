@@ -1,0 +1,11 @@
+Sample	QUAST_mqc-generalstats-quast-N50	QUAST_mqc-generalstats-quast-Total_length
+canu_assembly	3713674.0	29828639.0
+canu_medaka_consensus	3718495.0	29866502.0
+flye_assembly	2284154.0	29321964.0
+flye_medaka_consensus	2285325.0	29331139.0
+raven_assembly	3783467.0	29481737.0
+raven_medaka_consensus	3782302.0	29482805.0
+shasta_assembly	136758.0	28330807.0
+shasta_medaka_consensus	136426.0	28257574.0
+wtdbg2_assembly	2043797.0	28625627.0
+wtdbg2_medaka_consensus	2047660.0	28632319.0
