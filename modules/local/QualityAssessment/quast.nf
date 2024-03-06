@@ -32,9 +32,9 @@ process quast {
   // busco lineage < bacteria_odb10 / fungi_odb10 / eukaryota_odb10 >
   def busco_lineage = ''
   if (!params.busco_lineage) {
-    if (params.organism == 'bacteria')  { busco_lineage = '/opt/busco_db/bacteria_odb10'  }
-    if (params.organism == 'eukaryote') { busco_lineage = '/opt/busco_db/eukaryota_odb10' }
-    if (params.organism == 'fungus')    { busco_lineage = '/opt/busco_db/fungi_odb10'     }
+    if (params.organism == 'bacteria')  { busco_lineage = './busco_db/bacteria_odb10'  }
+    if (params.organism == 'eukaryote') { busco_lineage = './busco_db/eukaryota_odb10' }
+    if (params.organism == 'fungus')    { busco_lineage = './busco_db/fungi_odb10'     }
   } else {
     busco_lineage = params.busco_lineage
   }
@@ -66,7 +66,10 @@ process quast {
       ${contigs}
   
   # run busco
+  cp -r /opt/busco_db .
   busco \\
+    --tar \\
+    --download_path ./ \\
     -i ${contigs} \\
     -m genome \\
     $busco_lineage \\
