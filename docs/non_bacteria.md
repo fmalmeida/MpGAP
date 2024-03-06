@@ -36,11 +36,12 @@ nextflow run fmalmeida/mpgap \
     --tracedir ./genome_assembly/pipeline_info \
     --input input.yml \
     --skip_unicycler \
-    --flye_additional_parameters ' --keep-haplotypes ' \
-    --quast_additional_parameters ' --eukaryote ' \
     --skip_hifiasm \
+    --flye_additional_parameters ' --keep-haplotypes ' \
+    --organism 'fungus' \
     --max_cpus 20 \
-    --max_memory '40.GB'
+    --max_memory '40.GB' \
+    --start_asm_mem '30.GB'
 ```
 
 !!! note
