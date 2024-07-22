@@ -3,6 +3,13 @@
  */
 
 /*
+ * Modules for assembling short reads
+ */
+
+// Unicycler assembler
+include { unicycler as strategy_3_unicycler } from '../modules/local/ShortReads/unicycler_sreads.nf'
+
+/*
  * Modules for assembling long reads
  */
 
@@ -80,6 +87,9 @@ workflow HYBRID {
       LONGREADS_OUTPUTS['GCPP']        = Channel.empty()
       LONGREADS_OUTPUTS['HIFIASM']     = Channel.empty()
 
+      def SHORTREADS_OUTPUTS = [:]
+      SHORTREADS_OUTPUTS['UNICYCLER']  = Channel.empty()
+
       def HYBRID_OUTPUTS = [:]
       HYBRID_OUTPUTS['UNICYCLER']     = Channel.empty()
       HYBRID_OUTPUTS['SPADES']        = Channel.empty()
@@ -92,12 +102,13 @@ workflow HYBRID {
        * create branches
        */
       input_tuple.branch{
-        main: it[1] == "hybrid_strategy_1"
-        secondary: it[1] == "hybrid_strategy_2"
+        main      : it[1] == "hybrid_strategy_1"
+        secondary : it[1] == "hybrid_strategy_2"
+        scaffold  : it[1] == "hybrid_strategy_3"
       }.set { input_branches }
 
       /*
-       * Full (default) hybrid mode
+       * Strategy 1 --> Full (default) hybrid mode
        */
       
       // SPAdes
@@ -129,7 +140,7 @@ workflow HYBRID {
         .combine(input_tuple, by: 0)
 
       /*
-       * Polish a long reads assembly
+       * Strategy 2 --> Polish a long reads assembly
        */
       
       /*
@@ -193,7 +204,6 @@ workflow HYBRID {
         LONGREADS_OUTPUTS['WTDBG2'] = strategy_2_wtdbg2.out[1]
         ch_versions_hb = ch_versions_hb.mix(strategy_2_wtdbg2.out.versions.first())
       }
-
 
 
       // Get long reads assemblies
@@ -272,6 +282,19 @@ workflow HYBRID {
        */
       if ( !params.skip_pilon || !params.skip_polypolish) { 
         HYBRID_OUTPUTS['SREADS_POLISH'] = HYBRID_OUTPUTS['SREADS_POLISH'].combine( input_tuple, by: 0 )
+      }
+
+      /*
+       * Strategy 3 --> Scaffold a short reads assembly
+       */
+      
+      /*
+       * Unicycler
+       */
+      if (!params.skip_unicycler) {
+        strategy_3_unicycler(input_branches.scaffold)
+        // LONGREADS_OUTPUTS['CANU'] = strategy_2_canu.out[1]
+        // ch_versions_hb = ch_versions_hb.mix(strategy_2_canu.out.versions.first())
       }
 
       /*
