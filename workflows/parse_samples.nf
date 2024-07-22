@@ -23,6 +23,10 @@ workflow PARSE_SAMPLESHEET {
       fixed_name = row.name - ":strategy_2"
       prefix = "${fixed_name}/hybrid_strategy_2" 
     }
+    if (row.entrypoint == 'hybrid_strategy_3') { 
+      fixed_name = row.name - ":strategy_3"
+      prefix = "${fixed_name}/hybrid_strategy_3"
+    }
     if (row.entrypoint == 'longreads_only') { 
       prefix = "${row.name}/longreads_only" 
     }
