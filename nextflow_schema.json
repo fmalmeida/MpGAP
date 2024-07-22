@@ -92,7 +92,7 @@
             "description": "Select assembly strategy",
             "properties": {
                 "hybrid_strategy": {
-                    "description": "Which hybrid strategy to run? Options: 1, 2, both.",
+                    "description": "Which hybrid strategy to run? Options: 1, 2, 3, both.",
                     "help_text": "Selects which hybrid assembly strategy to run. Please read the manual for more information: https://mpgap.readthedocs.io/en/latest/manual.html",
                     "default": "1",
                     "fa_icon": "fas fa-align-left"

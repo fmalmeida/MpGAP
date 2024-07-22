@@ -15,8 +15,13 @@ class WorkflowMpGAP {
             }
         }
 
-        if (params.hybrid_strategy.toString() != "1" && params.hybrid_strategy.toString() != "2" && params.hybrid_strategy.toString() != "both") {
-            log.error "ERROR!\nA major error has occurred!\n\t==>  Parameter --hybrid_strategy must be either 1, 2 or both.\n\t Online documentation is available at: https://mpgap.readthedocs.io/en/latest/\nPlease, read the docs.\nCheers."
+        if (
+                params.hybrid_strategy.toString() != "1" && 
+                params.hybrid_strategy.toString() != "2" &&
+                params.hybrid_strategy.toString() != "3" &&
+                params.hybrid_strategy.toString() != "both"
+            ) {
+            log.error "ERROR!\nA major error has occurred!\n\t==>  Parameter --hybrid_strategy must be either 1, 2, 3 or both.\n\t Online documentation is available at: https://mpgap.readthedocs.io/en/latest/\nPlease, read the docs.\nCheers."
             System.exit(1)
         }
 
@@ -35,3 +40,4 @@ class WorkflowMpGAP {
     }
 
 }
+
