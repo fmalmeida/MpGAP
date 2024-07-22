@@ -13,7 +13,7 @@ process megahit {
   path('versions.yml'), emit: versions
 
   when:
-  (entrypoint == 'shortreads_only')
+  (entrypoint == 'shortreads_only' || entrypoint == 'hybrid_strategy_3')
 
   script:
   param_paired = !(sread1 =~ /input.*/ || sread2 =~ /input.*/) ? "-1 $sread1 -2 $sread2" : ""

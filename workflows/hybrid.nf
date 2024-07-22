@@ -9,6 +9,15 @@
 // Unicycler assembler
 include { unicycler as strategy_3_unicycler } from '../modules/local/ShortReads/unicycler_sreads.nf'
 
+// SPAdes assembler
+include { spades as strategy_3_spades } from '../modules/local/ShortReads/spades_sreads.nf'
+
+// Shovill assembler
+include { shovill as strategy_3_shovill } from '../modules/local/ShortReads/shovill_sreads.nf'
+
+// Megahit assembler
+include { megahit as strategy_3_megahit } from '../modules/local/ShortReads/megahit_sreads.nf'
+
 /*
  * Modules for assembling long reads
  */
@@ -293,9 +302,37 @@ workflow HYBRID {
        */
       if (!params.skip_unicycler) {
         strategy_3_unicycler(input_branches.scaffold)
-        // LONGREADS_OUTPUTS['CANU'] = strategy_2_canu.out[1]
-        // ch_versions_hb = ch_versions_hb.mix(strategy_2_canu.out.versions.first())
+        SHORTREADS_OUTPUTS['UNICYCLER'] = strategy_3_unicycler.out[1]
+        ch_versions_hb = ch_versions_hb.mix(strategy_3_unicycler.out.versions.first())
       }
+
+      /*
+       * SPAdes
+       */
+      if (!params.skip_spades) {
+        strategy_3_spades(input_branches.scaffold)
+        SHORTREADS_OUTPUTS['SPADES'] = strategy_3_spades.out[1]
+        ch_versions_hb = ch_versions_hb.mix(strategy_3_spades.out.versions.first())
+      }
+      
+      /*
+       * Shovill
+       */
+      if (!params.skip_shovill) {
+        strategy_3_shovill(input_branches.scaffold.combine(Channel.from('spades', 'skesa', 'megahit')))
+        SHORTREADS_OUTPUTS['SHOVILL'] = strategy_3_shovill.out[1]
+        ch_versions_hb = ch_versions_hb.mix(strategy_3_shovill.out.versions.first())
+      }
+      
+      /*
+       * Megahit
+       */
+      if (!params.skip_megahit) {
+        strategy_3_megahit(input_branches.scaffold)
+        SHORTREADS_OUTPUTS['MEGAHIT'] = strategy_3_megahit.out[1]
+        ch_versions_hb = ch_versions_hb.mix(strategy_3_megahit.out.versions.first())
+      }
+
 
       /*
        * Finalize workflow

@@ -13,7 +13,7 @@ process shovill {
   path('versions.yml'), emit: versions
 
   when:
-  !(sread1 =~ /input.*/ || sread2 =~ /input.*/) && (single =~ /input.*/) && (entrypoint == 'shortreads_only')
+  !(sread1 =~ /input.*/ || sread2 =~ /input.*/) && (single =~ /input.*/) && (entrypoint == 'shortreads_only' || entrypoint == 'hybrid_strategy_3')
 
   script:
   additional_params = (params.shovill_additional_parameters) ? params.shovill_additional_parameters : ""
