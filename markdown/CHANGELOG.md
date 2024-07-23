@@ -2,7 +2,12 @@
 
 The tracking for changes started in v2.
 
-## v3.2 -- [2024-Mar-06]
+## v3.2.1
+
+* [#79](https://github.com/fmalmeida/MpGAP/issues/79)
+  * Add if-else in MultiQC module so that if Quast report has different set of columns.
+
+## v3.2.0 -- [2024-Mar-06]
 
 * Update unicyler to v0.5.0
 * Adjust Pilon polishing module to select how many rounds of polishing to run. Default is 4.
