@@ -31,8 +31,12 @@ process multiqc {
   echo \"\" >> ASSEMBLY_SUMMARY.txt
   echo \"## Main QUAST statistics\" >> ASSEMBLY_SUMMARY.txt
   echo \"\" >> ASSEMBLY_SUMMARY.txt
-  csvtk cut -t -f 1,14,15,16,17,18,22,27,28,31 multiqc_data/multiqc_quast.txt | csvtk -t pretty >> ASSEMBLY_SUMMARY.txt || \
-  csvtk -t pretty multiqc_data/multiqc_quast.txt >> ASSEMBLY_SUMMARY.txt
+  csvtk cut -t \\
+    -f 1,14,15,16,17,18,22,27,28,31 \\
+    multiqc_data/multiqc_quast.txt | csvtk -t pretty >> ASSEMBLY_SUMMARY.txt || \
+  cat multiqc_data/multiqc_quast.txt | \\
+    csvtk cut -t \\
+    -f Sample,#\ contigs,Largest\ contig,Total\ length,GC\ (%),N50,L90,#\ predicted\ rRNA\ genes | csvtk -t pretty >> ASSEMBLY_SUMMARY.txt
   echo \"\" >> ASSEMBLY_SUMMARY.txt
   echo \"## Main BUSCO statistics\" >> ASSEMBLY_SUMMARY.txt
   echo \"\" >> ASSEMBLY_SUMMARY.txt
