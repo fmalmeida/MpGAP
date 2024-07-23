@@ -5,7 +5,7 @@ The tracking for changes started in v2.
 ## v3.2.1
 
 * [#79](https://github.com/fmalmeida/MpGAP/issues/79)
-  * Add if-else in MultiQC module so that if Quast report has different set of columns, we print it all to avoid breaking.
+  * Add if-else in MultiQC module so that if Quast report has different set of columns.
 
 ## v3.2.0 -- [2024-Mar-06]
 
