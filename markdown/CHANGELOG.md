@@ -2,7 +2,7 @@
 
 The tracking for changes started in v2.
 
-## v3.2.1
+## v3.2.1 -- [2024-Jul-24]
 
 * [#77](https://github.com/fmalmeida/MpGAP/issues/77)
   * Add cleanup to avoid `overwrite existing files` error in BUSCO when resuming a run.
