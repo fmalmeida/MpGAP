@@ -1,6 +1,6 @@
 # You can use this file to create a conda environment for this pipeline:
 #   conda env create -f environment.yml
-name: mpgap-3.2
+name: mpgap-3.3
 
 channels:
 - conda-forge
@@ -36,6 +36,7 @@ dependencies:
 - bioconda::mummer
 - bioconda::bowtie2
 - bioconda::freebayes
+- bioconda::longstitch=1.0.5
 - bioconda::minimap2=2.22
 - bioconda::nanopolish=0.13.2
 - bioconda::pbgcpp=2.0.2
