@@ -54,6 +54,7 @@ process quast {
   // any case
   """
   # run quast
+  rm -rf ${assembler}/
   quast.py \\
       -o ${assembler} \\
       -t $task.cpus \\
@@ -68,6 +69,7 @@ process quast {
   # run busco
   cp -r /opt/busco_db .
   busco \\
+    -f \\
     --tar \\
     --download_path ./ \\
     -i ${contigs} \\
