@@ -2,7 +2,7 @@
 
 The tracking for changes started in v2.
 
-## v3.2.2 -- TBD
+## v3.2.2 -- [2024-Sep-06]
 
 * [#82](https://github.com/fmalmeida/MpGAP/issues/82)
   * Small fix to allow canu to use `-pacbio-hifi` parameter when using `--high_quality_longreads` pipeline parameter. For nanopore it stays using `-corrected` since canu does not have a special option for high-quality nanopore data.
