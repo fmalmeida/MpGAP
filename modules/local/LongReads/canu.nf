@@ -16,7 +16,11 @@ process canu {
 
   script:
   lr        = (lr_type == 'nanopore') ? '-nanopore' : '-pacbio'
-  corrected = (corrected_longreads.toBoolean() || high_quality_longreads.toBoolean()) ? '-corrected' : '' // canu does not have a specific config for high-quality, however, --corrected means, skipping canu read correction phase, which is what we want.
+  corrected = (corrected_longreads.toBoolean()) ? '-corrected' : '' // user wants the -corrected parameter
+  if (high_quality_longreads.toBoolean()) {
+    if (lr_type == 'nanopore') { corrected = '-corrected' } // for nanopore there is no special hifi option, so activate normal -corrected
+    if (lr_type == 'pacbio')   { lr = lr + '-hifi' }        // constructs special -pacbio-hifi parameter
+  }
   fixed_id = id - ":strategy_2"
   additional_params = (params.canu_additional_parameters) ? params.canu_additional_parameters : ""
   """
