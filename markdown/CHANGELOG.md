@@ -2,6 +2,11 @@
 
 The tracking for changes started in v2.
 
+## v3.2.1 -- [2026-01-22]
+
+* [#87](https://github.com/fmalmeida/MpGAP/issues/87)
+  * Make sure the max_time parameter, in fact, just sets directly the max time for all modules
+
 ## v3.2.2 -- [2024-Sep-06]
 
 * [#82](https://github.com/fmalmeida/MpGAP/issues/82)
